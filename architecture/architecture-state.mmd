@@ -1,0 +1,11 @@
+stateDiagram
+    [*] --> Checkout
+    Checkout --> Billing
+    Billing --> Payment
+    
+    Payment --> Delivery: success
+    Payment --> Error : failed
+    Delivery --> Confirmation
+    Confirmation --> Completed
+    Completed --> [*]
+

@@ -1,0 +1,38 @@
+classDiagram
+MojitoCheckout --> UserInfo
+MojitoCheckout --> Billing
+MojitoCheckout --> Payment
+MojitoCheckout --> Delivery
+MojitoCheckout --> Confirmation
+MojitoCheckout --> MojitoTheme
+MojitoCheckout --> MojitoLocalization
+MojitoCheckout --> MojitoUIConfiguration 
+
+
+class MojitoCheckout{
+    -String discountCode
+    -uiConfiguration MojitoUIConfiguration
+    -localization MojitoLocalization
+    -UserInfo userInfo
+    -MojitoTheme theme
+}
+class UserInfo {
+    -String name
+    -String email
+}
+class MojitoUIConfiguration {
+    -BillingUIConfiguration billing
+    -PaymentUIConfiguration payment
+    -DeliveryUIConfiguration delivery
+    -PaymentConfirmationUIConfiguration paymentConfirmation
+}
+class MojitoLocalization {
+    -BillingLocalization billing
+    -PaymentLocalization payment
+    -DeliveryLocalization delivery
+    -PaymentConfirmationLocalization paymentConfirmation
+}
+class MojitoTheme {
+    -MojitoColor color
+    -MojitoFont font
+}
