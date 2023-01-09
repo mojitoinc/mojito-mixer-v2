@@ -1,4 +1,3 @@
-import { CONTAINERSTATES } from "../constants/states";
 import { Dialog, ThemeProvider, GlobalStyles, Box } from "@mui/material";
 import React, { useState } from "react";
 import ConfigurationContext, {
@@ -9,6 +8,7 @@ import UserContext, { UserType } from "@providers/UserProvider";
 import { theme } from "@lib/theme/CreateTheme";
 import { styles } from "@lib/theme/GlobalStyles";
 import CheckOutContainer from "@views/CheckOut";
+import { CONTAINERSTATES } from "../constants/states";
 
 interface MojitoCheckoutProps {
   uiConfiguration?: ConfigurationType;

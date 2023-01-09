@@ -3,15 +3,7 @@ import React from "react";
 import { Icons } from "../assets";
 import { MixTheme } from "../theme/ThemeOptions";
 
-interface HeaderProps {
-  onPressBack?: () => void;
-  backText?: string;
-}
-
-const Header = ({
-  onPressBack,
-  backText,
-}: HeaderProps) => {
+const Header = () => {
   const theme = useTheme<MixTheme>();
   return (
     <Box
