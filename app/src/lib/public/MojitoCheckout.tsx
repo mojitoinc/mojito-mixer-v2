@@ -1,4 +1,4 @@
-import { CONTAINERSTATES } from "@lib/constants/states";
+import { CONTAINERSTATES } from "../constants/states";
 import { Dialog, ThemeProvider, GlobalStyles, Box } from "@mui/material";
 import React, { useState } from "react";
 import ConfigurationContext, {
