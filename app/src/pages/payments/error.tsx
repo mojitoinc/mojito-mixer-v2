@@ -2,7 +2,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import React, { useCallback } from "react";
- 
+
 const ErrorPage: NextPage = () => {
   const router = useRouter();
   const { getIdTokenClaims } = useAuth0();
@@ -32,7 +32,7 @@ const ErrorPage: NextPage = () => {
   //   }
   // }, [router]);
 
-  return  <div>error</div>
+  return <div>error</div>;
 };
 
 export default ErrorPage;

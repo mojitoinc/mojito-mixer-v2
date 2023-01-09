@@ -1,5 +1,4 @@
-
-import { createContext, useContext } from 'react';
+import { createContext, useContext } from "react";
 
 
 export interface UserType {
@@ -10,6 +9,6 @@ const UserContext = createContext<UserType>({} as UserType);
 export default UserContext;
 
 
-export const  useUser =()=> {
+export const useUser = () => {
   return useContext(UserContext);
 };

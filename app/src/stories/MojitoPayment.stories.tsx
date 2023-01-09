@@ -9,8 +9,7 @@ stories.add("SHOW Express checkout", () => {
     <MojitoCheckout
       userInfo={{
         email: "Showrisrinivas@gmail.com",
-      }}
-    />
+      }} />
   );
 });
 
@@ -22,8 +21,7 @@ stories.add("Hide Express checkout", () => {
       }}
       userInfo={{
         email: "Showrisrinivas@gmail.com",
-      }}
-    />
+      }} />
   );
 });
 

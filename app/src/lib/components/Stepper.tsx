@@ -1,8 +1,7 @@
 import { CONTAINERSTATES } from "@lib/constants/states";
 import { Box, Typography, useTheme } from "@mui/material";
-import Image from "next/image";
 import React from "react";
-import { Icons } from "../icons";
+import { Icons } from "../assets";
 import { MixTheme } from "../theme/ThemeOptions";
 
 interface StepsType {
@@ -27,7 +26,7 @@ interface StepperProps {
   currentState:CONTAINERSTATES
 }
 const Stepper = ({
-  currentState
+  currentState,
 }:StepperProps) => {
   const theme = useTheme<MixTheme>();
   return (
@@ -37,41 +36,35 @@ const Stepper = ({
         backgroundColor: theme.global?.background,
         display: "flex",
         flexDirection: "row",
-        margin:'8px 0px'
-      }}
-    >
-      {steps.map((item: StepsType, index: number) => {
+        margin: "8px 0px",
+      }}>
+      { steps.map((item: StepsType, index: number) => {
         return (
-          <Box display={"flex"} flexDirection={"row"} alignItems={"center"}>
+          <Box display="flex" flexDirection="row" alignItems="center">
             <Typography
-              fontWeight={"700"}
-              fontSize={"12px"}
-              color={
-                item.value === currentState
-                  ? theme.global?.highlightedText
-                  : theme.global?.unHighlightedText
-              }
-            >
-              {item.title}
+              fontWeight="700"
+              fontSize="12px"
+              color={ item.value === currentState
+                ? theme.global?.highlightedText
+                : theme.global?.unHighlightedText }>
+              { item.title }
             </Typography>
-            {index !== steps.length - 1 && (
+            { index !== steps.length - 1 && (
               <img
-                src={Icons.rightArrow}
-                width={"14px"}
-                height={"14px"}
+                src={ Icons.rightArrow }
+                width="14px"
+                height="14px"
                 style={{
-                    margin:'0px 10px'
+                  margin: "0px 10px",
                 }}
-                color={
-                  item.value === currentState
-                    ? theme.global?.highlightedText
-                    : theme.global?.unHighlightedText
-                }
-              />
-            )}
+                alt="arrow"
+                color={ item.value === currentState
+                  ? theme.global?.highlightedText
+                  : theme.global?.unHighlightedText } />
+            ) }
           </Box>
         );
-      })}
+      }) }
     </Box>
   );
 };

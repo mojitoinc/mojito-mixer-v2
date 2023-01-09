@@ -16,24 +16,21 @@ const LinedText = ({ text, capitalize = true }: LinedTextProps) => {
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-      }}
-    >
+      }}>
       <Box
         sx={{
           width: "100%",
           backgroundColor: theme.global?.lines,
           height: "1px",
-        }}
-      />
+        }} />
       <Typography
-        color={theme?.global?.unHighlightedText}
-        fontWeight={"700"}
-        fontSize={"12px"}
-        margin={"0px 10px"}
-        minWidth={`${text.length*8}px`}
-        textAlign={'center'}
-      >
-        {capitalize ? text.toUpperCase():text}
+        color={ theme?.global?.unHighlightedText }
+        fontWeight="700"
+        fontSize="12px"
+        margin="0px 10px"
+        minWidth={ `${ text.length * 8 }px` }
+        textAlign="center">
+        { capitalize ? text.toUpperCase() : text }
       </Typography>
 
       <Box
@@ -41,8 +38,7 @@ const LinedText = ({ text, capitalize = true }: LinedTextProps) => {
           width: "100%",
           backgroundColor: theme.global?.lines,
           height: "1px",
-        }}
-      />
+        }} />
     </Box>
   );
 };

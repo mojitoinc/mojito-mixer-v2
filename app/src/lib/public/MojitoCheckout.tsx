@@ -19,23 +19,22 @@ const MojitoCheckout = ({
   userInfo,
 }: MojitoCheckoutProps) => {
   const [containerState, setContainerState] = useState<CONTAINERSTATES>(
-    CONTAINERSTATES.CHECKOUT
+    CONTAINERSTATES.CHECKOUT,
   );
   const themes = theme();
   return (
-    <Dialog open={true} fullScreen>
-      <ThemeProvider theme={themes}>
-        <UserContext.Provider value={userInfo}>
-          <ConfigurationContext.Provider value={uiConfiguration}>
-            <GlobalStyles styles={styles} />
+    <Dialog open fullScreen>
+      <ThemeProvider theme={ themes }>
+        <UserContext.Provider value={ userInfo }>
+          <ConfigurationContext.Provider value={ uiConfiguration }>
+            <GlobalStyles styles={ styles } />
             <Box
               sx={{
                 display: "flex",
                 width: "100%",
                 height: "100%",
-              }}
-            >
-              {containerState === CONTAINERSTATES.CHECKOUT && <CheckOutContainer />}
+              }}>
+              { containerState === CONTAINERSTATES.CHECKOUT && <CheckOutContainer /> }
             </Box>
           </ConfigurationContext.Provider>
         </UserContext.Provider>

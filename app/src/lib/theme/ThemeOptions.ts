@@ -1,5 +1,5 @@
 // https://mui.com/material-ui/customization/theming/
-import { ThemeOptions, Theme } from '@mui/material/styles';
+import { ThemeOptions, Theme } from "@mui/material/styles";
 
 export interface ExtendsThemeOptions {
     font?: {

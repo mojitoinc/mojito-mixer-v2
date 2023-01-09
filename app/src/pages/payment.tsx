@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 import { ProtectedPageContainer } from "../component/auth/ProtectedPageContainer";
-import {CheckoutComponent } from '../component/CheckoutComponent';
+import { CheckoutComponent } from "../component/CheckoutComponent";
 
 const PaymentMemoized = memo(() => {
   return <CheckoutComponent />;

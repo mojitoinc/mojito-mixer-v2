@@ -16,8 +16,8 @@ const PlaidOAuthPage: NextPage = () => {
   }, [router]);
 
   return (
-   <div>oauth</div>
-  )
+    <div>oauth</div>
+  );
 };
 
 export default PlaidOAuthPage;

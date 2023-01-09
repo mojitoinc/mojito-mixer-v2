@@ -1,5 +1,4 @@
-
-import { createContext, useContext } from 'react';
+import { createContext, useContext } from "react";
 
 
 export interface ConfigurationType {
@@ -7,12 +6,12 @@ export interface ConfigurationType {
 }
 
 export const DefaultConfiguration:ConfigurationType = {
-    hideExpressCheckout : false
-}
+  hideExpressCheckout: false,
+};
 const ConfigurationContext = createContext<ConfigurationType>(DefaultConfiguration);
 export default ConfigurationContext;
 
 
-export const  useConfiguration =()=> {
+export const useConfiguration = () => {
   return useContext(ConfigurationContext);
 };

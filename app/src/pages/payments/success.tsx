@@ -22,7 +22,7 @@ const SuccessPage: NextPage = () => {
     if (paymentId === "") router.replace("/");
   }, [paymentId, router]);
 
-  return <div>Sucess</div>
+  return <div>Sucess</div>;
 };
 
 export default SuccessPage;
