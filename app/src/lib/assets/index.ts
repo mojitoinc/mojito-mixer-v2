@@ -1,5 +1,9 @@
+import logo from "./logo.svg";
+import rightArrow from "./arrow-right.svg";
+import background from "./background.svg";
+
 export const Icons = {
-  logo:require("/src/lib/assets/logo.svg"),
-  rightArrow: require("/src/lib/assets/arrow-right.svg"),
-  background: require("/src/lib/assets/background.svg"),
+  logo,
+  rightArrow,
+  background,
 };
