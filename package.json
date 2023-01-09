@@ -44,7 +44,9 @@
     "dist:build": "yarn dist:start && yarn dist:clean && rollup -c && yarn dist:end",
     "dist:end": "mv src app/src/lib",
     "dist:uninstall": "rm -rf node_modules",
-    "codegen": "graphql-codegen --config codegen.yml"
+    "codegen": "graphql-codegen --config codegen.yml",
+    "storybook": "yarn --cwd app storybook",
+    "build-storybook": "yarn --cwd app build-storybook"
   },
   "engines": {
     "node": ">=16.0.0"
@@ -84,6 +86,7 @@
     "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.20.12",
     "@graphql-codegen/cli": "^2.8.1",
     "@graphql-codegen/introspection": "^2.2.0",
     "@graphql-codegen/typescript": "^2.7.1",
@@ -97,6 +100,7 @@
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
     "ansi-regex": "^5.0.1",
+    "babel-loader": "^8.3.0",
     "node-fetch": "^2.6.7",
     "rollup": "^2.76.0",
     "rollup-plugin-analyzer": "^4.0.0",

@@ -42,6 +42,9 @@
       ],
       "@lib/*": [
         "lib/*"
+      ],
+      "@providers/*": [
+        "lib/providers/*"
       ]
     },
     "incremental": true

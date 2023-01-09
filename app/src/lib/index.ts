@@ -1,1 +1,1 @@
-export * from './public/MojioCheckout'
+export * from './public/MojitoCheckout'
