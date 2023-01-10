@@ -1,12 +1,11 @@
-import { useAuth0 } from "@auth0/auth0-react";
-import { useRouter } from "next/router";
-import React, { ErrorInfo, useCallback } from "react";
-import {  MojioCheckout } from "../lib";
-  
-export const CheckoutComponent: React.FC = ({
+import MojitoCheckout from '@lib/public/MojitoCheckout';
+import React from 'react';
 
-}) => {
-  const router = useRouter();
-  
-  return <MojioCheckout   />;
+export const CheckoutComponent: React.FC = () => {
+  return (
+    <MojitoCheckout
+      userInfo={{
+        email: 'ShowriSrinivas@gmail.com',
+      }} />
+  );
 };

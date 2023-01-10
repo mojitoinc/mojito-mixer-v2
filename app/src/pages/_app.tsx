@@ -1,11 +1,11 @@
-import { Auth0Provider } from "@auth0/auth0-react";
-import { AppProps } from "next/app";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
-import React from "react";
-import Head from "next/head";
-import { GlobalStyles } from "@mui/material";
-import { Container,Header, GLOBAL_STYLES } from "../component/core";
-import { RuntimeConfig } from "../constant";
+import { Auth0Provider } from '@auth0/auth0-react';
+import { AppProps } from 'next/app';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import React from 'react';
+import Head from 'next/head';
+import { GlobalStyles } from '@mui/material';
+import { Container, Header, GLOBAL_STYLES } from '../component/core';
+import { RuntimeConfig } from '../constant';
 
 const defaultTheme = createTheme();
 
@@ -25,16 +25,16 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
         <link href="/fonts/style.css" rel="stylesheet" />
       </Head>
 
-        <ThemeProvider theme={ defaultTheme }>
+      <ThemeProvider theme={ defaultTheme }>
 
-          <GlobalStyles styles={ GLOBAL_STYLES } />
+        <GlobalStyles styles={ GLOBAL_STYLES } />
 
-          <Container>
-            <Header />
-            <Component { ...pageProps } />
-          </Container>
+        <Container>
+          <Header />
+          <Component { ...pageProps } />
+        </Container>
 
-        </ThemeProvider>
+      </ThemeProvider>
     </Auth0Provider>
   );
 };

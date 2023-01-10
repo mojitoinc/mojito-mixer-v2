@@ -1,21 +1,21 @@
-import { useAuth0 } from "@auth0/auth0-react";
-import React, { useCallback } from "react";
-import { Box, Button, Typography } from "@mui/material";
-import { Theme, SxProps } from "@mui/material/styles";
-import { RuntimeConfig } from "../../constant";
+import { useAuth0 } from '@auth0/auth0-react';
+import React, { useCallback } from 'react';
+import { Box, Button, Typography } from '@mui/material';
+import { Theme, SxProps } from '@mui/material/styles';
+import { RuntimeConfig } from '../../constant';
 
 const buttonSx: SxProps<Theme> = {
   py: 0,
-  height: "32px",
-  display: "flex",
-  alignItems: "center",
+  height: '32px',
+  display: 'flex',
+  alignItems: 'center',
 };
 
 export const AuthButton: React.FC = () => {
   const { logout, loginWithPopup, isAuthenticated, isLoading, getIdTokenClaims } = useAuth0();
 
   const handleLogin = useCallback(async () => {
-    await loginWithPopup({ prompt: "login" });
+    await loginWithPopup({ prompt: 'login' });
 
     const token = await getIdTokenClaims();
 

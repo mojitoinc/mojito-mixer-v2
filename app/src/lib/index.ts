@@ -1,1 +1,5 @@
-export * from './public/MojioCheckout'
+import MojitoCheckout from './public/MojitoCheckout';
+
+export {
+  MojitoCheckout,
+};
