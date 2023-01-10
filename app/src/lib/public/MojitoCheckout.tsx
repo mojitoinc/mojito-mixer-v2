@@ -8,20 +8,23 @@ import UserContext, { UserType } from '@providers/UserProvider';
 import { theme } from '@lib/theme/CreateTheme';
 import { styles } from '@lib/theme/GlobalStyles';
 import MojitoCheckoutLayout from '@views/MojitoCheckout/MojitoCheckOut.layout';
+import { ThemeConfiguration } from '@lib/interfaces/ThemeConfiguration';
 import { ContainerTypes } from '../constants/states';
 
 interface MojitoCheckoutProps {
   uiConfiguration?: ConfigurationType;
   userInfo: UserType;
+  themeConfiguration?:ThemeConfiguration;
 }
 const MojitoCheckout = ({
   uiConfiguration = DefaultConfiguration,
   userInfo,
+  themeConfiguration,
 }: MojitoCheckoutProps) => {
   const [containerState, setContainerState] = useState<ContainerTypes>(
     ContainerTypes.CHECKOUT,
   );
-  const themes = theme();
+  const themes = theme(themeConfiguration);
   return (
     <Dialog open fullScreen>
       <ThemeProvider theme={ themes }>
