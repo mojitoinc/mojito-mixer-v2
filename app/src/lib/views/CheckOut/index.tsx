@@ -1,5 +1,5 @@
-import React from "react";
-import CheckOutLayout from "./CheckOutInfo";
+import React from 'react';
+import CheckOutLayout from './CheckOutInfo';
 
 const CheckOutContainer = () => {
   return (

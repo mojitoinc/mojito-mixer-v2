@@ -1,6 +1,6 @@
-import { Box, Typography, useTheme } from "@mui/material";
-import React from "react";
-import { MixTheme } from "../theme/ThemeOptions";
+import { Box, Typography, useTheme } from '@mui/material';
+import React from 'react';
+import { MixTheme } from '../theme/ThemeOptions';
 
 interface LinedTextProps {
   text: string;
@@ -12,16 +12,16 @@ const LinedText = ({ text, capitalize = true }: LinedTextProps) => {
   return (
     <Box
       sx={{
-        width: "100%",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
+        width: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
       }}>
       <Box
         sx={{
-          width: "100%",
+          width: '100%',
           backgroundColor: theme.global?.lines,
-          height: "1px",
+          height: '1px',
         }} />
       <Typography
         color={ theme?.global?.unHighlightedText }
@@ -35,9 +35,9 @@ const LinedText = ({ text, capitalize = true }: LinedTextProps) => {
 
       <Box
         sx={{
-          width: "100%",
+          width: '100%',
           backgroundColor: theme.global?.lines,
-          height: "1px",
+          height: '1px',
         }} />
     </Box>
   );

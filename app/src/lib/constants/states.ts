@@ -1,5 +1,5 @@
-export enum CONTAINERSTATES {
-    CHECKOUT = "CHECKOUT",
-    PAYMENT = "PAYMENT",
-    DELIVERY = "DELIVERY",
+export enum ContainerTypes {
+    CHECKOUT = 'CHECKOUT',
+    PAYMENT = 'PAYMENT',
+    DELIVERY = 'DELIVERY',
   }

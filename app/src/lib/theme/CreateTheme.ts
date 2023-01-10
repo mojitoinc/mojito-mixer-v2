@@ -1,10 +1,10 @@
-import { createTheme } from "@mui/material/styles";
-import { MixThemeOptions, MixTheme } from "./ThemeOptions";
+import { createTheme } from '@mui/material/styles';
+import { MixThemeOptions, MixTheme } from './ThemeOptions';
 
 export const theme = () => {
   return createTheme({
     typography: {
-      fontFamily: "Sneak",
+      fontFamily: 'Sneak',
     },
     components: {
       MuiCssBaseline: {
@@ -26,32 +26,32 @@ export const theme = () => {
     },
     palette: {
       primary: {
-        main: "#6663FD",
+        main: '#6663FD',
       },
       secondary: {
-        main: "#FFFFFF",
+        main: '#FFFFFF',
       },
       background: {
-        default: "#FAFAFC",
+        default: '#FAFAFC',
       },
       text: {
-        primary: "#000000",
+        primary: '#000000',
       },
     },
     font: {
-      primary: "Sneak",
-      secondary: "Sneak",
-      tertiary: "Sneak",
-      sneak: "Sneak",
+      primary: 'Sneak',
+      secondary: 'Sneak',
+      tertiary: 'Sneak',
+      sneak: 'Sneak',
     },
     global: {
-      background: "#FAFAFC",
-      highlightedText: "#6663FD",
-      unHighlightedText: "#8A8AB9",
-      lines: "#CACAE0",
-      cardBackground: "#FFFFFF",
-      cardShadow: "rgba(0,0,0,0.08)",
-      cardBorder: "#EAEAF3",
+      background: '#FAFAFC',
+      highlightedText: '#6663FD',
+      unHighlightedText: '#8A8AB9',
+      lines: '#CACAE0',
+      cardBackground: '#FFFFFF',
+      cardShadow: 'rgba(0,0,0,0.08)',
+      cardBorder: '#EAEAF3',
     },
   } as MixThemeOptions)as MixTheme;
 };

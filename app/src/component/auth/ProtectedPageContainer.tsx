@@ -1,7 +1,7 @@
-import { useAuth0 } from "@auth0/auth0-react";
-import { Typography } from "@mui/material";
-import React from "react";
-import { GlobalLoader } from "../core/GlobalLoader";
+import { useAuth0 } from '@auth0/auth0-react';
+import { Typography } from '@mui/material';
+import React from 'react';
+import { GlobalLoader } from '../core/GlobalLoader';
 
 interface ProtectedPageContainer {
   revertDirection?: boolean;

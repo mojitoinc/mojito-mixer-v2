@@ -1,4 +1,4 @@
-import MojitoCheckout from "./public/MojitoCheckout";
+import MojitoCheckout from './public/MojitoCheckout';
 
 export {
   MojitoCheckout,

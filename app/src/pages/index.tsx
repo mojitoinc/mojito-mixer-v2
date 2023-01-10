@@ -1,5 +1,5 @@
-import React from "react";
-import { CheckoutComponent } from "../component/CheckoutComponent";
+import React from 'react';
+import { CheckoutComponent } from '../component/CheckoutComponent';
 
 const HomePage: React.FC = () => {
   return (
