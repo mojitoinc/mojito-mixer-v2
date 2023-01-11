@@ -16,7 +16,7 @@ interface BillingProps {
   handleSubmit: () => void;
 }
 
-const BillingLayout = ({
+const BillingView = ({
   isEditing,
   values,
   errors,
@@ -57,4 +57,4 @@ const BillingLayout = ({
     </Box>
   );
 };
-export default BillingLayout;
+export default BillingView;

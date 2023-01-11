@@ -1,7 +1,7 @@
 import { BillingFormData, useUser } from '@lib/providers/UserProvider';
 import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
-import BillingLayout from './BillingLayout';
+import BillingView from './BillingLayout';
 
 const BillingContainer = () => {
   const userData = useUser();
@@ -31,7 +31,7 @@ const BillingContainer = () => {
   }, [userData]);
 
   return (
-    <BillingLayout
+    <BillingView
       isEditing={ isEditing }
       values={ values }
       errors={ errors }

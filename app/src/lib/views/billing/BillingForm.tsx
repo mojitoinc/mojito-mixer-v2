@@ -5,8 +5,8 @@ import { Card, Typography, useTheme } from '@mui/material';
 import { Box } from '@mui/system';
 import { FormikErrors } from 'formik';
 import React from 'react';
-import Dropdown, { SelectOption } from '../../../components/shared/Dropdown';
-import TextInput from '../../../components/shared/TextInput';
+import Dropdown from '../../components/shared/Dropdown';
+import TextInput from '../../components/shared/TextInput';
 
 interface BillingFormProps {
   values: BillingFormData;
@@ -17,13 +17,12 @@ interface BillingFormProps {
 const BillingForm = ({
   values,
   errors,
-  onChange
+  onChange,
 }: BillingFormProps) => {
-
   const countries = useCountryOptions();
   const states = useStateOptions(values?.country);
   const cities = useCityOptions(values?.country, values?.state);
-  
+
   const theme = useTheme<MixTheme>();
   return (
     <>

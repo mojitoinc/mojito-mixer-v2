@@ -13,9 +13,8 @@ import {
   useTheme,
 } from '@mui/material';
 import { MixTheme } from '@lib/theme/ThemeOptions';
-import { SelectOption } from '@lib/interfaces/Components';
 
-export interface SelectOption {
+export interface DropdownOptions {
   label: string;
   value: string;
 }
@@ -24,7 +23,7 @@ interface DropdownProps {
   value?: string;
   title?: string;
   onChange?: (val: string) => void;
-  options?: SelectOption[];
+  options?: DropdownOptions[];
   error?: string;
   sx: SxProps<Theme>;
   required?: boolean;
@@ -94,7 +93,7 @@ const Dropdown = ({
               { placeholder }
             </Typography>
           </MenuItem>
-          { options.map((item: SelectOption) => {
+          { options.map((item: DropdownOptions) => {
             return <MenuItem value={ item.value }>{ item.label }</MenuItem>;
           }) }
         </Select>
