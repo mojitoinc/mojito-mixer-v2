@@ -1,5 +1,5 @@
 // https://mui.com/material-ui/customization/theming/
-import { CheckOutColor } from '@lib/interfaces/ThemeConfiguration';
+import { CheckOutColor, CostBreakDownColors } from '@lib/interfaces/ThemeConfiguration';
 import { ThemeOptions, Theme } from '@mui/material/styles';
 
 export interface ExtendsThemeOptions {
@@ -14,12 +14,16 @@ export interface ExtendsThemeOptions {
         highlightedText: string;
         unHighlightedText: string;
         lines: string;
+        border:string;
         cardBackground: string;
         cardShadow: string;
         cardBorder: string;
+        black: string;
+        white:string;
         required: string;
         placeholder:string;
-        checkOutColors?: CheckOutColor;
+        checkOutColors: CheckOutColor;
+        costBreakDownColors: CostBreakDownColors;
     };
 
 }

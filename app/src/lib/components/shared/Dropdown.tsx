@@ -79,6 +79,7 @@ const Dropdown = ({
           displayEmpty
           fullWidth
           error={ Boolean(error) }
+          size="small"
           MenuProps={{
             PaperProps: {
               style: {

@@ -52,16 +52,21 @@ export const theme = (themeConfiguration?: ThemeConfiguration) => {
       highlightedText: '#6663FD',
       unHighlightedText: '#8A8AB9',
       lines: '#CACAE0',
-      cardBackground: '#FFFFFF',
+      black: '#000000',
+      white: '#FFFFFF',
+      border: '#000000',
+      cardBackground: themeConfiguration?.color?.cardBackground ?? DefaultThemes.color?.cardBackground,
       cardShadow: 'rgba(0,0,0,0.08)',
       cardBorder: '#EAEAF3',
       required: '#CE2818',
       placeholder: themeConfiguration?.color?.placeholder ?? DefaultThemes.color?.placeholder,
       checkOutColors: {
-        continueButtonBackground: themeConfiguration?.color?.checkOutColors?.continueButtonBackground ??
-          DefaultThemes.color?.checkOutColors?.continueButtonBackground,
-        continueButtonTextColor: themeConfiguration?.color?.checkOutColors?.continueButtonTextColor ??
-          DefaultThemes.color?.checkOutColors?.continueButtonTextColor,
+        ...DefaultThemes.color?.checkOutColors,
+        ...themeConfiguration?.color?.checkOutColors,
+      },
+      costBreakDownColors: {
+        ...DefaultThemes.color?.costBreakDownColors,
+        ...themeConfiguration?.color?.costBreakDownColors,
       },
 
     },

@@ -1,14 +1,23 @@
 import { MixTheme } from '@lib/theme/ThemeOptions';
-import { Box, SxProps, TextField, Theme, Typography, useTheme } from '@mui/material';
+import {
+  Box,
+  InputBaseProps,
+  SxProps,
+  TextField,
+  Theme,
+  Typography,
+  useTheme,
+} from '@mui/material';
 import React, { useCallback } from 'react';
 
 interface TextInputProps {
   value?: string;
   title?: string;
-  onChange?: (val:string) => void;
+  onChange?: (val: string) => void;
   placeholder?: string;
   error?: string;
-  sx:SxProps<Theme>;
+  sx?: SxProps<Theme>;
+  inputProps?: InputBaseProps['inputProps'];
   required?: boolean;
   type?: React.InputHTMLAttributes<unknown>['type'];
 }
@@ -22,34 +31,43 @@ const TextInput = ({
   error,
   required,
   type,
-}:TextInputProps) => {
+  inputProps,
+}: TextInputProps) => {
   const theme = useTheme<MixTheme>();
 
-  const onChangeText = useCallback((e:React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-    onChange?.(e.target.value);
-  }, [onChange]);
+  const onChangeText = useCallback(
+    (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+      onChange?.(e.target.value);
+    },
+    [onChange],
+  );
 
   return (
     <Box
       sx={{
-        ...sx,
         width: '100%',
+        ...sx,
       }}>
       { title && (
-      <Box display="flex" flexDirection="row">
-        <Typography color={ theme.palette?.text?.primary } fontSize="16px">
-          { title }
-        </Typography>
+        <Box
+          display="flex"
+          flexDirection="row"
+          sx={{
+            marginBottom: '6px',
+          }}>
+          <Typography color={ theme.palette?.text?.primary } fontSize="16px">
+            { title }
+          </Typography>
 
-        { required && (
-        <Typography
-          color={ theme.global?.required }
-          fontSize="16px"
-          marginLeft="4px">
-          *
-        </Typography>
-        ) }
-      </Box>
+          { required && (
+            <Typography
+              color={ theme.global?.required }
+              fontSize="16px"
+              marginLeft="4px">
+              *
+            </Typography>
+          ) }
+        </Box>
       ) }
       <TextField
         value={ value }
@@ -57,9 +75,8 @@ const TextInput = ({
         placeholder={ placeholder }
         onChange={ onChangeText }
         fullWidth
-        sx={{
-          marginTop: '6px',
-        }}
+        inputProps={ inputProps }
+        size="small"
         helperText={ error }
         type={ type } />
     </Box>
