@@ -17,7 +17,9 @@ stories.add('Hide Express checkout', () => {
   return (
     <MojitoCheckout
       uiConfiguration={{
-        hideExpressCheckout: true,
+        billing: {
+          hideExpressCheckout: true,
+        },
       }}
       userInfo={{
         email: 'Showrisrinivas@gmail.com',

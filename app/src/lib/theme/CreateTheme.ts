@@ -1,7 +1,9 @@
+import DefaultThemes from '@lib/constants/themes';
+import { ThemeConfiguration } from '@lib/interfaces/ThemeConfiguration';
 import { createTheme } from '@mui/material/styles';
 import { MixThemeOptions, MixTheme } from './ThemeOptions';
 
-export const theme = () => {
+export const theme = (themeConfiguration?: ThemeConfiguration) => {
   return createTheme({
     typography: {
       fontFamily: 'Sneak',
@@ -10,13 +12,13 @@ export const theme = () => {
       MuiCssBaseline: {
         styleOverrides: `
                 @font-face {
-                  font-family: 'Sneak';
+                  font-family: ${ themeConfiguration?.font?.primary ?? DefaultThemes.font?.primary };
                   font-style: normal;
                   font-display: swap;
                   font-weight: 400;
                 }
                 @font-face {
-                    font-family: 'Sneak';
+                    font-family: ${ themeConfiguration?.font?.secondary ?? DefaultThemes.font?.secondary };
                     font-style: normal;
                     font-display: swap;
                     font-weight: 400;
@@ -26,16 +28,17 @@ export const theme = () => {
     },
     palette: {
       primary: {
-        main: '#6663FD',
+        main: themeConfiguration?.color?.primary ?? DefaultThemes.color?.primary,
       },
       secondary: {
-        main: '#FFFFFF',
+        main: themeConfiguration?.color?.secondary ?? DefaultThemes.color?.secondary,
       },
       background: {
-        default: '#FAFAFC',
+        default: themeConfiguration?.color?.background ?? DefaultThemes.color?.background,
       },
       text: {
-        primary: '#000000',
+        primary: themeConfiguration?.color?.text ?? DefaultThemes.color?.text,
+        disabled: themeConfiguration?.color?.placeholder ?? DefaultThemes.color?.placeholder,
       },
     },
     font: {
@@ -45,13 +48,22 @@ export const theme = () => {
       sneak: 'Sneak',
     },
     global: {
-      background: '#FAFAFC',
+      background: themeConfiguration?.color?.background ?? DefaultThemes.color?.background,
       highlightedText: '#6663FD',
       unHighlightedText: '#8A8AB9',
       lines: '#CACAE0',
       cardBackground: '#FFFFFF',
       cardShadow: 'rgba(0,0,0,0.08)',
       cardBorder: '#EAEAF3',
+      required: '#CE2818',
+      placeholder: themeConfiguration?.color?.placeholder ?? DefaultThemes.color?.placeholder,
+      checkOutColors: {
+        continueButtonBackground: themeConfiguration?.color?.checkOutColors?.continueButtonBackground ??
+          DefaultThemes.color?.checkOutColors?.continueButtonBackground,
+        continueButtonTextColor: themeConfiguration?.color?.checkOutColors?.continueButtonTextColor ??
+          DefaultThemes.color?.checkOutColors?.continueButtonTextColor,
+      },
+
     },
-  } as MixThemeOptions)as MixTheme;
+  } as MixThemeOptions) as MixTheme;
 };

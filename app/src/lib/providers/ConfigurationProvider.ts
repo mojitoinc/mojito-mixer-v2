@@ -2,16 +2,20 @@ import { createContext, useContext } from 'react';
 
 
 export interface ConfigurationType {
-    hideExpressCheckout : boolean;
+    billing:{
+      hideExpressCheckout : boolean;
+    }
 }
 
 export const DefaultConfiguration:ConfigurationType = {
-  hideExpressCheckout: false,
+  billing: {
+    hideExpressCheckout: false,
+  },
 };
 const ConfigurationContext = createContext<ConfigurationType>(DefaultConfiguration);
 export default ConfigurationContext;
 
 
-export const useConfiguration = () => {
+export const useUIConfiguration = () => {
   return useContext(ConfigurationContext);
 };
