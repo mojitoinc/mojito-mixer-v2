@@ -1,0 +1,10 @@
+flowchart TB
+    source(Source App) --> payment(Mojiti Payment)
+    subgraph  
+    payment --> success
+    payment --> Failed
+    end
+    payment --> Redicted(Redirected URL)
+    success --> sourceApp(Source App Page)
+
+
