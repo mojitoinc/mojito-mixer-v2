@@ -15,6 +15,11 @@ import {
 import { MixTheme } from '@lib/theme/ThemeOptions';
 import { SelectOption } from '@lib/interfaces/Components';
 
+export interface SelectOption {
+  label: string;
+  value: string;
+}
+
 interface DropdownProps {
   value?: string;
   title?: string;
