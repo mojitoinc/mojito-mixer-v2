@@ -76,7 +76,7 @@ const CostBreakDownLayout = () => {
         </Box>
         <Divider
           sx={{
-            background: '#000',
+            background: theme.global?.border,
             margin: '20px 0px',
           }} />
         <Box display="flex" flexDirection="row">
@@ -84,7 +84,7 @@ const CostBreakDownLayout = () => {
             placeholder="Discount code"
             inputProps={{
               style: {
-                backgroundColor: '#fff',
+                backgroundColor: theme.global?.background,
               },
             }} />
           <Button
@@ -97,7 +97,7 @@ const CostBreakDownLayout = () => {
         </Box>
         <Divider
           sx={{
-            background: '#000',
+            background: theme.global?.border,
             margin: '20px 0px 10px 0px',
           }} />
         <Box>
@@ -108,7 +108,7 @@ const CostBreakDownLayout = () => {
 
         <Divider
           sx={{
-            background: '#000',
+            background: theme.global?.border,
             margin: '20px 0px',
           }} />
         <Box

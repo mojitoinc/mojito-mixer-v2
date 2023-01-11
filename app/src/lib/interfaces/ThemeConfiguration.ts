@@ -17,6 +17,7 @@ interface ThemeColor {
     secondary?: string;
     background?: string;
     text?: string;
+    cardBackground?: string;
     checkOutColors?: CheckOutColor;
     costBreakDownColors?: CostBreakDownColors;
     placeholder?: string;

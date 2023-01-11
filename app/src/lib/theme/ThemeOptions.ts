@@ -14,6 +14,7 @@ export interface ExtendsThemeOptions {
         highlightedText: string;
         unHighlightedText: string;
         lines: string;
+        border:string;
         cardBackground: string;
         cardShadow: string;
         cardBorder: string;
