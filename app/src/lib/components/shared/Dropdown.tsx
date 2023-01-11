@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import {
   Box,
@@ -6,6 +6,7 @@ import {
   FormHelperText,
   MenuItem,
   Select,
+  SelectChangeEvent,
   SxProps,
   Theme,
   Typography,
@@ -13,7 +14,6 @@ import {
 } from '@mui/material';
 import { MixTheme } from '@lib/theme/ThemeOptions';
 import { SelectOption } from '@lib/interfaces/Components';
-
 
 interface DropdownProps {
   value?: string;
@@ -23,6 +23,7 @@ interface DropdownProps {
   error?: string;
   sx: SxProps<Theme>;
   required?: boolean;
+  placeholder?: string;
 }
 
 const Dropdown = ({
@@ -33,8 +34,13 @@ const Dropdown = ({
   sx,
   error,
   required,
+  placeholder,
 }: DropdownProps) => {
   const theme = useTheme<MixTheme>();
+
+  const onChangeValue = useCallback((e: SelectChangeEvent<string>) => {
+    onChange?.(e.target.value);
+  }, [onChange]);
 
   return (
     <Box
@@ -77,10 +83,10 @@ const Dropdown = ({
             },
           }}
           inputProps={{ 'aria-label': 'Without label' }}
-          onChange={ e => onChange?.(e.target.value) }>
+          onChange={ onChangeValue }>
           <MenuItem disabled value="">
             <Typography color={ theme.palette.text?.disabled }>
-              Select One...
+              { placeholder }
             </Typography>
           </MenuItem>
           { options.map((item: SelectOption) => {

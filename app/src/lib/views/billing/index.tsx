@@ -1,14 +1,12 @@
-import { UserType, useUser } from '@lib/providers/UserProvider';
+import { BillingFormData, useUser } from '@lib/providers/UserProvider';
 import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
-import { useCityOptions, useCountryOptions, useStateOptions } from '@lib/utils/dropdowns';
-import CheckOutLayout from './CheckOutLayout';
+import BillingLayout from './BillingLayout';
 
-const CheckOutContainer = () => {
+const BillingContainer = () => {
   const userData = useUser();
 
   const [isEditing, setIsEditing] = useState<boolean>(true);
-  const countriesList = useCountryOptions();
   const { values, errors, handleChange, handleSubmit } = useFormik({
     initialValues: {
       email: userData?.email,
@@ -17,13 +15,9 @@ const CheckOutContainer = () => {
       state: userData?.state,
       zipcode: userData?.zipcode,
       phoneNumber: userData?.phoneNumber,
-    } as UserType,
+    } as BillingFormData,
     onSubmit: () => undefined,
   });
-
-  const statesList = useStateOptions(values?.country);
-  const citiesList = useCityOptions(values?.country, values?.state);
-
 
   useEffect(() => {
     const hasUserData =
@@ -37,16 +31,13 @@ const CheckOutContainer = () => {
   }, [userData]);
 
   return (
-    <CheckOutLayout
+    <BillingLayout
       isEditing={ isEditing }
       values={ values }
       errors={ errors }
-      handleChange={ handleChange }
-      handleSubmit={ handleSubmit }
-      countriesList={ countriesList }
-      statesList={ statesList }
-      citiesList={ citiesList } />
+      onChange={ handleChange }
+      handleSubmit={ handleSubmit } />
   );
 };
 
-export default CheckOutContainer;
+export default BillingContainer;

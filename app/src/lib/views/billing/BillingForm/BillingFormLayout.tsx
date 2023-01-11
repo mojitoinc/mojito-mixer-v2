@@ -1,30 +1,30 @@
 import { SelectOption } from '@lib/interfaces/Components';
-import { UserType } from '@lib/providers/UserProvider';
+import { BillingFormData } from '@lib/providers/UserProvider';
 import { MixTheme } from '@lib/theme/ThemeOptions';
 import { Card, Typography, useTheme } from '@mui/material';
 import { Box } from '@mui/system';
 import { FormikErrors } from 'formik';
 import React from 'react';
-import Dropdown from './shared/Dropdown';
-import TextInput from './shared/TextInput';
+import Dropdown from '../../../components/shared/Dropdown';
+import TextInput from '../../../components/shared/TextInput';
 
-interface BillingFormProps {
-  values: UserType;
-  errors: FormikErrors<UserType>;
-  handleChange: any;
-  countriesList:SelectOption[]
-  statesList:SelectOption[];
-  citiesList:SelectOption[];
+interface BillingFormLayoutProps {
+  values: BillingFormData;
+  errors: FormikErrors<BillingFormData>;
+  onChange: any;
+  countries:SelectOption[]
+  states:SelectOption[];
+  cities:SelectOption[];
 }
 
-const BillingForm = ({
+const BillingFormLayout = ({
   values,
   errors,
-  handleChange,
-  countriesList,
-  statesList,
-  citiesList,
-}: BillingFormProps) => {
+  onChange,
+  countries,
+  states,
+  cities,
+}: BillingFormLayoutProps) => {
   const theme = useTheme<MixTheme>();
   return (
     <>
@@ -44,7 +44,7 @@ const BillingForm = ({
           </Typography>
           <TextInput
             value={ values?.email }
-            onChange={ handleChange('email') }
+            onChange={ onChange('email') }
             error={ errors?.email }
             placeholder="Email"
             sx={{
@@ -74,20 +74,22 @@ const BillingForm = ({
             }}>
             <Dropdown
               value={ values?.country }
-              onChange={ handleChange('country') }
+              onChange={ onChange('country') }
               title="Country/Region"
               required
               sx={{ marginRight: '8px' }}
               error={ errors?.country }
-              options={ countriesList } />
+              placeholder="Select one,,,"
+              options={ countries } />
             <Dropdown
               value={ values?.state }
-              onChange={ handleChange('state') }
+              onChange={ onChange('state') }
               title="State"
               sx={{
                 marginLeft: '8px',
               }}
-              options={ statesList }
+              placeholder="Select one,,,"
+              options={ states }
               error={ errors?.state }
               required />
           </Box>
@@ -99,15 +101,16 @@ const BillingForm = ({
             }}>
             <Dropdown
               value={ values?.city }
-              onChange={ handleChange('city') }
+              onChange={ onChange('city') }
               title="City"
               required
+              placeholder="Select one,,,"
               sx={{ marginRight: '8px' }}
               error={ errors?.city }
-              options={ citiesList } />
+              options={ cities } />
             <TextInput
               value={ values?.zipcode }
-              onChange={ handleChange('zipcode') }
+              onChange={ onChange('zipcode') }
               title="Zipcode"
               sx={{
                 marginLeft: '8px',
@@ -118,7 +121,7 @@ const BillingForm = ({
           </Box>
           <TextInput
             value={ values?.phoneNumber }
-            onChange={ handleChange('phoneNumber') }
+            onChange={ onChange('phoneNumber') }
             title="Phone number"
             sx={{
               marginTop: '16px',
@@ -133,4 +136,4 @@ const BillingForm = ({
   );
 };
 
-export default BillingForm;
+export default BillingFormLayout;

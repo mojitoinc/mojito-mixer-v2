@@ -1,22 +1,22 @@
 export interface ThemeFont {
-    primary?:string;
-    secondary?:string;
+    primary?: string;
+    secondary?: string;
 }
 
 export interface CheckOutColor {
-    continueButtonBackground?:string;
-    continueButtonTextColor?:string;
+    continueButtonBackground?: string;
+    continueButtonTextColor?: string;
 }
 
 interface ThemeColor {
-    primary?:string;
-    secondary?:string;
-    background?:string;
-    text?:string;
-    checkOutColors?:CheckOutColor;
-    placeholder?:string;
+    primary?: string;
+    secondary?: string;
+    background?: string;
+    text?: string;
+    checkOutColors?: CheckOutColor;
+    placeholder?: string;
 }
 export interface ThemeConfiguration{
-    color?:ThemeColor;
-    font?:ThemeFont;
+    color?: ThemeColor;
+    font?: ThemeFont;
 }

@@ -2,7 +2,7 @@ import { Icons } from '@lib/assets';
 import { Box } from '@mui/material';
 import React from 'react';
 
-const SummaryContainer = () => {
+const CostBreakDownLayout = () => {
   return (
     <Box
       width="100%"
@@ -13,4 +13,4 @@ const SummaryContainer = () => {
       }} />
   );
 };
-export default SummaryContainer;
+export default CostBreakDownLayout;

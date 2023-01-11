@@ -1,10 +1,10 @@
 import { Dialog, ThemeProvider, GlobalStyles } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import ConfigurationContext, {
   ConfigurationType,
   DefaultConfiguration,
 } from '@providers/ConfigurationProvider';
-import UserContext, { UserType } from '@providers/UserProvider';
+import UserContext, { BillingFormData } from '@providers/UserProvider';
 import { theme } from '@lib/theme/CreateTheme';
 import { styles } from '@lib/theme/GlobalStyles';
 import MojitoCheckoutLayout from '@views/MojitoCheckout/MojitoCheckOut.layout';
@@ -13,7 +13,7 @@ import { ContainerTypes } from '../constants/states';
 
 interface MojitoCheckoutProps {
   uiConfiguration?: ConfigurationType;
-  userInfo: UserType;
+  userInfo: BillingFormData;
   themeConfiguration?:ThemeConfiguration;
 }
 const MojitoCheckout = ({
@@ -24,7 +24,7 @@ const MojitoCheckout = ({
   const [containerState, setContainerState] = useState<ContainerTypes>(
     ContainerTypes.CHECKOUT,
   );
-  const themes = theme(themeConfiguration);
+  const themes = useMemo(() => theme(themeConfiguration), [themeConfiguration]);
   return (
     <Dialog open fullScreen>
       <ThemeProvider theme={ themes }>
