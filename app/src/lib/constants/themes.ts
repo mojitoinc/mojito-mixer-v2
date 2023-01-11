@@ -15,6 +15,10 @@ const DefaultThemes: ThemeConfiguration = {
       continueButtonTextColor: '#FFFFFF',
     },
     placeholder: '#BABEC5',
+    costBreakDownColors: {
+      applyButtonBackground: '#DADAE9',
+      applyButtonTextColor: '#FFFFFF',
+    },
   },
 };
 

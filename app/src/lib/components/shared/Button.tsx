@@ -3,11 +3,12 @@ import { Button as MuiButton, SxProps, Theme, useTheme } from '@mui/material';
 import React from 'react';
 
 interface ButtonProps {
-  title: string;
-  onClick: () => void;
+  title?: string;
+  onClick?: () => void;
   backgroundColor?: string;
   textColor?: string;
   sx?: SxProps<Theme>;
+  children? : JSX.Element;
 }
 
 const Button = ({
@@ -16,6 +17,7 @@ const Button = ({
   backgroundColor,
   textColor,
   sx,
+  children
 }: ButtonProps) => {
   const theme = useTheme<MixTheme>();
 
@@ -23,16 +25,25 @@ const Button = ({
     <MuiButton
       title={ title }
       autoCapitalize="none"
+      size='small'
       sx={{
         backgroundColor: backgroundColor ?? theme.palette?.primary?.main,
         color: textColor ?? theme.palette?.secondary?.main,
         textTransform: 'none',
         fontWeight: '700',
         fontSize: '16px',
-        padding: '12px 22px',
+        borderRadius: '4px',
+        padding: '0px 22px',
+        height:'40px',
+        display:'flex',
+        flexDirection:'row',
+        alignItems:'center',
+        justifyContent:'center',
         ...sx,
       }}
-      onClick={ onClick }>{ title }
+      onClick={ onClick }>
+        { children }
+        { title }
     </MuiButton>
   );
 };

@@ -2,11 +2,11 @@ import { Box, useTheme } from '@mui/material';
 import React from 'react';
 import { useUIConfiguration } from '@providers/ConfigurationProvider';
 import { BillingFormData } from '@providers/UserProvider';
-import LinedText from '@lib/components/shared/LinedText';
 import { FormikErrors } from 'formik';
 import Button from '@components/shared/Button';
 import { MixTheme } from '../../theme/ThemeOptions';
 import BillingForm from './BillingForm';
+import ExpressCheckoutView from './ExpressCheckout';
 
 interface BillingProps {
   isEditing: boolean;
@@ -29,10 +29,7 @@ const BillingView = ({
   return (
     <Box width="100%">
       { !billing.hideExpressCheckout && (
-      <Box margin="8px 0px">
-        <LinedText text="Express Checkout" />
-        <LinedText text="OR" />
-      </Box>
+        <ExpressCheckoutView />
       ) }
       { isEditing && (
       <BillingForm

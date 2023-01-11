@@ -7,6 +7,10 @@ export interface CheckOutColor {
     continueButtonBackground?: string;
     continueButtonTextColor?: string;
 }
+export interface CostBreakDownColors {
+    applyButtonBackground?: string;
+    applyButtonTextColor?: string;
+}
 
 interface ThemeColor {
     primary?: string;
@@ -14,6 +18,7 @@ interface ThemeColor {
     background?: string;
     text?: string;
     checkOutColors?: CheckOutColor;
+    costBreakDownColors?: CostBreakDownColors;
     placeholder?: string;
 }
 export interface ThemeConfiguration{
