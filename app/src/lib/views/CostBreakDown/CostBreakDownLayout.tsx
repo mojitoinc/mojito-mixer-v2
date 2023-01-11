@@ -45,7 +45,7 @@ const CostBreakDownLayout = () => {
           justifyContent="space-between">
           <Box display="flex" flexDirection="row">
             <img
-              alt={'Item'}
+              alt="Item"
               style={{
                 width: '80px',
                 height: '80px',
@@ -83,16 +83,15 @@ const CostBreakDownLayout = () => {
           <TextInput
             placeholder="Discount code"
             inputProps={{
-              style:{
+              style: {
                 backgroundColor: '#fff',
-              }
-            }}
-            />
+              },
+            }} />
           <Button
             title="Apply"
             backgroundColor={ theme.global?.costBreakDownColors?.applyButtonBackground }
             sx={{
-              marginLeft:'8px'
+              marginLeft: '8px',
             }}
             textColor={ theme.global?.costBreakDownColors?.applyButtonTextColor } />
         </Box>

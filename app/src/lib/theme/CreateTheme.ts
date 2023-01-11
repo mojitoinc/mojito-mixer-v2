@@ -53,7 +53,7 @@ export const theme = (themeConfiguration?: ThemeConfiguration) => {
       unHighlightedText: '#8A8AB9',
       lines: '#CACAE0',
       black: '#000000',
-      white:'#FFFFFF',
+      white: '#FFFFFF',
       cardBackground: '#FFFFFF',
       cardShadow: 'rgba(0,0,0,0.08)',
       cardBorder: '#EAEAF3',

@@ -15,5 +15,5 @@ export const Icons = {
   gpay,
   applepay,
   metamask,
-  walletConnect
+  walletConnect,
 };

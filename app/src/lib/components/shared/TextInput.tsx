@@ -76,9 +76,8 @@ const TextInput = ({
         onChange={ onChangeText }
         fullWidth
         inputProps={ inputProps }
-        size={'small'}
+        size="small"
         helperText={ error }
-        
         type={ type } />
     </Box>
   );

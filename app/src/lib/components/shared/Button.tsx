@@ -17,7 +17,7 @@ const Button = ({
   backgroundColor,
   textColor,
   sx,
-  children
+  children,
 }: ButtonProps) => {
   const theme = useTheme<MixTheme>();
 
@@ -25,7 +25,7 @@ const Button = ({
     <MuiButton
       title={ title }
       autoCapitalize="none"
-      size='small'
+      size="small"
       sx={{
         backgroundColor: backgroundColor ?? theme.palette?.primary?.main,
         color: textColor ?? theme.palette?.secondary?.main,
@@ -34,16 +34,16 @@ const Button = ({
         fontSize: '16px',
         borderRadius: '4px',
         padding: '0px 22px',
-        height:'40px',
-        display:'flex',
-        flexDirection:'row',
-        alignItems:'center',
-        justifyContent:'center',
+        height: '40px',
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
         ...sx,
       }}
       onClick={ onClick }>
-        { children }
-        { title }
+      { children }
+      { title }
     </MuiButton>
   );
 };
