@@ -1,7 +1,7 @@
 import { BillingFormData, useUser } from '@lib/providers/UserProvider';
 import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
-import BillingView from './BillingLayout';
+import BillingView from './BillingView';
 
 const BillingContainer = () => {
   const userData = useUser();
