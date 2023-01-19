@@ -5,8 +5,8 @@ import Stepper from '@components/shared/Stepper';
 import { MixTheme } from '@lib/theme/ThemeOptions';
 import CostBreakDownContainer from '@views/CostBreakDown';
 import { ContainerTypes } from '../../constants/states';
-import BillingContainer from '../billing';
-import { PaymentCheckout } from '@views/payment';
+import BillingContainer from '../Billing';
+import { PaymentCheckout } from '@views/Payment';
 
 interface MojitoCheckoutProps {
   containerState: ContainerTypes;
