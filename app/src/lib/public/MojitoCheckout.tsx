@@ -31,7 +31,7 @@ const MojitoCheckout = ({
         <UserContext.Provider value={ userInfo }>
           <ConfigurationContext.Provider value={ uiConfiguration }>
             <GlobalStyles styles={ styles } />
-            <MojitoCheckoutLayout containerState={ containerState } />
+            <MojitoCheckoutLayout containerState={ containerState } setContainerState={setContainerState}/>
           </ConfigurationContext.Provider>
         </UserContext.Provider>
       </ThemeProvider>

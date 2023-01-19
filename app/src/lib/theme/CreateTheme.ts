@@ -12,13 +12,13 @@ export const theme = (themeConfiguration?: ThemeConfiguration) => {
       MuiCssBaseline: {
         styleOverrides: `
                 @font-face {
-                  font-family: ${ themeConfiguration?.font?.primary ?? DefaultThemes.font?.primary };
+                  font-family: ${themeConfiguration?.font?.primary ?? DefaultThemes.font?.primary};
                   font-style: normal;
                   font-display: swap;
                   font-weight: 400;
                 }
                 @font-face {
-                    font-family: ${ themeConfiguration?.font?.secondary ?? DefaultThemes.font?.secondary };
+                    font-family: ${themeConfiguration?.font?.secondary ?? DefaultThemes.font?.secondary};
                     font-style: normal;
                     font-display: swap;
                     font-weight: 400;
@@ -68,7 +68,8 @@ export const theme = (themeConfiguration?: ThemeConfiguration) => {
         ...DefaultThemes.color?.costBreakDownColors,
         ...themeConfiguration?.color?.costBreakDownColors,
       },
-
+      cardGrayedText: '#5C5C9B',
+      grayBackground: '#F4F4F5'
     },
   } as MixThemeOptions) as MixTheme;
 };
