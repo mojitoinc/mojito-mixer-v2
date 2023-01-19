@@ -7,6 +7,7 @@ const stories = storiesOf('Payment', module);
 stories.add('SHOW Express checkout', () => {
   return (
     <MojitoCheckout
+      show
       userInfo={{
         email: 'Showrisrinivas@gmail.com',
       }} />
@@ -16,6 +17,7 @@ stories.add('SHOW Express checkout', () => {
 stories.add('Hide Express checkout', () => {
   return (
     <MojitoCheckout
+      show
       uiConfiguration={{
         billing: {
           hideExpressCheckout: true,

@@ -3,6 +3,14 @@ export interface ThemeFont {
     secondary?: string;
 }
 
+export interface ConfirmationColors {
+    processedBackground?:string;
+    processedTextColor?:string;
+    awaitingPaymentBackground?:string;
+    awaitingPaymentTextColor?:string;
+    copyIconColor?:string;
+}
+
 export interface CheckOutColor {
     continueButtonBackground?: string;
     continueButtonTextColor?: string;
@@ -20,6 +28,7 @@ interface ThemeColor {
     cardBackground?: string;
     checkOutColors?: CheckOutColor;
     costBreakDownColors?: CostBreakDownColors;
+    confirmationColors?:ConfirmationColors;
     placeholder?: string;
 }
 export interface ThemeConfiguration{

@@ -4,6 +4,7 @@ import Header from '@components/shared/Header';
 import Stepper from '@components/shared/Stepper';
 import { MixTheme } from '@lib/theme/ThemeOptions';
 import CostBreakDownContainer from '@views/CostBreakDown';
+import ConfirmationContainer from '@views/Confirmation';
 import { ContainerTypes } from '../../constants/states';
 import BillingContainer from '../Billing';
 import { PaymentCheckout } from '@views/Payment';
@@ -30,6 +31,7 @@ const MojitoCheckoutLayout = ({ containerState,setContainerState }: MojitoChecko
         <Header />
         <Stepper currentState={ containerState } />
         { containerState === ContainerTypes.CHECKOUT && <BillingContainer /> }
+        { containerState === ContainerTypes.CONFIRMATION && <ConfirmationContainer /> }
         { containerState === ContainerTypes.PAYMENT && <PaymentCheckout/>}
       </Box>
       <CostBreakDownContainer />

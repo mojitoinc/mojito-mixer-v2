@@ -2,8 +2,8 @@ export enum ContainerTypes {
   CHECKOUT = 'CHECKOUT',
   PAYMENT = 'PAYMENT',
   DELIVERY = 'DELIVERY',
+  CONFIRMATION = 'CONFIRMATION',
 }
-
 export enum PaymentTypes {
   CREDIT_CARD = 'Credit Card',
   WALLET_CONNECT = 'Walletconnect',

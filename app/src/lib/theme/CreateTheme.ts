@@ -68,6 +68,13 @@ export const theme = (themeConfiguration?: ThemeConfiguration) => {
         ...DefaultThemes.color?.costBreakDownColors,
         ...themeConfiguration?.color?.costBreakDownColors,
       },
+      confirmationColors: {
+        awaitingPaymentBackground: '#FCFB99',
+        awaitingPaymentTextColor: '#F98028',
+        processedBackground: '#E7EFE8',
+        processedTextColor: '#0B4D12',
+        copyIconColor: '#B0AFFE',
+      },
       cardGrayedText: '#5C5C9B',
       grayBackground: '#F4F4F5'
     },
