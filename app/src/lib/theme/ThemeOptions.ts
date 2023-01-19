@@ -14,17 +14,19 @@ export interface ExtendsThemeOptions {
         highlightedText: string;
         unHighlightedText: string;
         lines: string;
-        border:string;
+        border: string;
         cardBackground: string;
         cardShadow: string;
         cardBorder: string;
         black: string;
-        white:string;
+        white: string;
         required: string;
-        placeholder:string;
+        placeholder: string;
         checkOutColors: CheckOutColor;
         costBreakDownColors: CostBreakDownColors;
         confirmationColors: ConfirmationColors;
+        cardGrayedText: string;
+        grayBackground: string;
     };
 
 }

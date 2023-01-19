@@ -6,6 +6,11 @@ import gpay from './gpay.svg';
 import applepay from './applepay.svg';
 import metamask from './metamask.svg';
 import walletConnect from './wallet-connect.svg';
+import wireTransfer from './wiretransfer.svg'
+import lock from './lock.svg'
+import creditCards from './creditcards.svg'
+import gpayDark from './gpay-dark.svg'
+import applepayDark from './applepay-dark.svg'
 
 export const Icons = {
   logo,
@@ -16,4 +21,9 @@ export const Icons = {
   applepay,
   metamask,
   walletConnect,
+  wireTransfer,
+  lock,
+  creditCards,
+  gpayDark,
+  applepayDark
 };

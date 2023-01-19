@@ -1,18 +1,20 @@
 import { Box, useTheme } from '@mui/material';
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import Header from '@components/shared/Header';
 import Stepper from '@components/shared/Stepper';
 import { MixTheme } from '@lib/theme/ThemeOptions';
 import CostBreakDownContainer from '@views/CostBreakDown';
 import ConfirmationContainer from '@views/Confirmation';
 import { ContainerTypes } from '../../constants/states';
-import BillingContainer from '../billing';
+import BillingContainer from '../Billing';
+import { PaymentCheckout } from '@views/Payment';
 
 interface MojitoCheckoutProps {
   containerState: ContainerTypes;
+  setContainerState: Dispatch<SetStateAction<ContainerTypes>>
 }
 
-const MojitoCheckoutLayout = ({ containerState }: MojitoCheckoutProps) => {
+const MojitoCheckoutLayout = ({ containerState,setContainerState }: MojitoCheckoutProps) => {
   const theme = useTheme<MixTheme>();
 
   return (
@@ -30,6 +32,7 @@ const MojitoCheckoutLayout = ({ containerState }: MojitoCheckoutProps) => {
         <Stepper currentState={ containerState } />
         { containerState === ContainerTypes.CHECKOUT && <BillingContainer /> }
         { containerState === ContainerTypes.CONFIRMATION && <ConfirmationContainer /> }
+        { containerState === ContainerTypes.PAYMENT && <PaymentCheckout/>}
       </Box>
       <CostBreakDownContainer />
     </Box>
