@@ -21,14 +21,14 @@ const MojitoCheckout = ({
   uiConfiguration = DefaultConfiguration,
   userInfo,
   themeConfiguration,
-  show
+  show,
 }: MojitoCheckoutProps) => {
   const [containerState, setContainerState] = useState<ContainerTypes>(
     ContainerTypes.CONFIRMATION,
   );
   const themes = useMemo(() => theme(themeConfiguration), [themeConfiguration]);
   return (
-    <Dialog open={show} fullScreen>
+    <Dialog open={ show } fullScreen>
       <ThemeProvider theme={ themes }>
         <UserContext.Provider value={ userInfo }>
           <ConfigurationContext.Provider value={ uiConfiguration }>

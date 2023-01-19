@@ -7,7 +7,7 @@ const stories = storiesOf('Payment', module);
 stories.add('SHOW Express checkout', () => {
   return (
     <MojitoCheckout
-    show
+      show
       userInfo={{
         email: 'Showrisrinivas@gmail.com',
       }} />

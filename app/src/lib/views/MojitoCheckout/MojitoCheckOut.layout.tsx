@@ -4,9 +4,9 @@ import Header from '@components/shared/Header';
 import Stepper from '@components/shared/Stepper';
 import { MixTheme } from '@lib/theme/ThemeOptions';
 import CostBreakDownContainer from '@views/CostBreakDown';
+import ConfirmationContainer from '@views/Confirmation';
 import { ContainerTypes } from '../../constants/states';
 import BillingContainer from '../billing';
-import ConfirmationContainer from '@views/Confirmation';
 
 interface MojitoCheckoutProps {
   containerState: ContainerTypes;

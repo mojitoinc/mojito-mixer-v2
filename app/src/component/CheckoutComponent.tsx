@@ -9,8 +9,7 @@ export const CheckoutComponent: React.FC = () => {
     <MojitoCheckout
       userInfo={{
         email: 'ShowriSrinivas@gmail.com',
-      }} 
-      show={isAuthenticated}
-      />
+      }}
+      show={ isAuthenticated } />
   );
 };
