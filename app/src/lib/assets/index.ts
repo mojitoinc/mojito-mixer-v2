@@ -11,6 +11,7 @@ import lock from './lock.svg'
 import creditCards from './creditcards.svg'
 import gpayDark from './gpay-dark.svg'
 import applepayDark from './applepay-dark.svg'
+import visaCard from './visa.svg'
 
 export const Icons = {
   logo,
@@ -25,5 +26,6 @@ export const Icons = {
   lock,
   creditCards,
   gpayDark,
-  applepayDark
+  applepayDark,
+  visaCard
 };

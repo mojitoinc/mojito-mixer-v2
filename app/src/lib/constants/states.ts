@@ -11,3 +11,5 @@ export enum PaymentTypes {
   GOOGLE_PAY = 'Google Pay',
   WIRE_TRANSFER = 'Wire Transfer'
 }
+
+export const BanksList = ['Bank of America', 'Capitol One', 'Chase', 'Citi Bank', 'Wells Fargo', 'US Bank']

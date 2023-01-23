@@ -24,7 +24,7 @@ const MojitoCheckout = ({
   show,
 }: MojitoCheckoutProps) => {
   const [containerState, setContainerState] = useState<ContainerTypes>(
-    ContainerTypes.CONFIRMATION,
+    ContainerTypes.DELIVERY,
   );
   const themes = useMemo(() => theme(themeConfiguration), [themeConfiguration]);
   return (
