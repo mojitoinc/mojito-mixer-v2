@@ -28,7 +28,7 @@ const Button = ({
       title={ title }
       autoCapitalize="none"
       size="small"
-      variant={variant}
+      variant={ variant }
       sx={{
         backgroundColor: backgroundColor ?? theme.palette?.primary?.main,
         color: textColor ?? theme.palette?.secondary?.main,

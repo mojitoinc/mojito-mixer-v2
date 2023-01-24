@@ -5,35 +5,37 @@ import ConfigurationContext, {
   DefaultConfiguration,
 } from '@providers/ConfigurationProvider';
 import UserContext, { BillingFormData } from '@providers/UserProvider';
-import { theme } from '@lib/theme/CreateTheme';
+import { makeTheme } from '@lib/theme/CreateTheme';
 import { styles } from '@lib/theme/GlobalStyles';
-import MojitoCheckoutLayout from '@views/MojitoCheckout/MojitoCheckOut.layout';
+import MojitoCheckoutLayout, { ContainerTypes } from '@views/MojitoCheckout/MojitoCheckOut.layout';
 import { ThemeConfiguration } from '@lib/interfaces/ThemeConfiguration';
-import { ContainerTypes } from '../constants/states';
+
 
 interface MojitoCheckoutProps {
   uiConfiguration?: ConfigurationType;
   userInfo: BillingFormData;
-  themeConfiguration?:ThemeConfiguration;
-  show:boolean
+  theme?:ThemeConfiguration;
+  show: boolean;
 }
 const MojitoCheckout = ({
   uiConfiguration = DefaultConfiguration,
   userInfo,
-  themeConfiguration,
+  theme,
   show,
 }: MojitoCheckoutProps) => {
   const [containerState, setContainerState] = useState<ContainerTypes>(
-    ContainerTypes.DELIVERY,
+    ContainerTypes.CHECKOUT,
   );
-  const themes = useMemo(() => theme(themeConfiguration), [themeConfiguration]);
+
+  const themes = useMemo(() => makeTheme(theme), [theme]);
+
   return (
     <Dialog open={ show } fullScreen>
       <ThemeProvider theme={ themes }>
         <UserContext.Provider value={ userInfo }>
           <ConfigurationContext.Provider value={ uiConfiguration }>
             <GlobalStyles styles={ styles } />
-            <MojitoCheckoutLayout containerState={ containerState } setContainerState={setContainerState}/>
+            <MojitoCheckoutLayout containerState={ containerState } setContainerState={ setContainerState } />
           </ConfigurationContext.Provider>
         </UserContext.Provider>
       </ThemeProvider>

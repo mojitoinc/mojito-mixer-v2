@@ -3,7 +3,7 @@ import { ProtectedPageContainer } from '../component/auth/ProtectedPageContainer
 import { CheckoutComponent } from '../component/CheckoutComponent';
 
 const PaymentMemoized = memo(() => {
-  return <CheckoutComponent />;
+  return <CheckoutComponent show />;
 });
 
 const Payment: React.FC = () => {

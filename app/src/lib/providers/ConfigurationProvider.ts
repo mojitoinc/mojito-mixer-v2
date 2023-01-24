@@ -7,7 +7,7 @@ export interface ConfigurationType {
     }
 }
 
-export const DefaultConfiguration:ConfigurationType = {
+export const DefaultConfiguration: ConfigurationType = {
   billing: {
     hideExpressCheckout: false,
   },
