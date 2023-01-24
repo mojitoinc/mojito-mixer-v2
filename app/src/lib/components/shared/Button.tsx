@@ -9,6 +9,7 @@ interface ButtonProps {
   textColor?: string;
   sx?: SxProps<Theme>;
   children? : JSX.Element;
+  variant?: 'text' | 'outlined' | 'contained';
 }
 
 const Button = ({
@@ -18,6 +19,7 @@ const Button = ({
   textColor,
   sx,
   children,
+  variant,
 }: ButtonProps) => {
   const theme = useTheme<MixTheme>();
 
@@ -26,6 +28,7 @@ const Button = ({
       title={ title }
       autoCapitalize="none"
       size="small"
+      variant={variant}
       sx={{
         backgroundColor: backgroundColor ?? theme.palette?.primary?.main,
         color: textColor ?? theme.palette?.secondary?.main,

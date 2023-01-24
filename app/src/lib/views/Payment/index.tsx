@@ -7,6 +7,7 @@ import { PaymentTypes } from '@lib/constants/states'
 import { Icons } from '@lib/assets'
 import Button from '@components/shared/Button'
 import { CreditCardForm } from './CreditCardForm'
+import { WireTransferForm } from './WireTransferForm'
 
 export const PaymentCheckout = ()=> {
     const theme = useTheme<MixTheme>()
@@ -28,7 +29,7 @@ export const PaymentCheckout = ()=> {
             <PaymentMethod logo={Icons.walletConnect} isSelected={paymentType} name={PaymentTypes.WALLET_CONNECT} bodyContent={<>Test</>} onChoosePaymentType={onChoosePaymentType}/>
             <PaymentMethod logo={Icons.applepayDark} isSelected={paymentType} name={PaymentTypes.APPLE_PAY} bodyContent={<>Test</>} onChoosePaymentType={onChoosePaymentType}/>
             <PaymentMethod logo={Icons.gpayDark} isSelected={paymentType} name={PaymentTypes.GOOGLE_PAY} bodyContent={<>Test</>} onChoosePaymentType={onChoosePaymentType}/>
-            <PaymentMethod logo={Icons.wireTransfer} isSelected={paymentType} name={PaymentTypes.WIRE_TRANSFER} bodyContent={<>Test</>} onChoosePaymentType={onChoosePaymentType}/>
+            <PaymentMethod logo={Icons.wireTransfer} isSelected={paymentType} name={PaymentTypes.WIRE_TRANSFER} bodyContent={<WireTransferForm/>} onChoosePaymentType={onChoosePaymentType}/>
             <Box display={'flex'} marginTop={2} alignItems={'center'}>
                 <img src={Icons.lock} height={28} width={28}/>
                 <Typography variant='body2' sx={{marginLeft: 1}}>We protect your payment information using encryption to provide bank-level security</Typography>

@@ -8,6 +8,7 @@ import ConfirmationContainer from '@views/Confirmation';
 import { ContainerTypes } from '../../constants/states';
 import BillingContainer from '../Billing';
 import { PaymentCheckout } from '@views/Payment';
+import { Delivery } from '@views/Delivery';
 
 interface MojitoCheckoutProps {
   containerState: ContainerTypes;
@@ -33,6 +34,7 @@ const MojitoCheckoutLayout = ({ containerState,setContainerState }: MojitoChecko
         { containerState === ContainerTypes.CHECKOUT && <BillingContainer /> }
         { containerState === ContainerTypes.CONFIRMATION && <ConfirmationContainer /> }
         { containerState === ContainerTypes.PAYMENT && <PaymentCheckout/>}
+        { containerState === ContainerTypes.DELIVERY && <Delivery />}
       </Box>
       <CostBreakDownContainer />
     </Box>
