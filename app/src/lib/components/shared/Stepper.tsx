@@ -1,4 +1,3 @@
-import { ContainerTypes } from '@lib/constants/states';
 import { Box, Typography, useTheme } from '@mui/material';
 import React from 'react';
 import { Icons } from '../../assets';
@@ -6,24 +5,24 @@ import { MixTheme } from '../../theme/ThemeOptions';
 
 interface StepsType {
   title: string;
-  value: ContainerTypes;
+  value: string;
 }
 const steps: StepsType[] = [
   {
     title: 'Info',
-    value: ContainerTypes.CHECKOUT,
+    value: 'Checkout',
   },
   {
     title: 'Payment',
-    value: ContainerTypes.PAYMENT,
+    value: 'Payment',
   },
   {
     title: 'Delivery',
-    value: ContainerTypes.DELIVERY,
+    value: 'Delivery',
   },
 ];
 interface StepperProps {
-  currentState:ContainerTypes
+  currentState: string;
 }
 const Stepper = ({
   currentState,

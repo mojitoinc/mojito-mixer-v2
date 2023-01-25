@@ -3,7 +3,7 @@ import { ThemeConfiguration } from '@lib/interfaces/ThemeConfiguration';
 import { createTheme } from '@mui/material/styles';
 import { MixThemeOptions, MixTheme } from './ThemeOptions';
 
-export const theme = (themeConfiguration?: ThemeConfiguration) => {
+export const makeTheme = (themeConfiguration?: ThemeConfiguration) => {
   return createTheme({
     typography: {
       fontFamily: 'Sneak',
@@ -12,13 +12,13 @@ export const theme = (themeConfiguration?: ThemeConfiguration) => {
       MuiCssBaseline: {
         styleOverrides: `
                 @font-face {
-                  font-family: ${themeConfiguration?.font?.primary ?? DefaultThemes.font?.primary};
+                  font-family: ${ themeConfiguration?.font?.primary ?? DefaultThemes.font?.primary };
                   font-style: normal;
                   font-display: swap;
                   font-weight: 400;
                 }
                 @font-face {
-                    font-family: ${themeConfiguration?.font?.secondary ?? DefaultThemes.font?.secondary};
+                    font-family: ${ themeConfiguration?.font?.secondary ?? DefaultThemes.font?.secondary };
                     font-style: normal;
                     font-display: swap;
                     font-weight: 400;
@@ -76,7 +76,7 @@ export const theme = (themeConfiguration?: ThemeConfiguration) => {
         copyIconColor: '#B0AFFE',
       },
       cardGrayedText: '#5C5C9B',
-      grayBackground: '#F4F4F5'
+      grayBackground: '#F4F4F5',
     },
   } as MixThemeOptions) as MixTheme;
 };

@@ -11,12 +11,12 @@ import { WireTransferForm } from './WireTransferForm'
 import { useFormik } from 'formik'
 import { object, string } from 'yup'
 
-export const PaymentCheckout = ()=> {
-    const theme = useTheme<MixTheme>()
-    const [paymentType, setPaymentType] = useState<string>('')
-    const onChoosePaymentType = useCallback((name:string, value: boolean)=> {  
-        setPaymentType(value ? name : paymentType)
-    },[])
+export const PaymentCheckout = () => {
+  const theme = useTheme<MixTheme>();
+  const [paymentType, setPaymentType] = useState<string>('');
+  const onChoosePaymentType = useCallback((name:string, value: boolean) => {
+    setPaymentType(value ? name : paymentType);
+  }, []);
 
     const validationSchema = object().shape({
         accountNumber: string().matches(/^[\d\s]+$/, 'Invalid account number').min(14, 'Invalid account number'),
@@ -61,16 +61,16 @@ export const PaymentCheckout = ()=> {
     <Box
         display="flex"
         justifyContent="flex-end">
-            
+
         <Button
-            title="Continue to Delivery"
-            backgroundColor={ theme.global?.checkOutColors?.continueButtonBackground }
-            textColor={ theme.global?.checkOutColors?.continueButtonTextColor }
-            onClick={ ()=> undefined }
-            sx={{
-                margin: '24px 0',
-            }} />
-    </Box>
+          title="Continue to Delivery"
+          backgroundColor={ theme.global?.checkOutColors?.continueButtonBackground }
+          textColor={ theme.global?.checkOutColors?.continueButtonTextColor }
+          onClick={ () => undefined }
+          sx={{
+            margin: '24px 0',
+          }} />
+      </Box>
     </>
-    )
-}
+  );
+};

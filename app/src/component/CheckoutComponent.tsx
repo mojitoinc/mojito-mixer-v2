@@ -2,7 +2,10 @@ import { useAuth0 } from '@auth0/auth0-react';
 import MojitoCheckout from '@lib/public/MojitoCheckout';
 import React from 'react';
 
-export const CheckoutComponent: React.FC = () => {
+interface CheckoutProps {
+  show: boolean;
+}
+export const CheckoutComponent: React.FC<CheckoutProps> = ({ show }:CheckoutProps) => {
   const { isAuthenticated } = useAuth0();
 
   return (
@@ -10,6 +13,6 @@ export const CheckoutComponent: React.FC = () => {
       userInfo={{
         email: 'ShowriSrinivas@gmail.com',
       }}
-      show={ isAuthenticated } />
+      show={ show } />
   );
 };

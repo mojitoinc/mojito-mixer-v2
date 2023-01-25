@@ -5,17 +5,24 @@ import Stepper from '@components/shared/Stepper';
 import { MixTheme } from '@lib/theme/ThemeOptions';
 import CostBreakDownContainer from '@views/CostBreakDown';
 import ConfirmationContainer from '@views/Confirmation';
-import { ContainerTypes } from '../../constants/states';
-import BillingContainer from '../Billing';
 import { PaymentCheckout } from '@views/Payment';
 import { Delivery } from '@views/Delivery';
+import BillingContainer from '../Billing';
+
+
+export enum ContainerTypes {
+  CHECKOUT = 'CHECKOUT',
+  PAYMENT = 'PAYMENT',
+  DELIVERY = 'DELIVERY',
+  CONFIRMATION = 'CONFIRMATION',
+}
 
 interface MojitoCheckoutProps {
   containerState: ContainerTypes;
   setContainerState: Dispatch<SetStateAction<ContainerTypes>>
 }
 
-const MojitoCheckoutLayout = ({ containerState,setContainerState }: MojitoCheckoutProps) => {
+const MojitoCheckoutLayout = ({ containerState, setContainerState }: MojitoCheckoutProps) => {
   const theme = useTheme<MixTheme>();
 
   return (
@@ -33,8 +40,8 @@ const MojitoCheckoutLayout = ({ containerState,setContainerState }: MojitoChecko
         <Stepper currentState={ containerState } />
         { containerState === ContainerTypes.CHECKOUT && <BillingContainer /> }
         { containerState === ContainerTypes.CONFIRMATION && <ConfirmationContainer /> }
-        { containerState === ContainerTypes.PAYMENT && <PaymentCheckout/>}
-        { containerState === ContainerTypes.DELIVERY && <Delivery />}
+        { containerState === ContainerTypes.PAYMENT && <PaymentCheckout /> }
+        { containerState === ContainerTypes.DELIVERY && <Delivery /> }
       </Box>
       <CostBreakDownContainer />
     </Box>

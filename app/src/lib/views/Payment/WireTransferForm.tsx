@@ -93,5 +93,5 @@ export const WireTransferForm = ({ values, handleChange, setFieldValue, errors}:
             borderRadius: '4px'
         }}>Please note that wire transfers usually take 1-3 business days to complete and your NFT will not be transferred until payment has been settled.</Typography>
     </>
-    )
-}
+  );
+};
