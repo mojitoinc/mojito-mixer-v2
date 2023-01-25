@@ -20,7 +20,7 @@ export const PaymentCheckout = () => {
 
     const validationSchema = object().shape({
         accountNumber: string().matches(/^[\d\s]+$/, 'Invalid account number').min(14, 'Invalid account number'),
-        aba: string().matches(/^[\d\s]+$/, 'Invalid aba').min(14, 'Invalid account number'),
+        aba: string().matches(/^[\d\s]+$/, 'Invalid aba').min(14, 'Invalid aba'),
         bankCountry: string(),
         bankName: string()
     })
