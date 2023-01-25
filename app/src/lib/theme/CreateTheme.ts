@@ -51,6 +51,7 @@ export const makeTheme = (themeConfiguration?: ThemeConfiguration) => {
       background: themeConfiguration?.color?.background ?? DefaultThemes.color?.background,
       highlightedText: '#6663FD',
       unHighlightedText: '#8A8AB9',
+      linksText: '#8A8AB9',
       lines: '#CACAE0',
       black: '#000000',
       white: '#FFFFFF',

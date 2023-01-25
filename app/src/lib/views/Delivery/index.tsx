@@ -40,7 +40,7 @@ export const Delivery = () => {
           placeholder="Select or Enter Wallet Address"
           sx={{ marginRight: '8px' }}
           options={ cardOptions } />
-        { selectedDeliveryAddress == 'new-multi-sig' && <Typography variant="body2" sx={{ marginTop: '6px', color: theme.global?.cardGrayedText }}>A new multi-sig wallet will be created for you when purchase is complete</Typography> }
+        { selectedDeliveryAddress === 'new-multi-sig' && <Typography variant="body2" sx={{ marginTop: '6px', color: theme.global?.cardGrayedText }}>A new multi-sig wallet will be created for you when purchase is complete</Typography> }
         <Stack flexDirection="row" alignItems="flex-end" justifyContent="flex-end">
           <Button
             title="Connect Wallet"

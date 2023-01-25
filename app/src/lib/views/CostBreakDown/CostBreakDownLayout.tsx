@@ -1,11 +1,18 @@
 import Button from '@components/shared/Button';
 import TextInput from '@components/shared/TextInput';
 import { Icons } from '@lib/assets';
+import { Taxes } from '@lib/interfaces/CostBreakDown';
+import { ReserveNow } from '@lib/interfaces/Invoice';
 import { MixTheme } from '@lib/theme/ThemeOptions';
 import { Box, Divider, Typography, useTheme } from '@mui/material';
 import React from 'react';
 
-const CostBreakDownLayout = () => {
+interface CostBreakDownProps {
+  taxes:Taxes;
+  reserveLotData:ReserveNow;
+}
+
+const CostBreakDownLayout = ({taxes,reserveLotData}:CostBreakDownProps) => {
   const theme = useTheme<MixTheme>();
 
   const renderTextRow = (text: string, value: string) => {
@@ -63,14 +70,14 @@ const CostBreakDownLayout = () => {
                 Item Name
               </Typography>
               <Typography>Qty :1</Typography>
-              <Typography>100 remaining</Typography>
+              <Typography>{reserveLotData?.items[0]?.units} remaining</Typography>
             </Box>
           </Box>
           <Box
             display="flex"
             flexDirection="column"
             alignItems="flex-end">
-            <Typography fontWeight="700">2,000 USD</Typography>
+            <Typography fontWeight="700">{taxes?.taxablePrice} USD</Typography>
             <Typography>2.00 ETH</Typography>
           </Box>
         </Box>
@@ -101,8 +108,8 @@ const CostBreakDownLayout = () => {
             margin: '20px 0px 10px 0px',
           }} />
         <Box>
-          { renderTextRow('Subtotal', '2,000 USD') }
-          { renderTextRow('Taxes', '1.5 USD') }
+          { renderTextRow('Subtotal', `${taxes?.taxablePrice} USD`) }
+          { renderTextRow('Taxes', `${taxes?.totalTaxAmount} USD`) }
           { renderTextRow('Fee', '0 USD') }
         </Box>
 
@@ -121,7 +128,7 @@ const CostBreakDownLayout = () => {
             display="flex"
             flexDirection="column"
             alignItems="flex-end">
-            <Typography fontWeight="700" fontSize="20px">2,150 USD</Typography>
+            <Typography fontWeight="700" fontSize="20px"> {taxes?.totalTaxedPrice} USD</Typography>
             <Typography fontSize="16px">2.00 ETH</Typography>
           </Box>
         </Box>

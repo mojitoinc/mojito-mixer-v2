@@ -13,6 +13,7 @@ export interface ExtendsThemeOptions {
         background: string;
         highlightedText: string;
         unHighlightedText: string;
+        linksText:string;
         lines: string;
         border: string;
         cardBackground: string;

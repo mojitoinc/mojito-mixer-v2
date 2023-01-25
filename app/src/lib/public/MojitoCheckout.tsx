@@ -4,24 +4,27 @@ import ConfigurationContext, {
   ConfigurationType,
   DefaultConfiguration,
 } from '@providers/ConfigurationProvider';
-import UserContext, { BillingFormData } from '@providers/UserProvider';
 import { makeTheme } from '@lib/theme/CreateTheme';
 import { styles } from '@lib/theme/GlobalStyles';
-import MojitoCheckoutLayout, { ContainerTypes } from '@views/MojitoCheckout/MojitoCheckOut.layout';
+import MojitoCheckoutLayout, {
+  ContainerTypes,
+} from '@views/MojitoCheckout/MojitoCheckOut.layout';
 import { ThemeConfiguration } from '@lib/interfaces/ThemeConfiguration';
-
+import DeliveryContext, { Delivery } from '@lib/providers/DeliveryProvider';
+import { MojitoApiProvider } from '@lib/state/MojitoApiProvider';
+import BillingProvider from '@lib/providers/BillingProvider';
 
 interface MojitoCheckoutProps {
   uiConfiguration?: ConfigurationType;
-  userInfo: BillingFormData;
-  theme?:ThemeConfiguration;
+  deliveryConfiguration: Delivery;
+  theme?: ThemeConfiguration;
   show: boolean;
 }
 const MojitoCheckout = ({
   uiConfiguration = DefaultConfiguration,
-  userInfo,
   theme,
   show,
+  deliveryConfiguration,
 }: MojitoCheckoutProps) => {
   const [containerState, setContainerState] = useState<ContainerTypes>(
     ContainerTypes.CHECKOUT,
@@ -31,14 +34,20 @@ const MojitoCheckout = ({
 
   return (
     <Dialog open={ show } fullScreen>
-      <ThemeProvider theme={ themes }>
-        <UserContext.Provider value={ userInfo }>
-          <ConfigurationContext.Provider value={ uiConfiguration }>
-            <GlobalStyles styles={ styles } />
-            <MojitoCheckoutLayout containerState={ containerState } setContainerState={ setContainerState } />
-          </ConfigurationContext.Provider>
-        </UserContext.Provider>
-      </ThemeProvider>
+      <MojitoApiProvider>
+        <ThemeProvider theme={ themes }>
+          <DeliveryContext.Provider value={ deliveryConfiguration }>
+            <ConfigurationContext.Provider value={ uiConfiguration }>
+              <BillingProvider>
+                <GlobalStyles styles={ styles } />
+                <MojitoCheckoutLayout
+                  containerState={ containerState }
+                  setContainerState={ setContainerState } />
+              </BillingProvider>
+            </ConfigurationContext.Provider>
+          </DeliveryContext.Provider>
+        </ThemeProvider>
+      </MojitoApiProvider>
     </Dialog>
   );
 };
