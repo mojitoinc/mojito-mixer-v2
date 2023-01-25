@@ -8,6 +8,8 @@ import { Icons } from '@lib/assets'
 import Button from '@components/shared/Button'
 import { CreditCardForm } from './CreditCardForm'
 import { WireTransferForm } from './WireTransferForm'
+import { useFormik } from 'formik'
+import { object, string } from 'yup'
 
 export const PaymentCheckout = ()=> {
     const theme = useTheme<MixTheme>()
@@ -15,6 +17,27 @@ export const PaymentCheckout = ()=> {
     const onChoosePaymentType = useCallback((name:string, value: boolean)=> {  
         setPaymentType(value ? name : paymentType)
     },[])
+
+    const validationSchema = object().shape({
+        accountNumber: string().matches(/^[\d\s]+$/, 'Invalid account number').min(14, 'Invalid account number'),
+        aba: string().matches(/^[\d\s]+$/, 'Invalid aba').min(14, 'Invalid account number'),
+        bankCountry: string(),
+        bankName: string()
+    })
+
+    const { values : wireTransferFormValues,
+            handleChange: onChangeWireTransferField,
+            setFieldValue: onSetWireTransferField,
+            errors: wireTransferFormErrors } = useFormik({
+        initialValues: {
+            accountNumber: '',
+            aba: '',
+            bankCountry: '',
+            bankName: ''
+        },
+        validationSchema: validationSchema,
+        onSubmit: ()=> undefined
+    })
 
     return (<>
     <PaymentInfoCards />
@@ -29,7 +52,7 @@ export const PaymentCheckout = ()=> {
             <PaymentMethod logo={Icons.walletConnect} isSelected={paymentType} name={PaymentTypes.WALLET_CONNECT} bodyContent={<>Test</>} onChoosePaymentType={onChoosePaymentType}/>
             <PaymentMethod logo={Icons.applepayDark} isSelected={paymentType} name={PaymentTypes.APPLE_PAY} bodyContent={<>Test</>} onChoosePaymentType={onChoosePaymentType}/>
             <PaymentMethod logo={Icons.gpayDark} isSelected={paymentType} name={PaymentTypes.GOOGLE_PAY} bodyContent={<>Test</>} onChoosePaymentType={onChoosePaymentType}/>
-            <PaymentMethod logo={Icons.wireTransfer} isSelected={paymentType} name={PaymentTypes.WIRE_TRANSFER} bodyContent={<WireTransferForm/>} onChoosePaymentType={onChoosePaymentType}/>
+            <PaymentMethod logo={Icons.wireTransfer} isSelected={paymentType} name={PaymentTypes.WIRE_TRANSFER} bodyContent={<WireTransferForm values={wireTransferFormValues} handleChange={onChangeWireTransferField} setFieldValue={onSetWireTransferField} errors={wireTransferFormErrors}/>} onChoosePaymentType={onChoosePaymentType}/>
             <Box display={'flex'} marginTop={2} alignItems={'center'}>
                 <img src={Icons.lock} height={28} width={28}/>
                 <Typography variant='body2' sx={{marginLeft: 1}}>We protect your payment information using encryption to provide bank-level security</Typography>
