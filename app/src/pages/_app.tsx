@@ -6,6 +6,7 @@ import Head from 'next/head';
 import { GlobalStyles } from '@mui/material';
 import { Container, Header, GLOBAL_STYLES } from '../component/core';
 import { RuntimeConfig } from '../constant';
+import './fonts.css';
 
 const defaultTheme = createTheme();
 

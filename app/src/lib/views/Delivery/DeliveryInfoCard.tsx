@@ -61,7 +61,7 @@ export const DeliveryInfoCard = ({ isCreditCard } : DeliveryInfoCardProps) => {
                           <Typography variant="body2" sx={{ marginBottom: '4px' }}>Credit Card</Typography>
                           <Typography variant="body2" sx={{ marginBottom: '4px' }}>Raakhee Miller</Typography>
                           <Stack flexDirection="row">
-                            <img src={ Icons.visaCard } width={ 40 } height={ 24 } />
+                            <img src={ Icons.visaCard } width={ 40 } height={ 24 } alt="credit card" />
                             <Typography variant="body2" sx={{ margin: '0 8px' }}>****1234</Typography>
                             <Typography variant="body2" sx={{ color: theme.global?.unHighlightedText }}>12/12</Typography>
                           </Stack>

@@ -1,6 +1,0 @@
-query CollectionItemById($id: UUID1!) {
-  collectionItemById(id: $id) {
-    id
-    collectionId
-  }
-}

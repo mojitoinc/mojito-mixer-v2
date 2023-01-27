@@ -1,0 +1,8 @@
+@font-face {
+    font-family: 'Sneak';
+    src: url('../lib/assets/fonts/Sneak-Regular.otf') format('opentype');
+}
+
+.disabled-link {
+    pointer-events: none;
+}
