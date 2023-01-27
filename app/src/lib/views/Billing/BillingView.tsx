@@ -15,7 +15,6 @@ interface BillingProps {
   values: BillingFormData;
   errors: FormikErrors<BillingFormData>;
   onChange: any;
-  handleSubmit: () => void;
   onClickEdit: () => void;
   onClickContinue: () => void;
 }
@@ -25,7 +24,6 @@ const BillingView = ({
   values,
   errors,
   onChange,
-  handleSubmit,
   onClickEdit,
   onClickContinue,
 }: BillingProps) => {
@@ -71,7 +69,7 @@ const BillingView = ({
           title="Continue to Payment"
           backgroundColor={ theme.global?.checkOutColors?.continueButtonBackground }
           textColor={ theme.global?.checkOutColors?.continueButtonTextColor }
-          onClick={ isEditing ? handleSubmit : onClickContinue }
+          onClick={ onClickContinue }
           sx={{
             marginTop: '24px',
           }} />

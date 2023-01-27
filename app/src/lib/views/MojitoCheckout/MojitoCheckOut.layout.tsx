@@ -8,6 +8,7 @@ import ConfirmationContainer from '@views/Confirmation';
 import { PaymentCheckout } from '@views/Payment';
 import { Delivery } from '@views/Delivery';
 import BillingContainer from '../Billing';
+import { useContainer } from '@lib/providers/ContainerStateProvider';
 
 
 export enum ContainerTypes {
@@ -17,13 +18,9 @@ export enum ContainerTypes {
   CONFIRMATION = 'CONFIRMATION',
 }
 
-interface MojitoCheckoutProps {
-  containerState: ContainerTypes;
-  setContainerState: Dispatch<SetStateAction<ContainerTypes>>
-}
-
-const MojitoCheckoutLayout = ({ containerState, setContainerState }: MojitoCheckoutProps) => {
+const MojitoCheckoutLayout = () => {
   const theme = useTheme<MixTheme>();
+  const { containerState } = useContainer()
 
   return (
     <Box
