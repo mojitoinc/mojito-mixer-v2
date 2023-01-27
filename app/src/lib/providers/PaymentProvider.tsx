@@ -5,8 +5,17 @@ export interface PaymentData {
 
   };
   wireData? : {
-
+    accountNumber: string,
+    routingNumber: string,
+    bankAddress: {
+      bankName: string,
+      country: string
+    }
   };
+  paymentId?: string,
+  paymentType?: string,
+  destinationAddress?: string;
+  deliveryStatus?: string;
 }
 
 export interface Payment {

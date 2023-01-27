@@ -1,62 +1,108 @@
-import React, { useCallback, useState } from 'react';
-import { Box, Card, Typography, useTheme } from '@mui/material';
-import { MixTheme } from '@lib/theme/ThemeOptions';
-import Dropdown, { DropdownOptions } from '@components/shared/Dropdown';
-import Button from '@components/shared/Button';
-import { Stack } from '@mui/system';
-import { DeliveryInfoCard } from './DeliveryInfoCard';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { DropdownOptions } from '@components/shared/Dropdown';
+import DeliveryLayout from './Delivery.layout';
+import { usePayment } from '@lib/providers/PaymentProvider';
+import { useMutation, useQuery } from '@apollo/client';
+import { meQuery } from '@lib/queries/me';
+import { createPaymentMethod, createPayment, getPaymentMethodStatus } from '@lib/queries/Payment';
+import { useDelivery } from '@lib/providers/DeliveryProvider';
+import { useBilling } from '@lib/providers/BillingProvider';
+import { useContainer } from '@lib/providers/ContainerStateProvider';
+import { ContainerTypes } from '@views/MojitoCheckout/MojitoCheckOut.layout';
 
 export const Delivery = () => {
-  const theme = useTheme<MixTheme>();
   const [selectedDeliveryAddress, setSelectedDeliveryAddress] = useState<string>('');
-  const [cardOptions, setCardOptions] = useState<DropdownOptions[]>([{
-    label: 'I don’t have a wallet / Create a new Multi-sig',
-    value: 'new-multi-sig',
-  }]);
+  const [walletOptions, setWalletOptions] = useState<DropdownOptions[]>([]);
+  const { billingInfo, reserveLotData }  = useBilling()
+  const { orgId } = useDelivery()
+  const { paymentInfo, setPaymentInfo } = usePayment()
+  const { setContainerState } = useContainer()
+  const isCreditCard = useMemo(()=> Object.keys(paymentInfo?.creditCardData ??{}).length > 0 , [paymentInfo])
+  const [CreatePaymentMethod] = useMutation(createPaymentMethod)
+  const [CreatePayment] = useMutation(createPayment)
+  const {data: meData } = useQuery(meQuery)
+  const [skipPaymentMethodStatus, setSkipPaymentMethodStatus] = useState<boolean>(true)
+  const {refetch: refetchPaymentMethod} = useQuery(getPaymentMethodStatus, {
+    skip: skipPaymentMethodStatus
+  })
+  const formatWallets =  (wallets:any)=> {
+    return wallets.map((item:any)=> ({
+      label: item.address,
+      value: item.address,
+    }))
+  }
+
+  useEffect(()=> {
+    let formattedWallets = []
+    if (meData?.me?.wallets) {
+      formattedWallets = formatWallets(meData.me?.wallets)
+      formattedWallets.push({
+        label: 'I don’t have a wallet / Create a new Multi-sig',
+        value: 'new-multi-sig',
+      })
+      setWalletOptions(formattedWallets)
+    }
+  }, [meData])
+
 
   const handleChange = useCallback((value:string) => {
     setSelectedDeliveryAddress(value);
   }, []);
-  const isCreditCard = false;
+
+  const onClickConfirmPurchase = useCallback(async ()=> {
+    let inputData:any = {}
+    const copiedBillingDetails = {...billingInfo, district: billingInfo?.state, address1: billingInfo?.street1}
+    delete copiedBillingDetails.state
+    delete copiedBillingDetails.street1
+    delete copiedBillingDetails.email
+    if (!isCreditCard) {
+      inputData.paymentType = 'Wire'
+      inputData.wireData = { ...paymentInfo?.wireData, billingDetails: copiedBillingDetails}      
+      const result = await CreatePaymentMethod({
+        variables: {
+          orgID: orgId,
+          input: inputData
+        }
+      })
+      if (result?.data?.createPaymentMethod?.id) {
+        setPaymentInfo({
+          ...paymentInfo,
+          paymentId: result?.data?.createPaymentMethod?.id ?? '',
+          destinationAddress: selectedDeliveryAddress
+
+        })
+        if (result?.data?.createPaymentMethod?.status !== 'complete') {
+          setSkipPaymentMethodStatus(false)
+          const paymentStatus = refetchPaymentMethod({
+            paymentMethodID: result?.data?.createPaymentMethod?.id
+          })
+      }
+        setSkipPaymentMethodStatus(true)
+        const result1 = await CreatePayment({
+          variables: {
+            paymentMethodID: result?.data?.createPaymentMethod?.id,
+            invoiceID: reserveLotData?.invoiceID,
+            metadata: {
+              destinationAddress: selectedDeliveryAddress
+            }
+          }
+        })
+        setPaymentInfo({
+          ...paymentInfo,
+          deliveryStatus: result1?.data?.createPayment?.status
+        })
+        setContainerState(ContainerTypes.CONFIRMATION)
+      }
+    }
+  }, [isCreditCard, reserveLotData, selectedDeliveryAddress])
+
   return (
-    <>
-      <DeliveryInfoCard isCreditCard={ isCreditCard } />
-      <Card sx={{
-        border: `1px solid ${ theme.global?.cardBorder }`,
-        backgroundColor: theme.global?.cardBackground,
-        boxShadow: `0px 4px 16px ${ theme.global?.cardShadow }`,
-        margin: '24px 0px',
-        padding: '24px',
-      }}>
-        <Typography sx={{ fontSize: '20px', fontWeight: 500 }}>Delivery Address</Typography>
-        <Typography variant="body2" sx={{ marginTop: 1, marginBottom: 2 }}>{
-                isCreditCard ? 'All related purchase and delivery fees will be covered by [org name]. NFTs purchased by credit card can only be transferred to your multi-sig wallet and cannot be transferred out for 14 days.'
-                  : 'All related NFT purchase and delivery fees will be covered by [org name].'
-                }
-        </Typography>
-        <Dropdown
-          value=""
-          onChange={ handleChange }
-          placeholder="Select or Enter Wallet Address"
-          sx={{ marginRight: '8px' }}
-          options={ cardOptions } />
-        { selectedDeliveryAddress === 'new-multi-sig' && <Typography variant="body2" sx={{ marginTop: '6px', color: theme.global?.cardGrayedText }}>A new multi-sig wallet will be created for you when purchase is complete</Typography> }
-        <Stack flexDirection="row" alignItems="flex-end" justifyContent="flex-end">
-          <Button
-            title="Connect Wallet"
-            textColor={ theme.global?.highlightedText }
-            backgroundColor={ theme.global?.white }
-            variant="outlined"
-            sx={{ marginTop: 2 }} />
-        </Stack>
-      </Card>
-      <Box display="flex" flexDirection="row" justifyContent="flex-end">
-        <Button
-          title="Confirm purchase"
-          backgroundColor={ theme.global?.checkOutColors?.continueButtonBackground }
-          textColor={ theme.global?.checkOutColors?.continueButtonTextColor }
-          onClick={ () => undefined } />
-      </Box>
-    </>
+    <DeliveryLayout 
+      isCreditCard= {isCreditCard}
+      onWalletChange = {handleChange}
+      walletOptions = {walletOptions}
+      selectedDeliveryAddress = {selectedDeliveryAddress}
+      onClickConfirmPurchase={onClickConfirmPurchase}
+    />
   );
 };

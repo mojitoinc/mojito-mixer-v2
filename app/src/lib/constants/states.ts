@@ -1,9 +1,9 @@
 export enum PaymentTypes {
-  CREDIT_CARD = 'Credit Card',
-  WALLET_CONNECT = 'Walletconnect',
-  APPLE_PAY = 'Apple Pay',
-  GOOGLE_PAY = 'Google Pay',
-  WIRE_TRANSFER = 'Wire Transfer'
+  CREDIT_CARD = 'CreditCard',
+  WALLET_CONNECT = 'Crypto',
+  APPLE_PAY = 'ApplePayCheckout',
+  GOOGLE_PAY = 'GooglePayCheckout',
+  WIRE_TRANSFER = 'Wire'
 }
 
 export const BanksList = ['Bank of America', 'Capitol One', 'Chase', 'Citi Bank', 'Wells Fargo', 'US Bank'];

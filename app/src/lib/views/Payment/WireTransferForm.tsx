@@ -42,11 +42,8 @@ export const WireTransferForm = ({
   const formatAccountNumberAndAba = useCallback(
     async (value: string, fieldName: string) => {
       const isValid = value.match(/^[\d\s]+$/);
-      if (isValid && value.length < 15) {
-        if (
-          (value.length === 4 && values.accountNumber.length !== 5) ||
-          (value.length === 9 && values.accountNumber.length !== 10)
-        ) {
+      if (isValid && (( fieldName === 'accountNumber' && value.length < 10) ||  ( fieldName === 'aba' && value.length < 11))) {
+        if ((value.length === 4 && values.accountNumber.length !== 5 && values.accountNumber.length > 0) || (value.length === 4 && values.aba.length !== 5 && values.aba.length > 0)) {
           value = `${value} `;
         }
         await setFieldValue(fieldName, value);

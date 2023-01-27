@@ -13,7 +13,7 @@ import { FormikErrors } from "formik";
 
 interface PaymentLayoutProps {
   paymentType: string;
-  onChoosePaymentType: (name:string, value: boolean)=>void;
+  onChoosePaymentType: (name:PaymentTypes, value: boolean)=>void;
   wireTransferFormValues:WireTransferFormData;
 
   onChangeWireTransferField: any;
@@ -23,6 +23,7 @@ interface PaymentLayoutProps {
     shouldValidate?: boolean | undefined
   ) => Promise<void> | Promise<FormikErrors<WireTransferFormData>>;
   wireTransferFormErrors: FormikErrors<WireTransferFormData>;
+  onClickDelivery: ()=>void;
 }
 
 const PaymentLayout = ({
@@ -31,7 +32,8 @@ const PaymentLayout = ({
     wireTransferFormValues,
     onChangeWireTransferField,
     onSetWireTransferField,
-    wireTransferFormErrors
+    wireTransferFormErrors,
+    onClickDelivery
 }:PaymentLayoutProps) => {
   const theme = useTheme<MixTheme>();
 
@@ -50,35 +52,40 @@ const PaymentLayout = ({
         <PaymentMethod
           logo={Icons.creditCards}
           isSelected={paymentType}
-          name={PaymentTypes.CREDIT_CARD}
+          name={'Credit Card'}
+          type={PaymentTypes.CREDIT_CARD}
           bodyContent={<CreditCardForm />}
           onChoosePaymentType={onChoosePaymentType}
         />
         <PaymentMethod
           logo={Icons.walletConnect}
           isSelected={paymentType}
-          name={PaymentTypes.WALLET_CONNECT}
+          name={'Walletconnect'}
+          type={PaymentTypes.WALLET_CONNECT}
           bodyContent={<>Test</>}
           onChoosePaymentType={onChoosePaymentType}
         />
         <PaymentMethod
           logo={Icons.applepayDark}
           isSelected={paymentType}
-          name={PaymentTypes.APPLE_PAY}
+          name={'Apple Pay'}
+          type={PaymentTypes.APPLE_PAY}
           bodyContent={<>Test</>}
           onChoosePaymentType={onChoosePaymentType}
         />
         <PaymentMethod
           logo={Icons.gpayDark}
           isSelected={paymentType}
-          name={PaymentTypes.GOOGLE_PAY}
+          name={'Google Pay'}
+          type={PaymentTypes.GOOGLE_PAY}
           bodyContent={<>Test</>}
           onChoosePaymentType={onChoosePaymentType}
         />
         <PaymentMethod
           logo={Icons.wireTransfer}
           isSelected={paymentType}
-          name={PaymentTypes.WIRE_TRANSFER}
+          name={'Wire Transfer'}
+          type={PaymentTypes.WIRE_TRANSFER}
           bodyContent={
             <WireTransferForm
               values={wireTransferFormValues}
@@ -104,7 +111,7 @@ const PaymentLayout = ({
             theme.global?.checkOutColors?.continueButtonBackground
           }
           textColor={theme.global?.checkOutColors?.continueButtonTextColor}
-          onClick={() => undefined}
+          onClick={onClickDelivery}
           sx={{
             margin: "24px 0",
           }}

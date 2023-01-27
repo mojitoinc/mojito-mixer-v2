@@ -53,6 +53,7 @@ const BillingContainer = () => {
           email: paymentItem?.metadata?.email,
           phoneNumber: paymentItem?.metadata?.phoneNumber,
           street1: paymentItem?.billingDetails?.address1,
+          name: paymentItem?.billingDetails?.name
         });
       } else {
         setIsEditing(true);
