@@ -12,7 +12,7 @@ interface CostBreakDownProps {
   reserveLotData:ReserveNow;
 }
 
-const CostBreakDownLayout = ({taxes,reserveLotData}:CostBreakDownProps) => {
+const CostBreakDownLayout = ({ taxes, reserveLotData }:CostBreakDownProps) => {
   const theme = useTheme<MixTheme>();
 
   const renderTextRow = (text: string, value: string) => {
@@ -70,14 +70,14 @@ const CostBreakDownLayout = ({taxes,reserveLotData}:CostBreakDownProps) => {
                 Item Name
               </Typography>
               <Typography>Qty :1</Typography>
-              <Typography>{reserveLotData?.items[0]?.units} remaining</Typography>
+              <Typography>{ reserveLotData?.items[0]?.units } remaining</Typography>
             </Box>
           </Box>
           <Box
             display="flex"
             flexDirection="column"
             alignItems="flex-end">
-            <Typography fontWeight="700">{taxes?.taxablePrice} USD</Typography>
+            <Typography fontWeight="700">{ taxes?.taxablePrice } USD</Typography>
             <Typography>2.00 ETH</Typography>
           </Box>
         </Box>
@@ -108,8 +108,8 @@ const CostBreakDownLayout = ({taxes,reserveLotData}:CostBreakDownProps) => {
             margin: '20px 0px 10px 0px',
           }} />
         <Box>
-          { renderTextRow('Subtotal', `${taxes?.taxablePrice} USD`) }
-          { renderTextRow('Taxes', `${taxes?.totalTaxAmount} USD`) }
+          { renderTextRow('Subtotal', `${ taxes?.taxablePrice } USD`) }
+          { renderTextRow('Taxes', `${ taxes?.totalTaxAmount } USD`) }
           { renderTextRow('Fee', '0 USD') }
         </Box>
 
@@ -128,7 +128,7 @@ const CostBreakDownLayout = ({taxes,reserveLotData}:CostBreakDownProps) => {
             display="flex"
             flexDirection="column"
             alignItems="flex-end">
-            <Typography fontWeight="700" fontSize="20px"> {taxes?.totalTaxedPrice} USD</Typography>
+            <Typography fontWeight="700" fontSize="20px"> { taxes?.totalTaxedPrice } USD</Typography>
             <Typography fontSize="16px">2.00 ETH</Typography>
           </Box>
         </Box>

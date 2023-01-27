@@ -4,10 +4,12 @@ import { MixTheme } from '@lib/theme/ThemeOptions';
 import { PaymentTypes } from '@lib/constants/states';
 import { Icons } from '@lib/assets';
 import Button from '@components/shared/Button';
-import { PaymentMethod } from './PaymentMethod.layout';
-import { PaymentInfoCards } from './InfoCards';
+import { useFormik } from 'formik';
+import { object, string } from 'yup';
 import { CreditCardForm } from './CreditCardForm';
 import { WireTransferForm } from './WireTransferForm';
+import { PaymentMethod } from './PaymentMethod.layout';
+import { PaymentInfoCards } from './InfoCards';
 
 export const PaymentCheckout = () => {
   const theme = useTheme<MixTheme>();
@@ -16,16 +18,38 @@ export const PaymentCheckout = () => {
     setPaymentType(value ? name : paymentType);
   }, [paymentType]);
 
+  const validationSchema = object().shape({
+    accountNumber: string().matches(/^[\d\s]+$/, 'Invalid account number').min(14, 'Invalid account number'),
+    aba: string().matches(/^[\d\s]+$/, 'Invalid aba').min(14, 'Invalid aba'),
+    bankCountry: string(),
+    bankName: string(),
+  });
+
+  const {
+    values: wireTransferFormValues,
+    handleChange: onChangeWireTransferField,
+    setFieldValue: onSetWireTransferField,
+    errors: wireTransferFormErrors,
+  } = useFormik({
+    initialValues: {
+      accountNumber: '',
+      aba: '',
+      bankCountry: '',
+      bankName: '',
+    },
+    validationSchema,
+    onSubmit: () => undefined,
+  });
+
   return (
     <>
       <PaymentInfoCards />
-      <Card
-        sx={{
-          border: `1px solid ${ theme.global?.cardBorder }`,
-          backgroundColor: theme.global?.cardBackground,
-          boxShadow: `0px 4px 16px ${ theme.global?.cardShadow }`,
-          padding: '24px',
-        }}>
+      <Card sx={{
+        border: `1px solid ${ theme.global?.cardBorder }`,
+        backgroundColor: theme.global?.cardBackground,
+        boxShadow: `0px 4px 16px ${ theme.global?.cardShadow }`,
+        padding: '24px',
+      }}>
         <Typography sx={{ fontSize: '20px' }}>Payment Method</Typography>
         <PaymentMethod
           logo={ Icons.creditCards }
@@ -55,17 +79,23 @@ export const PaymentCheckout = () => {
           logo={ Icons.wireTransfer }
           isSelected={ paymentType }
           name={ PaymentTypes.WIRE_TRANSFER }
-          bodyContent={ <WireTransferForm /> }
+          bodyContent={ (
+            <WireTransferForm
+              values={ wireTransferFormValues }
+              handleChange={ onChangeWireTransferField }
+              setFieldValue={ onSetWireTransferField }
+              errors={ wireTransferFormErrors } />
+          ) }
           onChoosePaymentType={ onChoosePaymentType } />
         <Box display="flex" marginTop={ 2 } alignItems="center">
-          <img src={ Icons.lock } height={ 28 } width={ 28 } alt="lock" />
-          <Typography variant="body2" sx={{ marginLeft: 1 }}>
-            We protect your payment information using encryption to provide
-            bank-level security
-          </Typography>
+          <img src={ Icons.lock } height={ 28 } width={ 28 } />
+          <Typography variant="body2" sx={{ marginLeft: 1 }}>We protect your payment information using encryption to provide bank-level security</Typography>
         </Box>
       </Card>
-      <Box display="flex" justifyContent="flex-end">
+      <Box
+        display="flex"
+        justifyContent="flex-end">
+
         <Button
           title="Continue to Delivery"
           backgroundColor={ theme.global?.checkOutColors?.continueButtonBackground }

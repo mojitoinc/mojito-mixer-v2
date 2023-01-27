@@ -6,8 +6,8 @@ import {
   invoiceDetailsQuery,
   getTaxQuoteQuery,
 } from '@lib/queries/invoiceDetails';
-import { useDelivery } from './DeliveryProvider';
 import { Taxes } from '@lib/interfaces/CostBreakDown';
+import { useDelivery } from './DeliveryProvider';
 
 export interface BillingFormData {
   email?: string;
@@ -30,7 +30,7 @@ const BillingContext = createContext<Billing>({} as Billing);
 
 const BillingProvider = ({ children }: { children?: React.ReactNode }) => {
   const [billingInfo, setBillingInfo] = useState<BillingFormData>();
-  const { lotId, itemCount,orgId } = useDelivery();
+  const { lotId, itemCount, orgId } = useDelivery();
 
   const [reserveNow, { data: reserveData }] = useMutation(reserveNowBuyLotQuery, {
     variables: {
@@ -55,35 +55,34 @@ const BillingProvider = ({ children }: { children?: React.ReactNode }) => {
 
 
   const invoiceData:Invoice[] = useMemo<Invoice[]>(() => {
-    return invoiceDetails?.getInvoiceDetails?.items ?? []
+    return invoiceDetails?.getInvoiceDetails?.items ?? [];
   }, [invoiceDetails]);
 
-  const taxablePrice = useMemo(()=>
-    invoiceData?.reduce((value:number,item:Invoice)=>{
-      return value+item.totalPrice
-    },0)
-  ,[invoiceData])
+  const taxablePrice = useMemo(() => invoiceData?.reduce((value:number, item:Invoice) => {
+    return value + item.totalPrice;
+  }, 0),
+  [invoiceData]);
 
-  const {data : taxQuoteData } = useQuery(getTaxQuoteQuery , {
-    variables : {
-      input:{
-        address:{
-          city:billingInfo?.city,
-          country:billingInfo?.country,
-          state:billingInfo?.state,
-          street1:billingInfo?.street1,
-          postalCode:billingInfo?.postalCode,
+  const { data: taxQuoteData } = useQuery(getTaxQuoteQuery, {
+    variables: {
+      input: {
+        address: {
+          city: billingInfo?.city,
+          country: billingInfo?.country,
+          state: billingInfo?.state,
+          street1: billingInfo?.street1,
+          postalCode: billingInfo?.postalCode,
         },
-        orgID:orgId,
-        taxablePrice:taxablePrice
-      }
+        orgID: orgId,
+        taxablePrice,
+      },
     },
-    skip : !billingInfo || !taxablePrice
-  })
+    skip: !billingInfo || !taxablePrice,
+  });
 
-  const taxes:Taxes = useMemo<Taxes>(()=>{
+  const taxes:Taxes = useMemo<Taxes>(() => {
     return taxQuoteData?.getTaxQuote;
-  },[taxQuoteData])
+  }, [taxQuoteData]);
 
   useEffect(() => {
     reserveNow();
@@ -95,9 +94,9 @@ const BillingProvider = ({ children }: { children?: React.ReactNode }) => {
       setBillingInfo,
       reserveLotData,
       invoiceData,
-      taxes
+      taxes,
     };
-  }, [billingInfo, setBillingInfo, reserveLotData, invoiceDetails,taxes]);
+  }, [billingInfo, setBillingInfo, reserveLotData, invoiceDetails, taxes]);
 
   return (
     <BillingContext.Provider

@@ -3,13 +3,12 @@ import React from 'react';
 import CostBreakDownLayout from './CostBreakDownLayout';
 
 const CostBreakdownContainer = () => {
-  const { taxes,reserveLotData } = useBilling();
-  
+  const { taxes, reserveLotData } = useBilling();
+
   return (
-    <CostBreakDownLayout 
-      taxes={taxes}
-      reserveLotData={reserveLotData}
-    />
+    <CostBreakDownLayout
+      taxes={ taxes }
+      reserveLotData={ reserveLotData } />
   );
 };
 

@@ -7,8 +7,18 @@ import React, { useCallback, useMemo, useState } from 'react';
 export const CreditCardForm = () => {
   const [selectedCard, setSelectedCard] = useState<string>();
   const [cardOptions, setCardOptions] = useState<DropdownOptions[]>([{
+    label: 'Card ending 4242',
+    value: '4242-visa',
+    data: {
+      cardType: 'visaCard',
+    },
+  },
+  {
     label: 'Add new card info',
     value: 'newCard',
+    data: {
+      hideCard: true,
+    },
   }]);
   const theme = useTheme<MixTheme>();
 
@@ -62,6 +72,7 @@ export const CreditCardForm = () => {
             : (
               <Dropdown
                 value=""
+                optionType="card"
                 onChange={ handleChange }
                 title="Card info"
                 sx={{ marginRight: '8px' }}
