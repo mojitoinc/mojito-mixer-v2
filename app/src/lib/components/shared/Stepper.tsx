@@ -39,7 +39,7 @@ const Stepper = ({
       }}>
       { steps.map((item: StepsType, index: number) => {
         return (
-          <Box display="flex" flexDirection="row" alignItems="center">
+          <Box display="flex" flexDirection="row" alignItems="center" key={ item.value }>
             <Typography
               fontWeight="700"
               fontSize="12px"

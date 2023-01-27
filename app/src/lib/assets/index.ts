@@ -6,14 +6,14 @@ import gpay from './gpay.svg';
 import applepay from './applepay.svg';
 import metamask from './metamask.svg';
 import walletConnect from './wallet-connect.svg';
-import wireTransfer from './wiretransfer.svg'
-import lock from './lock.svg'
-import creditCards from './creditcards.svg'
-import gpayDark from './gpay-dark.svg'
-import applepayDark from './applepay-dark.svg'
-import visaCard from './visa.svg'
-import masterCard from './masterCard.svg'
-import americanExpress from './americanExpress.svg'
+import wireTransfer from './wiretransfer.svg';
+import lock from './lock.svg';
+import creditCards from './creditcards.svg';
+import gpayDark from './gpay-dark.svg';
+import applepayDark from './applepay-dark.svg';
+import visaCard from './visa.svg';
+import masterCard from './masterCard.svg';
+import americanExpress from './americanExpress.svg';
 
 export const Icons = {
   logo,
@@ -31,5 +31,5 @@ export const Icons = {
   applepayDark,
   visaCard,
   masterCard,
-  americanExpress
+  americanExpress,
 };

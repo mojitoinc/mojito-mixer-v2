@@ -1,26 +1,26 @@
-import Dropdown, { DropdownOptions } from "@components/shared/Dropdown";
-import TextInput from "@components/shared/TextInput";
-import { MixTheme } from "@lib/theme/ThemeOptions";
-import { Box, Checkbox, Typography, useTheme } from "@mui/material";
-import React, { useCallback, useMemo, useState } from "react";
+import Dropdown, { DropdownOptions } from '@components/shared/Dropdown';
+import TextInput from '@components/shared/TextInput';
+import { MixTheme } from '@lib/theme/ThemeOptions';
+import { Box, Checkbox, Typography, useTheme } from '@mui/material';
+import React, { useCallback, useMemo, useState } from 'react';
 
-export const CreditCardForm =  ()=> {
-    const [selectedCard, setSelectedCard] = useState<string>()
-    const [cardOptions, setCardOptions] = useState<DropdownOptions[]>([{
-        label: 'Card ending 4242',
-        value: '4242-visa',
-        data: {
-            cardType: 'visaCard',
-        }
-    }   
-    ,{
-        label: 'Add new card info',
-        value: 'newCard',
-        data: {
-            hideCard: true
-        }
-    }])
-    const theme =  useTheme<MixTheme>()
+export const CreditCardForm = () => {
+  const [selectedCard, setSelectedCard] = useState<string>();
+  const [cardOptions, setCardOptions] = useState<DropdownOptions[]>([{
+    label: 'Card ending 4242',
+    value: '4242-visa',
+    data: {
+      cardType: 'visaCard',
+    },
+  },
+  {
+    label: 'Add new card info',
+    value: 'newCard',
+    data: {
+      hideCard: true,
+    },
+  }]);
+  const theme = useTheme<MixTheme>();
 
   const isNewCard = useMemo(() => selectedCard === 'newCard', [selectedCard]);
 
@@ -58,8 +58,8 @@ export const CreditCardForm =  ()=> {
       ) }
       {
           isNewCard
-            ?
-            <TextInput
+            ? (
+              <TextInput
                 value=""
                 onChange={ () => undefined }
                 title="Card info"
@@ -68,14 +68,16 @@ export const CreditCardForm =  ()=> {
                 }}
                 placeholder="4242 4242 4242 4242"
                 type="text" />
-          : 
-          <Dropdown
-            value={ '' }
-            optionType={'card'}
-            onChange={ handleChange }
-            title="Card info"
-            sx={{ marginRight: '8px' }}
-            options={ cardOptions } />  
+            )
+            : (
+              <Dropdown
+                value=""
+                optionType="card"
+                onChange={ handleChange }
+                title="Card info"
+                sx={{ marginRight: '8px' }}
+                options={ cardOptions } />
+            )
         }
       <Box display="flex" justifyContent="space-between">
         <TextInput
