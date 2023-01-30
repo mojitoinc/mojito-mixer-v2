@@ -17,6 +17,7 @@ export interface BillingFormData {
   postalCode?: string;
   phoneNumber?: string;
   street1?:string;
+  name?: string;
 }
 
 export interface Billing {

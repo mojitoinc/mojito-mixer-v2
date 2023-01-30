@@ -1,26 +1,23 @@
 import React, { useCallback, useState } from 'react';
-import { useTheme, Card, Typography, Box } from '@mui/material';
-import { MixTheme } from '@lib/theme/ThemeOptions';
-import { PaymentTypes } from '@lib/constants/states';
-import { Icons } from '@lib/assets';
-import Button from '@components/shared/Button';
 import { useFormik } from 'formik';
 import { object, string } from 'yup';
-import { CreditCardForm } from './CreditCardForm';
-import { WireTransferForm } from './WireTransferForm';
-import { PaymentMethod } from './PaymentMethod.layout';
-import { PaymentInfoCards } from './InfoCards';
+import PaymentLayout from './Payment.layout';
+import { usePayment } from '@lib/providers/PaymentProvider';
+import { useContainer } from '@lib/providers/ContainerStateProvider';
+import { ContainerTypes } from '@views/MojitoCheckout/MojitoCheckOut.layout';
+import { PaymentTypes } from '@lib/constants/states';
 
-export const PaymentCheckout = () => {
-  const theme = useTheme<MixTheme>();
+export const PaymentContainer = () => {
   const [paymentType, setPaymentType] = useState<string>('');
-  const onChoosePaymentType = useCallback((name: string, value: boolean) => {
+  const { setPaymentInfo, paymentInfo } = usePayment()
+  const { setContainerState } = useContainer()
+  const onChoosePaymentType = useCallback((name: PaymentTypes, value: boolean) => {
     setPaymentType(value ? name : paymentType);
   }, [paymentType]);
 
   const validationSchema = object().shape({
-    accountNumber: string().matches(/^[\d\s]+$/, 'Invalid account number').min(14, 'Invalid account number'),
-    aba: string().matches(/^[\d\s]+$/, 'Invalid aba').min(14, 'Invalid aba'),
+    accountNumber: string().matches(/^[\d\s]+$/, 'Invalid account number').min(9, 'Invalid account number'),
+    aba: string().matches(/^[\d\s]+$/, 'Invalid aba').min(10, 'Invalid aba'),
     bankCountry: string(),
     bankName: string(),
   });
@@ -41,70 +38,33 @@ export const PaymentCheckout = () => {
     onSubmit: () => undefined,
   });
 
-  return (
-    <>
-      <PaymentInfoCards />
-      <Card sx={{
-        border: `1px solid ${ theme.global?.cardBorder }`,
-        backgroundColor: theme.global?.cardBackground,
-        boxShadow: `0px 4px 16px ${ theme.global?.cardShadow }`,
-        padding: '24px',
-      }}>
-        <Typography sx={{ fontSize: '20px' }}>Payment Method</Typography>
-        <PaymentMethod
-          logo={ Icons.creditCards }
-          isSelected={ paymentType }
-          name={ PaymentTypes.CREDIT_CARD }
-          bodyContent={ <CreditCardForm /> }
-          onChoosePaymentType={ onChoosePaymentType } />
-        <PaymentMethod
-          logo={ Icons.walletConnect }
-          isSelected={ paymentType }
-          name={ PaymentTypes.WALLET_CONNECT }
-          bodyContent={ <>Test</> }
-          onChoosePaymentType={ onChoosePaymentType } />
-        <PaymentMethod
-          logo={ Icons.applepayDark }
-          isSelected={ paymentType }
-          name={ PaymentTypes.APPLE_PAY }
-          bodyContent={ <>Test</> }
-          onChoosePaymentType={ onChoosePaymentType } />
-        <PaymentMethod
-          logo={ Icons.gpayDark }
-          isSelected={ paymentType }
-          name={ PaymentTypes.GOOGLE_PAY }
-          bodyContent={ <>Test</> }
-          onChoosePaymentType={ onChoosePaymentType } />
-        <PaymentMethod
-          logo={ Icons.wireTransfer }
-          isSelected={ paymentType }
-          name={ PaymentTypes.WIRE_TRANSFER }
-          bodyContent={ (
-            <WireTransferForm
-              values={ wireTransferFormValues }
-              handleChange={ onChangeWireTransferField }
-              setFieldValue={ onSetWireTransferField }
-              errors={ wireTransferFormErrors } />
-          ) }
-          onChoosePaymentType={ onChoosePaymentType } />
-        <Box display="flex" marginTop={ 2 } alignItems="center">
-          <img src={ Icons.lock } height={ 28 } width={ 28 } />
-          <Typography variant="body2" sx={{ marginLeft: 1 }}>We protect your payment information using encryption to provide bank-level security</Typography>
-        </Box>
-      </Card>
-      <Box
-        display="flex"
-        justifyContent="flex-end">
+  const onClickDelivery = useCallback(()=> {
+    if (paymentType === PaymentTypes.WIRE_TRANSFER) {
+      setPaymentInfo({
+        ...paymentInfo,
+        paymentType: paymentType,
+        wireData : {
+          accountNumber : wireTransferFormValues.accountNumber.split(' ').join(''),
+          routingNumber: wireTransferFormValues.aba.split(' ').join(''),
+          bankAddress: {
+            bankName: wireTransferFormValues.bankName,
+            country: wireTransferFormValues.bankCountry
+          }
+        }
+      })
+    }
+    setContainerState(ContainerTypes.DELIVERY)
+  }, [paymentType, wireTransferFormValues, setPaymentInfo, setContainerState])
 
-        <Button
-          title="Continue to Delivery"
-          backgroundColor={ theme.global?.checkOutColors?.continueButtonBackground }
-          textColor={ theme.global?.checkOutColors?.continueButtonTextColor }
-          onClick={ () => undefined }
-          sx={{
-            margin: '24px 0',
-          }} />
-      </Box>
-    </>
+  return (
+    <PaymentLayout 
+    paymentType={paymentType}
+    onChoosePaymentType={onChoosePaymentType}
+    wireTransferFormValues={wireTransferFormValues}
+    onChangeWireTransferField={onChangeWireTransferField}
+    onSetWireTransferField={onSetWireTransferField}
+    wireTransferFormErrors={wireTransferFormErrors}
+    onClickDelivery = {onClickDelivery}
+    />
   );
 };
