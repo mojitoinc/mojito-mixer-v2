@@ -33,5 +33,5 @@ export interface PaymentMethod {
   billingDetails?: BillingDetails
   network?: string
   last4Digit?: string
-  metadata?: Metadata
+  metadata?: Metadata;
 }

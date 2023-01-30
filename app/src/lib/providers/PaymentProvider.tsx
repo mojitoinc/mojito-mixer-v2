@@ -1,9 +1,8 @@
+import { CreditCardFormType } from "@lib/interfaces/CreditCard";
 import React, { createContext, useContext, useState } from "react";
 
 export interface PaymentData {
-  creditCardData?: {
-
-  };
+  creditCardData?: CreditCardFormType;
   wireData? : {
 
   };

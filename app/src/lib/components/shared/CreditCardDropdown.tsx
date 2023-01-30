@@ -14,6 +14,7 @@ import {
 } from '@mui/material';
 import { MixTheme } from '@lib/theme/ThemeOptions';
 import { Icons } from '@lib/assets';
+import { PaymentMethod } from '@lib/interfaces/PaymentMethods';
 
 export interface DropdownOptions {
   label: string | JSX.Element;
@@ -25,14 +26,14 @@ interface DropdownProps {
   value?: string;
   title?: string;
   onChange?: (val: string) => void;
-  options?:  DropdownOptions[];
+  options?: PaymentMethod[];
   error?: string;
   sx: SxProps<Theme>;
   required?: boolean;
   placeholder?: string;
 }
 
-const Dropdown = ({
+const CreditCardDropdown = ({
   value = '',
   title,
   onChange,
@@ -47,6 +48,29 @@ const Dropdown = ({
   const onChangeValue = useCallback((e: SelectChangeEvent<string>) => {
     onChange?.(e.target.value);
   }, [onChange]);
+
+  const getCreditCardType = useCallback((item: PaymentMethod) => {
+    if (item?.network == 'MASTERCARD') {
+      return Icons.masterCard;
+    }
+    if (item?.network == 'VISA') {
+      return Icons.visaCard;
+    }
+    if (item?.network == 'americanCard') {
+      return Icons.americanExpress;
+    }
+  }, []);
+
+  const renderOption = useCallback((item:PaymentMethod ) => {
+      const creditCardType = getCreditCardType(item as PaymentMethod);
+      return (
+        <Stack flexDirection="row">
+          { item?.network &&
+          <img src={ creditCardType } width="49px" height="24px" /> }
+          <Typography variant="body1" sx={{ marginLeft: '4px' }}>Card ending { item.last4Digit }</Typography>
+        </Stack>
+      );
+  }, []);
 
   return (
     <Box
@@ -96,9 +120,10 @@ const Dropdown = ({
               { placeholder }
             </Typography>
           </MenuItem>
-          { options.map((item:   DropdownOptions) => {
-            return <MenuItem value={  item?.value } key={  item?.value  }>{item.label }</MenuItem>;
+          { options.map((item: PaymentMethod ) => {
+            return <MenuItem value={ item?.id  } key={ item?.id }>{ renderOption(item) }</MenuItem>;
           }) }
+          <MenuItem value={ "null" } >Add new card info</MenuItem>
         </Select>
         { error && <FormHelperText>{ error }</FormHelperText> }
       </FormControl>
@@ -106,4 +131,4 @@ const Dropdown = ({
   );
 };
 
-export default Dropdown;
+export default CreditCardDropdown;

@@ -4,12 +4,14 @@ import React from "react";
 
 import { CreditCardForm } from "./CreditCardForm";
 import { WireTransferForm, WireTransferFormData } from "./WireTransferForm";
-import { PaymentMethod } from "./PaymentMethod.layout";
+import { PaymentMethodView } from "./PaymentMethod.layout";
 import { PaymentInfoCards } from "./InfoCards";
 import { PaymentTypes } from "@lib/constants/states";
 import { Icons } from "@lib/assets";
 import Button from "@components/shared/Button";
 import { FormikErrors } from "formik";
+import { PaymentMethod } from "@lib/interfaces/PaymentMethods";
+import { CreditCardFormType } from "@lib/interfaces/CreditCard";
 
 interface PaymentLayoutProps {
   paymentType: string;
@@ -23,6 +25,16 @@ interface PaymentLayoutProps {
     shouldValidate?: boolean | undefined
   ) => Promise<void> | Promise<FormikErrors<WireTransferFormData>>;
   wireTransferFormErrors: FormikErrors<WireTransferFormData>;
+  creditCardList:PaymentMethod[];
+  creditCardFormValues:CreditCardFormType;
+  onChangeCreditCardField: any;
+  onSetCreditCardField: (
+    field: string,
+    value: any,
+    shouldValidate?: boolean | undefined
+  ) => Promise<void> | Promise<FormikErrors<CreditCardFormType>>;
+  creditCardFormErrors: FormikErrors<CreditCardFormType>;
+  onClickSubmit:()=>void;
 }
 
 const PaymentLayout = ({
@@ -31,7 +43,13 @@ const PaymentLayout = ({
     wireTransferFormValues,
     onChangeWireTransferField,
     onSetWireTransferField,
-    wireTransferFormErrors
+    wireTransferFormErrors,
+    creditCardList,
+    creditCardFormErrors,
+    creditCardFormValues,
+    onChangeCreditCardField,
+    onSetCreditCardField,
+    onClickSubmit
 }:PaymentLayoutProps) => {
   const theme = useTheme<MixTheme>();
 
@@ -47,35 +65,41 @@ const PaymentLayout = ({
         }}
       >
         <Typography sx={{ fontSize: "20px" }}>Payment Method</Typography>
-        <PaymentMethod
+        <PaymentMethodView
           logo={Icons.creditCards}
           isSelected={paymentType}
           name={PaymentTypes.CREDIT_CARD}
-          bodyContent={<CreditCardForm />}
+          bodyContent={<CreditCardForm 
+            creditCardList={creditCardList}
+            values={creditCardFormValues}
+            handleChange={onChangeCreditCardField}
+            setFieldValue={onSetCreditCardField}
+            errors={creditCardFormErrors}
+          />}
           onChoosePaymentType={onChoosePaymentType}
         />
-        <PaymentMethod
+        <PaymentMethodView
           logo={Icons.walletConnect}
           isSelected={paymentType}
           name={PaymentTypes.WALLET_CONNECT}
           bodyContent={<>Test</>}
           onChoosePaymentType={onChoosePaymentType}
         />
-        <PaymentMethod
+        <PaymentMethodView
           logo={Icons.applepayDark}
           isSelected={paymentType}
           name={PaymentTypes.APPLE_PAY}
           bodyContent={<>Test</>}
           onChoosePaymentType={onChoosePaymentType}
         />
-        <PaymentMethod
+        <PaymentMethodView
           logo={Icons.gpayDark}
           isSelected={paymentType}
           name={PaymentTypes.GOOGLE_PAY}
           bodyContent={<>Test</>}
           onChoosePaymentType={onChoosePaymentType}
         />
-        <PaymentMethod
+        <PaymentMethodView
           logo={Icons.wireTransfer}
           isSelected={paymentType}
           name={PaymentTypes.WIRE_TRANSFER}
@@ -104,7 +128,7 @@ const PaymentLayout = ({
             theme.global?.checkOutColors?.continueButtonBackground
           }
           textColor={theme.global?.checkOutColors?.continueButtonTextColor}
-          onClick={() => undefined}
+          onClick={onClickSubmit}
           sx={{
             margin: "24px 0",
           }}

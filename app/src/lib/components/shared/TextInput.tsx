@@ -31,7 +31,7 @@ const TextInput = ({
   error,
   required,
   type,
-  inputProps,
+  inputProps
 }: TextInputProps) => {
   const theme = useTheme<MixTheme>();
 
