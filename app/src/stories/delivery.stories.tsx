@@ -1,10 +1,22 @@
-import Header from '@lib/components/shared/Header';
+import DeliveryLayout from '@lib/views/Delivery/Delivery.layout';
 
-export const HeaderStories = () => {
-    return <Header />;
+export const BillingViewStories = () => {
+    return <DeliveryLayout 
+    isCreditCard={false}
+    onClickConfirmPurchase={()=>undefined}
+    onWalletChange={()=>undefined}
+    organizationName={''}
+    selectedDeliveryAddress={''}
+    walletOptions={[
+        {
+            label:'Showri',
+            value:'0xaldjkaslk'
+        }
+    ]}
+    />;
 };
 const stories = {
-    title: 'components/Header',
-    component: Header,
+    title: 'views/DeliveryLayout',
+    component: DeliveryLayout,
 };
 export default stories;
