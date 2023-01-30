@@ -5,7 +5,7 @@ import React from 'react';
 import OrderDetails from './OrderDetails';
 import { usePayment } from '@lib/providers/PaymentProvider';
 import { useBilling } from '@lib/providers/BillingProvider';
-import { PaymentTypes } from '@lib/constants/states';
+import { PaymentStatus, PaymentTypes } from '@lib/constants/states';
 
 const ConfirmationView = () => {
   const theme = useTheme<MixTheme>();
@@ -56,15 +56,15 @@ const ConfirmationView = () => {
           <Box
             sx={{
               backgroundColor:
-                paymentInfo?.deliveryStatus == 'pending'? theme.global?.confirmationColors?.awaitingPaymentBackground :theme.global?.confirmationColors?.processedBackground,
+                paymentInfo?.deliveryStatus == PaymentStatus.PENDING ? theme.global?.confirmationColors?.awaitingPaymentBackground :theme.global?.confirmationColors?.processedBackground,
               padding: '5px 8px',
               borderRadius: '4px',
             }}>
             <Typography
               fontWeight="700"
               fontSize="12px"
-              color={ paymentInfo?.deliveryStatus == 'pending'? theme.global?.confirmationColors?.awaitingPaymentTextColor : theme.global?.confirmationColors?.processedTextColor }>
-               { paymentInfo?.deliveryStatus == 'pending' ? 'Awaiting Payment': 'Processed' }
+              color={ paymentInfo?.deliveryStatus == PaymentStatus.PENDING ? theme.global?.confirmationColors?.awaitingPaymentTextColor : theme.global?.confirmationColors?.processedTextColor }>
+               { paymentInfo?.deliveryStatus == PaymentStatus.PENDING ? 'Awaiting Payment': 'Processed' }
             </Typography>
           </Box>
         </Box>

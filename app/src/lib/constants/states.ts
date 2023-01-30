@@ -7,3 +7,9 @@ export enum PaymentTypes {
 }
 
 export const BanksList = ['Bank of America', 'Capitol One', 'Chase', 'Citi Bank', 'Wells Fargo', 'US Bank'];
+
+export enum PaymentStatus {
+  PENDING = 'pending',
+  COMPLETED = 'completed',
+  ACTIVE = 'active'
+}

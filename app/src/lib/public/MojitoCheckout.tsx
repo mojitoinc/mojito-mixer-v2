@@ -12,7 +12,7 @@ import DeliveryContext, { Delivery } from "@lib/providers/DeliveryProvider";
 import { MojitoApiProvider } from "@lib/state/MojitoApiProvider";
 import BillingProvider from "@lib/providers/BillingProvider";
 import PaymentProvider from "@lib/providers/PaymentProvider";
-import ContainerProvider from "@lib/providers/ContainerStateProvider";
+import ContainerStateProvider from "@lib/providers/ContainerStateProvider";
 
 interface MojitoCheckoutProps {
   uiConfiguration?: ConfigurationType;
@@ -35,7 +35,7 @@ const MojitoCheckout = ({
         <ThemeProvider theme={themes}>
           <DeliveryContext.Provider value={deliveryConfiguration}>
             <ConfigurationContext.Provider value={uiConfiguration}>
-              <ContainerProvider>
+              <ContainerStateProvider>
                 <BillingProvider>
                   <PaymentProvider>
                     <GlobalStyles styles={styles} />
@@ -43,7 +43,7 @@ const MojitoCheckout = ({
                     />
                   </PaymentProvider>
                 </BillingProvider>
-              </ContainerProvider>
+              </ContainerStateProvider>
             </ConfigurationContext.Provider>
           </DeliveryContext.Provider>
         </ThemeProvider>

@@ -65,12 +65,6 @@ export const Delivery = () => {
         }
       })
       if (result?.data?.createPaymentMethod?.id) {
-        setPaymentInfo({
-          ...paymentInfo,
-          paymentId: result?.data?.createPaymentMethod?.id ?? '',
-          destinationAddress: selectedDeliveryAddress
-
-        })
         if (result?.data?.createPaymentMethod?.status !== 'complete') {
           setSkipPaymentMethodStatus(false)
           const paymentStatus = refetchPaymentMethod({
@@ -89,7 +83,9 @@ export const Delivery = () => {
         })
         setPaymentInfo({
           ...paymentInfo,
-          deliveryStatus: result1?.data?.createPayment?.status
+          deliveryStatus: result1?.data?.createPayment?.status,
+          paymentId: result?.data?.createPaymentMethod?.id ?? '',
+          destinationAddress: selectedDeliveryAddress
         })
         setContainerState(ContainerTypes.CONFIRMATION)
       }
@@ -103,6 +99,7 @@ export const Delivery = () => {
       walletOptions = {walletOptions}
       selectedDeliveryAddress = {selectedDeliveryAddress}
       onClickConfirmPurchase={onClickConfirmPurchase}
+      organizationName = {meData?.me?.userOrgs[0]?.organization?.name}
     />
   );
 };
