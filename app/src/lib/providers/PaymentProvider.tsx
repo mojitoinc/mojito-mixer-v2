@@ -15,6 +15,7 @@ export interface PaymentData {
   paymentType?: string,
   destinationAddress?: string;
   deliveryStatus?: string;
+  sessionKey?: string;
 }
 
 export interface Payment {

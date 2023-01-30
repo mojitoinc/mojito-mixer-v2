@@ -68,7 +68,8 @@ const PaymentLayout = ({
         <PaymentMethodView
           logo={Icons.creditCards}
           isSelected={paymentType}
-          name={PaymentTypes.CREDIT_CARD}
+          type={PaymentTypes.CREDIT_CARD}
+          name={'Credit Card'}
           bodyContent={<CreditCardForm 
             creditCardList={creditCardList}
             values={creditCardFormValues}
