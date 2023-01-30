@@ -4,8 +4,17 @@ import React, { createContext, useContext, useState } from "react";
 export interface PaymentData {
   creditCardData?: CreditCardFormType;
   wireData? : {
-
+    accountNumber: string,
+    routingNumber: string,
+    bankAddress: {
+      bankName: string,
+      country: string
+    }
   };
+  paymentId?: string,
+  paymentType?: string,
+  destinationAddress?: string;
+  deliveryStatus?: string;
 }
 
 export interface Payment {

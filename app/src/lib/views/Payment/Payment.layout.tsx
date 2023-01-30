@@ -4,7 +4,7 @@ import React from "react";
 
 import { CreditCardForm } from "./CreditCardForm";
 import { WireTransferForm, WireTransferFormData } from "./WireTransferForm";
-import { PaymentMethodView } from "./PaymentMethod.layout";
+import  {PaymentMethodView} from "./PaymentMethod.layout";
 import { PaymentInfoCards } from "./InfoCards";
 import { PaymentTypes } from "@lib/constants/states";
 import { Icons } from "@lib/assets";
@@ -15,7 +15,7 @@ import { CreditCardFormType } from "@lib/interfaces/CreditCard";
 
 interface PaymentLayoutProps {
   paymentType: string;
-  onChoosePaymentType: (name:string, value: boolean)=>void;
+  onChoosePaymentType: (name:PaymentTypes, value: boolean)=>void;
   wireTransferFormValues:WireTransferFormData;
 
   onChangeWireTransferField: any;
@@ -34,7 +34,7 @@ interface PaymentLayoutProps {
     shouldValidate?: boolean | undefined
   ) => Promise<void> | Promise<FormikErrors<CreditCardFormType>>;
   creditCardFormErrors: FormikErrors<CreditCardFormType>;
-  onClickSubmit:()=>void;
+  onClickDelivery: ()=>void;
 }
 
 const PaymentLayout = ({
@@ -49,7 +49,7 @@ const PaymentLayout = ({
     creditCardFormValues,
     onChangeCreditCardField,
     onSetCreditCardField,
-    onClickSubmit
+    onClickDelivery
 }:PaymentLayoutProps) => {
   const theme = useTheme<MixTheme>();
 
@@ -81,28 +81,32 @@ const PaymentLayout = ({
         <PaymentMethodView
           logo={Icons.walletConnect}
           isSelected={paymentType}
-          name={PaymentTypes.WALLET_CONNECT}
+          name={'Walletconnect'}
+          type={PaymentTypes.WALLET_CONNECT}
           bodyContent={<>Test</>}
           onChoosePaymentType={onChoosePaymentType}
         />
         <PaymentMethodView
           logo={Icons.applepayDark}
           isSelected={paymentType}
-          name={PaymentTypes.APPLE_PAY}
+          name={'Apple Pay'}
+          type={PaymentTypes.APPLE_PAY}
           bodyContent={<>Test</>}
           onChoosePaymentType={onChoosePaymentType}
         />
         <PaymentMethodView
           logo={Icons.gpayDark}
           isSelected={paymentType}
-          name={PaymentTypes.GOOGLE_PAY}
+          name={'Google Pay'}
+          type={PaymentTypes.GOOGLE_PAY}
           bodyContent={<>Test</>}
           onChoosePaymentType={onChoosePaymentType}
         />
         <PaymentMethodView
           logo={Icons.wireTransfer}
           isSelected={paymentType}
-          name={PaymentTypes.WIRE_TRANSFER}
+          name={'Wire Transfer'}
+          type={PaymentTypes.WIRE_TRANSFER}
           bodyContent={
             <WireTransferForm
               values={wireTransferFormValues}
@@ -128,7 +132,7 @@ const PaymentLayout = ({
             theme.global?.checkOutColors?.continueButtonBackground
           }
           textColor={theme.global?.checkOutColors?.continueButtonTextColor}
-          onClick={onClickSubmit}
+          onClick={onClickDelivery}
           sx={{
             margin: "24px 0",
           }}

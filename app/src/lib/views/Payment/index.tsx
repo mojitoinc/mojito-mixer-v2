@@ -21,13 +21,13 @@ export const PaymentContainer = () => {
   const {  setContainerState } = useContainer()
 
   const [paymentType, setPaymentType] = useState<string>('');
-  const onChoosePaymentType = useCallback((name: string, value: boolean) => {
+  const onChoosePaymentType = useCallback((name: PaymentTypes, value: boolean) => {
     setPaymentType(value ? name : paymentType);
   }, [paymentType]);
 
   const validationSchema = Yup.object().shape({
-    accountNumber: Yup.string().matches(/^[\d\s]+$/, 'Invalid account number').min(14, 'Invalid account number'),
-    aba: Yup.string().matches(/^[\d\s]+$/, 'Invalid aba').min(14, 'Invalid aba'),
+    accountNumber: Yup.string().matches(/^[\d\s]+$/, 'Invalid account number').min(9, 'Invalid account number'),
+    aba: Yup.string().matches(/^[\d\s]+$/, 'Invalid aba').min(10, 'Invalid aba'),
     bankCountry: Yup.string(),
     bankName: Yup.string(),
   });
@@ -115,11 +115,26 @@ export const PaymentContainer = () => {
     }
   },[creditCardFormValues,isValidCreditCardValues,creditCardList])
 
-  const onClickSubmit = useCallback(()=>{
+  const onClickDelivery = useCallback(()=> {
+    if (paymentType === PaymentTypes.WIRE_TRANSFER) {
+      setPaymentInfo({
+        ...paymentInfo,
+        paymentType: paymentType,
+        wireData : {
+          accountNumber : wireTransferFormValues.accountNumber.split(' ').join(''),
+          routingNumber: wireTransferFormValues.aba.split(' ').join(''),
+          bankAddress: {
+            bankName: wireTransferFormValues.bankName,
+            country: wireTransferFormValues.bankCountry
+          }
+        }
+      })
+    }
     if(paymentType === PaymentTypes.CREDIT_CARD ) {
       onSubmitCreditCard()
     }
-  },[paymentType,onSubmitCreditCard])
+    setContainerState(ContainerTypes.DELIVERY)
+  }, [paymentType, wireTransferFormValues, setPaymentInfo, setContainerState,onSubmitCreditCard])
 
   return (
     <PaymentLayout 
@@ -134,7 +149,7 @@ export const PaymentContainer = () => {
     onSetCreditCardField={onSetCreditCardField}
     creditCardFormErrors={creditCardFormErrors}
     creditCardList={creditCardList}
-    onClickSubmit={onClickSubmit}
+    onClickDelivery = {onClickDelivery}
     />
   );
 };
