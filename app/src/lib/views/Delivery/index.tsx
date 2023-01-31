@@ -1,32 +1,44 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { DropdownOptions } from '@components/shared/Dropdown';
-import { usePayment } from '@lib/providers/PaymentProvider';
-import { useMutation, useQuery } from '@apollo/client';
+import { PaymentData, usePayment } from '@lib/providers/PaymentProvider';
+import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
 import { meQuery } from '@lib/queries/me';
-import { createPaymentMethod, createPayment, getPaymentMethodStatus } from '@lib/queries/Payment';
+import {
+  createPaymentMethodQuery,
+  createPaymentQuery,
+  getPaymentMethodStatus,
+} from '@lib/queries/Payment';
 import { useDelivery } from '@lib/providers/DeliveryProvider';
 import { useBilling } from '@lib/providers/BillingProvider';
 import { useContainer } from '@lib/providers/ContainerStateProvider';
 import { ContainerTypes } from '@views/MojitoCheckout/MojitoCheckOut.layout';
+import { PaymentTypes } from '@lib/constants/states';
+import {
+  getPaymentNotificationQuery,
+} from '@lib/queries/creditCard';
+import { useEncryptCardData } from '@lib/hooks/useEncryptCard';
+import { CookieService } from '@lib/storage/CookieService';
+import {
+  formCreatePaymentMethodObject,
+} from './Delivery.service';
 import DeliveryLayout from './Delivery.layout';
 
 export const Delivery = () => {
-  const [selectedDeliveryAddress, setSelectedDeliveryAddress] = useState<string>('');
+  const [selectedDeliveryAddress, setSelectedDeliveryAddress] =
+    useState<string>('');
   const [walletOptions, setWalletOptions] = useState<DropdownOptions[]>([]);
-  const { billingInfo, reserveLotData } = useBilling();
+  const { billingInfo, reserveLotData, taxes } = useBilling();
   const { orgId } = useDelivery();
   const { paymentInfo, setPaymentInfo } = usePayment();
   const { setContainerState } = useContainer();
-  const isCreditCard = useMemo(() => Object.keys(paymentInfo?.creditCardData ?? {}).length > 0, [paymentInfo]);
-  const [CreatePaymentMethod] = useMutation(createPaymentMethod);
-  const [CreatePayment] = useMutation(createPayment);
+  const [createPaymentMethod] = useMutation(createPaymentMethodQuery);
+  const [createPayment] = useMutation(createPaymentQuery);
   const { data: meData } = useQuery(meQuery);
-  const [skipPaymentMethodStatus, setSkipPaymentMethodStatus] = useState<boolean>(true);
-  const { refetch: refetchPaymentMethod } = useQuery(getPaymentMethodStatus, {
-    skip: skipPaymentMethodStatus,
-  });
-  const formatWallets = (wallets:any) => {
-    return wallets.map((item:any) => ({
+  const [encryptCardData] = useEncryptCardData({ orgID: orgId });
+  const [paymentMethodStatus] = useLazyQuery(getPaymentMethodStatus);
+  const [paymentNotification] = useLazyQuery(getPaymentNotificationQuery);
+  const formatWallets = (wallets: any) => {
+    return wallets.map((item: any) => ({
       label: item.address,
       value: item.address,
     }));
@@ -44,21 +56,109 @@ export const Delivery = () => {
     }
   }, [meData]);
 
-
-  const handleChange = useCallback((value:string) => {
+  const handleChange = useCallback((value: string) => {
     setSelectedDeliveryAddress(value);
   }, []);
 
-  const onClickConfirmPurchase = useCallback(async () => {
-    const inputData:any = {};
-    const copiedBillingDetails = { ...billingInfo, district: billingInfo?.state, address1: billingInfo?.street1 };
-    delete copiedBillingDetails.state;
-    delete copiedBillingDetails.street1;
-    delete copiedBillingDetails.email;
-    if (!isCreditCard) {
+  const onConfirmCreditCardPurchase = useCallback(async () => {
+    try {
+      const { keyID, encryptedCardData } = await encryptCardData({
+        number: paymentInfo?.creditCardData?.isNew
+          ? paymentInfo?.creditCardData?.cardNumber?.replace(/\s/g, '')
+          : undefined,
+        cvv: paymentInfo?.creditCardData?.cvv ?? '',
+      });
+      let paymentMethodId = paymentInfo?.creditCardData?.isNew
+        ? undefined
+        : paymentInfo?.creditCardData?.cardId;
+      if (paymentInfo?.creditCardData?.isNew) {
+        const inputData = formCreatePaymentMethodObject(
+          orgId,
+          paymentInfo,
+          billingInfo,
+          keyID,
+          encryptedCardData,
+        );
+        const createPaymentMethodResult = await createPaymentMethod({
+          variables: {
+            orgID: orgId,
+            input: inputData,
+          },
+        });
+        paymentMethodId =
+          createPaymentMethodResult?.data?.createPaymentMethod?.id;
+        if (
+          createPaymentMethodResult?.data?.createPaymentMethod?.status !==
+          'complete'
+        ) {
+          await paymentMethodStatus({
+            variables: {
+              paymentMethodID: paymentMethodId,
+            },
+          });
+        }
+      }
+      if (paymentMethodId) {
+        await createPayment({
+          variables: {
+            paymentMethodID: paymentMethodId,
+            invoiceID: reserveLotData?.invoiceID,
+            metadata: {
+              destinationAddress: selectedDeliveryAddress,
+              creditCardData: {
+                keyID,
+                encryptedData: encryptedCardData,
+              },
+            },
+          },
+        });
+        const notificationData = await paymentNotification();
+        const paymentData: PaymentData = {
+          ...paymentInfo,
+          paymentId: paymentMethodId,
+          destinationAddress: selectedDeliveryAddress,
+        };
+        CookieService.billing.setValue(JSON.stringify(billingInfo));
+        CookieService.paymentInfo.setValue(JSON.stringify(paymentData));
+        CookieService.taxes.setValue(JSON.stringify(taxes));
+        CookieService.reserveLotData.setValue(JSON.stringify(reserveLotData));
+        window.location.href =
+          notificationData?.data?.getPaymentNotification?.message?.redirectURL;
+      }
+    } catch (e) {
+      console.error('ERROR', e);
+    }
+  }, [
+    orgId,
+    reserveLotData,
+    paymentInfo,
+    billingInfo,
+    paymentNotification,
+    selectedDeliveryAddress,
+    taxes,
+    createPayment,
+    createPaymentMethod,
+    encryptCardData,
+    paymentMethodStatus,
+  ]);
+
+  const onConfirmWireTransferPurchase = useCallback(async () => {
+    try {
+      const inputData: any = {};
+      const copiedBillingDetails = {
+        ...billingInfo,
+        district: billingInfo?.state,
+        address1: billingInfo?.street1,
+      };
+      delete copiedBillingDetails.state;
+      delete copiedBillingDetails.street1;
+      delete copiedBillingDetails.email;
       inputData.paymentType = 'Wire';
-      inputData.wireData = { ...paymentInfo?.wireData, billingDetails: copiedBillingDetails };
-      const result = await CreatePaymentMethod({
+      inputData.wireData = {
+        ...paymentInfo?.wireData,
+        billingDetails: copiedBillingDetails,
+      };
+      const result = await createPaymentMethod({
         variables: {
           orgID: orgId,
           input: inputData,
@@ -66,13 +166,13 @@ export const Delivery = () => {
       });
       if (result?.data?.createPaymentMethod?.id) {
         if (result?.data?.createPaymentMethod?.status !== 'complete') {
-          setSkipPaymentMethodStatus(false);
-          refetchPaymentMethod({
-            paymentMethodID: result?.data?.createPaymentMethod?.id,
+          await paymentMethodStatus({
+            variables: {
+              paymentMethodID: result?.data?.createPaymentMethod?.id,
+            },
           });
         }
-        setSkipPaymentMethodStatus(true);
-        const result1 = await CreatePayment({
+        const result1 = await createPayment({
           variables: {
             paymentMethodID: result?.data?.createPaymentMethod?.id,
             invoiceID: reserveLotData?.invoiceID,
@@ -81,31 +181,49 @@ export const Delivery = () => {
             },
           },
         });
-        setPaymentInfo({
+        const paymentData: PaymentData = {
           ...paymentInfo,
           deliveryStatus: result1?.data?.createPayment?.status,
           paymentId: result?.data?.createPaymentMethod?.id ?? '',
           destinationAddress: selectedDeliveryAddress,
-        });
+        };
+        setPaymentInfo(paymentData);
+
+        CookieService.billing.setValue(JSON.stringify(billingInfo));
+        CookieService.paymentInfo.setValue(JSON.stringify(paymentData));
+        CookieService.taxes.setValue(JSON.stringify(taxes));
+        CookieService.reserveLotData.setValue(JSON.stringify(reserveLotData));
         setContainerState(ContainerTypes.CONFIRMATION);
       }
+    } catch (e) {
+      console.error('ERROR', e);
     }
-  }, [isCreditCard,
+  }, [
+    paymentInfo,
+    billingInfo,
     reserveLotData,
     selectedDeliveryAddress,
-    setPaymentInfo,
-    setContainerState,
-    CreatePayment,
-    refetchPaymentMethod,
-    CreatePaymentMethod,
+    taxes,
     orgId,
-    billingInfo,
-    paymentInfo,
+    paymentMethodStatus,
+    setContainerState,
+    setPaymentInfo,
+    createPaymentMethod,
+    createPayment,
   ]);
+
+  const onClickConfirmPurchase = useCallback(async () => {
+    if (paymentInfo?.paymentType === PaymentTypes.WIRE_TRANSFER) {
+      onConfirmWireTransferPurchase();
+    }
+    if (paymentInfo?.paymentType === PaymentTypes.CREDIT_CARD) {
+      onConfirmCreditCardPurchase();
+    }
+  }, [onConfirmCreditCardPurchase, onConfirmWireTransferPurchase, paymentInfo]);
 
   return (
     <DeliveryLayout
-      isCreditCard={ isCreditCard }
+      isCreditCard={ paymentInfo?.paymentType === PaymentTypes.CREDIT_CARD }
       onWalletChange={ handleChange }
       walletOptions={ walletOptions }
       selectedDeliveryAddress={ selectedDeliveryAddress }

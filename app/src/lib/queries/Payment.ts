@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-export const createPaymentMethod = gql`
+export const createPaymentMethodQuery = gql`
     mutation CreatePaymentMethod($orgID: UUID1!, $input: PaymentMethodCreateInput!) {
         createPaymentMethod(orgID: $orgID, input: $input) {
         ... on ACHPaymentMethodOutput {
@@ -28,7 +28,7 @@ export const createPaymentMethod = gql`
     }
 `;
 
-export const createPayment = gql`
+export const createPaymentQuery = gql`
     mutation CreatePayment($paymentMethodID: UUID1!, $invoiceID: UUID1!, $metadata: CreatePaymentMetadataInput) {
         createPayment(
         paymentMethodID: $paymentMethodID

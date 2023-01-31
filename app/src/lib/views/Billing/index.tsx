@@ -8,7 +8,10 @@ import { PaymentMethod } from '@lib/interfaces/PaymentMethods';
 import * as Yup from 'yup';
 import { useContainer } from '@lib/providers/ContainerStateProvider';
 import { ContainerTypes } from '@views/MojitoCheckout/MojitoCheckOut.layout';
+import { uuid } from 'uuidv4';
+import { usePayment } from '@lib/providers/PaymentProvider';
 import BillingView from './BillingView';
+
 
 const BillingContainer = () => {
   const { orgId } = useDelivery();
@@ -16,6 +19,7 @@ const BillingContainer = () => {
 
   const [isEditing, setIsEditing] = useState<boolean>(true);
   const { setContainerState } = useContainer();
+  const { setPaymentInfo } = usePayment();
 
   const { data: paymentData } = useQuery(paymentMethodsQuery, {
     variables: {
@@ -34,11 +38,19 @@ const BillingContainer = () => {
     phoneNumber: Yup.string().required('Please enter a mobile number'),
   });
 
+
   const { values, errors, handleChange, setValues, isValid } = useFormik({
-    initialValues: {} as BillingFormData,
+    initialValues: {
+    } as BillingFormData,
     onSubmit: () => undefined,
     validationSchema: schema,
   });
+
+  useEffect(() => {
+    setPaymentInfo({
+      sessionKey: uuid(),
+    });
+  }, [setPaymentInfo]);
 
   useEffect(() => {
     if (paymentData) {

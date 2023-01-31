@@ -5,6 +5,7 @@ export interface Delivery {
   orgId: string;
   lotId: string;
   itemCount: number;
+  paymentId?: string;
 }
 
 const DeliveryContext = createContext<Delivery>({} as Delivery);

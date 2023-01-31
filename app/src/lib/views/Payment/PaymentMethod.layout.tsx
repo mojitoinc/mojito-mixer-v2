@@ -1,7 +1,14 @@
 import { Icons } from '@lib/assets';
 import { PaymentTypes } from '@lib/constants/states';
 import { MixTheme } from '@lib/theme/ThemeOptions';
-import { Card, Typography, useTheme, Box, Radio, CardContent } from '@mui/material';
+import {
+  Card,
+  Typography,
+  useTheme,
+  Box,
+  Radio,
+  CardContent,
+} from '@mui/material';
 import React, { useMemo } from 'react';
 
 interface PaymentMethodProps {
@@ -13,7 +20,7 @@ interface PaymentMethodProps {
     type: PaymentTypes
 }
 
-export const PaymentMethod = ({ isSelected = '', name, logo, bodyContent, onChoosePaymentType, type }:PaymentMethodProps) => {
+export const PaymentMethodView = ({ isSelected = '', name, logo, bodyContent, onChoosePaymentType, type }:PaymentMethodProps) => {
   const isCreditCard = useMemo(() => type === PaymentTypes.CREDIT_CARD, [type]);
   const theme = useTheme<MixTheme>();
   const handleChange = (e:any) => {

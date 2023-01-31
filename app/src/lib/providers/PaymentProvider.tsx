@@ -1,10 +1,11 @@
+import { CreditCardFormType } from '@lib/interfaces/CreditCard';
 import React, { createContext, useContext, useState, useMemo } from 'react';
 
 export interface PaymentData {
-  creditCardData?: object;
-  wireData?: {
-    accountNumber: string;
-    routingNumber: string;
+  creditCardData?: CreditCardFormType;
+  wireData? : {
+    accountNumber: string,
+    routingNumber: string,
     bankAddress: {
       bankName: string;
       country: string;
@@ -14,6 +15,7 @@ export interface PaymentData {
   paymentType?: string;
   destinationAddress?: string;
   deliveryStatus?: string;
+  sessionKey?: string;
 }
 
 export interface Payment {

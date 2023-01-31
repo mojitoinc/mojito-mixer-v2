@@ -18,7 +18,7 @@ import {
   PaymentMethodTypes,
 } from 'pages';
 
-interface CheckboxOptions {
+export interface CheckboxOptions {
   field: string;
   label: string;
   checked: boolean;

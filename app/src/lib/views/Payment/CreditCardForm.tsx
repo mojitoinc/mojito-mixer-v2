@@ -1,103 +1,143 @@
-import Dropdown, { DropdownOptions } from '@components/shared/Dropdown';
+import CreditCardDropdown from '@components/shared/CreditCardDropdown';
 import TextInput from '@components/shared/TextInput';
+import { CreditCardFormType } from '@lib/interfaces/CreditCard';
+import { PaymentMethod } from '@lib/interfaces/PaymentMethods';
 import { MixTheme } from '@lib/theme/ThemeOptions';
 import { Box, Checkbox, Typography, useTheme } from '@mui/material';
-import React, { useCallback, useMemo, useState } from 'react';
+import { FormikErrors } from 'formik';
+import React, { useCallback } from 'react';
 
-export const CreditCardForm = () => {
-  const [selectedCard, setSelectedCard] = useState<string>();
-  const [cardOptions, setCardOptions] = useState<DropdownOptions[]>([{
-    label: 'Card ending 4242',
-    value: '4242-visa',
-    data: {
-      cardType: 'visaCard',
-    },
-  },
-  {
-    label: 'Add new card info',
-    value: 'newCard',
-    data: {
-      hideCard: true,
-    },
-  }]);
+interface CreditCardProps {
+  creditCardList: PaymentMethod[];
+  values: CreditCardFormType;
+  handleChange: any;
+  setFieldValue: (
+    field: string,
+    value: any,
+    shouldValidate?: boolean | undefined
+  ) => Promise<void> | Promise<FormikErrors<CreditCardFormType>>;
+  errors: FormikErrors<CreditCardFormType>;
+}
+
+export const CreditCardForm = ({
+  creditCardList,
+  values,
+  setFieldValue,
+  errors,
+  handleChange,
+}: CreditCardProps) => {
   const theme = useTheme<MixTheme>();
 
-  const isNewCard = useMemo(() => selectedCard === 'newCard', [selectedCard]);
+  const handleCardChange = useCallback((val: string) => {
+    setFieldValue('isNew', val === 'null');
+    setFieldValue('cardId', val);
+  }, [setFieldValue]);
 
-  const handleChange = useCallback((value:string) => {
-    setSelectedCard(value);
-  }, []);
+  const formatCardNumber = useCallback(
+    async (value: string) => {
+      let cardNumber = value;
+      const isValid = cardNumber.match(/^[\d\s]+$/);
+      if (isValid) {
+        if (
+          cardNumber.length === 4 ||
+        cardNumber.length === 9 ||
+        cardNumber.length === 14
+        ) {
+          cardNumber = `${ cardNumber } `;
+        }
+        await setFieldValue('cardNumber', cardNumber);
+      }
+    },
+    [setFieldValue],
+  );
+
+  const formatExpiry = useCallback(
+    async (value: string) => {
+      await setFieldValue('expiry', value.length === 2 ? `${ value }/` : value);
+    },
+    [setFieldValue],
+  );
 
   return (
     <>
-      { isNewCard && (
-      <Box display="flex" justifyContent="space-between">
-        <TextInput
-          value=""
-          onChange={ () => undefined }
-          title="First name"
-          sx={{
-            marginTop: '16px',
-            width: '48%',
-          }}
-          required
-          placeholder="First name"
-          type="text" />
-        <TextInput
-          value=""
-          onChange={ () => undefined }
-          title="Last name"
-          sx={{
-            marginTop: '16px',
-            width: '48%',
-          }}
-          required
-          placeholder="Last name"
-          type="text" />
-      </Box>
+
+      <CreditCardDropdown
+        value={ values?.cardId }
+        onChange={ handleCardChange }
+        error={ errors?.cardId }
+        title="Card info"
+        sx={{ marginRight: '8px' }}
+        options={ creditCardList } />
+      { values?.isNew && (
+        <Box display="flex" justifyContent="space-between">
+          <TextInput
+            value={ values?.firstName }
+            onChange={ handleChange('firstName') }
+            error={ errors?.firstName }
+            title="First name"
+            sx={{
+              marginTop: '16px',
+              width: '48%',
+            }}
+            required
+            placeholder="First name"
+            type="text" />
+          <TextInput
+            value={ values?.lastName }
+            onChange={ handleChange('lastName') }
+            error={ errors?.lastName }
+            title="Last name"
+            sx={{
+              marginTop: '16px',
+              width: '48%',
+            }}
+            required
+            placeholder="Last name"
+            type="text" />
+        </Box>
       ) }
-      {
-          isNewCard
-            ? (
-              <TextInput
-                value=""
-                onChange={ () => undefined }
-                title="Card info"
-                sx={{
-                  marginTop: '16px',
-                }}
-                placeholder="4242 4242 4242 4242"
-                type="text" />
-            )
-            : (
-              <Dropdown
-                value=""
-                optionType="card"
-                onChange={ handleChange }
-                title="Card info"
-                sx={{ marginRight: '8px' }}
-                options={ cardOptions } />
-            )
-        }
+      { values?.isNew && (
+        <TextInput
+          value={ values?.cardNumber }
+          onChange={ formatCardNumber }
+          error={ errors?.cardNumber }
+          inputProps={{
+            maxLength: 19,
+          }}
+          type="text"
+          title="Card info"
+          sx={{
+            marginTop: '16px',
+          }}
+          placeholder="4242 4242 4242 4242" />
+      ) }
       <Box display="flex" justifyContent="space-between">
         <TextInput
-          value=""
-          onChange={ () => undefined }
+          value={ values?.expiry }
+          onChange={ formatExpiry }
+          error={ errors?.expiry }
           sx={{
             marginTop: '16px',
             width: '48%',
           }}
-          placeholder="MM/YY"
-          type="text" />
+          inputProps={{
+            maxLength: 5,
+          }}
+          type="text"
+          placeholder="MM/YY" />
         <TextInput
-          value=""
-          onChange={ () => undefined }
+          value={ values?.cvv }
+          onChange={ handleChange('cvv') }
+          error={ errors?.cvv }
+          inputProps={{
+            maxLength: 3,
+          }}
+          type="number"
           sx={{
             marginTop: '16px',
             width: '48%',
           }}
-          placeholder="CVV"
-          type="text" />
+          placeholder="CVV" />
       </Box>
       <Typography
         variant="body2"
@@ -107,16 +147,21 @@ export const CreditCardForm = () => {
           marginTop: 2,
           backgroundColor: theme.global?.grayBackground,
           borderRadius: '4px',
-        }}>NFTs purchased by credit card can only be transferred to your multi-sig wallet and cannot be transferred out for 14 days.
+        }}>
+        NFTs purchased by credit card can only be transferred to your multi-sig
+        wallet and cannot be transferred out for 14 days.
       </Typography>
-      {
-          isNewCard && (
-            <Box display="flex" alignItems="center" marginTop={ 2 }>
-              <Checkbox sx={{ padding: 0 }} checked={ false } onChange={ () => undefined } />
-              <Typography variant="body1" sx={{ marginLeft: 1 }}>Save my credit card info for faster checkout</Typography>
-            </Box>
-          )
-}
+      { values?.isNew && (
+        <Box display="flex" alignItems="center" marginTop={ 2 }>
+          <Checkbox
+            sx={{ padding: 0 }}
+            checked={ values?.save }
+            onChange={ handleChange('save') } />
+          <Typography variant="body1" sx={{ marginLeft: 1 }}>
+            Save my credit card info for faster checkout
+          </Typography>
+        </Box>
+      ) }
     </>
   );
 };

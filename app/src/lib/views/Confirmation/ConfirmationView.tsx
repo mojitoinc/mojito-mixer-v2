@@ -2,9 +2,8 @@ import Button from '@components/shared/Button';
 import { MixTheme } from '@lib/theme/ThemeOptions';
 import { Box, Card, Typography, useTheme } from '@mui/material';
 import React, { useMemo } from 'react';
-import { usePayment } from '@lib/providers/PaymentProvider';
-import { useBilling } from '@lib/providers/BillingProvider';
 import { PaymentStatus, PaymentTypes } from '@lib/constants/states';
+import usePaymentInfo from '@lib/hooks/usePaymentInfo';
 import OrderDetails from './OrderDetails';
 
 interface ConfirmationViewProps {
@@ -13,8 +12,7 @@ interface ConfirmationViewProps {
 
 const ConfirmationView = ({ paymentStatus }: ConfirmationViewProps) => {
   const theme = useTheme<MixTheme>();
-  const { paymentInfo } = usePayment();
-  const { billingInfo } = useBilling();
+  const { paymentInfo, billingInfo } = usePaymentInfo();
   const backgroundColor = useMemo(() => {
     return paymentStatus === PaymentStatus.PENDING
       ? theme.global?.confirmationColors?.awaitingPaymentBackground
