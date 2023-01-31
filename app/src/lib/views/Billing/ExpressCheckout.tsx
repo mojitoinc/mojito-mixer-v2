@@ -7,10 +7,10 @@ import { Icons } from '@lib/assets';
 
 interface ExpressCheckoutViewProps {
   config: {
-      gpay: boolean;
-      applepay: boolean;
-      walletConnect: boolean;
-      metaMask: boolean;
+      gpay?: boolean;
+      applepay?: boolean;
+      walletConnect?: boolean;
+      metaMask?: boolean;
   }
 }
 
@@ -38,7 +38,7 @@ const ExpressCheckoutView = ({ config } :ExpressCheckoutViewProps) => {
         </Button>
         ) }
         {
-            config.applepay && (
+          config?.applepay && (
             <Button
               backgroundColor={ theme.global?.black }
               sx={{
@@ -50,7 +50,7 @@ const ExpressCheckoutView = ({ config } :ExpressCheckoutViewProps) => {
             )
 }
         {
-            config.walletConnect && (
+          config?.walletConnect && (
             <Button
               backgroundColor={ theme.global?.white }
               textColor={ theme.global?.black }
@@ -70,9 +70,9 @@ const ExpressCheckoutView = ({ config } :ExpressCheckoutViewProps) => {
                 alt="Walletconnect" />
             </Button>
             )
-}
+        }
         {
-            config.metaMask && (
+          config?.metaMask && (
             <Button
               backgroundColor={ theme.global?.white }
               textColor={ theme.global?.black }
@@ -93,7 +93,7 @@ const ExpressCheckoutView = ({ config } :ExpressCheckoutViewProps) => {
                 }} />
             </Button>
             )
-}
+        }
       </Box>
       <LinedText text="OR" />
     </Box>

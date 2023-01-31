@@ -5,18 +5,19 @@ export interface ConfigurationType {
   billing: {
     hideExpressCheckout: boolean;
     expressCheckoutConfig: {
-      gpay: boolean;
-      applepay: boolean;
-      walletConnect: boolean;
-      metaMask: boolean;
+      gpay?: boolean;
+      applepay?: boolean;
+      walletConnect?: boolean;
+      metaMask?: boolean;
     },
     paymentMethods: {
-      gpay: boolean;
-      applepay: boolean;
-      walletConnect: boolean;
-      wire: boolean;
-      creditCard: boolean;
-    }
+      gpay?: boolean;
+      applepay?: boolean;
+      walletConnect?: boolean;
+      wire?: boolean;
+      creditCard?: boolean;
+    },
+    showDiscountCode: boolean;
   }
 }
 
@@ -36,6 +37,7 @@ export const DefaultConfiguration: ConfigurationType = {
       wire: true,
       creditCard: true,
     },
+    showDiscountCode: true
   },
 };
 const ConfigurationContext = createContext<ConfigurationType>(DefaultConfiguration);

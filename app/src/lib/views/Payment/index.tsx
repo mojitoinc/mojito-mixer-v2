@@ -5,7 +5,7 @@ import { usePayment } from '@lib/providers/PaymentProvider';
 import { useContainer } from '@lib/providers/ContainerStateProvider';
 import { ContainerTypes } from '@views/MojitoCheckout/MojitoCheckOut.layout';
 import { PaymentTypes } from '@lib/constants/states';
-import { useUIConfiguration } from '@lib/providers/ConfigurationProvider';
+import { useUIConfiguration, DefaultConfiguration } from '@lib/providers/ConfigurationProvider';
 import PaymentLayout from './Payment.layout';
 
 export const PaymentContainer = () => {
@@ -16,6 +16,7 @@ export const PaymentContainer = () => {
     setPaymentType(value ? name : paymentType);
   }, [paymentType]);
   const { billing } = useUIConfiguration();
+  const configuration = {...DefaultConfiguration.billing.paymentMethods, ...billing.paymentMethods}
 
   const validationSchema = object().shape({
     accountNumber: string().matches(/^[\d\s]+$/, 'Invalid account number').min(9, 'Invalid account number'),
@@ -67,6 +68,6 @@ export const PaymentContainer = () => {
       onSetWireTransferField={ onSetWireTransferField }
       wireTransferFormErrors={ wireTransferFormErrors }
       onClickDelivery={ onClickDelivery }
-      config={ billing.paymentMethods } />
+      config={ configuration } />
   );
 };

@@ -17,6 +17,13 @@ export const WireTransferStories = () => {
             bankCountry:"US",
             bankName:"Bank of America"
         }}
+        config={{
+            gpay: true,
+            applepay: true,
+            walletConnect: true,
+            wire: true,
+            creditCard: true,
+        }}
     />;
 };
 const stories = {

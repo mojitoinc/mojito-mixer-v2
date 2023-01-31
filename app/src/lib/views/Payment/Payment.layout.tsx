@@ -25,11 +25,11 @@ interface PaymentLayoutProps {
   wireTransferFormErrors: FormikErrors<WireTransferFormData>;
   onClickDelivery: ()=>void;
   config:{
-    gpay: boolean;
-    applepay: boolean;
-    walletConnect: boolean;
-    wire: boolean;
-    creditCard: boolean;
+    gpay?: boolean;
+    applepay?: boolean;
+    walletConnect?: boolean;
+    wire?: boolean;
+    creditCard?: boolean;
   }
 }
 
@@ -41,7 +41,7 @@ const PaymentLayout = ({
   onSetWireTransferField,
   wireTransferFormErrors,
   onClickDelivery,
-  config,
+  config
 }:PaymentLayoutProps) => {
   const theme = useTheme<MixTheme>();
 
@@ -57,7 +57,7 @@ const PaymentLayout = ({
         }}>
         <Typography sx={{ fontSize: '20px' }}>Payment Method</Typography>
         {
-          config.creditCard && (
+          config.creditCard && 
             <PaymentMethod
               logo={ Icons.creditCards }
               isSelected={ paymentType }
@@ -65,10 +65,9 @@ const PaymentLayout = ({
               type={ PaymentTypes.CREDIT_CARD }
               bodyContent={ <CreditCardForm /> }
               onChoosePaymentType={ onChoosePaymentType } />
-          )
-}
+        }
         {
-          config.walletConnect && (
+          config.walletConnect &&
             <PaymentMethod
               logo={ Icons.walletConnect }
               isSelected={ paymentType }
@@ -76,10 +75,9 @@ const PaymentLayout = ({
               type={ PaymentTypes.WALLET_CONNECT }
               bodyContent={ <>Test</> }
               onChoosePaymentType={ onChoosePaymentType } />
-          )
-}
+        }
         {
-          config.applepay && (
+          config.applepay &&
             <PaymentMethod
               logo={ Icons.applepayDark }
               isSelected={ paymentType }
@@ -87,10 +85,9 @@ const PaymentLayout = ({
               type={ PaymentTypes.APPLE_PAY }
               bodyContent={ <>Test</> }
               onChoosePaymentType={ onChoosePaymentType } />
-          )
-}
+        }
         {
-          config.gpay && (
+          config.gpay &&
             <PaymentMethod
               logo={ Icons.gpayDark }
               isSelected={ paymentType }
@@ -98,10 +95,9 @@ const PaymentLayout = ({
               type={ PaymentTypes.GOOGLE_PAY }
               bodyContent={ <>Test</> }
               onChoosePaymentType={ onChoosePaymentType } />
-          )
-}
+        }
         {
-          config.wire && (
+          config.wire &&
             <PaymentMethod
               logo={ Icons.wireTransfer }
               isSelected={ paymentType }
@@ -115,9 +111,7 @@ const PaymentLayout = ({
                   errors={ wireTransferFormErrors } />
               ) }
               onChoosePaymentType={ onChoosePaymentType } />
-          )
-}
-
+        }
         <Box display="flex" marginTop={ 2 } alignItems="center">
           <img src={ Icons.lock } height={ 28 } width={ 28 } alt="lock-icon" />
           <Typography variant="body2" sx={{ marginLeft: 1 }}>

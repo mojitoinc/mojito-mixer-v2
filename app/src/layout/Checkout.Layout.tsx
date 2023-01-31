@@ -98,7 +98,7 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({ show, onOpen, isAuthen
           billing: {
             hideExpressCheckout: Boolean(!values.express ?? true),
             expressCheckoutConfig: {
-              gpay: Boolean(values['express.applepay'] ?? true),
+              gpay: Boolean(values['express.gpay'] ?? true),
               applepay: Boolean(values['express.applepay'] ?? true),
               walletConnect: Boolean(values['express.walletconnect'] ?? true),
               metaMask: Boolean(values['express.metamask'] ?? true),
@@ -111,6 +111,7 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({ show, onOpen, isAuthen
               wire: Boolean(values.wire ?? true),
 
             },
+            showDiscountCode: Boolean(values.discountCode ?? true)
           },
         }}
         show={ show } />

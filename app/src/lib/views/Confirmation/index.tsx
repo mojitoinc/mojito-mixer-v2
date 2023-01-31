@@ -18,7 +18,6 @@ const ConfirmationContainer = () => {
     skip: !orgId,
   });
   useEffect(() => {
-    console.log(paymentMethodsData, 'paymentMethodsData', paymentInfo?.paymentId, 'paymentInfo?.paymentId');
     if (paymentMethodsData?.getPaymentMethodList) {
       const filteredData = paymentMethodsData?.getPaymentMethodList.filter((item:PaymentMethod) => item.id === paymentInfo?.paymentId);
       setPaymentStatus(filteredData[0]?.status);
