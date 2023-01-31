@@ -1,19 +1,17 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useMemo } from 'react';
 
 export interface PaymentData {
-  creditCardData?: {
-
-  };
-  wireData? : {
-    accountNumber: string,
-    routingNumber: string,
+  creditCardData?: object;
+  wireData?: {
+    accountNumber: string;
+    routingNumber: string;
     bankAddress: {
-      bankName: string,
-      country: string
-    }
+      bankName: string;
+      country: string;
+    };
   };
-  paymentId?: string,
-  paymentType?: string,
+  paymentId?: string;
+  paymentType?: string;
   destinationAddress?: string;
   deliveryStatus?: string;
 }
@@ -26,10 +24,14 @@ const PaymentContext = createContext<Payment>({} as Payment);
 
 const PaymentProvider = ({ children }: { children?: React.ReactNode }) => {
   const [paymentInfo, setPaymentInfo] = useState<PaymentData>();
+  const values = useMemo<Payment>(() => {
+    return {
+      paymentInfo,
+      setPaymentInfo,
+    };
+  }, [paymentInfo, setPaymentInfo]);
   return (
-    <PaymentContext.Provider value={{ paymentInfo, setPaymentInfo }}>
-      {children}
-    </PaymentContext.Provider>
+    <PaymentContext.Provider value={ values }>{ children }</PaymentContext.Provider>
   );
 };
 export default PaymentProvider;

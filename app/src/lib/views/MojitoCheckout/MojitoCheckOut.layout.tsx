@@ -1,5 +1,5 @@
 import { Box, useTheme } from '@mui/material';
-import React, { Dispatch, SetStateAction } from 'react';
+import React from 'react';
 import Header from '@components/shared/Header';
 import Stepper from '@components/shared/Stepper';
 import { MixTheme } from '@lib/theme/ThemeOptions';
@@ -7,8 +7,8 @@ import CostBreakDownContainer from '@views/CostBreakDown';
 import ConfirmationContainer from '@views/Confirmation';
 import { PaymentContainer } from '@views/Payment';
 import { Delivery } from '@views/Delivery';
-import BillingContainer from '../Billing';
 import { useContainer } from '@lib/providers/ContainerStateProvider';
+import BillingContainer from '../Billing';
 
 
 export enum ContainerTypes {
@@ -20,7 +20,7 @@ export enum ContainerTypes {
 
 const MojitoCheckoutLayout = () => {
   const theme = useTheme<MixTheme>();
-  const { containerState } = useContainer()
+  const { containerState } = useContainer();
 
   return (
     <Box

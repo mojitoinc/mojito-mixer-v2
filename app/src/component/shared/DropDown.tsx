@@ -6,14 +6,12 @@ import {
   MenuItem,
   Select,
   SelectChangeEvent,
-  Stack,
   SxProps,
   Theme,
   Typography,
   useTheme,
 } from '@mui/material';
 import { MixTheme } from '@lib/theme/ThemeOptions';
-import { Icons } from '@lib/assets';
 
 export interface DropdownOptions {
   label: string | JSX.Element;
@@ -27,10 +25,9 @@ interface DropdownProps {
   onChange?: (val: string) => void;
   options?: DropdownOptions[];
   error?: string;
-  sx: SxProps<Theme>;
+  sx?: SxProps<Theme>;
   required?: boolean;
   placeholder?: string;
-  optionType?: string;
 }
 
 const Dropdown = ({
@@ -42,42 +39,12 @@ const Dropdown = ({
   error,
   required,
   placeholder,
-  optionType,
 }: DropdownProps) => {
   const theme = useTheme<MixTheme>();
 
   const onChangeValue = useCallback((e: SelectChangeEvent<string>) => {
     onChange?.(e.target.value);
   }, [onChange]);
-
-  const getCreditCardType = useCallback((item: DropdownOptions) => {
-    if (item?.data?.cardType === 'MasterCard') {
-      return Icons.masterCard;
-    }
-    if (item?.data?.cardType === 'visaCard') {
-      return Icons.visaCard;
-    }
-    if (item?.data?.cardType === 'americanCard') {
-      return Icons.americanExpress;
-    }
-
-    return Icons.visaCard;
-  }, []);
-
-  const renderOption = useCallback((item:DropdownOptions, itemType: string) => {
-    if (itemType === 'card') {
-      const creditCardType = getCreditCardType(item);
-      return (
-        <Stack flexDirection="row">
-          { !item?.data?.hideCard &&
-          <img src={ creditCardType } width="49px" height="24px" alt="cards-logo" /> }
-          <Typography variant="body1" sx={{ marginLeft: '4px' }}>{ item.label }</Typography>
-        </Stack>
-      );
-    }
-
-    return item.label;
-  }, [getCreditCardType]);
 
   return (
     <Box
@@ -128,7 +95,7 @@ const Dropdown = ({
             </Typography>
           </MenuItem>
           { options.map((item: DropdownOptions) => {
-            return <MenuItem value={ item.value } key={ item.value }>{ renderOption(item, optionType ?? '') }</MenuItem>;
+            return <MenuItem value={ item.value } key={ item.value }>{ item.label }</MenuItem>;
           }) }
         </Select>
         { error && <FormHelperText>{ error }</FormHelperText> }

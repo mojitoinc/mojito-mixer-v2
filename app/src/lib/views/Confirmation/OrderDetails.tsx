@@ -32,6 +32,8 @@ const OrderDetails = ({
         flexDirection: 'row',
         alignItems: 'center',
         margin: '8px 0px',
+        border: `1px solid ${ theme.global?.cardBorder }`,
+        borderRadius: '4px',
       }}>
       <Typography fontSize="16px" width="40%">
         { title }
