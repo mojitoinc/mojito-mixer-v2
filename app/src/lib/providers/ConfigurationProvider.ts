@@ -4,13 +4,13 @@ import { createContext, useContext } from 'react';
 export interface ConfigurationType {
   billing: {
     hideExpressCheckout?: boolean;
-    expressCheckoutConfig: {
+    expressCheckoutConfig?: {
       gpay?: boolean;
       applepay?: boolean;
       walletConnect?: boolean;
       metaMask?: boolean;
     },
-    paymentMethods: {
+    paymentMethods?: {
       gpay?: boolean;
       applepay?: boolean;
       walletConnect?: boolean;
@@ -52,10 +52,10 @@ export const useUIConfiguration = () => {
 export const makeUIConfiguration = (configurations: ConfigurationType) => {
   return {
     billing: {
-      showDiscountCode: configurations.billing.showDiscountCode ?? DefaultConfiguration.billing.showDiscountCode,
-      expressCheckoutConfig: { ...DefaultConfiguration.billing.expressCheckoutConfig, ...configurations.billing.expressCheckoutConfig },
-      hideExpressCheckout: configurations.billing.hideExpressCheckout ?? DefaultConfiguration.billing.hideExpressCheckout,
-      paymentMethods: { ...DefaultConfiguration.billing.paymentMethods, ...configurations.billing.paymentMethods },
+      showDiscountCode: configurations?.billing?.showDiscountCode ?? DefaultConfiguration?.billing?.showDiscountCode,
+      expressCheckoutConfig: { ...DefaultConfiguration?.billing?.expressCheckoutConfig, ...configurations?.billing?.expressCheckoutConfig },
+      hideExpressCheckout: configurations?.billing?.hideExpressCheckout ?? DefaultConfiguration?.billing?.hideExpressCheckout,
+      paymentMethods: { ...DefaultConfiguration?.billing?.paymentMethods, ...configurations?.billing?.paymentMethods },
     },
   } as ConfigurationType;
 };
