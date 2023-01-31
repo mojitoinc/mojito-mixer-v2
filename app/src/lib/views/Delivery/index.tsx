@@ -10,8 +10,9 @@ import { useBilling } from '@lib/providers/BillingProvider';
 import { useContainer } from '@lib/providers/ContainerStateProvider';
 import { ContainerTypes } from '@views/MojitoCheckout/MojitoCheckOut.layout';
 import { PaymentTypes } from '@lib/constants/states';
-import { cardScreeningQuery, publicKeyQuery } from '@lib/queries/creditCard';
-import { formCardScreeningVariable } from './Delivery.service';
+import { cardScreeningQuery, getPaymentNotificationQuery, publicKeyQuery } from '@lib/queries/creditCard';
+import { formCardScreeningVariable, formCreatePaymentMethodObject } from './Delivery.service';
+import { useEncryptCardData } from '@lib/hooks/useEncryptCard';
 
 export const Delivery = () => {
   const [selectedDeliveryAddress, setSelectedDeliveryAddress] = useState<string>('');
@@ -23,11 +24,9 @@ export const Delivery = () => {
   const [CreatePaymentMethod] = useMutation(createPaymentMethod)
   const [CreatePayment] = useMutation(createPayment)
   const {data: meData } = useQuery(meQuery)
-  const [getPublicKey] = useLazyQuery(publicKeyQuery)
-  const [skipPaymentMethodStatus, setSkipPaymentMethodStatus] = useState<boolean>(true)
-  const {refetch: refetchPaymentMethod} = useQuery(getPaymentMethodStatus, {
-    skip: skipPaymentMethodStatus
-  })
+  const [encryptCardData] = useEncryptCardData({ orgID:orgId})
+  const [paymentMethodStatus] = useLazyQuery(getPaymentMethodStatus)
+  const [paymentNotification] = useLazyQuery(getPaymentNotificationQuery)
   const formatWallets =  (wallets:any)=> {
     return wallets.map((item:any)=> ({
       label: item.address,
@@ -54,17 +53,50 @@ export const Delivery = () => {
 
   const onConfirmCreditCardPurchase = useCallback(async()=>{
     try {
-      const publickeyData = await getPublicKey({
-        variables:{
-          orgID:orgId
+      
+      const { keyID, encryptedCardData } = await encryptCardData({
+        number: paymentInfo?.creditCardData?.cardNumber?.replace(/\s/g, ""),
+        cvv: paymentInfo?.creditCardData?.cvv ?? "",
+      });
+
+      const inputData = formCreatePaymentMethodObject(orgId,paymentInfo,billingInfo,keyID,encryptedCardData);
+      const createPaymentMethodResult = await CreatePaymentMethod({
+        variables: {
+          orgID: orgId,
+          input: inputData
         }
       })
-
+      if (createPaymentMethodResult?.data?.createPaymentMethod?.id) {
+        if (createPaymentMethodResult?.data?.createPaymentMethod?.status !== 'complete') {
+          const paymentStatus =await paymentMethodStatus({
+            variables:{
+              paymentMethodID: createPaymentMethodResult?.data?.createPaymentMethod?.id
+            }
+          })
+        }
+        const createPaymentResult = await CreatePayment({
+          variables: {
+            paymentMethodID: createPaymentMethodResult?.data?.createPaymentMethod?.id,
+            invoiceID: reserveLotData?.invoiceID,
+            metadata: {
+              destinationAddress: selectedDeliveryAddress,
+              creditCardData:{
+                keyID,
+                encryptedData:encryptedCardData
+              }
+            }
+          }
+        })
+        const notificationData = await paymentNotification()
+        console.log("notificationData",notificationData);
+        window.location.href = notificationData?.data?.getPaymentNotification?.message?.redirectURL 
+        
+      }
       
     }catch(e) {
 
     }
-  },[orgId])
+  },[orgId,reserveLotData,paymentInfo,billingInfo,paymentNotification])
 
   const onClickConfirmPurchase = useCallback(async ()=> {
     let inputData:any = {}
@@ -83,12 +115,12 @@ export const Delivery = () => {
       })
       if (result?.data?.createPaymentMethod?.id) {
         if (result?.data?.createPaymentMethod?.status !== 'complete') {
-          setSkipPaymentMethodStatus(false)
-          const paymentStatus = refetchPaymentMethod({
-            paymentMethodID: result?.data?.createPaymentMethod?.id
+          const paymentStatus = await paymentMethodStatus({
+            variables:{
+              paymentMethodID: result?.data?.createPaymentMethod?.id
+            }
           })
       }
-        setSkipPaymentMethodStatus(true)
         const result1 = await CreatePayment({
           variables: {
             paymentMethodID: result?.data?.createPaymentMethod?.id,

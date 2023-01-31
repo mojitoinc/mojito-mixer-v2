@@ -24,3 +24,19 @@ export const publicKeyQuery = gql`
         }
     }
 `
+
+export const getPaymentNotificationQuery = gql`
+    query GetPaymentNotification {
+        getPaymentNotification {
+            message {
+                ... on PaymentNotification3DSMessage {
+                redirectURL
+                error
+                __typename
+                }
+                __typename
+            }
+            __typename
+        }
+    }
+`
