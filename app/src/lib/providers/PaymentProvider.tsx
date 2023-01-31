@@ -1,5 +1,5 @@
-import { CreditCardFormType } from "@lib/interfaces/CreditCard";
-import React, { createContext, useContext, useState } from "react";
+import { CreditCardFormType } from '@lib/interfaces/CreditCard';
+import React, { createContext, useContext, useState } from 'react';
 
 export interface PaymentData {
   creditCardData?: CreditCardFormType;
@@ -28,7 +28,7 @@ const PaymentProvider = ({ children }: { children?: React.ReactNode }) => {
   const [paymentInfo, setPaymentInfo] = useState<PaymentData>();
   return (
     <PaymentContext.Provider value={{ paymentInfo, setPaymentInfo }}>
-      {children}
+      { children }
     </PaymentContext.Provider>
   );
 };

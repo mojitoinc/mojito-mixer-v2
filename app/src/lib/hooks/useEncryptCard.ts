@@ -1,7 +1,7 @@
-import { LazyQueryResult, useLazyQuery } from "@apollo/client";
-import { publicKeyQuery } from "@lib/queries/creditCard";
-import { useCallback } from "react";
-import { encryptCardData as encryptCardDataUtil } from "../utils/encryptionUtils";
+import { LazyQueryResult, useLazyQuery } from '@apollo/client';
+import { publicKeyQuery } from '@lib/queries/creditCard';
+import { useCallback } from 'react';
+import { encryptCardData as encryptCardDataUtil } from '../utils/encryptionUtils';
 
 export interface EncryptCardDataOptions {
   number?: string;

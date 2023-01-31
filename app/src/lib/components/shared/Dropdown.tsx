@@ -25,7 +25,7 @@ interface DropdownProps {
   value?: string;
   title?: string;
   onChange?: (val: string) => void;
-  options?:  DropdownOptions[];
+  options?: DropdownOptions[];
   error?: string;
   sx: SxProps<Theme>;
   required?: boolean;
@@ -96,8 +96,8 @@ const Dropdown = ({
               { placeholder }
             </Typography>
           </MenuItem>
-          { options.map((item:   DropdownOptions) => {
-            return <MenuItem value={  item?.value } key={  item?.value  }>{item.label }</MenuItem>;
+          { options.map((item: DropdownOptions) => {
+            return <MenuItem value={ item?.value } key={ item?.value }>{ item.label }</MenuItem>;
           }) }
         </Select>
         { error && <FormHelperText>{ error }</FormHelperText> }

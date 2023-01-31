@@ -5,11 +5,11 @@ import CostBreakDownLayout from './CostBreakDownLayout';
 
 const CostBreakdownContainer = () => {
   const { taxes, reserveLotData } = useBilling();
-  const { taxData,lotData } = usePaymentInfo()
+  const { taxData, lotData } = usePaymentInfo();
 
   return (
     <CostBreakDownLayout
-      taxes={  taxData ?? taxes }
+      taxes={ taxData ?? taxes }
       reserveLotData={ lotData ?? reserveLotData } />
   );
 };

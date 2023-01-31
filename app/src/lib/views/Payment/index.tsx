@@ -1,22 +1,22 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import PaymentLayout from "./Payment.layout";
-import { WireTransferFormData } from "./WireTransferForm";
-import { paymentMethodsQuery } from "@lib/queries/billing";
-import { useLazyQuery, useQuery } from "@apollo/client";
-import { useDelivery } from "@lib/providers/DeliveryProvider";
-import { PaymentMethod } from "@lib/interfaces/PaymentMethods";
-import { getCardTypeByValue } from "@lib/utils/payment-utils";
-import { CreditCardFormType } from "@lib/interfaces/CreditCard";
-import { PaymentTypes } from "@lib/constants/states";
-import { PaymentData, usePayment } from "@lib/providers/PaymentProvider";
-import { useContainer } from "@lib/providers/ContainerStateProvider";
-import { ContainerTypes } from "@views/MojitoCheckout/MojitoCheckOut.layout";
-import { formCardScreeningVariable } from "@views/Delivery/Delivery.service";
-import { useBilling } from "@lib/providers/BillingProvider";
-import { cardScreeningQuery } from "@lib/queries/creditCard";
-import { meQuery } from "@lib/queries/me";
+import React, { useCallback, useEffect, useState } from 'react';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import { paymentMethodsQuery } from '@lib/queries/billing';
+import { useLazyQuery, useQuery } from '@apollo/client';
+import { useDelivery } from '@lib/providers/DeliveryProvider';
+import { PaymentMethod } from '@lib/interfaces/PaymentMethods';
+import { getCardTypeByValue } from '@lib/utils/payment-utils';
+import { CreditCardFormType } from '@lib/interfaces/CreditCard';
+import { PaymentTypes } from '@lib/constants/states';
+import { PaymentData, usePayment } from '@lib/providers/PaymentProvider';
+import { useContainer } from '@lib/providers/ContainerStateProvider';
+import { ContainerTypes } from '@views/MojitoCheckout/MojitoCheckOut.layout';
+import { formCardScreeningVariable } from '@views/Delivery/Delivery.service';
+import { useBilling } from '@lib/providers/BillingProvider';
+import { cardScreeningQuery } from '@lib/queries/creditCard';
+import { meQuery } from '@lib/queries/me';
+import { WireTransferFormData } from './WireTransferForm';
+import PaymentLayout from './Payment.layout';
 
 export const PaymentContainer = () => {
   const { orgId } = useDelivery();
@@ -24,55 +24,55 @@ export const PaymentContainer = () => {
   const { setPaymentInfo, paymentInfo } = usePayment();
   const { setContainerState } = useContainer();
 
-  const {billingInfo,taxes} =useBilling()
+  const { billingInfo, taxes } = useBilling();
 
-  const [paymentType, setPaymentType] = useState<string>("");
+  const [paymentType, setPaymentType] = useState<string>('');
   const onChoosePaymentType = useCallback(
     (name: PaymentTypes, value: boolean) => {
       setPaymentType(value ? name : paymentType);
     },
-    [paymentType]
+    [paymentType],
   );
 
   const validationSchema = Yup.object().shape({
     accountNumber: Yup.string()
-      .matches(/^[\d\s]+$/, "Invalid account number")
-      .min(9, "Invalid account number"),
+      .matches(/^[\d\s]+$/, 'Invalid account number')
+      .min(9, 'Invalid account number'),
     aba: Yup.string()
-      .matches(/^[\d\s]+$/, "Invalid aba")
-      .min(10, "Invalid aba"),
+      .matches(/^[\d\s]+$/, 'Invalid aba')
+      .min(10, 'Invalid aba'),
     bankCountry: Yup.string(),
     bankName: Yup.string(),
   });
   const creditCardSchema = Yup.object().shape({
     isNew: Yup.boolean(),
     expiry: Yup.string()
-      .matches(/^(0[1-9]|1[0-2])\/?([0-9]{2})$/, "Invalid expiry")
-      .required("Please enter expiry"),
+      .matches(/^(0[1-9]|1[0-2])\/?([0-9]{2})$/, 'Invalid expiry')
+      .required('Please enter expiry'),
     cvv: Yup.string()
-      .matches(/^[\d\s]+$/, "Invalid account number")
-      .min(3, "Invalid CVV")
-      .required("Please enter CVV"),
-    cardNumber: Yup.string().when("isNew", {
+      .matches(/^[\d\s]+$/, 'Invalid account number')
+      .min(3, 'Invalid CVV')
+      .required('Please enter CVV'),
+    cardNumber: Yup.string().when('isNew', {
       is: true,
       then: Yup.string()
-        .required("Please enter card number")
-        .min(12, "Please enter valid card number"),
+        .required('Please enter card number')
+        .min(12, 'Please enter valid card number'),
       otherwise: Yup.string(),
     }),
-    firstName: Yup.string().when("isNew", {
+    firstName: Yup.string().when('isNew', {
       is: true,
-      then: Yup.string().required("Please enter first name"),
+      then: Yup.string().required('Please enter first name'),
       otherwise: Yup.string(),
     }),
-    lastName: Yup.string().when("isNew", {
+    lastName: Yup.string().when('isNew', {
       is: true,
-      then: Yup.string().required("Please enter last name"),
+      then: Yup.string().required('Please enter last name'),
       otherwise: Yup.string(),
     }),
-    cardId: Yup.string().when("isNew", {
-      is: (isNew?: boolean) => !Boolean(isNew),
-      then: Yup.string().required("Please select a card"),
+    cardId: Yup.string().when('isNew', {
+      is: (isNew?: boolean) => !isNew,
+      then: Yup.string().required('Please select a card'),
       otherwise: Yup.string().nullable(),
     }),
   });
@@ -82,8 +82,8 @@ export const PaymentContainer = () => {
     },
   });
 
-  const [cardScreening] = useLazyQuery(cardScreeningQuery)
-  const {data: meData } = useQuery(meQuery)
+  const [cardScreening] = useLazyQuery(cardScreeningQuery);
+  const { data: meData } = useQuery(meQuery);
 
   const [creditCardList, setCreditCardList] = useState<PaymentMethod[]>([]);
 
@@ -91,7 +91,7 @@ export const PaymentContainer = () => {
     if (paymentData) {
       const creditCards: PaymentMethod[] =
         paymentData?.getPaymentMethodList?.filter(
-          (item: PaymentMethod) => item.type === "CreditCard"
+          (item: PaymentMethod) => item.type === 'CreditCard',
         );
       setCreditCardList(creditCards);
     }
@@ -104,10 +104,10 @@ export const PaymentContainer = () => {
     errors: wireTransferFormErrors,
   } = useFormik({
     initialValues: {
-      accountNumber: "",
-      aba: "",
-      bankCountry: "",
-      bankName: "",
+      accountNumber: '',
+      aba: '',
+      bankCountry: '',
+      bankName: '',
     } as WireTransferFormData,
     validationSchema,
     onSubmit: () => undefined,
@@ -119,7 +119,7 @@ export const PaymentContainer = () => {
     setFieldValue: onSetCreditCardField,
     errors: creditCardFormErrors,
     isValid: isValidCreditCardValues,
-    setFieldError
+    setFieldError,
   } = useFormik({
     initialValues: {
       isNew: false,
@@ -128,33 +128,33 @@ export const PaymentContainer = () => {
     onSubmit: () => undefined,
   });
 
-  const onSubmitCreditCard = useCallback(async() => {
+  const onSubmitCreditCard = useCallback(async () => {
     if (isValidCreditCardValues) {
       const selectedCard = creditCardList.find(
-        (item: PaymentMethod) => item.id === creditCardFormValues?.cardId
+        (item: PaymentMethod) => item.id === creditCardFormValues?.cardId,
       );
-      const paymentData:PaymentData ={
+      const paymentData:PaymentData = {
         ...paymentInfo,
-        paymentType: paymentType,
+        paymentType,
         creditCardData: {
           ...creditCardFormValues,
           cardData: selectedCard,
         },
-      }
+      };
       try {
-        const variables = formCardScreeningVariable(orgId,paymentData,billingInfo,taxes,meData)
-        const  cardScreeningData =await cardScreening({
-          variables:variables
-        })
+        const variables = formCardScreeningVariable(orgId, paymentData, billingInfo, taxes, meData);
+        const cardScreeningData = await cardScreening({
+          variables,
+        });
 
-        if(cardScreeningData.data?.cardScreening?.level !== 'high') {
+        if (cardScreeningData.data?.cardScreening?.level !== 'high') {
           setPaymentInfo(paymentData);
           setContainerState(ContainerTypes.DELIVERY);
-        }else {
-          setFieldError('cardNumber','Please enter a valid card number.')
+        } else {
+          setFieldError('cardNumber', 'Please enter a valid card number.');
         }
-      }catch(e) {
-  
+      } catch (e) {
+
       }
     }
   }, [
@@ -167,16 +167,16 @@ export const PaymentContainer = () => {
     billingInfo,
     taxes,
     meData,
-    cardScreening
+    cardScreening,
   ]);
 
   const onSubmitWireTransfer = useCallback(() => {
     setPaymentInfo({
       ...paymentInfo,
-      paymentType: paymentType,
+      paymentType,
       wireData: {
-        accountNumber: wireTransferFormValues.accountNumber.split(" ").join(""),
-        routingNumber: wireTransferFormValues.aba.split(" ").join(""),
+        accountNumber: wireTransferFormValues.accountNumber.split(' ').join(''),
+        routingNumber: wireTransferFormValues.aba.split(' ').join(''),
         bankAddress: {
           bankName: wireTransferFormValues.bankName,
           country: wireTransferFormValues.bankCountry,
@@ -202,18 +202,17 @@ export const PaymentContainer = () => {
 
   return (
     <PaymentLayout
-      paymentType={paymentType}
-      onChoosePaymentType={onChoosePaymentType}
-      wireTransferFormValues={wireTransferFormValues}
-      onChangeWireTransferField={onChangeWireTransferField}
-      onSetWireTransferField={onSetWireTransferField}
-      wireTransferFormErrors={wireTransferFormErrors}
-      creditCardFormValues={creditCardFormValues}
-      onChangeCreditCardField={onChangeCreditCardField}
-      onSetCreditCardField={onSetCreditCardField}
-      creditCardFormErrors={creditCardFormErrors}
-      creditCardList={creditCardList}
-      onClickDelivery={onClickDelivery}
-    />
+      paymentType={ paymentType }
+      onChoosePaymentType={ onChoosePaymentType }
+      wireTransferFormValues={ wireTransferFormValues }
+      onChangeWireTransferField={ onChangeWireTransferField }
+      onSetWireTransferField={ onSetWireTransferField }
+      wireTransferFormErrors={ wireTransferFormErrors }
+      creditCardFormValues={ creditCardFormValues }
+      onChangeCreditCardField={ onChangeCreditCardField }
+      onSetCreditCardField={ onSetCreditCardField }
+      creditCardFormErrors={ creditCardFormErrors }
+      creditCardList={ creditCardList }
+      onClickDelivery={ onClickDelivery } />
   );
 };

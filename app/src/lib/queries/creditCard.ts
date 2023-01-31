@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const cardScreeningQuery = gql`
     query(
@@ -13,7 +13,7 @@ export const cardScreeningQuery = gql`
             status
         }
     }
-`
+`;
 
 export const publicKeyQuery = gql`
     query PaymentKey($orgID: UUID1!) {
@@ -23,7 +23,7 @@ export const publicKeyQuery = gql`
             __typename
         }
     }
-`
+`;
 
 export const getPaymentNotificationQuery = gql`
     query GetPaymentNotification {
@@ -39,4 +39,4 @@ export const getPaymentNotificationQuery = gql`
             __typename
         }
     }
-`
+`;

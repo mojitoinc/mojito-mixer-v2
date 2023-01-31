@@ -1,5 +1,5 @@
-import { ContainerTypes } from "@views/MojitoCheckout/MojitoCheckOut.layout";
-import React, { createContext, useContext, useEffect, useState } from "react";
+import { ContainerTypes } from '@views/MojitoCheckout/MojitoCheckOut.layout';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 
 export interface Container {
   containerState: ContainerTypes;
@@ -7,24 +7,23 @@ export interface Container {
 }
 const ContainerStateContext = createContext<Container>({} as Container);
 
-interface ContainerStateProps  {
+interface ContainerStateProps {
   success?:boolean;
   children?: React.ReactNode
 }
 
-const ContainerStateProvider = ({ success,children }:ContainerStateProps) => {
+const ContainerStateProvider = ({ success, children }:ContainerStateProps) => {
   const [containerState, setContainerState] = useState<ContainerTypes>(
-    ContainerTypes.CHECKOUT
+    ContainerTypes.CHECKOUT,
   );
 
-  useEffect(()=>{
-    if(success)
-    setContainerState(ContainerTypes.CONFIRMATION)
-  },[success])
+  useEffect(() => {
+    if (success) setContainerState(ContainerTypes.CONFIRMATION);
+  }, [success]);
 
   return (
     <ContainerStateContext.Provider value={{ containerState, setContainerState }}>
-      {children}
+      { children }
     </ContainerStateContext.Provider>
   );
 };

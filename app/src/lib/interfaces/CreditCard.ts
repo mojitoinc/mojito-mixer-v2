@@ -1,4 +1,4 @@
-import { PaymentMethod } from "./PaymentMethods";
+import { PaymentMethod } from './PaymentMethods';
 
 export interface CreditCardFormType {
     isNew : boolean;

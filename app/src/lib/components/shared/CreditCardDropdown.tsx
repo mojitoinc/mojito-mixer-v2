@@ -61,15 +61,15 @@ const CreditCardDropdown = ({
     }
   }, []);
 
-  const renderOption = useCallback((item:PaymentMethod ) => {
-      const creditCardType = getCreditCardType(item as PaymentMethod);
-      return (
-        <Stack flexDirection="row">
-          { item?.network &&
+  const renderOption = useCallback((item:PaymentMethod) => {
+    const creditCardType = getCreditCardType(item as PaymentMethod);
+    return (
+      <Stack flexDirection="row">
+        { item?.network &&
           <img src={ creditCardType } width="49px" height="24px" /> }
-          <Typography variant="body1" sx={{ marginLeft: '4px' }}>Card ending { item.last4Digit }</Typography>
-        </Stack>
-      );
+        <Typography variant="body1" sx={{ marginLeft: '4px' }}>Card ending { item.last4Digit }</Typography>
+      </Stack>
+    );
   }, []);
 
   return (
@@ -120,10 +120,10 @@ const CreditCardDropdown = ({
               { placeholder }
             </Typography>
           </MenuItem>
-          { options.map((item: PaymentMethod ) => {
-            return <MenuItem value={ item?.id  } key={ item?.id }>{ renderOption(item) }</MenuItem>;
+          { options.map((item: PaymentMethod) => {
+            return <MenuItem value={ item?.id } key={ item?.id }>{ renderOption(item) }</MenuItem>;
           }) }
-          <MenuItem value={ "null" } >Add new card info</MenuItem>
+          <MenuItem value="null">Add new card info</MenuItem>
         </Select>
         { error && <FormHelperText>{ error }</FormHelperText> }
       </FormControl>

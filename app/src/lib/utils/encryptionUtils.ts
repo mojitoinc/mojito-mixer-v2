@@ -1,6 +1,6 @@
-import { createMessage, encrypt, Key, readKeys, Message } from "openpgp";
-import atob from "atob";
-import btoa from "btoa";
+import { createMessage, encrypt, Key, readKeys, Message } from 'openpgp';
+import atob from 'atob';
+import btoa from 'btoa';
 
 export interface EncryptCVVArgs {
   key: string;
@@ -21,7 +21,7 @@ export async function encryptCardData({ key, ...dataToEncrypt }: EncryptCardData
     createMessage({ text: JSON.stringify(dataToEncrypt) }),
   ]).then((allSettledResults) => {
     return allSettledResults.map((allSettledResult) => {
-      return allSettledResult.status === "fulfilled" ? allSettledResult.value : null;
+      return allSettledResult.status === 'fulfilled' ? allSettledResult.value : null;
     }) as [Key[], Message<string>];
   });
 

@@ -6,11 +6,11 @@ import { paymentMethodsQuery } from '@lib/queries/billing';
 import { useDelivery } from '@lib/providers/DeliveryProvider';
 import { PaymentMethod } from '@lib/interfaces/PaymentMethods';
 import * as Yup from 'yup';
-import BillingView from './BillingView';
 import { useContainer } from '@lib/providers/ContainerStateProvider';
 import { ContainerTypes } from '@views/MojitoCheckout/MojitoCheckOut.layout';
-import { uuid } from "uuidv4";
+import { uuid } from 'uuidv4';
 import { usePayment } from '@lib/providers/PaymentProvider';
+import BillingView from './BillingView';
 
 
 const BillingContainer = () => {
@@ -18,8 +18,8 @@ const BillingContainer = () => {
   const { setBillingInfo } = useBilling();
 
   const [isEditing, setIsEditing] = useState<boolean>(true);
-  const { setContainerState } = useContainer()
-  const { setPaymentInfo } = usePayment()
+  const { setContainerState } = useContainer();
+  const { setPaymentInfo } = usePayment();
 
   const { data: paymentData } = useQuery(paymentMethodsQuery, {
     variables: {
@@ -37,18 +37,18 @@ const BillingContainer = () => {
   });
 
 
-  const { values, errors, handleChange, setValues,isValid } = useFormik({
+  const { values, errors, handleChange, setValues, isValid } = useFormik({
     initialValues: {
     } as BillingFormData,
     onSubmit: () => undefined,
     validationSchema: schema,
   });
 
-  useEffect(()=>{
+  useEffect(() => {
     setPaymentInfo({
-      sessionKey : uuid()
-    })
-  },[])
+      sessionKey: uuid(),
+    });
+  }, []);
 
   useEffect(() => {
     if (paymentData) {
@@ -63,7 +63,7 @@ const BillingContainer = () => {
           email: paymentItem?.metadata?.email,
           phoneNumber: paymentItem?.metadata?.phoneNumber,
           street1: paymentItem?.billingDetails?.address1,
-          name: paymentItem?.billingDetails?.name
+          name: paymentItem?.billingDetails?.name,
         });
       } else {
         setIsEditing(true);
@@ -80,16 +80,15 @@ const BillingContainer = () => {
   }, []);
 
   const onClickContinue = useCallback(async () => {
-
-    if(isEditing && !isValid) return;
-    if(!isEditing) {
-      const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
-      const isValidEmail =emailRegex.test(values?.email ?? '')
-      if(!isValidEmail) return;
+    if (isEditing && !isValid) return;
+    if (!isEditing) {
+      const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+      const isValidEmail = emailRegex.test(values?.email ?? '');
+      if (!isValidEmail) return;
     }
-    
-    setContainerState(ContainerTypes.PAYMENT)
-  }, [values,isEditing,isValid,setContainerState]);
+
+    setContainerState(ContainerTypes.PAYMENT);
+  }, [values, isEditing, isValid, setContainerState]);
 
   return (
     <BillingView
