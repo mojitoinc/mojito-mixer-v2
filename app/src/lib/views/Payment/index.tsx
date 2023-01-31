@@ -142,17 +142,23 @@ export const PaymentContainer = () => {
         },
       };
       try {
-        const variables = formCardScreeningVariable(orgId, paymentData, billingInfo, taxes, meData);
-        const cardScreeningData = await cardScreening({
-          variables,
-        });
+        if(creditCardFormValues?.isNew) {
+          const variables = formCardScreeningVariable(orgId, paymentData, billingInfo, taxes, meData);
+          const cardScreeningData = await cardScreening({
+            variables,
+          });
 
-        if (cardScreeningData.data?.cardScreening?.level !== 'high') {
+          if (cardScreeningData.data?.cardScreening?.level !== 'high') {
+            setPaymentInfo(paymentData);
+            setContainerState(ContainerTypes.DELIVERY);
+          } else {
+            setFieldError('cardNumber', 'Please enter a valid card number.');
+          }
+        }else {
           setPaymentInfo(paymentData);
           setContainerState(ContainerTypes.DELIVERY);
-        } else {
-          setFieldError('cardNumber', 'Please enter a valid card number.');
         }
+
       } catch (e) {
 
       }

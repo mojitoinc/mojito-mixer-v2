@@ -55,28 +55,31 @@ export const Delivery = () => {
   const onConfirmCreditCardPurchase = useCallback(async () => {
     try {
       const { keyID, encryptedCardData } = await encryptCardData({
-        number: paymentInfo?.creditCardData?.cardNumber?.replace(/\s/g, ''),
+        number: paymentInfo?.creditCardData?.isNew ? paymentInfo?.creditCardData?.cardNumber?.replace(/\s/g, '') : undefined,
         cvv: paymentInfo?.creditCardData?.cvv ?? '',
       });
-
-      const inputData = formCreatePaymentMethodObject(orgId, paymentInfo, billingInfo, keyID, encryptedCardData);
-      const createPaymentMethodResult = await CreatePaymentMethod({
-        variables: {
-          orgID: orgId,
-          input: inputData,
-        },
-      });
-      if (createPaymentMethodResult?.data?.createPaymentMethod?.id) {
+      let paymentMethodId = paymentInfo?.creditCardData?.isNew ? undefined : paymentInfo?.creditCardData?.cardId
+      if( paymentInfo?.creditCardData?.isNew ){
+        const inputData = formCreatePaymentMethodObject(orgId, paymentInfo, billingInfo, keyID, encryptedCardData);
+        const createPaymentMethodResult = await CreatePaymentMethod({
+          variables: {
+            orgID: orgId,
+            input: inputData,
+          },
+        });
+        paymentMethodId = createPaymentMethodResult?.data?.createPaymentMethod?.id
         if (createPaymentMethodResult?.data?.createPaymentMethod?.status !== 'complete') {
           const paymentStatus = await paymentMethodStatus({
             variables: {
-              paymentMethodID: createPaymentMethodResult?.data?.createPaymentMethod?.id,
+              paymentMethodID: paymentMethodId,
             },
           });
         }
+      }
+      if (paymentMethodId ) {
         const createPaymentResult = await CreatePayment({
           variables: {
-            paymentMethodID: createPaymentMethodResult?.data?.createPaymentMethod?.id,
+            paymentMethodID: paymentMethodId,
             invoiceID: reserveLotData?.invoiceID,
             metadata: {
               destinationAddress: selectedDeliveryAddress,
@@ -90,8 +93,7 @@ export const Delivery = () => {
         const notificationData = await paymentNotification();
         const paymentData:PaymentData = {
           ...paymentInfo,
-          deliveryStatus: createPaymentMethodResult?.data?.createPayment?.status,
-          paymentId: createPaymentMethodResult?.data?.createPaymentMethod?.id ?? '',
+          paymentId: paymentMethodId,
           destinationAddress: selectedDeliveryAddress,
         };
         CookieService.billing.setValue(JSON.stringify(billingInfo));
