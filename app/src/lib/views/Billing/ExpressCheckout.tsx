@@ -47,7 +47,7 @@ const ExpressCheckoutView = ({ config } :ExpressCheckoutViewProps) => {
               }}>
               <img src={ Icons.applepay } width="50px" height="20px" alt="Apple pay" />
             </Button>
-            )
+          )
 }
         {
           config?.walletConnect && (
@@ -69,7 +69,7 @@ const ExpressCheckoutView = ({ config } :ExpressCheckoutViewProps) => {
                 }}
                 alt="Walletconnect" />
             </Button>
-            )
+          )
         }
         {
           config?.metaMask && (
@@ -92,7 +92,7 @@ const ExpressCheckoutView = ({ config } :ExpressCheckoutViewProps) => {
                   marginRight: '8px',
                 }} />
             </Button>
-            )
+          )
         }
       </Box>
       <LinedText text="OR" />

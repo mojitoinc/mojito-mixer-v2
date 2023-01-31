@@ -3,7 +3,7 @@ import TextInput from '@components/shared/TextInput';
 import { Icons } from '@lib/assets';
 import { Taxes } from '@lib/interfaces/CostBreakDown';
 import { ReserveNow } from '@lib/interfaces/Invoice';
-import { DefaultConfiguration, useUIConfiguration } from '@lib/providers/ConfigurationProvider';
+import { useUIConfiguration } from '@lib/providers/ConfigurationProvider';
 import { MixTheme } from '@lib/theme/ThemeOptions';
 import { Box, Divider, Typography, useTheme } from '@mui/material';
 import React from 'react';
@@ -15,8 +15,7 @@ interface CostBreakDownProps {
 
 const CostBreakDownLayout = ({ taxes, reserveLotData }:CostBreakDownProps) => {
   const theme = useTheme<MixTheme>();
-  const { billing } =useUIConfiguration()
-  const showDiscountCode = billing.showDiscountCode ?? DefaultConfiguration.billing.showDiscountCode
+  const { billing } = useUIConfiguration();
 
   const renderTextRow = (text: string, value: string) => {
     return (
@@ -85,7 +84,7 @@ const CostBreakDownLayout = ({ taxes, reserveLotData }:CostBreakDownProps) => {
           </Box>
         </Box>
         {
-          showDiscountCode && 
+          billing.showDiscountCode && (
             <>
               <Divider
                 sx={{
@@ -109,8 +108,9 @@ const CostBreakDownLayout = ({ taxes, reserveLotData }:CostBreakDownProps) => {
                   textColor={ theme.global?.costBreakDownColors?.applyButtonTextColor } />
               </Box>
             </>
-        }
-        
+          )
+}
+
         <Divider
           sx={{
             background: theme.global?.border,

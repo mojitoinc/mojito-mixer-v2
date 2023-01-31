@@ -28,21 +28,24 @@ const BillingContainer = () => {
     state: Yup.string().required('Please select a state'),
     city: Yup.string().required('Please select a city'),
     postalCode: Yup.string().required('Please enter zipcode'),
-    email: Yup.string().email('Please enter valid email').required('Please enter email'),
+    email: Yup.string()
+      .email('Please enter valid email')
+      .required('Please enter email'),
     phoneNumber: Yup.string().required('Please enter a mobile number'),
   });
 
-
   const { values, errors, handleChange, setValues, isValid } = useFormik({
-    initialValues: {
-    } as BillingFormData,
+    initialValues: {} as BillingFormData,
     onSubmit: () => undefined,
     validationSchema: schema,
   });
 
   useEffect(() => {
     if (paymentData) {
-      const paymentItem : PaymentMethod = paymentData?.getPaymentMethodList?.find((item:PaymentMethod) => item.billingDetails);
+      const paymentItem: PaymentMethod =
+        paymentData?.getPaymentMethodList?.find(
+          (item: PaymentMethod) => item.billingDetails,
+        );
       if (paymentItem) {
         setIsEditing(false);
         setValues({
@@ -72,7 +75,7 @@ const BillingContainer = () => {
   const onClickContinue = useCallback(async () => {
     if (isEditing && !isValid) return;
     if (!isEditing) {
-      const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+      const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
       const isValidEmail = emailRegex.test(values?.email ?? '');
       if (!isValidEmail) return;
     }

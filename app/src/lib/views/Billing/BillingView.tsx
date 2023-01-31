@@ -1,6 +1,6 @@
 import { Box, Card, Typography, useTheme } from '@mui/material';
 import React from 'react';
-import { useUIConfiguration, DefaultConfiguration } from '@providers/ConfigurationProvider';
+import { useUIConfiguration } from '@providers/ConfigurationProvider';
 import { BillingFormData } from '@lib/providers/BillingProvider';
 import { FormikErrors } from 'formik';
 import Button from '@components/shared/Button';
@@ -29,11 +29,10 @@ const BillingView = ({
 }: BillingProps) => {
   const theme = useTheme<MixTheme>();
   const { billing } = useUIConfiguration();
-  const configuration = {...DefaultConfiguration.billing.expressCheckoutConfig, ...billing.expressCheckoutConfig}
-  const hideExpressCheckout = billing.hideExpressCheckout ?? DefaultConfiguration.billing.hideExpressCheckout
+
   return (
     <Box width="100%">
-      { !hideExpressCheckout && <ExpressCheckoutView config={ configuration } /> }
+      { !billing.hideExpressCheckout && <ExpressCheckoutView config={ billing.expressCheckoutConfig } /> }
       <Card
         sx={{
           border: `1px solid ${ theme.global?.cardBorder }`,

@@ -36,6 +36,7 @@ stories.add('Hide Express checkout', () => {
             walletConnect: true,
             wire: true,
           },
+          showDiscountCode: true,
         },
       }}
       deliveryConfiguration={{
