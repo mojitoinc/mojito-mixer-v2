@@ -6,11 +6,12 @@ import OrderDetails from './OrderDetails';
 import { usePayment } from '@lib/providers/PaymentProvider';
 import { useBilling } from '@lib/providers/BillingProvider';
 import { PaymentStatus, PaymentTypes } from '@lib/constants/states';
+import usePaymentInfo from '@lib/hooks/usePaymentInfo';
 
 const ConfirmationView = () => {
   const theme = useTheme<MixTheme>();
-  const { paymentInfo } = usePayment()
-  const { billingInfo } = useBilling()
+  const { paymentInfo,billingInfo } = usePaymentInfo()
+  console.log("paymentInfo",paymentInfo)
   return (
     <Box>
       <Card

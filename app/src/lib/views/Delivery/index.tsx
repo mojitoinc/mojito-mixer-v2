@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { DropdownOptions } from '@components/shared/Dropdown';
 import DeliveryLayout from './Delivery.layout';
-import { usePayment } from '@lib/providers/PaymentProvider';
+import { PaymentData, usePayment } from '@lib/providers/PaymentProvider';
 import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
 import { meQuery } from '@lib/queries/me';
 import { createPaymentMethod, createPayment, getPaymentMethodStatus } from '@lib/queries/Payment';
@@ -13,6 +13,7 @@ import { PaymentTypes } from '@lib/constants/states';
 import { cardScreeningQuery, getPaymentNotificationQuery, publicKeyQuery } from '@lib/queries/creditCard';
 import { formCardScreeningVariable, formCreatePaymentMethodObject } from './Delivery.service';
 import { useEncryptCardData } from '@lib/hooks/useEncryptCard';
+import { CookieService } from '@lib/storage/CookieService';
 
 export const Delivery = () => {
   const [selectedDeliveryAddress, setSelectedDeliveryAddress] = useState<string>('');
@@ -88,15 +89,23 @@ export const Delivery = () => {
           }
         })
         const notificationData = await paymentNotification()
-        console.log("notificationData",notificationData);
+        const paymentData:PaymentData = {
+          ...paymentInfo,
+          deliveryStatus: createPaymentMethodResult?.data?.createPayment?.status,
+          paymentId: createPaymentMethodResult?.data?.createPaymentMethod?.id ?? '',
+          destinationAddress: selectedDeliveryAddress
+        }
+        CookieService.billing.setValue(JSON.stringify(billingInfo));
+        CookieService.paymentInfo.setValue(JSON.stringify(paymentData));
+        CookieService.taxes.setValue(JSON.stringify(taxes));
+        CookieService.reserveLotData.setValue(JSON.stringify(reserveLotData));
         window.location.href = notificationData?.data?.getPaymentNotification?.message?.redirectURL 
-        
       }
       
     }catch(e) {
 
     }
-  },[orgId,reserveLotData,paymentInfo,billingInfo,paymentNotification])
+  },[orgId,reserveLotData,paymentInfo,billingInfo,paymentNotification,selectedDeliveryAddress,taxes])
 
   const onClickConfirmPurchase = useCallback(async ()=> {
     let inputData:any = {}
@@ -130,19 +139,25 @@ export const Delivery = () => {
             }
           }
         })
-        setPaymentInfo({
+        const paymentData:PaymentData = {
           ...paymentInfo,
           deliveryStatus: result1?.data?.createPayment?.status,
           paymentId: result?.data?.createPaymentMethod?.id ?? '',
           destinationAddress: selectedDeliveryAddress
-        })
+        }
+        setPaymentInfo(paymentData)
+
+        CookieService.billing.setValue(JSON.stringify(billingInfo));
+        CookieService.paymentInfo.setValue(JSON.stringify(paymentData));
+        CookieService.taxes.setValue(JSON.stringify(taxes));
+        CookieService.reserveLotData.setValue(JSON.stringify(reserveLotData));
         setContainerState(ContainerTypes.CONFIRMATION)
       }
     }
     if (paymentInfo?.paymentType === PaymentTypes.CREDIT_CARD) {
       onConfirmCreditCardPurchase();
     }
-  }, [paymentInfo, reserveLotData, selectedDeliveryAddress])
+  }, [paymentInfo,billingInfo, reserveLotData, selectedDeliveryAddress,taxes])
 
   return (
     <DeliveryLayout 

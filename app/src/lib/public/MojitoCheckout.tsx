@@ -19,14 +19,15 @@ interface MojitoCheckoutProps {
   deliveryConfiguration: Delivery;
   theme?: ThemeConfiguration;
   show: boolean;
+  success?: boolean;
 }
 const MojitoCheckout = ({
   uiConfiguration = DefaultConfiguration,
   theme,
   show,
   deliveryConfiguration,
+  success,
 }: MojitoCheckoutProps) => {
-
   const themes = useMemo(() => makeTheme(theme), [theme]);
 
   return (
@@ -35,12 +36,11 @@ const MojitoCheckout = ({
         <ThemeProvider theme={themes}>
           <DeliveryContext.Provider value={deliveryConfiguration}>
             <ConfigurationContext.Provider value={uiConfiguration}>
-              <ContainerStateProvider>
+              <ContainerStateProvider success={success}>
                 <BillingProvider>
                   <PaymentProvider>
                     <GlobalStyles styles={styles} />
-                    <MojitoCheckoutLayout
-                    />
+                    <MojitoCheckoutLayout />
                   </PaymentProvider>
                 </BillingProvider>
               </ContainerStateProvider>
