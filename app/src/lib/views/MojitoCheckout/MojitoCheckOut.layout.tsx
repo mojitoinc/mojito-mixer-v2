@@ -1,5 +1,5 @@
 import { Box, useTheme } from '@mui/material';
-import React, { Dispatch, SetStateAction } from 'react';
+import React from 'react';
 import Header from '@components/shared/Header';
 import Stepper from '@components/shared/Stepper';
 import { MixTheme } from '@lib/theme/ThemeOptions';

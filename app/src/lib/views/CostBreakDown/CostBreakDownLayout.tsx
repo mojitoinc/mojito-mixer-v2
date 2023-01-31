@@ -3,6 +3,7 @@ import TextInput from '@components/shared/TextInput';
 import { Icons } from '@lib/assets';
 import { Taxes } from '@lib/interfaces/CostBreakDown';
 import { ReserveNow } from '@lib/interfaces/Invoice';
+import { useUIConfiguration } from '@lib/providers/ConfigurationProvider';
 import { MixTheme } from '@lib/theme/ThemeOptions';
 import { Box, Divider, Typography, useTheme } from '@mui/material';
 import React from 'react';
@@ -14,6 +15,7 @@ interface CostBreakDownProps {
 
 const CostBreakDownLayout = ({ taxes, reserveLotData }:CostBreakDownProps) => {
   const theme = useTheme<MixTheme>();
+  const { billing } = useUIConfiguration();
 
   const renderTextRow = (text: string, value: string) => {
     return (
@@ -81,27 +83,34 @@ const CostBreakDownLayout = ({ taxes, reserveLotData }:CostBreakDownProps) => {
             <Typography>2.00 ETH</Typography>
           </Box>
         </Box>
-        <Divider
-          sx={{
-            background: theme.global?.border,
-            margin: '20px 0px',
-          }} />
-        <Box display="flex" flexDirection="row">
-          <TextInput
-            placeholder="Discount code"
-            inputProps={{
-              style: {
-                backgroundColor: theme.global?.background,
-              },
-            }} />
-          <Button
-            title="Apply"
-            backgroundColor={ theme.global?.costBreakDownColors?.applyButtonBackground }
-            sx={{
-              marginLeft: '8px',
-            }}
-            textColor={ theme.global?.costBreakDownColors?.applyButtonTextColor } />
-        </Box>
+        {
+          billing.showDiscountCode && (
+            <>
+              <Divider
+                sx={{
+                  background: theme.global?.border,
+                  margin: '20px 0px',
+                }} />
+              <Box display="flex" flexDirection="row">
+                <TextInput
+                  placeholder="Discount code"
+                  inputProps={{
+                    style: {
+                      backgroundColor: theme.global?.background,
+                    },
+                  }} />
+                <Button
+                  title="Apply"
+                  backgroundColor={ theme.global?.costBreakDownColors?.applyButtonBackground }
+                  sx={{
+                    marginLeft: '8px',
+                  }}
+                  textColor={ theme.global?.costBreakDownColors?.applyButtonTextColor } />
+              </Box>
+            </>
+          )
+}
+
         <Divider
           sx={{
             background: theme.global?.border,

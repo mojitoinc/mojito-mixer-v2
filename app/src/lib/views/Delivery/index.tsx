@@ -107,57 +107,62 @@ export const Delivery = () => {
     }
   }, [orgId, reserveLotData, paymentInfo, billingInfo, paymentNotification, selectedDeliveryAddress, taxes]);
 
-  const onClickConfirmPurchase = useCallback(async () => {
+  const onConfirmWireTransferPurchase = useCallback(async () => {
     const inputData:any = {};
     const copiedBillingDetails = { ...billingInfo, district: billingInfo?.state, address1: billingInfo?.street1 };
     delete copiedBillingDetails.state;
     delete copiedBillingDetails.street1;
     delete copiedBillingDetails.email;
-    if (paymentInfo?.paymentType === PaymentTypes.WIRE_TRANSFER) {
-      inputData.paymentType = 'Wire';
-      inputData.wireData = { ...paymentInfo?.wireData, billingDetails: copiedBillingDetails };
-      const result = await CreatePaymentMethod({
-        variables: {
-          orgID: orgId,
-          input: inputData,
-        },
-      });
-      if (result?.data?.createPaymentMethod?.id) {
-        if (result?.data?.createPaymentMethod?.status !== 'complete') {
-          const paymentStatus = await paymentMethodStatus({
-            variables: {
-              paymentMethodID: result?.data?.createPaymentMethod?.id,
-            },
-          });
-        }
-        const result1 = await CreatePayment({
+    inputData.paymentType = 'Wire';
+    inputData.wireData = { ...paymentInfo?.wireData, billingDetails: copiedBillingDetails };
+    const result = await CreatePaymentMethod({
+      variables: {
+        orgID: orgId,
+        input: inputData,
+      },
+    });
+    if (result?.data?.createPaymentMethod?.id) {
+      if (result?.data?.createPaymentMethod?.status !== 'complete') {
+        const paymentStatus = await paymentMethodStatus({
           variables: {
             paymentMethodID: result?.data?.createPaymentMethod?.id,
-            invoiceID: reserveLotData?.invoiceID,
-            metadata: {
-              destinationAddress: selectedDeliveryAddress,
-            },
           },
         });
-        const paymentData:PaymentData = {
-          ...paymentInfo,
-          deliveryStatus: result1?.data?.createPayment?.status,
-          paymentId: result?.data?.createPaymentMethod?.id ?? '',
-          destinationAddress: selectedDeliveryAddress,
-        };
-        setPaymentInfo(paymentData);
-
-        CookieService.billing.setValue(JSON.stringify(billingInfo));
-        CookieService.paymentInfo.setValue(JSON.stringify(paymentData));
-        CookieService.taxes.setValue(JSON.stringify(taxes));
-        CookieService.reserveLotData.setValue(JSON.stringify(reserveLotData));
-        setContainerState(ContainerTypes.CONFIRMATION);
       }
+      const result1 = await CreatePayment({
+        variables: {
+          paymentMethodID: result?.data?.createPaymentMethod?.id,
+          invoiceID: reserveLotData?.invoiceID,
+          metadata: {
+            destinationAddress: selectedDeliveryAddress,
+          },
+        },
+      });
+      const paymentData:PaymentData = {
+        ...paymentInfo,
+        deliveryStatus: result1?.data?.createPayment?.status,
+        paymentId: result?.data?.createPaymentMethod?.id ?? '',
+        destinationAddress: selectedDeliveryAddress,
+      };
+      setPaymentInfo(paymentData);
+
+      CookieService.billing.setValue(JSON.stringify(billingInfo));
+      CookieService.paymentInfo.setValue(JSON.stringify(paymentData));
+      CookieService.taxes.setValue(JSON.stringify(taxes));
+      CookieService.reserveLotData.setValue(JSON.stringify(reserveLotData));
+      setContainerState(ContainerTypes.CONFIRMATION);
+    }
+  },[paymentInfo, billingInfo, reserveLotData, selectedDeliveryAddress, taxes])
+
+  const onClickConfirmPurchase = useCallback(async () => {
+  
+    if (paymentInfo?.paymentType === PaymentTypes.WIRE_TRANSFER) {
+      onConfirmWireTransferPurchase()
     }
     if (paymentInfo?.paymentType === PaymentTypes.CREDIT_CARD) {
       onConfirmCreditCardPurchase();
     }
-  }, [paymentInfo, billingInfo, reserveLotData, selectedDeliveryAddress, taxes]);
+  }, [onConfirmCreditCardPurchase,onConfirmWireTransferPurchase]);
 
   return (
     <DeliveryLayout

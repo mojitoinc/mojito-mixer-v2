@@ -3,6 +3,7 @@ import React, { useMemo } from 'react';
 import ConfigurationContext, {
   ConfigurationType,
   DefaultConfiguration,
+  makeUIConfiguration,
 } from '@providers/ConfigurationProvider';
 import { makeTheme } from '@lib/theme/CreateTheme';
 import { styles } from '@lib/theme/GlobalStyles';
@@ -29,13 +30,17 @@ const MojitoCheckout = ({
   success,
 }: MojitoCheckoutProps) => {
   const themes = useMemo(() => makeTheme(theme), [theme]);
+  const uiConfigurations = useMemo(
+    () => makeUIConfiguration(uiConfiguration),
+    [uiConfiguration],
+  );
 
   return (
     <Dialog open={ show } fullScreen>
       <MojitoApiProvider>
         <ThemeProvider theme={ themes }>
           <DeliveryContext.Provider value={ deliveryConfiguration }>
-            <ConfigurationContext.Provider value={ uiConfiguration }>
+            <ConfigurationContext.Provider value={ uiConfigurations }>
               <ContainerStateProvider success={ success }>
                 <BillingProvider>
                   <PaymentProvider>

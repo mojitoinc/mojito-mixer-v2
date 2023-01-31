@@ -104,11 +104,11 @@ export const PaymentContainer = () => {
     errors: wireTransferFormErrors,
   } = useFormik({
     initialValues: {
-      accountNumber: '',
-      aba: '',
-      bankCountry: '',
-      bankName: '',
-    } as WireTransferFormData,
+      accountNumber: "",
+      aba: "",
+      bankCountry: "",
+      bankName: "",
+    },
     validationSchema,
     onSubmit: () => undefined,
   });
@@ -219,6 +219,8 @@ export const PaymentContainer = () => {
       onSetCreditCardField={ onSetCreditCardField }
       creditCardFormErrors={ creditCardFormErrors }
       creditCardList={ creditCardList }
-      onClickDelivery={ onClickDelivery } />
+      onClickDelivery={ onClickDelivery }
+      config={billing?.paymentMethods}
+      />
   );
 };

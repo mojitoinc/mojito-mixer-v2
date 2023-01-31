@@ -14,7 +14,14 @@ interface DeliveryLayoutProps {
     organizationName: string;
 }
 
-const DeliveryLayout = ({ isCreditCard, onWalletChange, walletOptions, selectedDeliveryAddress, onClickConfirmPurchase, organizationName }: DeliveryLayoutProps) => {
+const DeliveryLayout = ({
+  isCreditCard,
+  onWalletChange,
+  walletOptions,
+  selectedDeliveryAddress,
+  onClickConfirmPurchase,
+  organizationName,
+}: DeliveryLayoutProps) => {
   const theme = useTheme<MixTheme>();
   return (
     <>
@@ -28,7 +35,9 @@ const DeliveryLayout = ({ isCreditCard, onWalletChange, walletOptions, selectedD
       }}>
         <Typography sx={{ fontSize: '20px', fontWeight: 500 }}>Delivery Address</Typography>
         <Typography variant="body2" sx={{ marginTop: 1, marginBottom: 2 }}>{
-                isCreditCard ? `All related purchase and delivery fees will be covered by ${ organizationName }. NFTs purchased by credit card can only be transferred to your multi-sig wallet and cannot be transferred out for 14 days.`
+                isCreditCard ? `All related purchase and delivery fees will be covered by ${ organizationName }.
+                  NFTs purchased by credit card can only be transferred to your multi-sig wallet and cannot be transferred 
+                  out for 14 days.`
                   : `All related NFT purchase and delivery fees will be covered by ${ organizationName }.`
                 }
         </Typography>
