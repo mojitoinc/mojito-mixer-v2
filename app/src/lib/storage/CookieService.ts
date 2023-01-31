@@ -20,6 +20,7 @@ class CookieStorage {
     if (typeof window !== 'undefined') {
       return this.cookies.get(this.key);
     }
+    return undefined;
   };
 
   remove = () => {

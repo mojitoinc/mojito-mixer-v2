@@ -9,9 +9,10 @@ export const formCardScreeningVariable = (
   taxes?: Taxes,
   meData?: any,
 ) => {
-  const first6 = paymentInfo?.creditCardData?.cardNumber?.substring(0, 6);
-  const last4 = paymentInfo?.creditCardData?.cardNumber?.substring(
-    paymentInfo?.creditCardData?.cardNumber?.length - 4,
+  const cardNumber = paymentInfo?.creditCardData?.cardNumber;
+  const first6 = cardNumber?.substring(0, 6);
+  const last4 = cardNumber?.substring(
+    cardNumber?.length > 4 ? (cardNumber.length - 4) : 0,
   );
   return {
     orgID: orgId,

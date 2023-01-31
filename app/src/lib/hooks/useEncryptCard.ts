@@ -1,4 +1,4 @@
-import { LazyQueryResult, useLazyQuery } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client';
 import { publicKeyQuery } from '@lib/queries/creditCard';
 import { useCallback } from 'react';
 import { encryptCardData as encryptCardDataUtil } from '../utils/encryptionUtils';
@@ -30,7 +30,7 @@ export function useEncryptCardData({ orgID }: UseEncryptCardDataOptions): [
     const publicKey = paymentKeyData?.getPaymentPublicKey?.publicKey;
     const keyID = paymentKeyData?.getPaymentPublicKey?.keyID;
 
-    if (!publicKey || !keyID) throw 'Unable to generate key';
+    if (!publicKey || !keyID) throw new Error('Unable to generate key');
 
     const encryptedCardData = await encryptCardDataUtil({
       ...encryptCardDataOptions,

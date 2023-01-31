@@ -1,12 +1,11 @@
 import CreditCardDropdown from '@components/shared/CreditCardDropdown';
-import Dropdown, { DropdownOptions } from '@components/shared/Dropdown';
 import TextInput from '@components/shared/TextInput';
 import { CreditCardFormType } from '@lib/interfaces/CreditCard';
 import { PaymentMethod } from '@lib/interfaces/PaymentMethods';
 import { MixTheme } from '@lib/theme/ThemeOptions';
 import { Box, Checkbox, Typography, useTheme } from '@mui/material';
 import { FormikErrors } from 'formik';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback } from 'react';
 
 interface CreditCardProps {
   creditCardList: PaymentMethod[];
@@ -32,10 +31,11 @@ export const CreditCardForm = ({
   const handleCardChange = useCallback((val: string) => {
     setFieldValue('isNew', val === 'null');
     setFieldValue('cardId', val);
-  }, []);
+  }, [setFieldValue]);
 
   const formatCardNumber = useCallback(
-    async (cardNumber: string) => {
+    async (value: string) => {
+      let cardNumber = value;
       const isValid = cardNumber.match(/^[\d\s]+$/);
       if (isValid) {
         if (
@@ -52,11 +52,8 @@ export const CreditCardForm = ({
   );
 
   const formatExpiry = useCallback(
-    async (val: string) => {
-      if (val.length === 2) {
-        val = `${ val }/`;
-      }
-      await setFieldValue('expiry', val);
+    async (value: string) => {
+      await setFieldValue('expiry', value.length === 2 ? `${ value }/` : value);
     },
     [setFieldValue],
   );

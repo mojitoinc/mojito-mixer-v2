@@ -50,15 +50,16 @@ const CreditCardDropdown = ({
   }, [onChange]);
 
   const getCreditCardType = useCallback((item: PaymentMethod) => {
-    if (item?.network == 'MASTERCARD') {
+    if (item?.network === 'MASTERCARD') {
       return Icons.masterCard;
     }
-    if (item?.network == 'VISA') {
+    if (item?.network === 'VISA') {
       return Icons.visaCard;
     }
-    if (item?.network == 'americanCard') {
+    if (item?.network === 'americanCard') {
       return Icons.americanExpress;
     }
+    return Icons.masterCard;
   }, []);
 
   const renderOption = useCallback((item:PaymentMethod) => {
@@ -66,11 +67,11 @@ const CreditCardDropdown = ({
     return (
       <Stack flexDirection="row">
         { item?.network &&
-          <img src={ creditCardType } width="49px" height="24px" /> }
+          <img src={ creditCardType } width="49px" height="24px" alt="Creditcard" /> }
         <Typography variant="body1" sx={{ marginLeft: '4px' }}>Card ending { item.last4Digit }</Typography>
       </Stack>
     );
-  }, []);
+  }, [getCreditCardType]);
 
   return (
     <Box

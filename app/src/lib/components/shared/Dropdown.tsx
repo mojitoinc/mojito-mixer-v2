@@ -6,14 +6,12 @@ import {
   MenuItem,
   Select,
   SelectChangeEvent,
-  Stack,
   SxProps,
   Theme,
   Typography,
   useTheme,
 } from '@mui/material';
 import { MixTheme } from '@lib/theme/ThemeOptions';
-import { Icons } from '@lib/assets';
 
 export interface DropdownOptions {
   label: string | JSX.Element;

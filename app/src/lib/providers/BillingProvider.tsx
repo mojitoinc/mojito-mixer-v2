@@ -99,7 +99,7 @@ const BillingProvider = ({ children }: { children?: React.ReactNode }) => {
 
   useEffect(() => {
     if (containerState !== ContainerTypes.CONFIRMATION) reserveNow();
-  }, [reserveNow]);
+  }, [reserveNow, containerState]);
 
   const value = useMemo<Billing>(() => {
     return {

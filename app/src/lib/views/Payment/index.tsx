@@ -5,7 +5,6 @@ import { paymentMethodsQuery } from '@lib/queries/billing';
 import { useLazyQuery, useQuery } from '@apollo/client';
 import { useDelivery } from '@lib/providers/DeliveryProvider';
 import { PaymentMethod } from '@lib/interfaces/PaymentMethods';
-import { getCardTypeByValue } from '@lib/utils/payment-utils';
 import { CreditCardFormType } from '@lib/interfaces/CreditCard';
 import { PaymentTypes } from '@lib/constants/states';
 import { PaymentData, usePayment } from '@lib/providers/PaymentProvider';
@@ -15,7 +14,6 @@ import { formCardScreeningVariable } from '@views/Delivery/Delivery.service';
 import { useBilling } from '@lib/providers/BillingProvider';
 import { cardScreeningQuery } from '@lib/queries/creditCard';
 import { meQuery } from '@lib/queries/me';
-import { WireTransferFormData } from './WireTransferForm';
 import PaymentLayout from './Payment.layout';
 
 export const PaymentContainer = () => {
@@ -104,10 +102,10 @@ export const PaymentContainer = () => {
     errors: wireTransferFormErrors,
   } = useFormik({
     initialValues: {
-      accountNumber: "",
-      aba: "",
-      bankCountry: "",
-      bankName: "",
+      accountNumber: '',
+      aba: '',
+      bankCountry: '',
+      bankName: '',
     },
     validationSchema,
     onSubmit: () => undefined,
@@ -133,7 +131,7 @@ export const PaymentContainer = () => {
       const selectedCard = creditCardList.find(
         (item: PaymentMethod) => item.id === creditCardFormValues?.cardId,
       );
-      const paymentData:PaymentData = {
+      const paymentInfoData:PaymentData = {
         ...paymentInfo,
         paymentType,
         creditCardData: {
@@ -142,25 +140,24 @@ export const PaymentContainer = () => {
         },
       };
       try {
-        if(creditCardFormValues?.isNew) {
-          const variables = formCardScreeningVariable(orgId, paymentData, billingInfo, taxes, meData);
+        if (creditCardFormValues?.isNew) {
+          const variables = formCardScreeningVariable(orgId, paymentInfoData, billingInfo, taxes, meData);
           const cardScreeningData = await cardScreening({
             variables,
           });
 
           if (cardScreeningData.data?.cardScreening?.level !== 'high') {
-            setPaymentInfo(paymentData);
+            setPaymentInfo(paymentInfoData);
             setContainerState(ContainerTypes.DELIVERY);
           } else {
             setFieldError('cardNumber', 'Please enter a valid card number.');
           }
-        }else {
-          setPaymentInfo(paymentData);
+        } else {
+          setPaymentInfo(paymentInfoData);
           setContainerState(ContainerTypes.DELIVERY);
         }
-
       } catch (e) {
-
+        console.error('ERROR', e);
       }
     }
   }, [
@@ -174,6 +171,9 @@ export const PaymentContainer = () => {
     taxes,
     meData,
     cardScreening,
+    setContainerState,
+    setFieldError,
+    setPaymentInfo,
   ]);
 
   const onSubmitWireTransfer = useCallback(() => {
@@ -190,7 +190,7 @@ export const PaymentContainer = () => {
       },
     });
     setContainerState(ContainerTypes.DELIVERY);
-  }, [wireTransferFormValues, paymentInfo, setPaymentInfo, paymentType]);
+  }, [wireTransferFormValues, paymentInfo, setPaymentInfo, paymentType, setContainerState]);
 
   const onClickDelivery = useCallback(() => {
     if (paymentType === PaymentTypes.WIRE_TRANSFER) {
@@ -203,7 +203,6 @@ export const PaymentContainer = () => {
     paymentType,
     onSubmitCreditCard,
     onSubmitWireTransfer,
-    setContainerState,
   ]);
 
   return (
@@ -220,7 +219,6 @@ export const PaymentContainer = () => {
       creditCardFormErrors={ creditCardFormErrors }
       creditCardList={ creditCardList }
       onClickDelivery={ onClickDelivery }
-      config={billing?.paymentMethods}
-      />
+      config={ billing?.paymentMethods } />
   );
 };

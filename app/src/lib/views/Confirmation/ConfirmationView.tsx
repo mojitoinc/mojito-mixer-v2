@@ -2,8 +2,6 @@ import Button from '@components/shared/Button';
 import { MixTheme } from '@lib/theme/ThemeOptions';
 import { Box, Card, Typography, useTheme } from '@mui/material';
 import React, { useMemo } from 'react';
-import { usePayment } from '@lib/providers/PaymentProvider';
-import { useBilling } from '@lib/providers/BillingProvider';
 import { PaymentStatus, PaymentTypes } from '@lib/constants/states';
 import usePaymentInfo from '@lib/hooks/usePaymentInfo';
 import OrderDetails from './OrderDetails';

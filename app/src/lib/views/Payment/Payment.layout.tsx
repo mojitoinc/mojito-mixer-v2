@@ -68,76 +68,70 @@ const PaymentLayout = ({
         sx={{
           border: `1px solid ${ theme.global?.cardBorder }`,
           backgroundColor: theme.global?.cardBackground,
-          boxShadow: `0px 4px 16px ${theme.global?.cardShadow}`,
-          padding: "24px",
-        }}
-      >
-        <Typography sx={{ fontSize: "20px" }}>Payment Method</Typography>
-        {config?.creditCard && (
+          boxShadow: `0px 4px 16px ${ theme.global?.cardShadow }`,
+          padding: '24px',
+        }}>
+        <Typography sx={{ fontSize: '20px' }}>Payment Method</Typography>
+        { config?.creditCard && (
           <PaymentMethodView
-            logo={Icons.creditCards}
-            isSelected={paymentType}
+            logo={ Icons.creditCards }
+            isSelected={ paymentType }
             name="Credit Card"
-            type={PaymentTypes.CREDIT_CARD}
-            bodyContent={<CreditCardForm
-              creditCardList={ creditCardList }
-              values={ creditCardFormValues }
-              handleChange={ onChangeCreditCardField }
-              setFieldValue={ onSetCreditCardField }
-              errors={ creditCardFormErrors } />
-            }
-            onChoosePaymentType={onChoosePaymentType}
-          />
-        )}
-        {config?.walletConnect && (
+            type={ PaymentTypes.CREDIT_CARD }
+            bodyContent={ (
+              <CreditCardForm
+                creditCardList={ creditCardList }
+                values={ creditCardFormValues }
+                handleChange={ onChangeCreditCardField }
+                setFieldValue={ onSetCreditCardField }
+                errors={ creditCardFormErrors } />
+) }
+            onChoosePaymentType={ onChoosePaymentType } />
+        ) }
+        { config?.walletConnect && (
           <PaymentMethodView
-            logo={Icons.walletConnect}
-            isSelected={paymentType}
+            logo={ Icons.walletConnect }
+            isSelected={ paymentType }
             name="Walletconnect"
-            type={PaymentTypes.WALLET_CONNECT}
-            bodyContent={<>Test</>}
-            onChoosePaymentType={onChoosePaymentType}
-          />
-        )}
-        {config?.applepay && (
+            type={ PaymentTypes.WALLET_CONNECT }
+            bodyContent={ <>Test</> }
+            onChoosePaymentType={ onChoosePaymentType } />
+        ) }
+        { config?.applepay && (
           <PaymentMethodView
-            logo={Icons.applepayDark}
-            isSelected={paymentType}
+            logo={ Icons.applepayDark }
+            isSelected={ paymentType }
             name="Apple Pay"
-            type={PaymentTypes.APPLE_PAY}
-            bodyContent={<>Test</>}
-            onChoosePaymentType={onChoosePaymentType}
-          />
-        )}
-        {config?.gpay && (
+            type={ PaymentTypes.APPLE_PAY }
+            bodyContent={ <>Test</> }
+            onChoosePaymentType={ onChoosePaymentType } />
+        ) }
+        { config?.gpay && (
           <PaymentMethodView
-            logo={Icons.gpayDark}
-            isSelected={paymentType}
+            logo={ Icons.gpayDark }
+            isSelected={ paymentType }
             name="Google Pay"
-            type={PaymentTypes.GOOGLE_PAY}
-            bodyContent={<>Test</>}
-            onChoosePaymentType={onChoosePaymentType}
-          />
-        )}
-        {config?.wire && (
+            type={ PaymentTypes.GOOGLE_PAY }
+            bodyContent={ <>Test</> }
+            onChoosePaymentType={ onChoosePaymentType } />
+        ) }
+        { config?.wire && (
           <PaymentMethodView
-            logo={Icons.wireTransfer}
-            isSelected={paymentType}
+            logo={ Icons.wireTransfer }
+            isSelected={ paymentType }
             name="Wire Transfer"
-            type={PaymentTypes.WIRE_TRANSFER}
-            bodyContent={
+            type={ PaymentTypes.WIRE_TRANSFER }
+            bodyContent={ (
               <WireTransferForm
-                values={wireTransferFormValues}
-                handleChange={onChangeWireTransferField}
-                setFieldValue={onSetWireTransferField}
-                errors={wireTransferFormErrors}
-              />
-            }
-            onChoosePaymentType={onChoosePaymentType}
-          />
-        )}
-        <Box display="flex" marginTop={2} alignItems="center">
-          <img src={Icons.lock} height={28} width={28} alt="lock-icon" />
+                values={ wireTransferFormValues }
+                handleChange={ onChangeWireTransferField }
+                setFieldValue={ onSetWireTransferField }
+                errors={ wireTransferFormErrors } />
+            ) }
+            onChoosePaymentType={ onChoosePaymentType } />
+        ) }
+        <Box display="flex" marginTop={ 2 } alignItems="center">
+          <img src={ Icons.lock } height={ 28 } width={ 28 } alt="lock-icon" />
           <Typography variant="body2" sx={{ marginLeft: 1 }}>
             We protect your payment information using encryption to provide
             bank-level security

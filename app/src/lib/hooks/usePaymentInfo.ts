@@ -21,7 +21,7 @@ const usePaymentInfo = (): PaymentInfo => {
   const getObject = (value:any) => {
     if (typeof value === 'object') return value;
     if (typeof value === 'string') return JSON.parse(value);
-    undefined;
+    return undefined;
   };
 
   const billingInfo = useMemo(() => {

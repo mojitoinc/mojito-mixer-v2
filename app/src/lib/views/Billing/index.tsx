@@ -50,7 +50,7 @@ const BillingContainer = () => {
     setPaymentInfo({
       sessionKey: uuid(),
     });
-  }, []);
+  }, [setPaymentInfo]);
 
   useEffect(() => {
     if (paymentData) {
