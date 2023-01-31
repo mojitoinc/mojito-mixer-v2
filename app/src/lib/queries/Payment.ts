@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const createPaymentMethod = gql`
     mutation CreatePaymentMethod($orgID: UUID1!, $input: PaymentMethodCreateInput!) {
@@ -26,7 +26,7 @@ export const createPaymentMethod = gql`
         __typename
         }
     }
-`
+`;
 
 export const createPayment = gql`
     mutation CreatePayment($paymentMethodID: UUID1!, $invoiceID: UUID1!, $metadata: CreatePaymentMetadataInput) {
@@ -74,7 +74,7 @@ export const createPayment = gql`
         __typename
         }
     }
-`
+`;
 
 export const getPaymentMethodStatus = gql`
     query GetPaymentMethodStatus($paymentMethodID: UUID1!) {
@@ -102,4 +102,4 @@ export const getPaymentMethodStatus = gql`
         __typename
         }
     }
-`
+`;

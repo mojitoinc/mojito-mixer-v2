@@ -32,7 +32,7 @@ const BillingView = ({
 
   return (
     <Box width="100%">
-      { !billing.hideExpressCheckout && <ExpressCheckoutView /> }
+      { !billing.hideExpressCheckout && <ExpressCheckoutView config={ billing.expressCheckoutConfig } /> }
 
       <Card
         sx={{

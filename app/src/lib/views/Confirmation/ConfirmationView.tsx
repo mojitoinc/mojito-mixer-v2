@@ -2,15 +2,19 @@ import Button from '@components/shared/Button';
 import { MixTheme } from '@lib/theme/ThemeOptions';
 import { Box, Card, Typography, useTheme } from '@mui/material';
 import React from 'react';
-import OrderDetails from './OrderDetails';
 import { usePayment } from '@lib/providers/PaymentProvider';
 import { useBilling } from '@lib/providers/BillingProvider';
 import { PaymentStatus, PaymentTypes } from '@lib/constants/states';
+import OrderDetails from './OrderDetails';
 
-const ConfirmationView = () => {
+interface ConfirmationViewProps {
+  paymentStatus: string;
+}
+
+const ConfirmationView = ({ paymentStatus }: ConfirmationViewProps) => {
   const theme = useTheme<MixTheme>();
-  const { paymentInfo } = usePayment()
-  const { billingInfo } = useBilling()
+  const { paymentInfo } = usePayment();
+  const { billingInfo } = useBilling();
   return (
     <Box>
       <Card
@@ -56,59 +60,74 @@ const ConfirmationView = () => {
           <Box
             sx={{
               backgroundColor:
-                paymentInfo?.deliveryStatus == PaymentStatus.PENDING ? theme.global?.confirmationColors?.awaitingPaymentBackground :theme.global?.confirmationColors?.processedBackground,
+                paymentStatus === PaymentStatus.PENDING
+                  ? theme.global?.confirmationColors?.awaitingPaymentBackground
+                  : paymentStatus === PaymentStatus.COMPLETED
+                    ? theme.global?.confirmationColors?.processedBackground
+                    : theme.global?.confirmationColors?.awaitingPaymentBackground,
               padding: '5px 8px',
               borderRadius: '4px',
             }}>
             <Typography
               fontWeight="700"
               fontSize="12px"
-              color={ paymentInfo?.deliveryStatus == PaymentStatus.PENDING ? theme.global?.confirmationColors?.awaitingPaymentTextColor : theme.global?.confirmationColors?.processedTextColor }>
-               { paymentInfo?.deliveryStatus == PaymentStatus.PENDING ? 'Awaiting Payment': 'Processed' }
+              color={ paymentStatus === PaymentStatus.PENDING
+                ? theme.global?.confirmationColors?.awaitingPaymentTextColor
+                : paymentStatus === PaymentStatus.COMPLETED
+                  ? theme.global?.confirmationColors?.processedTextColor
+                  : theme.global?.confirmationColors?.awaitingPaymentTextColor }>
+              { paymentStatus === PaymentStatus.PENDING
+                ? 'Awaiting Payment'
+                : paymentStatus === PaymentStatus.COMPLETED
+                  ? 'Processed' : 'Inprogress' }
             </Typography>
           </Box>
         </Box>
 
         <OrderDetails
           title="Delivery Address"
-          value={paymentInfo?.destinationAddress}
-          copyValue={paymentInfo?.destinationAddress}
+          value={ paymentInfo?.destinationAddress }
+          copyValue={ paymentInfo?.destinationAddress }
           showCopy />
-          { 
-            paymentInfo?.paymentType == PaymentTypes.WIRE_TRANSFER &&
-            <Typography variant={'body2'}>If you selected to have your NFT(s) transferred directly to your non-custodial wallet (such as MetaMask), we will do so as soon as payment confirmation is received; otherwise, your NFT(s) will be transferred to a MultiSig wallet (also known as a custodial wallet) for safekeeping. You can view your NFT(s) on your Account page at any time.</Typography>            
-          }                
+        {
+            paymentInfo?.paymentType === PaymentTypes.WIRE_TRANSFER &&
+            <Typography variant="body2">If you selected to have your NFT(s) transferred directly to your non-custodial wallet (such as MetaMask), we will do so as soon as payment confirmation is received; otherwise, your NFT(s) will be transferred to a MultiSig wallet (also known as a custodial wallet) for safekeeping. You can view your NFT(s) on your Account page at any time.</Typography>
+          }
+        { paymentInfo?.paymentType === PaymentTypes.WALLET_CONNECT && (
         <OrderDetails
           title="Transaction Hash"
           value="0x09750ad...360fdb7"
           copyValue="0x09750"
           showCopy />
-        { paymentInfo?.paymentType == PaymentTypes.WALLET_CONNECT &&
+        ) }
+        { paymentInfo?.paymentType === PaymentTypes.WALLET_CONNECT && (
           <OrderDetails title="Payment Method" copyValue="0x09750" showCopy>
             <Typography
               fontSize="16px">
               Wallet Connect<br />0x09750ad...360fdb7
             </Typography>
           </OrderDetails>
-        }
+        ) }
         {
-          paymentInfo?.paymentType == PaymentTypes.WIRE_TRANSFER && 
+          paymentInfo?.paymentType === PaymentTypes.WIRE_TRANSFER && (
           <OrderDetails title="Payment Method">
-          <Typography variant='body1'
-            fontSize="16px">
-            { paymentInfo.paymentType }<br />
-            { paymentInfo?.wireData?.accountNumber }<br />
-            { paymentInfo?.wireData?.routingNumber }<br />
-            { paymentInfo?.wireData?.bankAddress?.country}<br />
-            { paymentInfo?.wireData?.bankAddress?.bankName }
-          </Typography>
-        </OrderDetails>
-        }
+            <Typography
+              variant="body1"
+              fontSize="16px">
+              { paymentInfo.paymentType }<br />
+              { paymentInfo?.wireData?.accountNumber }<br />
+              { paymentInfo?.wireData?.routingNumber }<br />
+              { paymentInfo?.wireData?.bankAddress?.country }<br />
+              { paymentInfo?.wireData?.bankAddress?.bankName }
+            </Typography>
+          </OrderDetails>
+          )
+}
         <OrderDetails title="Billing Information">
           <Typography
             fontSize="16px">
-            {billingInfo?.name}<br />{billingInfo?.state}, {billingInfo?.postalCode}  {billingInfo?.country}
-            <br />{billingInfo?.phoneNumber}
+            { billingInfo?.name }<br />{ billingInfo?.state }, { billingInfo?.postalCode }  { billingInfo?.country }
+            <br />{ billingInfo?.phoneNumber }
           </Typography>
         </OrderDetails>
       </Card>

@@ -1,9 +1,7 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState } from 'react';
 
 export interface PaymentData {
-  creditCardData?: {
-
-  };
+  creditCardData?: object;
   wireData? : {
     accountNumber: string,
     routingNumber: string,
@@ -28,7 +26,7 @@ const PaymentProvider = ({ children }: { children?: React.ReactNode }) => {
   const [paymentInfo, setPaymentInfo] = useState<PaymentData>();
   return (
     <PaymentContext.Provider value={{ paymentInfo, setPaymentInfo }}>
-      {children}
+      { children }
     </PaymentContext.Provider>
   );
 };

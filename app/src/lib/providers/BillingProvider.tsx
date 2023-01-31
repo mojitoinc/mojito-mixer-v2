@@ -97,7 +97,7 @@ const BillingProvider = ({ children }: { children?: React.ReactNode }) => {
       invoiceData,
       taxes,
     };
-  }, [billingInfo, setBillingInfo, reserveLotData, invoiceDetails, taxes]);
+  }, [billingInfo, setBillingInfo, reserveLotData, taxes, invoiceData]);
 
   return (
     <BillingContext.Provider

@@ -23,6 +23,19 @@ stories.add('Hide Express checkout', () => {
       uiConfiguration={{
         billing: {
           hideExpressCheckout: true,
+          expressCheckoutConfig: {
+            gpay: true,
+            applepay: true,
+            walletConnect: true,
+            metaMask: true,
+          },
+          paymentMethods: {
+            creditCard: true,
+            gpay: true,
+            applepay: true,
+            walletConnect: true,
+            wire: true,
+          },
         },
       }}
       deliveryConfiguration={{
