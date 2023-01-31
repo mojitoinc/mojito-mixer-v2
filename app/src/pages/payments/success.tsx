@@ -22,7 +22,6 @@ const SuccessPage: NextPage = () => {
 
   return paymentId ? (
     <CheckoutComponent
-      success
       show
       paymentId={ paymentId } />
   ) : null;

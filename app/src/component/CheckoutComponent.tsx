@@ -3,12 +3,10 @@ import React from 'react';
 
 interface CheckoutProps {
   show: boolean;
-  success?: boolean;
   paymentId?: string;
 }
 export const CheckoutComponent: React.FC<CheckoutProps> = ({
   show,
-  success,
   paymentId,
 }: CheckoutProps) => {
   return (
@@ -19,7 +17,6 @@ export const CheckoutComponent: React.FC<CheckoutProps> = ({
         itemCount: 1,
         paymentId,
       }}
-      show={ show }
-      success={ success } />
+      show={ show } />
   );
 };
