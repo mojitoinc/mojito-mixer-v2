@@ -20,10 +20,6 @@ export const DeliveryInfoCard = ({
 }: DeliveryInfoCardProps) => {
   const theme = useTheme<MixTheme>();
   const { setContainerState } = useContainer();
-  const isCreditCard = useMemo(
-    () => paymentInfo?.paymentType === PaymentTypes.CREDIT_CARD,
-    [paymentInfo],
-  );
 
   const getCreditCardType = useCallback((network: string) => {
     if (network === 'MASTERCARD') {
@@ -139,7 +135,7 @@ export const DeliveryInfoCard = ({
             sx={{ color: theme.global?.cardGrayedText, marginRight: 3 }}>
             Payment Method
           </Typography>
-          { !isCreditCard && (
+          { paymentInfo?.paymentType === PaymentTypes.WIRE_TRANSFER && (
             <Box>
               <Typography variant="body2">Wire Transfer</Typography>
               <Stack flexDirection="row" alignItems="center">
@@ -160,7 +156,7 @@ export const DeliveryInfoCard = ({
               </Stack>
             </Box>
           ) }
-          { isCreditCard && (
+          { paymentInfo?.paymentType === PaymentTypes.CREDIT_CARD && (
             <Box>
               <Typography variant="body2" sx={{ marginBottom: '4px' }}>
                 Credit Card
