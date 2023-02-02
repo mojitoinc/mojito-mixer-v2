@@ -68,6 +68,8 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
   values,
   setFieldValue,
 }: CheckoutProps) => {
+
+
   const handleFieldChange = useCallback(
     async (fieldName: string, value: boolean | string) => {
       await setFieldValue(fieldName, value);
@@ -138,6 +140,12 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
               value={ values.lotId }
               onChange={ handleChange('lotId') }
               sx={{ width: '250px' }} />
+              <TextInput
+                title="Item ID"
+                placeholder="Item ID"
+                value={ values.itemId }
+                onChange={ handleChange('itemId') }
+                sx={{ width: '250px',marginLeft: 2 }} />
             <TextInput
               title="Lot Units"
               placeholder="Lot Units"
@@ -199,6 +207,8 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
             orgId,
             lotId: values.lotId ?? '',
             itemCount: parseInt(values.lotUnits ?? '1', 10),
+            itemId:values.itemId ?? '',
+            invoiceId : values?.invoiceId
           }}
           uiConfiguration={{
             billing: {
