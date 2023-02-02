@@ -103,3 +103,11 @@ export const getPaymentMethodStatus = gql`
         }
     }
 `;
+export const addressScreeningQuery = gql`
+    mutation GetPaymentMethodStatus($input: AddressScreeningInput!,$orgID: UUID1!) {
+        addressScreening(
+            input: $input
+            orgID: $orgID
+        )
+    }
+`;

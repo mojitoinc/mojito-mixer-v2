@@ -4,6 +4,7 @@ import { PaymentData, usePayment } from '@lib/providers/PaymentProvider';
 import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
 import { meQuery } from '@lib/queries/me';
 import {
+  addressScreeningQuery,
   createPaymentMethodQuery,
   createPaymentQuery,
   getPaymentMethodStatus,
@@ -20,6 +21,7 @@ import { CookieService } from '@lib/storage/CookieService';
 import { formCreatePaymentMethodObject } from './Delivery.service';
 import DeliveryLayout from './Delivery.layout';
 import { ReserveNow } from '@lib/interfaces/Invoice';
+import { RiskRating } from '@lib/constants/riskRating';
 
 export const Delivery = () => {
   const [selectedDeliveryAddress, setSelectedDeliveryAddress] =
@@ -35,7 +37,8 @@ export const Delivery = () => {
   const [encryptCardData] = useEncryptCardData({ orgID: orgId });
   const [paymentMethodStatus] = useLazyQuery(getPaymentMethodStatus);
   const [paymentNotification] = useLazyQuery(getPaymentNotificationQuery);
-  const [reserveNow] = useLazyQuery(reserveNowBuyLotQuery);
+  const [reserveNow] = useMutation(reserveNowBuyLotQuery);
+  const [addressScreening] = useMutation(addressScreeningQuery)
 
   const formatWallets = (wallets: any) => {
     return wallets.map((item: any) => ({
@@ -99,14 +102,16 @@ export const Delivery = () => {
         }
       }
 
-      const reserveData:any = await reserveNow({
+      const reserveData = await reserveNow({
         variables:{
-          marketplaceBuyNowLotID: lotId,
-          itemCount,
+          input: {
+            marketplaceBuyNowLotID: lotId,
+            itemCount,
+          },
         }
       })
 
-      const reserveLotData:ReserveNow = reserveData?.reserveMarketplaceBuyNowLot?.invoice
+      const reserveLotData:ReserveNow = reserveData?.data?.reserveMarketplaceBuyNowLot?.invoice
 
       if (paymentMethodId) {
         await createPayment({
@@ -190,14 +195,14 @@ export const Delivery = () => {
         }
 
 
-      const reserveData:any = await reserveNow({
+      const reserveData = await reserveNow({
         variables:{
           marketplaceBuyNowLotID: lotId,
           itemCount,
         }
       })
 
-      const reserveLotData:ReserveNow = reserveData?.reserveMarketplaceBuyNowLot?.invoice
+      const reserveLotData:ReserveNow = reserveData?.data?.reserveMarketplaceBuyNowLot?.invoice
 
         const result1 = await createPayment({
           variables: {
@@ -244,13 +249,30 @@ export const Delivery = () => {
   ]);
 
   const onClickConfirmPurchase = useCallback(async () => {
+    try {
+    const screeningData = await addressScreening({
+      variables:{
+        orgID : orgId,
+        input: {
+          address:selectedDeliveryAddress,
+          network: "ethereum",
+          asset: "ETH",
+        },
+      }
+    })
+    if(screeningData.data?.addressScreening === RiskRating.High) {
+      return;
+    }
     if (paymentInfo?.paymentType === PaymentTypes.WIRE_TRANSFER) {
       onConfirmWireTransferPurchase();
     }
     if (paymentInfo?.paymentType === PaymentTypes.CREDIT_CARD) {
       onConfirmCreditCardPurchase();
     }
-  }, [onConfirmCreditCardPurchase, onConfirmWireTransferPurchase, paymentInfo]);
+  }catch(e){
+    console.error('ERROR', e);
+  }
+  }, [onConfirmCreditCardPurchase, onConfirmWireTransferPurchase, paymentInfo,orgId,selectedDeliveryAddress]);
 
   return (
     <DeliveryLayout

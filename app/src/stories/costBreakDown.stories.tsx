@@ -7,7 +7,7 @@ export const CostBreakDownStories = () => {
     collectionData={{
       name:'Item',
       details:{
-        totalAvailableUnits:100
+        totalAvailableUnits:100,
       }
     }}
       taxes={{

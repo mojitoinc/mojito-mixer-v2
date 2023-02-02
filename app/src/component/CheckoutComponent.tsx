@@ -16,6 +16,8 @@ export const CheckoutComponent: React.FC<CheckoutProps> = ({
         lotId: '17cd1000-323d-4a20-8e5f-7a8598ffae2a',
         itemCount: 1,
         paymentId,
+        itemId:"",
+        invoiceId:""
       }}
       show={ show } />
   );
