@@ -1,27 +1,27 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { DropdownOptions } from "@components/shared/Dropdown";
-import { PaymentData, usePayment } from "@lib/providers/PaymentProvider";
-import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
-import { meQuery } from "@lib/queries/me";
+import React, { useCallback, useEffect, useState } from 'react';
+import { DropdownOptions } from '@components/shared/Dropdown';
+import { PaymentData, usePayment } from '@lib/providers/PaymentProvider';
+import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
+import { meQuery } from '@lib/queries/me';
 import {
   createPaymentMethodQuery,
   createPaymentQuery,
   getPaymentMethodStatus,
-} from "@lib/queries/Payment";
-import { useDelivery } from "@lib/providers/DeliveryProvider";
-import { useBilling } from "@lib/providers/BillingProvider";
-import { useContainer } from "@lib/providers/ContainerStateProvider";
-import { ContainerTypes } from "@views/MojitoCheckout/MojitoCheckOut.layout";
-import { PaymentTypes } from "@lib/constants/states";
-import { getPaymentNotificationQuery } from "@lib/queries/creditCard";
-import { useEncryptCardData } from "@lib/hooks/useEncryptCard";
-import { CookieService } from "@lib/storage/CookieService";
-import { formCreatePaymentMethodObject } from "./Delivery.service";
-import DeliveryLayout from "./Delivery.layout";
+} from '@lib/queries/Payment';
+import { useDelivery } from '@lib/providers/DeliveryProvider';
+import { useBilling } from '@lib/providers/BillingProvider';
+import { useContainer } from '@lib/providers/ContainerStateProvider';
+import { ContainerTypes } from '@views/MojitoCheckout/MojitoCheckOut.layout';
+import { PaymentTypes } from '@lib/constants/states';
+import { getPaymentNotificationQuery } from '@lib/queries/creditCard';
+import { useEncryptCardData } from '@lib/hooks/useEncryptCard';
+import { CookieService } from '@lib/storage/CookieService';
+import { formCreatePaymentMethodObject } from './Delivery.service';
+import DeliveryLayout from './Delivery.layout';
 
 export const Delivery = () => {
   const [selectedDeliveryAddress, setSelectedDeliveryAddress] =
-    useState<string>("");
+    useState<string>('');
   const [walletOptions, setWalletOptions] = useState<DropdownOptions[]>([]);
   const { billingInfo, reserveLotData, taxes } = useBilling();
   const { orgId } = useDelivery();
@@ -45,8 +45,8 @@ export const Delivery = () => {
     if (meData?.me?.wallets) {
       formattedWallets = formatWallets(meData.me?.wallets);
       formattedWallets.push({
-        label: "I don’t have a wallet / Create a new Multi-sig",
-        value: "new-multi-sig",
+        label: 'I don’t have a wallet / Create a new Multi-sig',
+        value: 'new-multi-sig',
       });
       setWalletOptions(formattedWallets);
     }
@@ -60,9 +60,9 @@ export const Delivery = () => {
     try {
       const { keyID, encryptedCardData } = await encryptCardData({
         number: paymentInfo?.creditCardData?.isNew
-          ? paymentInfo?.creditCardData?.cardNumber?.replace(/\s/g, "")
+          ? paymentInfo?.creditCardData?.cardNumber?.replace(/\s/g, '')
           : undefined,
-        cvv: paymentInfo?.creditCardData?.cvv ?? "",
+        cvv: paymentInfo?.creditCardData?.cvv ?? '',
       });
       let paymentMethodId = paymentInfo?.creditCardData?.isNew
         ? undefined
@@ -73,7 +73,7 @@ export const Delivery = () => {
           paymentInfo,
           billingInfo,
           keyID,
-          encryptedCardData
+          encryptedCardData,
         );
         const createPaymentMethodResult = await createPaymentMethod({
           variables: {
@@ -85,7 +85,7 @@ export const Delivery = () => {
           createPaymentMethodResult?.data?.createPaymentMethod?.id;
         if (
           createPaymentMethodResult?.data?.createPaymentMethod?.status !==
-          "complete"
+          'complete'
         ) {
           await paymentMethodStatus({
             variables: {
@@ -122,7 +122,7 @@ export const Delivery = () => {
           notificationData?.data?.getPaymentNotification?.message?.redirectURL;
       }
     } catch (e) {
-      console.error("ERROR", e);
+      console.error('ERROR', e);
     }
   }, [
     orgId,
@@ -150,7 +150,7 @@ export const Delivery = () => {
       delete copiedBillingDetails.street1;
       delete copiedBillingDetails.email;
       delete copiedBillingDetails.phoneNumber;
-      inputData.paymentType = "Wire";
+      inputData.paymentType = 'Wire';
       inputData.wireData = {
         ...paymentInfo?.wireData,
         billingDetails: copiedBillingDetails,
@@ -162,7 +162,7 @@ export const Delivery = () => {
         },
       });
       if (result?.data?.createPaymentMethod?.id) {
-        if (result?.data?.createPaymentMethod?.status !== "complete") {
+        if (result?.data?.createPaymentMethod?.status !== 'complete') {
           await paymentMethodStatus({
             variables: {
               paymentMethodID: result?.data?.createPaymentMethod?.id,
@@ -181,7 +181,7 @@ export const Delivery = () => {
         const paymentData: PaymentData = {
           ...paymentInfo,
           deliveryStatus: result1?.data?.createPayment?.status,
-          paymentId: result?.data?.createPaymentMethod?.id ?? "",
+          paymentId: result?.data?.createPaymentMethod?.id ?? '',
           destinationAddress: selectedDeliveryAddress,
         };
         setPaymentInfo(paymentData);
@@ -193,7 +193,7 @@ export const Delivery = () => {
         setContainerState(ContainerTypes.CONFIRMATION);
       }
     } catch (e) {
-      console.error("ERROR", e);
+      console.error('ERROR', e);
     }
   }, [
     paymentInfo,
@@ -220,13 +220,12 @@ export const Delivery = () => {
 
   return (
     <DeliveryLayout
-      onWalletChange={handleChange}
-      walletOptions={walletOptions}
-      selectedDeliveryAddress={selectedDeliveryAddress}
-      onClickConfirmPurchase={onClickConfirmPurchase}
-      organizationName={meData?.me?.userOrgs[0]?.organization?.name}
-      billingInfo={billingInfo}
-      paymentInfo={paymentInfo}
-    />
+      onWalletChange={ handleChange }
+      walletOptions={ walletOptions }
+      selectedDeliveryAddress={ selectedDeliveryAddress }
+      onClickConfirmPurchase={ onClickConfirmPurchase }
+      organizationName={ meData?.me?.userOrgs[0]?.organization?.name }
+      billingInfo={ billingInfo }
+      paymentInfo={ paymentInfo } />
   );
 };

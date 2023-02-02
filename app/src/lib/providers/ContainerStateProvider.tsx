@@ -1,11 +1,11 @@
-import { ContainerTypes } from "@views/MojitoCheckout/MojitoCheckOut.layout";
+import { ContainerTypes } from '@views/MojitoCheckout/MojitoCheckOut.layout';
 import React, {
   createContext,
   useContext,
   useEffect,
   useMemo,
   useState,
-} from "react";
+} from 'react';
 
 export interface Container {
   containerState: ContainerTypes;
@@ -23,7 +23,7 @@ const ContainerStateProvider = ({
   children,
 }: ContainerStateProps) => {
   const [containerState, setContainerState] = useState<ContainerTypes>(
-    ContainerTypes.CHECKOUT
+    ContainerTypes.CHECKOUT,
   );
 
   useEffect(() => {
@@ -35,8 +35,8 @@ const ContainerStateProvider = ({
   }, [containerState, setContainerState]);
 
   return (
-    <ContainerStateContext.Provider value={value}>
-      {children}
+    <ContainerStateContext.Provider value={ value }>
+      { children }
     </ContainerStateContext.Provider>
   );
 };
