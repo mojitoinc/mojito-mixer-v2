@@ -4,7 +4,8 @@ import DeliveryLayout from '@lib/views/Delivery/Delivery.layout';
 export const BillingViewStories = () => {
   return (
     <DeliveryLayout
-      isCreditCard={ false }
+      billingInfo={{}}
+      paymentInfo={{}}
       onClickConfirmPurchase={ () => undefined }
       onWalletChange={ () => undefined }
       organizationName=""

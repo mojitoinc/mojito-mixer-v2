@@ -5,6 +5,14 @@ import PaymentLayout from '@lib/views/Payment/Payment.layout';
 export const WireTransferStories = () => {
   return (
     <PaymentLayout
+      creditCardFormErrors={{}}
+      creditCardFormValues={{
+        isNew: false,
+      }}
+      billingInfo={{}}
+      creditCardList={ [] }
+      onChangeCreditCardField={ () => undefined }
+      onSetCreditCardField={ async () => undefined }
       onChangeWireTransferField={ () => undefined }
       onChoosePaymentType={ () => undefined }
       onSetWireTransferField={ async () => undefined }

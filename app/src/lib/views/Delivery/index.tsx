@@ -13,14 +13,10 @@ import { useBilling } from '@lib/providers/BillingProvider';
 import { useContainer } from '@lib/providers/ContainerStateProvider';
 import { ContainerTypes } from '@views/MojitoCheckout/MojitoCheckOut.layout';
 import { PaymentTypes } from '@lib/constants/states';
-import {
-  getPaymentNotificationQuery,
-} from '@lib/queries/creditCard';
+import { getPaymentNotificationQuery } from '@lib/queries/creditCard';
 import { useEncryptCardData } from '@lib/hooks/useEncryptCard';
 import { CookieService } from '@lib/storage/CookieService';
-import {
-  formCreatePaymentMethodObject,
-} from './Delivery.service';
+import { formCreatePaymentMethodObject } from './Delivery.service';
 import DeliveryLayout from './Delivery.layout';
 
 export const Delivery = () => {
@@ -153,6 +149,7 @@ export const Delivery = () => {
       delete copiedBillingDetails.state;
       delete copiedBillingDetails.street1;
       delete copiedBillingDetails.email;
+      delete copiedBillingDetails.phoneNumber;
       inputData.paymentType = 'Wire';
       inputData.wireData = {
         ...paymentInfo?.wireData,
@@ -223,11 +220,12 @@ export const Delivery = () => {
 
   return (
     <DeliveryLayout
-      isCreditCard={ paymentInfo?.paymentType === PaymentTypes.CREDIT_CARD }
       onWalletChange={ handleChange }
       walletOptions={ walletOptions }
       selectedDeliveryAddress={ selectedDeliveryAddress }
       onClickConfirmPurchase={ onClickConfirmPurchase }
-      organizationName={ meData?.me?.userOrgs[0]?.organization?.name } />
+      organizationName={ meData?.me?.userOrgs[0]?.organization?.name }
+      billingInfo={ billingInfo }
+      paymentInfo={ paymentInfo } />
   );
 };

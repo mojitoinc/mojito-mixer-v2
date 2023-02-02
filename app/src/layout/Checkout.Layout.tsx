@@ -1,5 +1,5 @@
 import MojitoCheckout from '@lib/public/MojitoCheckout';
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import {
   Box,
   Stack,
@@ -17,6 +17,7 @@ import {
   ExpressCheckoutPayment,
   PaymentMethodTypes,
 } from 'pages';
+import { FormikErrors } from 'formik';
 
 export interface CheckboxOptions {
   field: string;
@@ -29,8 +30,19 @@ interface CheckoutProps {
   onOpen: () => void;
   isAuthenticated: boolean;
   organizationOptions: DropdownOptions[];
-  handleChange: (fieldName: string, value: string | boolean) => void;
+  handleChange: any;
   values: ConfigurationValues & ExpressCheckoutPayment & PaymentMethodTypes;
+  setFieldValue: (
+    field: string,
+    value: any,
+    shouldValidate?: boolean | undefined
+  ) =>
+    | Promise<void>
+    | Promise<
+        FormikErrors<
+          ConfigurationValues & ExpressCheckoutPayment & PaymentMethodTypes
+        >
+      >;
 }
 
 const expressOptions: CheckboxOptions[] = [
@@ -54,14 +66,24 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
   organizationOptions,
   handleChange,
   values,
+  setFieldValue,
 }: CheckoutProps) => {
+  const handleFieldChange = useCallback(
+    async (fieldName: string, value: boolean | string) => {
+      await setFieldValue(fieldName, value);
+    },
+    [setFieldValue],
+  );
+
+  const orgId = useMemo(() => {
+    return values.organization !== undefined &&
+      values.organization !== 'custom-org-id'
+      ? values.organization
+      : values.customOrganization ?? '';
+  }, [values]);
+
   const renderCheckbox = useCallback(
-    (
-      label: string,
-      isChecked: boolean,
-      fieldName: string,
-      handleFieldChange: (fieldName: string, value: boolean) => void,
-    ) => {
+    (label: string, isChecked: boolean, fieldName: string) => {
       return (
         <FormGroup>
           <FormControlLabel
@@ -74,7 +96,7 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
         </FormGroup>
       );
     },
-    [],
+    [handleFieldChange],
   );
 
   return (
@@ -94,13 +116,13 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
             sx={{ width: '50%' }}
             options={ organizationOptions }
             value={ values.organization }
-            onChange={ (val: string) => handleChange('organization', val) } />
+            onChange={ handleChange('organization') } />
           { values.organization === 'custom-org-id' && (
             <TextInput
               placeholder="Custom Org ID"
               sx={{ width: '50%', marginTop: 2 }}
               value={ values.customOrganization ?? '' }
-              onChange={ (val: string) => handleChange('customOrganization', val) } />
+              onChange={ handleChange('customOrganization') } />
           ) }
           <Typography variant="body2" sx={{ marginTop: 1 }}>
             If left empty, the modal will fail to load your saved payment
@@ -114,13 +136,13 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
               title="Lot ID"
               placeholder="Lot ID"
               value={ values.lotId }
-              onChange={ (val: string) => handleChange('lotId', val) }
+              onChange={ handleChange('lotId') }
               sx={{ width: '250px' }} />
             <TextInput
               title="Lot Units"
               placeholder="Lot Units"
               value={ values.lotUnits }
-              onChange={ (val: string) => handleChange('lotUnits', val) }
+              onChange={ handleChange('lotUnits') }
               sx={{ width: '120px', marginLeft: 2 }}
               type="number" />
           </Stack>
@@ -130,7 +152,6 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
             'Express Checkout',
             values.express ?? false,
             'express',
-            handleChange,
           ) }
           { values.express && (
             <Grid container>
@@ -141,7 +162,6 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
                       label,
                       values[field as keyof ExpressCheckoutPayment] ?? checked,
                       field,
-                      handleChange,
                     ) }
                   </Grid>
                 ),
@@ -159,7 +179,6 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
                     label,
                     values[field as keyof PaymentMethodTypes] ?? checked,
                     field,
-                    handleChange,
                   ) }
                 </Grid>
               ),
@@ -171,14 +190,13 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
             'Discount Code',
             values?.discountCode ?? true,
             'discountCode',
-            handleChange,
           ) }
         </Box>
       </Box>
       { isAuthenticated && (
         <MojitoCheckout
           deliveryConfiguration={{
-            orgId: values.customOrganization ?? values.organization ?? '',
+            orgId,
             lotId: values.lotId ?? '',
             itemCount: parseInt(values.lotUnits ?? '1', 10),
           }}

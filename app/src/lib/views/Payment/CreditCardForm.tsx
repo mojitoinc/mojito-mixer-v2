@@ -2,8 +2,15 @@ import CreditCardDropdown from '@components/shared/CreditCardDropdown';
 import TextInput from '@components/shared/TextInput';
 import { CreditCardFormType } from '@lib/interfaces/CreditCard';
 import { PaymentMethod } from '@lib/interfaces/PaymentMethods';
+import { useBilling } from '@lib/providers/BillingProvider';
 import { MixTheme } from '@lib/theme/ThemeOptions';
-import { Box, Checkbox, Typography, useTheme } from '@mui/material';
+import {
+  Box,
+  Checkbox,
+  FormHelperText,
+  Typography,
+  useTheme,
+} from '@mui/material';
 import { FormikErrors } from 'formik';
 import React, { useCallback } from 'react';
 
@@ -27,11 +34,15 @@ export const CreditCardForm = ({
   handleChange,
 }: CreditCardProps) => {
   const theme = useTheme<MixTheme>();
+  const { billingInfo } = useBilling();
 
-  const handleCardChange = useCallback((val: string) => {
-    setFieldValue('isNew', val === 'null');
-    setFieldValue('cardId', val);
-  }, [setFieldValue]);
+  const handleCardChange = useCallback(
+    (val: string) => {
+      setFieldValue('isNew', val === 'null');
+      setFieldValue('cardId', val);
+    },
+    [setFieldValue],
+  );
 
   const formatCardNumber = useCallback(
     async (value: string) => {
@@ -40,8 +51,8 @@ export const CreditCardForm = ({
       if (isValid) {
         if (
           cardNumber.length === 4 ||
-        cardNumber.length === 9 ||
-        cardNumber.length === 14
+          cardNumber.length === 9 ||
+          cardNumber.length === 14
         ) {
           cardNumber = `${ cardNumber } `;
         }
@@ -60,7 +71,6 @@ export const CreditCardForm = ({
 
   return (
     <>
-
       <CreditCardDropdown
         value={ values?.cardId }
         onChange={ handleCardChange }
@@ -68,6 +78,11 @@ export const CreditCardForm = ({
         title="Card info"
         sx={{ marginRight: '8px' }}
         options={ creditCardList } />
+      { !billingInfo?.phoneNumber && (
+        <FormHelperText error>
+          Phone number is mandatory for credit card payment
+        </FormHelperText>
+      ) }
       { values?.isNew && (
         <Box display="flex" justifyContent="space-between">
           <TextInput

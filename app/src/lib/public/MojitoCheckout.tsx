@@ -39,7 +39,8 @@ const MojitoCheckout = ({
         <ThemeProvider theme={ themes }>
           <DeliveryContext.Provider value={ deliveryConfiguration }>
             <ConfigurationContext.Provider value={ uiConfigurations }>
-              <ContainerStateProvider paymentId={ deliveryConfiguration?.paymentId }>
+              <ContainerStateProvider
+                paymentId={ deliveryConfiguration?.paymentId }>
                 <BillingProvider>
                   <PaymentProvider>
                     <GlobalStyles styles={ styles } />

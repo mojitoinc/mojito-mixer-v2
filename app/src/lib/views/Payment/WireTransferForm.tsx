@@ -43,11 +43,21 @@ export const WireTransferForm = ({
     async (value: string, fieldName: string) => {
       const isValid = value.match(/^[\d\s]+$/);
       let copiedValue = value;
-      if (isValid && ((fieldName === 'accountNumber' && value.length < 10) || (fieldName === 'aba' && value.length < 11))) {
-        if ((value.length === 4 && values.accountNumber.length !== 5 &&
-              values.accountNumber.length > 0 && values.accountNumber.length !== 9) ||
-              (value.length === 4 && values.aba.length !== 5 &&
-                values.aba.length > 0 && values.aba.length !== 10)) {
+      if (
+        isValid &&
+        ((fieldName === 'accountNumber' && value.length < 10) ||
+          (fieldName === 'aba' && value.length < 11))
+      ) {
+        if (
+          (value.length === 4 &&
+            values.accountNumber.length !== 5 &&
+            values.accountNumber.length > 0 &&
+            values.accountNumber.length !== 9) ||
+          (value.length === 4 &&
+            values.aba.length !== 5 &&
+            values.aba.length > 0 &&
+            values.aba.length !== 10)
+        ) {
           copiedValue = `${ copiedValue } `;
         }
         await setFieldValue(fieldName, copiedValue);

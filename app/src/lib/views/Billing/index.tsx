@@ -12,10 +12,9 @@ import { uuid } from 'uuidv4';
 import { usePayment } from '@lib/providers/PaymentProvider';
 import BillingView from './BillingView';
 
-
 const BillingContainer = () => {
   const { orgId } = useDelivery();
-  const { setBillingInfo } = useBilling();
+  const { setBillingInfo, billingInfo } = useBilling();
 
   const [isEditing, setIsEditing] = useState<boolean>(true);
   const { setContainerState } = useContainer();
@@ -25,6 +24,7 @@ const BillingContainer = () => {
     variables: {
       orgID: orgId,
     },
+    skip: !orgId,
   });
 
   const schema = Yup.object().shape({
@@ -38,9 +38,16 @@ const BillingContainer = () => {
     phoneNumber: Yup.string().required('Please enter a mobile number'),
   });
 
-
   const { values, errors, handleChange, setValues, isValid } = useFormik({
     initialValues: {
+      email: '',
+      country: '',
+      state: '',
+      city: '',
+      postalCode: '',
+      phoneNumber: '',
+      street1: '',
+      name: '',
     } as BillingFormData,
     onSubmit: () => undefined,
     validationSchema: schema,
@@ -61,14 +68,17 @@ const BillingContainer = () => {
       if (paymentItem) {
         setIsEditing(false);
         setValues({
-          city: paymentItem?.billingDetails?.city,
-          country: paymentItem?.billingDetails?.country,
-          postalCode: paymentItem?.billingDetails?.postalCode,
-          state: paymentItem?.billingDetails?.district,
-          email: paymentItem?.metadata?.email,
-          phoneNumber: paymentItem?.metadata?.phoneNumber,
-          street1: paymentItem?.billingDetails?.address1,
-          name: paymentItem?.billingDetails?.name,
+          city: billingInfo?.city ?? paymentItem?.billingDetails?.city,
+          country: billingInfo?.country ?? paymentItem?.billingDetails?.country,
+          postalCode:
+            billingInfo?.postalCode ?? paymentItem?.billingDetails?.postalCode,
+          state: billingInfo?.state ?? paymentItem?.billingDetails?.district,
+          email: billingInfo?.email ?? paymentItem?.metadata?.email,
+          phoneNumber:
+            billingInfo?.phoneNumber ?? paymentItem?.metadata?.phoneNumber,
+          street1:
+            billingInfo?.street1 ?? paymentItem?.billingDetails?.address1,
+          name: billingInfo?.name ?? paymentItem?.billingDetails?.name,
         });
       } else {
         setIsEditing(true);

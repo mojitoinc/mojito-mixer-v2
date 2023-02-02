@@ -8,6 +8,7 @@ import Button from '@components/shared/Button';
 import { FormikErrors } from 'formik';
 import { PaymentMethod } from '@lib/interfaces/PaymentMethods';
 import { CreditCardFormType } from '@lib/interfaces/CreditCard';
+import { BillingFormData } from '@lib/providers/BillingProvider';
 import { PaymentInfoCards } from './InfoCards';
 import { PaymentMethodView } from './PaymentMethod.layout';
 import { WireTransferForm, WireTransferFormData } from './WireTransferForm';
@@ -25,8 +26,8 @@ interface PaymentLayoutProps {
     shouldValidate?: boolean | undefined
   ) => Promise<void> | Promise<FormikErrors<WireTransferFormData>>;
   wireTransferFormErrors: FormikErrors<WireTransferFormData>;
-  creditCardList:PaymentMethod[];
-  creditCardFormValues:CreditCardFormType;
+  creditCardList: PaymentMethod[];
+  creditCardFormValues: CreditCardFormType;
   onChangeCreditCardField: any;
   onSetCreditCardField: (
     field: string,
@@ -34,7 +35,7 @@ interface PaymentLayoutProps {
     shouldValidate?: boolean | undefined
   ) => Promise<void> | Promise<FormikErrors<CreditCardFormType>>;
   creditCardFormErrors: FormikErrors<CreditCardFormType>;
-  onClickDelivery: ()=>void;
+  onClickDelivery: () => void;
   config?: {
     gpay?: boolean;
     applepay?: boolean;
@@ -42,6 +43,7 @@ interface PaymentLayoutProps {
     wire?: boolean;
     creditCard?: boolean;
   };
+  billingInfo: BillingFormData | undefined;
 }
 
 const PaymentLayout = ({
@@ -58,12 +60,13 @@ const PaymentLayout = ({
   onSetCreditCardField,
   onClickDelivery,
   config,
-}:PaymentLayoutProps) => {
+  billingInfo,
+}: PaymentLayoutProps) => {
   const theme = useTheme<MixTheme>();
 
   return (
     <>
-      <PaymentInfoCards />
+      <PaymentInfoCards billingInfo={ billingInfo } />
       <Card
         sx={{
           border: `1px solid ${ theme.global?.cardBorder }`,
@@ -85,7 +88,7 @@ const PaymentLayout = ({
                 handleChange={ onChangeCreditCardField }
                 setFieldValue={ onSetCreditCardField }
                 errors={ creditCardFormErrors } />
-) }
+            ) }
             onChoosePaymentType={ onChoosePaymentType } />
         ) }
         { config?.walletConnect && (

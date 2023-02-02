@@ -4,6 +4,8 @@ import { meQuery } from 'queries/meQuery';
 import { useAuth0 } from '@auth0/auth0-react';
 import { UserOrg } from 'interface/meQuery';
 import { DropdownOptions } from 'component/shared/DropDown';
+import { useFormik } from 'formik';
+// import * as Yup from 'yup';
 import { CheckoutLayout } from '../layout/Checkout.Layout';
 
 export interface ConfigurationValues {
@@ -30,9 +32,58 @@ export interface PaymentMethodTypes {
   wire?: boolean;
 }
 
+// const validationSchema = Yup.object().shape({
+//   organization: Yup.string().when(["customOrganization", "organization"], {
+//     is: (customOrganization: string, organization: string) =>
+//       organization !== "custom-org-id" && customOrganization === "",
+//     then: Yup.string().required("Organization id is Required"),
+//   }),
+//   customOrganization: Yup.string().when(
+//     ["customOrganization", "organization"],
+//     {
+//       is: (customOrganization: string, organization: string) =>
+//         organization === "custom-org-id" && customOrganization !== "",
+//       then: Yup.string().required("Custom organization id is Required"),
+//     }
+//   ),
+//   lotId: Yup.string(),
+//   lotUnits: Yup.string(),
+//   express: Yup.boolean(),
+//   discountCode: Yup.boolean(),
+//   expressGpay: Yup.boolean(),
+//   expressApplepay: Yup.boolean(),
+//   expressWalletconnect: Yup.boolean(),
+//   expressMetamask: Yup.boolean(),
+//   creditcard: Yup.boolean(),
+//   gpay: Yup.boolean(),
+//   applepay: Yup.boolean(),
+//   walletconnect: Yup.boolean(),
+//   wire: Yup.boolean(),
+// });
+
 const HomePage: React.FC = () => {
   const [show, setShow] = useState<boolean>(false);
   const { isAuthenticated } = useAuth0();
+  const { values, handleChange, setFieldValue } = useFormik({
+    initialValues: {
+      organization: '',
+      customOrganization: '',
+      lotId: '',
+      lotUnits: '',
+      express: true,
+      discountCode: true,
+      expressApplepay: true,
+      expressGpay: true,
+      expressMetamask: true,
+      expressWalletconnect: true,
+      applepay: true,
+      gpay: true,
+      walletconnect: true,
+      creditcard: true,
+      wire: true,
+    } as ConfigurationValues & ExpressCheckoutPayment & PaymentMethodTypes,
+    onSubmit: () => undefined,
+  });
 
   const handleOpen = useCallback(() => {
     setShow(true);
@@ -40,21 +91,8 @@ const HomePage: React.FC = () => {
   const { data: meData } = useQuery(meQuery, {
     skip: !isAuthenticated,
   });
-  const [values, setValues] = useState<
-    ConfigurationValues & ExpressCheckoutPayment & PaymentMethodTypes
-  >({});
 
   const [organizations, setOrganizations] = useState<DropdownOptions[]>([]);
-
-  const handleChange = useCallback(
-    (fieldName: string, value: string | boolean) => {
-      setValues({
-        ...values,
-        [fieldName]: value,
-      });
-    },
-    [values],
-  );
 
   useEffect(() => {
     if (meData?.me?.userOrgs) {
@@ -77,6 +115,7 @@ const HomePage: React.FC = () => {
       isAuthenticated={ isAuthenticated }
       organizationOptions={ organizations }
       handleChange={ handleChange }
+      setFieldValue={ setFieldValue }
       values={ values } />
   );
 };

@@ -45,9 +45,12 @@ const CreditCardDropdown = ({
 }: DropdownProps) => {
   const theme = useTheme<MixTheme>();
 
-  const onChangeValue = useCallback((e: SelectChangeEvent<string>) => {
-    onChange?.(e.target.value);
-  }, [onChange]);
+  const onChangeValue = useCallback(
+    (e: SelectChangeEvent<string>) => {
+      onChange?.(e.target.value);
+    },
+    [onChange],
+  );
 
   const getCreditCardType = useCallback((item: PaymentMethod) => {
     if (item?.network === 'MASTERCARD') {
@@ -62,16 +65,26 @@ const CreditCardDropdown = ({
     return Icons.masterCard;
   }, []);
 
-  const renderOption = useCallback((item:PaymentMethod) => {
-    const creditCardType = getCreditCardType(item as PaymentMethod);
-    return (
-      <Stack flexDirection="row">
-        { item?.network &&
-          <img src={ creditCardType } width="49px" height="24px" alt="Creditcard" /> }
-        <Typography variant="body1" sx={{ marginLeft: '4px' }}>Card ending { item.last4Digit }</Typography>
-      </Stack>
-    );
-  }, [getCreditCardType]);
+  const renderOption = useCallback(
+    (item: PaymentMethod) => {
+      const creditCardType = getCreditCardType(item as PaymentMethod);
+      return (
+        <Stack flexDirection="row">
+          { item?.network && (
+            <img
+              src={ creditCardType }
+              width="49px"
+              height="24px"
+              alt="Creditcard" />
+          ) }
+          <Typography variant="body1" sx={{ marginLeft: '4px' }}>
+            Card ending { item.last4Digit }
+          </Typography>
+        </Stack>
+      );
+    },
+    [getCreditCardType],
+  );
 
   return (
     <Box
@@ -122,11 +135,15 @@ const CreditCardDropdown = ({
             </Typography>
           </MenuItem>
           { options.map((item: PaymentMethod) => {
-            return <MenuItem value={ item?.id } key={ item?.id }>{ renderOption(item) }</MenuItem>;
+            return (
+              <MenuItem value={ item?.id } key={ item?.id }>
+                { renderOption(item) }
+              </MenuItem>
+            );
           }) }
           <MenuItem value="null">Add new card info</MenuItem>
         </Select>
-        { error && <FormHelperText>{ error }</FormHelperText> }
+        { error && <FormHelperText error>{ error }</FormHelperText> }
       </FormControl>
     </Box>
   );
