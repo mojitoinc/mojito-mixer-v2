@@ -1,24 +1,26 @@
-import React from 'react';
-import DeliveryLayout from '@lib/views/Delivery/Delivery.layout';
+import React from "react";
+import DeliveryLayout from "@lib/views/Delivery/Delivery.layout";
 
 export const BillingViewStories = () => {
   return (
     <DeliveryLayout
-      isCreditCard={ false }
-      onClickConfirmPurchase={ () => undefined }
-      onWalletChange={ () => undefined }
+      billingInfo={{}}
+      paymentInfo={{}}
+      onClickConfirmPurchase={() => undefined}
+      onWalletChange={() => undefined}
       organizationName=""
       selectedDeliveryAddress=""
-      walletOptions={ [
+      walletOptions={[
         {
-          label: 'Showri',
-          value: '0xaldjkaslk',
+          label: "Showri",
+          value: "0xaldjkaslk",
         },
-      ] } />
+      ]}
+    />
   );
 };
 const stories = {
-  title: 'views/DeliveryLayout',
+  title: "views/DeliveryLayout",
   component: DeliveryLayout,
 };
 export default stories;

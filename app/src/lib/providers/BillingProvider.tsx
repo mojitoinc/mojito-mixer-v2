@@ -4,18 +4,18 @@ import React, {
   useEffect,
   useMemo,
   useState,
-} from 'react';
-import { useMutation, useQuery } from '@apollo/client';
-import { Invoice, ReserveNow } from '@lib/interfaces/Invoice';
+} from "react";
+import { useMutation, useQuery } from "@apollo/client";
+import { Invoice, ReserveNow } from "@lib/interfaces/Invoice";
 import {
   reserveNowBuyLotQuery,
   invoiceDetailsQuery,
   getTaxQuoteQuery,
-} from '@lib/queries/invoiceDetails';
-import { Taxes } from '@lib/interfaces/CostBreakDown';
-import { ContainerTypes } from '@views/MojitoCheckout/MojitoCheckOut.layout';
-import { useDelivery } from './DeliveryProvider';
-import { useContainer } from './ContainerStateProvider';
+} from "@lib/queries/invoiceDetails";
+import { Taxes } from "@lib/interfaces/CostBreakDown";
+import { ContainerTypes } from "@views/MojitoCheckout/MojitoCheckOut.layout";
+import { useDelivery } from "./DeliveryProvider";
+import { useContainer } from "./ContainerStateProvider";
 
 export interface BillingFormData {
   email?: string;
@@ -51,7 +51,7 @@ const BillingProvider = ({ children }: { children?: React.ReactNode }) => {
           itemCount,
         },
       },
-    },
+    }
   );
 
   const reserveLotData: ReserveNow = useMemo<ReserveNow>(() => {
@@ -70,10 +70,11 @@ const BillingProvider = ({ children }: { children?: React.ReactNode }) => {
   }, [invoiceDetails]);
 
   const taxablePrice = useMemo(
-    () => invoiceData?.reduce((value: number, item: Invoice) => {
-      return value + item.totalPrice;
-    }, 0),
-    [invoiceData],
+    () =>
+      invoiceData?.reduce((value: number, item: Invoice) => {
+        return value + item.totalPrice;
+      }, 0),
+    [invoiceData]
   );
 
   const { data: taxQuoteData } = useQuery(getTaxQuoteQuery, {
@@ -112,7 +113,7 @@ const BillingProvider = ({ children }: { children?: React.ReactNode }) => {
   }, [billingInfo, setBillingInfo, reserveLotData, taxes, invoiceData]);
 
   return (
-    <BillingContext.Provider value={ value }>{ children }</BillingContext.Provider>
+    <BillingContext.Provider value={value}>{children}</BillingContext.Provider>
   );
 };
 
