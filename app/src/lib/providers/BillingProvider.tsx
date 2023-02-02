@@ -49,8 +49,8 @@ const BillingProvider = ({ children }: { children?: React.ReactNode }) => {
 
   const taxablePrice = useMemo<number>(
     () => {
-      if (collectionData?.details?.unitPrice && !Number.isNaN(collectionData?.details?.unitPrice)) { 
-        return collectionData.details.unitPrice * itemCount; 
+      if (collectionData?.details?.unitPrice && !Number.isNaN(collectionData?.details?.unitPrice)) {
+        return collectionData.details.unitPrice * itemCount;
       }
       return 0;
     },

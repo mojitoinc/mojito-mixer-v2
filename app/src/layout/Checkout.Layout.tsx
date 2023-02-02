@@ -162,12 +162,12 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
           { values.express && (
             <Grid container>
               { expressOptions.map(
-                ({ field, label, checked }: CheckboxOptions) => (
-                  <Grid item xs={ 3 }>
+                (item: CheckboxOptions) => (
+                  <Grid item xs={ 3 } key={ item.field.toString() }>
                     { renderCheckbox(
-                      label,
-                      values[field as keyof ExpressCheckoutPayment] ?? checked,
-                      field,
+                      item.label,
+                      values[item.field as keyof ExpressCheckoutPayment] ?? item.checked,
+                      item.field,
                     ) }
                   </Grid>
                 ),
@@ -179,12 +179,12 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
           <Typography fontSize="18px">Payment Methods</Typography>
           <Grid container>
             { paymentOptions.map(
-              ({ field, label, checked }: CheckboxOptions) => (
-                <Grid item xs={ 3 }>
+              (item: CheckboxOptions) => (
+                <Grid item xs={ 3 } key={ item.field.toString() }>
                   { renderCheckbox(
-                    label,
-                    values[field as keyof PaymentMethodTypes] ?? checked,
-                    field,
+                    item.label,
+                    values[item.field as keyof PaymentMethodTypes] ?? item.checked,
+                    item.field,
                   ) }
                 </Grid>
               ),
