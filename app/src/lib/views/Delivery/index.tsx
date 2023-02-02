@@ -4,10 +4,12 @@ import { PaymentData, usePayment } from '@lib/providers/PaymentProvider';
 import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
 import { meQuery } from '@lib/queries/me';
 import {
+  addressScreeningQuery,
   createPaymentMethodQuery,
   createPaymentQuery,
   getPaymentMethodStatus,
 } from '@lib/queries/Payment';
+import { reserveNowBuyLotQuery } from '@lib/queries/invoiceDetails';
 import { useDelivery } from '@lib/providers/DeliveryProvider';
 import { useBilling } from '@lib/providers/BillingProvider';
 import { useContainer } from '@lib/providers/ContainerStateProvider';
@@ -16,6 +18,8 @@ import { PaymentTypes } from '@lib/constants/states';
 import { getPaymentNotificationQuery } from '@lib/queries/creditCard';
 import { useEncryptCardData } from '@lib/hooks/useEncryptCard';
 import { CookieService } from '@lib/storage/CookieService';
+import { ReserveNow } from '@lib/interfaces/Invoice';
+import { RiskRating } from '@lib/constants/riskRating';
 import { formCreatePaymentMethodObject } from './Delivery.service';
 import DeliveryLayout from './Delivery.layout';
 
@@ -23,8 +27,8 @@ export const Delivery = () => {
   const [selectedDeliveryAddress, setSelectedDeliveryAddress] =
     useState<string>('');
   const [walletOptions, setWalletOptions] = useState<DropdownOptions[]>([]);
-  const { billingInfo, reserveLotData, taxes } = useBilling();
-  const { orgId } = useDelivery();
+  const { billingInfo, collectionData, taxes } = useBilling();
+  const { orgId, lotId, quantity } = useDelivery();
   const { paymentInfo, setPaymentInfo } = usePayment();
   const { setContainerState } = useContainer();
   const [createPaymentMethod] = useMutation(createPaymentMethodQuery);
@@ -33,6 +37,9 @@ export const Delivery = () => {
   const [encryptCardData] = useEncryptCardData({ orgID: orgId });
   const [paymentMethodStatus] = useLazyQuery(getPaymentMethodStatus);
   const [paymentNotification] = useLazyQuery(getPaymentNotificationQuery);
+  const [reserveNow] = useMutation(reserveNowBuyLotQuery);
+  const [addressScreening] = useMutation(addressScreeningQuery);
+
   const formatWallets = (wallets: any) => {
     return wallets.map((item: any) => ({
       label: item.address,
@@ -94,6 +101,19 @@ export const Delivery = () => {
           });
         }
       }
+
+      const reserveData = await reserveNow({
+        variables: {
+          input: {
+            marketplaceBuyNowLotID: lotId,
+            itemCount:quantity,
+          },
+        },
+      });
+
+      const reserveLotData: ReserveNow =
+        reserveData?.data?.reserveMarketplaceBuyNowLot?.invoice;
+
       if (paymentMethodId) {
         await createPayment({
           variables: {
@@ -117,7 +137,9 @@ export const Delivery = () => {
         CookieService.billing.setValue(JSON.stringify(billingInfo));
         CookieService.paymentInfo.setValue(JSON.stringify(paymentData));
         CookieService.taxes.setValue(JSON.stringify(taxes));
+        CookieService.collectionData.setValue(JSON.stringify(collectionData));
         CookieService.reserveLotData.setValue(JSON.stringify(reserveLotData));
+
         window.location.href =
           notificationData?.data?.getPaymentNotification?.message?.redirectURL;
       }
@@ -126,7 +148,7 @@ export const Delivery = () => {
     }
   }, [
     orgId,
-    reserveLotData,
+    collectionData,
     paymentInfo,
     billingInfo,
     paymentNotification,
@@ -136,6 +158,9 @@ export const Delivery = () => {
     createPaymentMethod,
     encryptCardData,
     paymentMethodStatus,
+    reserveNow,
+    lotId,
+    quantity,
   ]);
 
   const onConfirmWireTransferPurchase = useCallback(async () => {
@@ -169,6 +194,17 @@ export const Delivery = () => {
             },
           });
         }
+
+        const reserveData = await reserveNow({
+          variables: {
+            marketplaceBuyNowLotID: lotId,
+            itemCount:quantity,
+          },
+        });
+
+        const reserveLotData: ReserveNow =
+          reserveData?.data?.reserveMarketplaceBuyNowLot?.invoice;
+
         const result1 = await createPayment({
           variables: {
             paymentMethodID: result?.data?.createPaymentMethod?.id,
@@ -189,6 +225,7 @@ export const Delivery = () => {
         CookieService.billing.setValue(JSON.stringify(billingInfo));
         CookieService.paymentInfo.setValue(JSON.stringify(paymentData));
         CookieService.taxes.setValue(JSON.stringify(taxes));
+        CookieService.collectionData.setValue(JSON.stringify(collectionData));
         CookieService.reserveLotData.setValue(JSON.stringify(reserveLotData));
         setContainerState(ContainerTypes.CONFIRMATION);
       }
@@ -198,7 +235,7 @@ export const Delivery = () => {
   }, [
     paymentInfo,
     billingInfo,
-    reserveLotData,
+    collectionData,
     selectedDeliveryAddress,
     taxes,
     orgId,
@@ -207,16 +244,43 @@ export const Delivery = () => {
     setPaymentInfo,
     createPaymentMethod,
     createPayment,
+    reserveNow,
+    lotId,
+    quantity,
   ]);
 
   const onClickConfirmPurchase = useCallback(async () => {
-    if (paymentInfo?.paymentType === PaymentTypes.WIRE_TRANSFER) {
-      onConfirmWireTransferPurchase();
+    try {
+      const screeningData = await addressScreening({
+        variables: {
+          orgID: orgId,
+          input: {
+            address: selectedDeliveryAddress,
+            network: 'ethereum',
+            asset: 'ETH',
+          },
+        },
+      });
+      if (screeningData.data?.addressScreening === RiskRating.High) {
+        return;
+      }
+      if (paymentInfo?.paymentType === PaymentTypes.WIRE_TRANSFER) {
+        onConfirmWireTransferPurchase();
+      }
+      if (paymentInfo?.paymentType === PaymentTypes.CREDIT_CARD) {
+        onConfirmCreditCardPurchase();
+      }
+    } catch (e) {
+      console.error('ERROR', e);
     }
-    if (paymentInfo?.paymentType === PaymentTypes.CREDIT_CARD) {
-      onConfirmCreditCardPurchase();
-    }
-  }, [onConfirmCreditCardPurchase, onConfirmWireTransferPurchase, paymentInfo]);
+  }, [
+    onConfirmCreditCardPurchase,
+    onConfirmWireTransferPurchase,
+    paymentInfo,
+    orgId,
+    selectedDeliveryAddress,
+    addressScreening,
+  ]);
 
   return (
     <DeliveryLayout

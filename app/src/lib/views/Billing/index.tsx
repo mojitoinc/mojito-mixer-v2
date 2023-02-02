@@ -59,35 +59,46 @@ const BillingContainer = () => {
     });
   }, [setPaymentInfo]);
 
-  useEffect(() => {
-    if (paymentData) {
-      const paymentItem: PaymentMethod =
-        paymentData?.getPaymentMethodList?.find(
-          (item: PaymentMethod) => item.billingDetails,
-        );
-      if (paymentItem) {
-        setIsEditing(false);
-        setValues({
-          city: billingInfo?.city ?? paymentItem?.billingDetails?.city,
-          country: billingInfo?.country ?? paymentItem?.billingDetails?.country,
-          postalCode:
-            billingInfo?.postalCode ?? paymentItem?.billingDetails?.postalCode,
-          state: billingInfo?.state ?? paymentItem?.billingDetails?.district,
-          email: billingInfo?.email ?? paymentItem?.metadata?.email,
-          phoneNumber:
-            billingInfo?.phoneNumber ?? paymentItem?.metadata?.phoneNumber,
-          street1:
-            billingInfo?.street1 ?? paymentItem?.billingDetails?.address1,
-          name: billingInfo?.name ?? paymentItem?.billingDetails?.name,
-        });
-      } else {
-        setIsEditing(true);
-      }
+  const setBillingValues = useCallback(() => {
+    const paymentItem: PaymentMethod = paymentData?.getPaymentMethodList?.find(
+      (item: PaymentMethod) => item.type === 'CreditCard' && item.billingDetails,
+    );
+    if (paymentItem) {
+      setIsEditing(false);
+      const billingValues: BillingFormData = {
+        city: billingInfo?.city ?? paymentItem?.billingDetails?.city,
+        country: billingInfo?.country ?? paymentItem?.billingDetails?.country,
+        postalCode:
+          billingInfo?.postalCode ?? paymentItem?.billingDetails?.postalCode,
+        state: billingInfo?.state ?? paymentItem?.billingDetails?.district,
+        email: billingInfo?.email ?? paymentItem?.metadata?.email,
+        phoneNumber:
+          billingInfo?.phoneNumber ?? paymentItem?.metadata?.phoneNumber,
+        street1: billingInfo?.street1 ?? paymentItem?.billingDetails?.address1,
+        name: billingInfo?.name ?? paymentItem?.billingDetails?.name,
+      };
+      setValues(billingValues);
+    } else {
+      setIsEditing(true);
     }
-  }, [paymentData, setValues]);
+  }, [billingInfo, setValues, paymentData]);
 
   useEffect(() => {
-    setBillingInfo({ ...values });
+    if (paymentData) {
+      setBillingValues();
+    }
+  }, [paymentData, setBillingValues]);
+
+  useEffect(() => {
+    if (
+      Boolean(values?.city) &&
+      Boolean(values?.country) &&
+      Boolean(values?.state) &&
+      Boolean(values?.street1) &&
+      Boolean(values?.postalCode)
+    ) {
+      setBillingInfo(values);
+    }
   }, [values, setBillingInfo]);
 
   const onClickEdit = useCallback(() => {
@@ -101,9 +112,10 @@ const BillingContainer = () => {
       const isValidEmail = emailRegex.test(values?.email ?? '');
       if (!isValidEmail) return;
     }
+    setBillingInfo({ ...values });
 
     setContainerState(ContainerTypes.PAYMENT);
-  }, [values, isEditing, isValid, setContainerState]);
+  }, [values, setBillingInfo, isEditing, isValid, setContainerState]);
 
   return (
     <BillingView

@@ -4,11 +4,11 @@ import CostBreakDownLayout from '@lib/views/CostBreakDown/CostBreakDownLayout';
 export const CostBreakDownStories = () => {
   return (
     <CostBreakDownLayout
-      reserveLotData={{
-        invoiceID: '2345',
-        items: [],
-        status: 'success',
-        __typename: '',
+      collectionData={{
+        name: 'Item',
+        details: {
+          totalAvailableUnits: 100,
+        },
       }}
       taxes={{
         __typename: 'taxes',

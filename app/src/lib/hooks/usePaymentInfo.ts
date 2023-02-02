@@ -1,3 +1,4 @@
+import { CollectionItem } from '@lib/interfaces/Collections';
 import { Taxes } from '@lib/interfaces/CostBreakDown';
 import { ReserveNow } from '@lib/interfaces/Invoice';
 import { BillingFormData } from '@lib/providers/BillingProvider';
@@ -10,6 +11,7 @@ interface PaymentInfo {
   paymentInfo?: PaymentData;
   lotData? : ReserveNow;
   taxData? : Taxes;
+  collection? : CollectionItem;
 }
 
 const usePaymentInfo = (): PaymentInfo => {
@@ -17,6 +19,7 @@ const usePaymentInfo = (): PaymentInfo => {
   const payment = CookieService.paymentInfo.getValue();
   const taxes = CookieService.taxes.getValue();
   const reserveLotData = CookieService.reserveLotData.getValue();
+  const collectionData = CookieService.collectionData.getValue();
 
   const getObject = (value:any) => {
     if (typeof value === 'object') return value;
@@ -36,12 +39,16 @@ const usePaymentInfo = (): PaymentInfo => {
   const taxData = useMemo(() => {
     return getObject(taxes) as Taxes;
   }, [taxes]);
+  const collection = useMemo(() => {
+    return getObject(collectionData) as CollectionItem;
+  }, [collectionData]);
 
   return {
     billingInfo,
     paymentInfo,
     lotData,
     taxData,
+    collection,
   };
 };
 export default usePaymentInfo;

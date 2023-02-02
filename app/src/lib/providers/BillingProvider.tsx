@@ -1,21 +1,17 @@
 import React, {
   createContext,
   useContext,
-  useEffect,
   useMemo,
   useState,
 } from 'react';
-import { useMutation, useQuery } from '@apollo/client';
-import { Invoice, ReserveNow } from '@lib/interfaces/Invoice';
+import { useQuery } from '@apollo/client';
 import {
-  reserveNowBuyLotQuery,
-  invoiceDetailsQuery,
   getTaxQuoteQuery,
 } from '@lib/queries/invoiceDetails';
 import { Taxes } from '@lib/interfaces/CostBreakDown';
-import { ContainerTypes } from '@views/MojitoCheckout/MojitoCheckOut.layout';
+import { collectionByIdQuery } from '@lib/queries/collection';
+import { CollectionItem } from '@lib/interfaces/Collections';
 import { useDelivery } from './DeliveryProvider';
-import { useContainer } from './ContainerStateProvider';
 
 export interface BillingFormData {
   email?: string;
@@ -31,49 +27,34 @@ export interface BillingFormData {
 export interface Billing {
   billingInfo?: BillingFormData;
   setBillingInfo: (val: BillingFormData) => void;
-  reserveLotData: ReserveNow;
-  invoiceData: Invoice[];
+  collectionData: CollectionItem;
   taxes: Taxes;
 }
 const BillingContext = createContext<Billing>({} as Billing);
 
 const BillingProvider = ({ children }: { children?: React.ReactNode }) => {
   const [billingInfo, setBillingInfo] = useState<BillingFormData>();
-  const { lotId, itemCount, orgId } = useDelivery();
-  const { containerState } = useContainer();
+  const { quantity, orgId, collectionItemId } = useDelivery();
 
-  const [reserveNow, { data: reserveData }] = useMutation(
-    reserveNowBuyLotQuery,
-    {
-      variables: {
-        input: {
-          marketplaceBuyNowLotID: lotId,
-          itemCount,
-        },
-      },
-    },
-  );
-
-  const reserveLotData: ReserveNow = useMemo<ReserveNow>(() => {
-    return reserveData?.reserveMarketplaceBuyNowLot?.invoice;
-  }, [reserveData]);
-
-  const { data: invoiceDetails } = useQuery(invoiceDetailsQuery, {
+  const { data: collection } = useQuery(collectionByIdQuery, {
     variables: {
-      invoiceID: reserveLotData?.invoiceID,
+      id: collectionItemId,
     },
-    skip: !reserveLotData?.invoiceID,
+    skip: !collectionItemId,
   });
 
-  const invoiceData: Invoice[] = useMemo<Invoice[]>(() => {
-    return invoiceDetails?.getInvoiceDetails?.items ?? [];
-  }, [invoiceDetails]);
+  const collectionData: CollectionItem = useMemo<CollectionItem>(() => {
+    return collection?.collectionItemById;
+  }, [collection]);
 
-  const taxablePrice = useMemo(
-    () => invoiceData?.reduce((value: number, item: Invoice) => {
-      return value + item.totalPrice;
-    }, 0),
-    [invoiceData],
+  const taxablePrice = useMemo<number>(
+    () => {
+      if (collectionData?.details?.unitPrice && !Number.isNaN(collectionData?.details?.unitPrice)) {
+        return collectionData.details.unitPrice * quantity;
+      }
+      return 0;
+    },
+    [collectionData, quantity],
   );
 
   const { data: taxQuoteData } = useQuery(getTaxQuoteQuery, {
@@ -97,19 +78,18 @@ const BillingProvider = ({ children }: { children?: React.ReactNode }) => {
     return taxQuoteData?.getTaxQuote;
   }, [taxQuoteData]);
 
-  useEffect(() => {
-    if (containerState !== ContainerTypes.CONFIRMATION) reserveNow();
-  }, [reserveNow, containerState]);
+  // useEffect(() => {
+  //   if (containerState !== ContainerTypes.CONFIRMATION) reserveNow();
+  // }, [reserveNow, containerState]);
 
   const value = useMemo<Billing>(() => {
     return {
       billingInfo,
       setBillingInfo,
-      reserveLotData,
-      invoiceData,
+      collectionData,
       taxes,
     };
-  }, [billingInfo, setBillingInfo, reserveLotData, taxes, invoiceData]);
+  }, [billingInfo, setBillingInfo, collectionData, taxes]);
 
   return (
     <BillingContext.Provider value={ value }>{ children }</BillingContext.Provider>

@@ -33,4 +33,5 @@ export const CookieService = {
   paymentInfo: new CookieStorage('payment-info'),
   taxes: new CookieStorage('taxes'),
   reserveLotData: new CookieStorage('reserveLotData'),
+  collectionData: new CookieStorage('collectionData'),
 };

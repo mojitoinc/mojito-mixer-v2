@@ -12,6 +12,8 @@ export interface ConfigurationValues {
   organization?: string;
   customOrganization?: string;
   lotId?: string;
+  itemId?: string;
+  invoiceId?: string;
   lotUnits?: string;
   express?: boolean;
   discountCode?: boolean;
@@ -69,6 +71,7 @@ const HomePage: React.FC = () => {
       organization: '',
       customOrganization: '',
       lotId: '',
+      itemId: '',
       lotUnits: '',
       express: true,
       discountCode: true,

@@ -1,21 +1,23 @@
 import Button from '@components/shared/Button';
 import TextInput from '@components/shared/TextInput';
 import { Icons } from '@lib/assets';
+import { CollectionItem } from '@lib/interfaces/Collections';
 import { Taxes } from '@lib/interfaces/CostBreakDown';
-import { ReserveNow } from '@lib/interfaces/Invoice';
 import { useUIConfiguration } from '@lib/providers/ConfigurationProvider';
+import { useDelivery } from '@lib/providers/DeliveryProvider';
 import { MixTheme } from '@lib/theme/ThemeOptions';
 import { Box, Divider, Typography, useTheme } from '@mui/material';
 import React from 'react';
 
 interface CostBreakDownProps {
   taxes:Taxes;
-  reserveLotData:ReserveNow;
+  collectionData:CollectionItem;
 }
 
-const CostBreakDownLayout = ({ taxes, reserveLotData }:CostBreakDownProps) => {
+const CostBreakDownLayout = ({ taxes, collectionData }:CostBreakDownProps) => {
   const theme = useTheme<MixTheme>();
   const { billing } = useUIConfiguration();
+  const { quantity } = useDelivery();
 
   const renderTextRow = (text: string, value: string) => {
     return (
@@ -69,10 +71,10 @@ const CostBreakDownLayout = ({ taxes, reserveLotData }:CostBreakDownProps) => {
                   fontWeight: '700',
                   fontSize: '20px',
                 }}>
-                Item Name
+                { collectionData?.name }
               </Typography>
-              <Typography>Qty :1</Typography>
-              <Typography>{ reserveLotData?.items[0]?.units } remaining</Typography>
+              <Typography>Qty : { quantity }</Typography>
+              <Typography>{ collectionData?.details?.totalUnits } remaining</Typography>
             </Box>
           </Box>
           <Box

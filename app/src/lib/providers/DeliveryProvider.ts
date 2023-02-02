@@ -3,9 +3,11 @@ import { createContext, useContext } from 'react';
 
 export interface Delivery {
   orgId: string;
-  lotId: string;
-  itemCount: number;
+  lotId?: string;
+  quantity: number;
   paymentId?: string;
+  collectionItemId: string;
+  invoiceId?: string;
 }
 
 const DeliveryContext = createContext<Delivery>({} as Delivery);
