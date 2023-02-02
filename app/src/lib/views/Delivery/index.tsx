@@ -28,7 +28,7 @@ export const Delivery = () => {
     useState<string>('');
   const [walletOptions, setWalletOptions] = useState<DropdownOptions[]>([]);
   const { billingInfo, collectionData, taxes } = useBilling();
-  const { orgId, lotId, itemCount } = useDelivery();
+  const { orgId, lotId, quantity } = useDelivery();
   const { paymentInfo, setPaymentInfo } = usePayment();
   const { setContainerState } = useContainer();
   const [createPaymentMethod] = useMutation(createPaymentMethodQuery);
@@ -106,7 +106,7 @@ export const Delivery = () => {
         variables: {
           input: {
             marketplaceBuyNowLotID: lotId,
-            itemCount,
+            itemCount:quantity,
           },
         },
       });
@@ -160,7 +160,7 @@ export const Delivery = () => {
     paymentMethodStatus,
     reserveNow,
     lotId,
-    itemCount,
+    quantity,
   ]);
 
   const onConfirmWireTransferPurchase = useCallback(async () => {
@@ -198,7 +198,7 @@ export const Delivery = () => {
         const reserveData = await reserveNow({
           variables: {
             marketplaceBuyNowLotID: lotId,
-            itemCount,
+            itemCount:quantity,
           },
         });
 
@@ -246,7 +246,7 @@ export const Delivery = () => {
     createPayment,
     reserveNow,
     lotId,
-    itemCount,
+    quantity,
   ]);
 
   const onClickConfirmPurchase = useCallback(async () => {

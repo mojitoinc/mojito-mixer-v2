@@ -204,8 +204,8 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
           deliveryConfiguration={{
             orgId,
             lotId: values.lotId ?? '',
-            itemCount: parseInt(values.lotUnits ?? '1', 10),
-            itemId: values.itemId ?? '',
+            quantity: parseInt(values.lotUnits ?? '1', 10),
+            collectionItemId: values.itemId ?? '',
             invoiceId: values?.invoiceId,
           }}
           uiConfiguration={{

@@ -10,7 +10,7 @@ import {
 } from '@lib/queries/invoiceDetails';
 import { Taxes } from '@lib/interfaces/CostBreakDown';
 import { collectionByIdQuery } from '@lib/queries/collection';
-import { Collection } from '@lib/interfaces/Collections';
+import { CollectionItem } from '@lib/interfaces/Collections';
 import { useDelivery } from './DeliveryProvider';
 
 export interface BillingFormData {
@@ -27,34 +27,34 @@ export interface BillingFormData {
 export interface Billing {
   billingInfo?: BillingFormData;
   setBillingInfo: (val: BillingFormData) => void;
-  collectionData: Collection;
+  collectionData: CollectionItem;
   taxes: Taxes;
 }
 const BillingContext = createContext<Billing>({} as Billing);
 
 const BillingProvider = ({ children }: { children?: React.ReactNode }) => {
   const [billingInfo, setBillingInfo] = useState<BillingFormData>();
-  const { itemCount, orgId, itemId } = useDelivery();
+  const { quantity, orgId, collectionItemId } = useDelivery();
 
   const { data: collection } = useQuery(collectionByIdQuery, {
     variables: {
-      id: itemId,
+      id: collectionItemId,
     },
-    skip: !itemId,
+    skip: !collectionItemId,
   });
 
-  const collectionData: Collection = useMemo<Collection>(() => {
+  const collectionData: CollectionItem = useMemo<CollectionItem>(() => {
     return collection?.collectionItemById;
   }, [collection]);
 
   const taxablePrice = useMemo<number>(
     () => {
       if (collectionData?.details?.unitPrice && !Number.isNaN(collectionData?.details?.unitPrice)) {
-        return collectionData.details.unitPrice * itemCount;
+        return collectionData.details.unitPrice * quantity;
       }
       return 0;
     },
-    [collectionData, itemCount],
+    [collectionData, quantity],
   );
 
   const { data: taxQuoteData } = useQuery(getTaxQuoteQuery, {

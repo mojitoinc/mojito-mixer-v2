@@ -1,7 +1,7 @@
 import Button from '@components/shared/Button';
 import TextInput from '@components/shared/TextInput';
 import { Icons } from '@lib/assets';
-import { Collection } from '@lib/interfaces/Collections';
+import { CollectionItem } from '@lib/interfaces/Collections';
 import { Taxes } from '@lib/interfaces/CostBreakDown';
 import { useUIConfiguration } from '@lib/providers/ConfigurationProvider';
 import { useDelivery } from '@lib/providers/DeliveryProvider';
@@ -11,13 +11,13 @@ import React from 'react';
 
 interface CostBreakDownProps {
   taxes:Taxes;
-  collectionData:Collection;
+  collectionData:CollectionItem;
 }
 
 const CostBreakDownLayout = ({ taxes, collectionData }:CostBreakDownProps) => {
   const theme = useTheme<MixTheme>();
   const { billing } = useUIConfiguration();
-  const { itemCount } = useDelivery();
+  const { quantity } = useDelivery();
 
   const renderTextRow = (text: string, value: string) => {
     return (
@@ -73,7 +73,7 @@ const CostBreakDownLayout = ({ taxes, collectionData }:CostBreakDownProps) => {
                 }}>
                 { collectionData?.name }
               </Typography>
-              <Typography>Qty : { itemCount }</Typography>
+              <Typography>Qty : { quantity }</Typography>
               <Typography>{ collectionData?.details?.totalUnits } remaining</Typography>
             </Box>
           </Box>

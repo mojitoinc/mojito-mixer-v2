@@ -1,4 +1,4 @@
-export interface Details {
+export interface CollectionDetails {
     id?: string;
     startDate?: Date;
     endDate?: Date;
@@ -10,13 +10,13 @@ export interface Details {
     __typename?: string;
 }
 
-export interface Collection {
+export interface CollectionItem {
     id?: string;
     marketplaceTokenId?: string;
     collectionId?: string;
     saleType?: string;
     name?: string;
     slug?: string;
-    details?: Details;
+    details?: CollectionDetails;
     __typename?: string;
 }

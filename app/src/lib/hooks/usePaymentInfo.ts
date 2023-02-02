@@ -1,4 +1,4 @@
-import { Collection } from '@lib/interfaces/Collections';
+import { CollectionItem } from '@lib/interfaces/Collections';
 import { Taxes } from '@lib/interfaces/CostBreakDown';
 import { ReserveNow } from '@lib/interfaces/Invoice';
 import { BillingFormData } from '@lib/providers/BillingProvider';
@@ -11,7 +11,7 @@ interface PaymentInfo {
   paymentInfo?: PaymentData;
   lotData? : ReserveNow;
   taxData? : Taxes;
-  collection? : Collection;
+  collection? : CollectionItem;
 }
 
 const usePaymentInfo = (): PaymentInfo => {
@@ -40,7 +40,7 @@ const usePaymentInfo = (): PaymentInfo => {
     return getObject(taxes) as Taxes;
   }, [taxes]);
   const collection = useMemo(() => {
-    return getObject(collectionData) as Collection;
+    return getObject(collectionData) as CollectionItem;
   }, [collectionData]);
 
   return {

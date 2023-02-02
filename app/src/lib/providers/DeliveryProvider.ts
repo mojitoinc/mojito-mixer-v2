@@ -4,9 +4,9 @@ import { createContext, useContext } from 'react';
 export interface Delivery {
   orgId: string;
   lotId?: string;
-  itemCount: number;
+  quantity: number;
   paymentId?: string;
-  itemId: string;
+  collectionItemId: string;
   invoiceId?: string;
 }
 
