@@ -3,7 +3,6 @@ import TextInput from '@components/shared/TextInput';
 import { Icons } from '@lib/assets';
 import { Collection } from '@lib/interfaces/Collections';
 import { Taxes } from '@lib/interfaces/CostBreakDown';
-import { ReserveNow } from '@lib/interfaces/Invoice';
 import { useUIConfiguration } from '@lib/providers/ConfigurationProvider';
 import { useDelivery } from '@lib/providers/DeliveryProvider';
 import { MixTheme } from '@lib/theme/ThemeOptions';
@@ -18,7 +17,7 @@ interface CostBreakDownProps {
 const CostBreakDownLayout = ({ taxes, collectionData }:CostBreakDownProps) => {
   const theme = useTheme<MixTheme>();
   const { billing } = useUIConfiguration();
-  const { itemCount } = useDelivery()
+  const { itemCount } = useDelivery();
 
   const renderTextRow = (text: string, value: string) => {
     return (
@@ -72,9 +71,9 @@ const CostBreakDownLayout = ({ taxes, collectionData }:CostBreakDownProps) => {
                   fontWeight: '700',
                   fontSize: '20px',
                 }}>
-                {collectionData?.name}
+                { collectionData?.name }
               </Typography>
-              <Typography>Qty : {itemCount}</Typography>
+              <Typography>Qty : { itemCount }</Typography>
               <Typography>{ collectionData?.details?.totalUnits } remaining</Typography>
             </Box>
           </Box>

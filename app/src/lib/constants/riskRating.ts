@@ -1,4 +1,4 @@
 export enum RiskRating {
-  High = "High",
-  Low = "Low",
+  High = 'High',
+  Low = 'Low',
 }

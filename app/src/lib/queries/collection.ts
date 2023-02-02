@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const collectionByIdQuery = gql`
     query($id:UUID1!){
@@ -24,4 +24,4 @@ export const collectionByIdQuery = gql`
             }
         }
     }
-`
+`;

@@ -71,7 +71,7 @@ const HomePage: React.FC = () => {
       organization: '',
       customOrganization: '',
       lotId: '',
-      itemId:'',
+      itemId: '',
       lotUnits: '',
       express: true,
       discountCode: true,

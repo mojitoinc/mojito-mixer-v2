@@ -19,7 +19,7 @@ const usePaymentInfo = (): PaymentInfo => {
   const payment = CookieService.paymentInfo.getValue();
   const taxes = CookieService.taxes.getValue();
   const reserveLotData = CookieService.reserveLotData.getValue();
-  const collectionData = CookieService.collectionData.getValue() 
+  const collectionData = CookieService.collectionData.getValue();
 
   const getObject = (value:any) => {
     if (typeof value === 'object') return value;
@@ -48,7 +48,7 @@ const usePaymentInfo = (): PaymentInfo => {
     paymentInfo,
     lotData,
     taxData,
-    collection
+    collection,
   };
 };
 export default usePaymentInfo;

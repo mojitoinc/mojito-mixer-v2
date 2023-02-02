@@ -4,12 +4,12 @@ import CostBreakDownLayout from '@lib/views/CostBreakDown/CostBreakDownLayout';
 export const CostBreakDownStories = () => {
   return (
     <CostBreakDownLayout
-    collectionData={{
-      name:'Item',
-      details:{
-        totalAvailableUnits:100,
-      }
-    }}
+      collectionData={{
+        name: 'Item',
+        details: {
+          totalAvailableUnits: 100,
+        },
+      }}
       taxes={{
         __typename: 'taxes',
         taxablePrice: 20,

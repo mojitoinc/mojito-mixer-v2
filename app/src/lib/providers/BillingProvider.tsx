@@ -1,23 +1,17 @@
 import React, {
   createContext,
   useContext,
-  useEffect,
   useMemo,
   useState,
 } from 'react';
-import { useMutation, useQuery } from '@apollo/client';
-import { Invoice, ReserveNow } from '@lib/interfaces/Invoice';
+import { useQuery } from '@apollo/client';
 import {
-  reserveNowBuyLotQuery,
-  invoiceDetailsQuery,
   getTaxQuoteQuery,
 } from '@lib/queries/invoiceDetails';
 import { Taxes } from '@lib/interfaces/CostBreakDown';
-import { ContainerTypes } from '@views/MojitoCheckout/MojitoCheckOut.layout';
-import { useDelivery } from './DeliveryProvider';
-import { useContainer } from './ContainerStateProvider';
 import { collectionByIdQuery } from '@lib/queries/collection';
 import { Collection } from '@lib/interfaces/Collections';
+import { useDelivery } from './DeliveryProvider';
 
 export interface BillingFormData {
   email?: string;
@@ -40,23 +34,27 @@ const BillingContext = createContext<Billing>({} as Billing);
 
 const BillingProvider = ({ children }: { children?: React.ReactNode }) => {
   const [billingInfo, setBillingInfo] = useState<BillingFormData>();
-  const { lotId, itemCount, orgId,itemId } = useDelivery();
-  const { containerState } = useContainer();
+  const { itemCount, orgId, itemId } = useDelivery();
 
-  const { data: collection } = useQuery(collectionByIdQuery,{
-    variables : {
-      id : itemId
+  const { data: collection } = useQuery(collectionByIdQuery, {
+    variables: {
+      id: itemId,
     },
-    skip: !itemId
-  })
+    skip: !itemId,
+  });
 
   const collectionData: Collection = useMemo<Collection>(() => {
     return collection?.collectionItemById;
   }, [collection]);
 
-  const taxablePrice = useMemo(
-    () => collectionData?.details?.unitPrice ? collectionData?.details?.unitPrice * itemCount :  0,
-    [collectionData,itemCount]
+  const taxablePrice = useMemo<number>(
+    () => {
+      if (collectionData?.details?.unitPrice && !Number.isNaN(collectionData?.details?.unitPrice)) { 
+        return collectionData.details.unitPrice * itemCount; 
+      }
+      return 0;
+    },
+    [collectionData, itemCount],
   );
 
   const { data: taxQuoteData } = useQuery(getTaxQuoteQuery, {
