@@ -16,6 +16,7 @@ interface DeliveryLayoutProps {
   organizationName: string;
   billingInfo: BillingFormData | undefined;
   paymentInfo: PaymentData | undefined;
+  onClickConnectWallet: ()=>void;
 }
 
 const DeliveryLayout = ({
@@ -26,6 +27,7 @@ const DeliveryLayout = ({
   organizationName,
   billingInfo,
   paymentInfo,
+  onClickConnectWallet
 }: DeliveryLayoutProps) => {
   const theme = useTheme<MixTheme>();
   const isCreditCard = useMemo(
@@ -76,7 +78,8 @@ const DeliveryLayout = ({
             textColor={ theme.global?.highlightedText }
             backgroundColor={ theme.global?.white }
             variant="outlined"
-            sx={{ marginTop: 2 }} />
+            sx={{ marginTop: 2 }}
+            onClick={onClickConnectWallet} />
         </Stack>
       </Card>
       <Box display="flex" flexDirection="row" justifyContent="flex-end">
