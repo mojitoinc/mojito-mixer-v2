@@ -28,7 +28,7 @@ export const Delivery = () => {
     useState<string>('');
   const [walletOptions, setWalletOptions] = useState<DropdownOptions[]>([]);
   const { billingInfo, collectionData, taxes } = useBilling();
-  const { orgId, lotId, quantity } = useDelivery();
+  const { orgId, lotId, quantity, invoiceId } = useDelivery();
   const { paymentInfo, setPaymentInfo } = usePayment();
   const { setContainerState } = useContainer();
   const [createPaymentMethod] = useMutation(createPaymentMethodQuery);
@@ -62,6 +62,27 @@ export const Delivery = () => {
   const handleChange = useCallback((value: string) => {
     setSelectedDeliveryAddress(value);
   }, []);
+
+  const getInvoiceData = useCallback(async () => {
+    if (invoiceId) {
+      return {
+        invoiceID: invoiceId,
+        items: [],
+        status: '',
+        __typename: 'BuyNowReserve',
+      } as ReserveNow;
+    }
+    const reserveData = await reserveNow({
+      variables: {
+        input: {
+          marketplaceBuyNowLotID: lotId,
+          itemCount: quantity,
+        },
+      },
+    });
+
+    return reserveData?.data?.reserveMarketplaceBuyNowLot?.invoice as ReserveNow;
+  }, [invoiceId, reserveNow, lotId, quantity]);
 
   const onConfirmCreditCardPurchase = useCallback(async () => {
     try {
@@ -102,17 +123,7 @@ export const Delivery = () => {
         }
       }
 
-      const reserveData = await reserveNow({
-        variables: {
-          input: {
-            marketplaceBuyNowLotID: lotId,
-            itemCount:quantity,
-          },
-        },
-      });
-
-      const reserveLotData: ReserveNow =
-        reserveData?.data?.reserveMarketplaceBuyNowLot?.invoice;
+      const reserveLotData = await getInvoiceData();
 
       if (paymentMethodId) {
         await createPayment({
@@ -158,9 +169,7 @@ export const Delivery = () => {
     createPaymentMethod,
     encryptCardData,
     paymentMethodStatus,
-    reserveNow,
-    lotId,
-    quantity,
+    getInvoiceData,
   ]);
 
   const onConfirmWireTransferPurchase = useCallback(async () => {
@@ -195,15 +204,7 @@ export const Delivery = () => {
           });
         }
 
-        const reserveData = await reserveNow({
-          variables: {
-            marketplaceBuyNowLotID: lotId,
-            itemCount:quantity,
-          },
-        });
-
-        const reserveLotData: ReserveNow =
-          reserveData?.data?.reserveMarketplaceBuyNowLot?.invoice;
+        const reserveLotData = await getInvoiceData();
 
         const result1 = await createPayment({
           variables: {
@@ -244,9 +245,7 @@ export const Delivery = () => {
     setPaymentInfo,
     createPaymentMethod,
     createPayment,
-    reserveNow,
-    lotId,
-    quantity,
+    getInvoiceData,
   ]);
 
   const onClickConfirmPurchase = useCallback(async () => {
