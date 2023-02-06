@@ -39,34 +39,6 @@ export const WireTransferForm = ({
       value: item,
     }));
   }, []);
-  const formatAccountNumberAndAba = useCallback(
-    async (value: string, fieldName: string) => {
-      const isValid = value.match(/^[\d\s]+$/);
-      let copiedValue = value;
-      if (
-        isValid &&
-        ((fieldName === 'accountNumber' && value.length < 10) ||
-          (fieldName === 'aba' && value.length < 11))
-      ) {
-        if (
-          (value.length === 4 &&
-            values.accountNumber.length !== 5 &&
-            values.accountNumber.length > 0 &&
-            values.accountNumber.length !== 9) ||
-          (value.length === 4 &&
-            values.aba.length !== 5 &&
-            values.aba.length > 0 &&
-            values.aba.length !== 10)
-        ) {
-          copiedValue = `${ copiedValue } `;
-        }
-        await setFieldValue(fieldName, copiedValue);
-      } else if (value === '') {
-        await setFieldValue(fieldName, '');
-      }
-    },
-    [values, setFieldValue],
-  );
 
   const formatAccountNumber = useCallback(
     async (value: string) => {
@@ -90,7 +62,6 @@ export const WireTransferForm = ({
         await setFieldValue('aba', value);
         return;
       }
-      const isValid = value.match(/^[\d\s]+$/);
       const aba = value.split(' ').join('');
       await setFieldValue('aba', aba.replace(/^(.{4})(.*)$/, '$1 $2'));
     },

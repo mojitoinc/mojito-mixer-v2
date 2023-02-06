@@ -1,7 +1,7 @@
 import { BillingFormData, useBilling } from '@lib/providers/BillingProvider';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useFormik } from 'formik';
-import { useLazyQuery, useQuery } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client';
 import { paymentMethodsQuery } from '@lib/queries/billing';
 import { useDelivery } from '@lib/providers/DeliveryProvider';
 import { PaymentMethod } from '@lib/interfaces/PaymentMethods';
@@ -65,7 +65,7 @@ const BillingContainer = () => {
     });
   }, [setPaymentInfo]);
 
-  const setBillingValues = () => {
+  const setBillingValues = useCallback(() => {
     const paymentItem: PaymentMethod = paymentData?.getPaymentMethodList?.find(
       (item: PaymentMethod) => item.type === 'CreditCard' && item.billingDetails,
     );
@@ -87,13 +87,13 @@ const BillingContainer = () => {
     } else {
       setIsEditing(true);
     }
-  }
+  }, [billingInfo, paymentData, setValues]);
 
   useEffect(() => {
     if (paymentData) {
       setBillingValues();
     }
-  }, [paymentData]);
+  }, [paymentData, setBillingValues]);
 
 
   const setValuesToBilling = useCallback(() => {

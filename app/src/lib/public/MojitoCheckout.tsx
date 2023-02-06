@@ -1,4 +1,4 @@
-import { Dialog, ThemeProvider, GlobalStyles } from '@mui/material';
+import { ThemeProvider, GlobalStyles } from '@mui/material';
 import React, { useMemo, useState } from 'react';
 import ConfigurationContext, {
   ConfigurationType,
@@ -42,10 +42,14 @@ const MojitoCheckout = ({
     [uiConfiguration],
   );
 
+  const connectValues = useMemo(() => {
+    return { connect, setConnect };
+  }, [connect, setConnect]);
+
   return (
     <Modal
       isOpen={ show }>
-      <ConnectContext.Provider value={{ connect, setConnect }}>
+      <ConnectContext.Provider value={ connectValues }>
         <MojitoApiProvider>
           <ThemeProvider theme={ themes }>
             <DeliveryContext.Provider value={ deliveryConfiguration }>

@@ -4,7 +4,7 @@ import { CreditCardFormType } from '@lib/interfaces/CreditCard';
 import { ReserveNow } from '@lib/interfaces/Invoice';
 import { getPaymentNotificationQuery } from '@lib/queries/creditCard';
 import { reserveNowBuyLotQuery } from '@lib/queries/invoiceDetails';
-import { addressScreeningQuery, createPaymentMethodQuery, createPaymentQuery, getPaymentMethodStatus } from '@lib/queries/Payment';
+import { createPaymentMethodQuery, createPaymentQuery, getPaymentMethodStatus } from '@lib/queries/Payment';
 import { CookieService } from '@lib/storage/CookieService';
 import { formCreatePaymentMethodObject } from '@views/Delivery/Delivery.service';
 import { ContainerTypes } from '@views/MojitoCheckout/MojitoCheckOut.layout';
@@ -51,7 +51,6 @@ const PaymentProvider = ({ children }: { children?: React.ReactNode }) => {
   const [paymentMethodStatus] = useLazyQuery(getPaymentMethodStatus);
   const [paymentNotification] = useLazyQuery(getPaymentNotificationQuery);
   const [reserveNow] = useMutation(reserveNowBuyLotQuery);
-  const [addressScreening] = useMutation(addressScreeningQuery);
 
   const getInvoiceData = useCallback(async () => {
     if (invoiceId) {

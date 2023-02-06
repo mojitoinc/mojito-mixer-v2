@@ -19,7 +19,7 @@ export const Delivery = () => {
   const [walletOptions, setWalletOptions] = useState<DropdownOptions[]>([]);
   const { billingInfo } = useBilling();
   const { orgId } = useDelivery();
-  const { paymentInfo, setPaymentInfo, onConfirmCreditCardPurchase, onConfirmWireTransferPurchase } = usePayment();
+  const { paymentInfo, onConfirmCreditCardPurchase, onConfirmWireTransferPurchase } = usePayment();
   const { data: meData } = useQuery(meQuery);
   const [addressScreening] = useMutation(addressScreeningQuery);
 
