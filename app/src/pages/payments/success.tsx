@@ -1,7 +1,7 @@
+import MojitoCheckout from '@lib/public/MojitoCheckout';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
-import { CheckoutComponent } from '../../component/CheckoutComponent';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Config } from '../../lib';
 
 const SuccessPage: NextPage = () => {
@@ -20,10 +20,26 @@ const SuccessPage: NextPage = () => {
     if (paymentId === '') router.replace('/');
   }, [paymentId, router]);
 
+  const onClickGoToMarketPlace = useCallback(() => {
+    router.replace('/');
+  }, [router]);
+
   return paymentId ? (
-    <CheckoutComponent
+
+    <MojitoCheckout
+      deliveryConfiguration={{
+        orgId: 'd086ea16-d40d-454c-84a4-64b5e940670a',
+        lotId: '17cd1000-323d-4a20-8e5f-7a8598ffae2a',
+        quantity: 1,
+        paymentId,
+        collectionItemId: '64e99437-ac2e-45bc-b4a6-4750985b4e81',
+      }}
       show
-      paymentId={ paymentId } />
+      uiConfiguration={{
+        paymentConfiguration: {
+          onClickGoToMarketPlace,
+        },
+      }} />
   ) : null;
 };
 

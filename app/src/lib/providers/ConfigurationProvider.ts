@@ -2,7 +2,7 @@ import { createContext, useContext } from 'react';
 
 
 export interface ConfigurationType {
-  billing: {
+  billing?: {
     hideExpressCheckout?: boolean;
     expressCheckoutConfig?: {
       gpay?: boolean;
@@ -18,6 +18,10 @@ export interface ConfigurationType {
       creditCard?: boolean;
     },
     showDiscountCode?: boolean;
+  },
+  paymentConfiguration?:{
+    instruction? : string;
+    onClickGoToMarketPlace? : ()=>void;
   }
 }
 
@@ -39,6 +43,15 @@ export const DefaultConfiguration: ConfigurationType = {
     },
     showDiscountCode: true,
   },
+  paymentConfiguration: {
+    instruction: `If you selected to have your NFT(s) transferred directly to your
+    non-custodial wallet (such as MetaMask), we will do so as soon as
+    payment confirmation is received; otherwise, your NFT(s) will be
+    transferred to a MultiSig wallet (also known as a custodial wallet)
+    for safekeeping. You can view your NFT(s) on your Account page at
+    any time.`,
+    onClickGoToMarketPlace: () => undefined,
+  },
 };
 const ConfigurationContext = createContext<ConfigurationType>(DefaultConfiguration);
 export default ConfigurationContext;
@@ -56,6 +69,10 @@ export const makeUIConfiguration = (configurations: ConfigurationType) => {
       expressCheckoutConfig: { ...DefaultConfiguration?.billing?.expressCheckoutConfig, ...configurations?.billing?.expressCheckoutConfig },
       hideExpressCheckout: configurations?.billing?.hideExpressCheckout ?? DefaultConfiguration?.billing?.hideExpressCheckout,
       paymentMethods: { ...DefaultConfiguration?.billing?.paymentMethods, ...configurations?.billing?.paymentMethods },
+    },
+    paymentConfiguration: {
+      ...DefaultConfiguration.paymentConfiguration,
+      ...configurations.paymentConfiguration,
     },
   } as ConfigurationType;
 };

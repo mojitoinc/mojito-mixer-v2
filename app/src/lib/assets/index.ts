@@ -14,6 +14,7 @@ import applepayDark from './applepay-dark.svg';
 import visaCard from './visa.svg';
 import masterCard from './masterCard.svg';
 import americanExpress from './americanExpress.svg';
+import loading from './loading.svg';
 
 export const Icons = {
   logo,
@@ -32,4 +33,5 @@ export const Icons = {
   visaCard,
   masterCard,
   americanExpress,
+  loading,
 };

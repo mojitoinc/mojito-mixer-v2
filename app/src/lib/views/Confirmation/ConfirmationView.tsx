@@ -4,6 +4,7 @@ import { Box, Card, Typography, useTheme } from '@mui/material';
 import React, { useMemo } from 'react';
 import { PaymentStatus, PaymentTypes } from '@lib/constants/states';
 import usePaymentInfo from '@lib/hooks/usePaymentInfo';
+import { useUIConfiguration } from '@lib/providers/ConfigurationProvider';
 import OrderDetails from './OrderDetails';
 
 interface ConfirmationViewProps {
@@ -13,6 +14,8 @@ interface ConfirmationViewProps {
 const ConfirmationView = ({ paymentStatus }: ConfirmationViewProps) => {
   const theme = useTheme<MixTheme>();
   const { paymentInfo, billingInfo } = usePaymentInfo();
+  const { paymentConfiguration } = useUIConfiguration();
+
   const backgroundColor = useMemo(() => {
     return paymentStatus === PaymentStatus.PENDING
       ? theme.global?.confirmationColors?.awaitingPaymentBackground
@@ -113,11 +116,11 @@ const ConfirmationView = ({ paymentStatus }: ConfirmationViewProps) => {
             showCopy />
         ) }
         { paymentInfo?.paymentType === PaymentTypes.WALLET_CONNECT && (
-          <OrderDetails title="Payment Method" copyValue="0x09750" showCopy>
+          <OrderDetails title="Payment Method" copyValue={ paymentInfo?.paymentId } showCopy>
             <Typography fontSize="16px">
               Wallet Connect
               <br />
-              0x09750ad...360fdb7
+              { paymentInfo?.paymentId }
             </Typography>
           </OrderDetails>
         ) }
@@ -148,7 +151,12 @@ const ConfirmationView = ({ paymentStatus }: ConfirmationViewProps) => {
         </OrderDetails>
       </Card>
       <Box display="flex" flexDirection="row" justifyContent="flex-end">
-        <Button title="Back To Marketplace" />
+        <Button
+          title="Back To Marketplace"
+          sx={{
+            background: theme.palette.primary?.main,
+          }}
+          onClick={ paymentConfiguration?.onClickGoToMarketPlace } />
       </Box>
     </Box>
   );
