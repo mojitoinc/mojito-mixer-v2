@@ -68,6 +68,22 @@ export const WireTransferForm = ({
     [values, setFieldValue],
   );
 
+  const formatAccountNumber = useCallback(
+    async (value: string) => {
+      const accountNumberLength = values?.accountNumber ? values?.accountNumber?.length : 0
+      if(accountNumberLength > value.length) {
+        await setFieldValue('accountNumber', value);
+        return;
+      }
+      const isValid = value.match(/^[\d\s]+$/);
+      if (isValid) {
+        const accountNumber =  value.split(" ").join('')
+        await setFieldValue('accountNumber', accountNumber.replace(/\d{4}(?=.)/g, '$& '));
+      }
+    },
+    [setFieldValue,values],
+  );
+
   return (
     <>
       <Typography variant="body2">
@@ -76,7 +92,7 @@ export const WireTransferForm = ({
       <TextInput
         value={ values.accountNumber }
         title="Account Number"
-        onChange={ (val: string) => formatAccountNumberAndAba(val, 'accountNumber') }
+        onChange={ formatAccountNumber }
         sx={{
           marginTop: '16px',
         }}

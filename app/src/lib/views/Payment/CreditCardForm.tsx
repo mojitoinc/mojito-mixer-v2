@@ -46,25 +46,30 @@ export const CreditCardForm = ({
 
   const formatCardNumber = useCallback(
     async (value: string) => {
-      let cardNumber = value;
-      const isValid = cardNumber.match(/^[\d\s]+$/);
+      const cardNumberLength = values?.cardNumber ? values?.cardNumber?.length : 0
+      if(cardNumberLength > value.length) {
+        await setFieldValue('cardNumber', value);
+        return;
+      }
+      const isValid = value.match(/^[\d\s]+$/);
       if (isValid) {
-        if (
-          cardNumber.length === 4 ||
-          cardNumber.length === 9 ||
-          cardNumber.length === 14
-        ) {
-          cardNumber = `${ cardNumber } `;
-        }
-        await setFieldValue('cardNumber', cardNumber);
+        const cardNumber =  value.split(" ").join('')
+        await setFieldValue('cardNumber', cardNumber.replace(/\d{4}(?=.)/g, '$& '));
       }
     },
-    [setFieldValue],
+    [setFieldValue,values],
   );
 
   const formatExpiry = useCallback(
     async (value: string) => {
-      await setFieldValue('expiry', value.length === 2 ? `${ value }/` : value);
+      const expiryLength = values?.expiry ? values?.expiry?.length : 0
+      if(expiryLength > value.length) {
+        await setFieldValue('expiry', value);
+        return;
+      }
+      const expiry =  value.split("/").join('')
+
+      await setFieldValue('expiry', expiry.replace(/\d{2}(?=.)/g, '$&/'));
     },
     [setFieldValue],
   );
