@@ -24,13 +24,23 @@ interface MojitoCheckoutProps {
   deliveryConfiguration: Delivery;
   theme?: ThemeConfiguration;
   show: boolean;
-  debug: boolean;
+  debug?: boolean;
 }
+
+const customStyles = {
+  content: {
+    width: '100%',
+    left: 'auto',
+    right: 'auto',
+    bottom: 'auto',
+  },
+};
+
 const MojitoCheckout = ({
   uiConfiguration = DefaultConfiguration,
   theme,
   show,
-  debug,
+  debug = false,
   deliveryConfiguration,
 }: MojitoCheckoutProps) => {
   const [connect, setConnect] = useState<ConnectType>({
@@ -53,6 +63,7 @@ const MojitoCheckout = ({
   return (
     <Modal
         ariaHideApp={false}
+        style={customStyles}
       isOpen={ show }>
       <ConnectContext.Provider value={ connectValues }>
         <DebugProvider debug={ debug }>

@@ -175,10 +175,10 @@ const PaymentProvider = ({ children }: { children?: React.ReactNode }) => {
         window.location.href =
           notificationData?.data?.getPaymentNotification?.message?.redirectURL;
       }
-    } catch (e) {
-      console.error('ERROR', e);
-      debug.error('confirm', { e });
-      setError(e?.message ?? 'err')
+    } catch (e: any) {
+      const message = e['message'] ?? '';
+      debug.error('confirm', { message });
+      setError(message)
     }
   }, [
     orgId,
@@ -247,8 +247,10 @@ const PaymentProvider = ({ children }: { children?: React.ReactNode }) => {
 
         setContainerState(ContainerTypes.CONFIRMATION);
       }
-    } catch (e) {
-      console.error('ERROR', e);
+    } catch (e: any) {
+      const message = e['message'] ?? '';
+      console.error('ERROR', { message });
+      setError(message)
     }
   }, [
     paymentInfo,

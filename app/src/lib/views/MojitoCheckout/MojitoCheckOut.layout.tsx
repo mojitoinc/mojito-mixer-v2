@@ -8,7 +8,9 @@ import ConfirmationContainer from '@views/Confirmation';
 import { PaymentContainer } from '@views/Payment';
 import { Delivery } from '@views/Delivery';
 import { useContainer } from '@lib/providers/ContainerStateProvider';
+import { useError } from '@lib/providers';
 import LoadingContainer from '@views/Loading';
+import ErrorContainer from '@views/Error';
 import BillingContainer from '../Billing';
 
 
@@ -23,7 +25,10 @@ export enum ContainerTypes {
 const MojitoCheckoutLayout = () => {
   const theme = useTheme<MixTheme>();
   const { containerState } = useContainer();
-
+  const { error } = useError();
+  if (error) {
+    return <ErrorContainer error={error} />;
+  }
   if (containerState === ContainerTypes.LOADING) {
     return <LoadingContainer />;
   }
