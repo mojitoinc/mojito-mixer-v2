@@ -1,7 +1,7 @@
 import { BillingFormData, useBilling } from '@lib/providers/BillingProvider';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useFormik } from 'formik';
-import { useQuery } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client';
 import { paymentMethodsQuery } from '@lib/queries/billing';
 import { useDelivery } from '@lib/providers/DeliveryProvider';
 import { PaymentMethod } from '@lib/interfaces/PaymentMethods';
@@ -20,12 +20,18 @@ const BillingContainer = () => {
   const { setContainerState } = useContainer();
   const { setPaymentInfo } = usePayment();
 
-  const { data: paymentData } = useQuery(paymentMethodsQuery, {
-    variables: {
-      orgID: orgId,
-    },
-    skip: !orgId,
-  });
+  const [fetchBilling, { data: paymentData }] = useLazyQuery(paymentMethodsQuery);
+
+  useEffect(() => {
+    if (orgId) {
+      console.log('FETCHING');
+      fetchBilling({
+        variables: {
+          orgID: orgId,
+        },
+      });
+    }
+  }, [fetchBilling, orgId]);
 
   const schema = Yup.object().shape({
     country: Yup.string().required('Please select a country'),
@@ -81,7 +87,7 @@ const BillingContainer = () => {
     } else {
       setIsEditing(true);
     }
-  }, [billingInfo, setValues, paymentData]);
+  }, [billingInfo, paymentData, setValues]);
 
   useEffect(() => {
     if (paymentData) {
@@ -89,7 +95,8 @@ const BillingContainer = () => {
     }
   }, [paymentData, setBillingValues]);
 
-  useEffect(() => {
+
+  const setValuesToBilling = useCallback(() => {
     if (
       Boolean(values?.city) &&
       Boolean(values?.country) &&
@@ -101,9 +108,16 @@ const BillingContainer = () => {
     }
   }, [values, setBillingInfo]);
 
+  useEffect(() => {
+    setValuesToBilling();
+  }, [values, setValuesToBilling]);
+
   const onClickEdit = useCallback(() => {
     setIsEditing(true);
+    console.log('ISEDITING');
   }, []);
+
+  console.log('ISEDITING,', isEditing);
 
   const onClickContinue = useCallback(async () => {
     if (isEditing && !isValid) return;

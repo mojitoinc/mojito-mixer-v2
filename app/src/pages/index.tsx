@@ -71,11 +71,11 @@ const HomePage: React.FC = () => {
     initialValues: {
       organization: '',
       customOrganization: '',
-      type: '',
+      type: 'BUY_NOW',
       invoiceId: '',
       lotId: '',
       itemId: '',
-      lotUnits: '',
+      lotUnits: '1',
       express: true,
       discountCode: true,
       expressApplepay: true,
@@ -113,6 +113,21 @@ const HomePage: React.FC = () => {
       setOrganizations(formattedData);
     }
   }, [meData]);
+
+  useEffect(() => {
+    setFieldValue('itemId', localStorage.getItem('itemId') ?? '');
+    setFieldValue('lotId', localStorage.getItem('lotId') ?? '');
+  }, [setFieldValue]);
+
+  useEffect(() => {
+    if (values.itemId !== '') {
+      localStorage.setItem('itemId', values.itemId ?? '');
+    }
+    if (values.lotId !== '') {
+      localStorage.setItem('lotId', values.lotId ?? '');
+    }
+    console.log('vv', values);
+  }, [values]);
 
   return (
     <CheckoutLayout

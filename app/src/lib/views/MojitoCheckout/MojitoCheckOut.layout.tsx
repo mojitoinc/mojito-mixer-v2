@@ -22,6 +22,7 @@ const MojitoCheckoutLayout = () => {
   const theme = useTheme<MixTheme>();
   const { containerState } = useContainer();
 
+  console.log('[MojitoCheckoutLayout]--');
   return (
     <Box
       sx={{
