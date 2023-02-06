@@ -8,6 +8,7 @@ import ConfirmationContainer from '@views/Confirmation';
 import { PaymentContainer } from '@views/Payment';
 import { Delivery } from '@views/Delivery';
 import { useContainer } from '@lib/providers/ContainerStateProvider';
+import LoadingContainer from '@views/Loading';
 import BillingContainer from '../Billing';
 
 
@@ -16,6 +17,7 @@ export enum ContainerTypes {
   PAYMENT = 'PAYMENT',
   DELIVERY = 'DELIVERY',
   CONFIRMATION = 'CONFIRMATION',
+  LOADING = 'LOADING'
 }
 
 const MojitoCheckoutLayout = () => {
@@ -23,6 +25,9 @@ const MojitoCheckoutLayout = () => {
   const { containerState } = useContainer();
 
   console.log('[MojitoCheckoutLayout]--');
+  if (containerState === ContainerTypes.LOADING) {
+    return <LoadingContainer />;
+  }
   return (
     <Box
       sx={{
