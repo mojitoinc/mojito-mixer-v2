@@ -29,8 +29,8 @@ export const Delivery = () => {
     useState<string>("");
   const [walletOptions, setWalletOptions] = useState<DropdownOptions[]>([]);
   const { billingInfo, collectionData, taxes } = useBilling();
-  const { orgId, lotId, quantity } = useDelivery();
-  const { paymentInfo, setPaymentInfo } = usePayment();
+  const { orgId, lotId, quantity, invoiceId } = useDelivery();
+  const { paymentInfo, setPaymentInfo,onConfirmCreditCardPurchase,onConfirmWireTransferPurchase } = usePayment();
   const { setContainerState } = useContainer();
   const [createPaymentMethod] = useMutation(createPaymentMethodQuery);
   const [createPayment] = useMutation(createPaymentQuery);
@@ -45,6 +45,21 @@ export const Delivery = () => {
     connect,
     onWalletConnect,
   } = useWeb3ModalConnect();
+
+
+  const handleChange = useCallback((value: string) => {
+    setSelectedDeliveryAddress(value);
+    setPaymentInfo({
+      ...paymentInfo,
+      destinationAddress:value,
+    })
+  }, [paymentInfo]);
+
+  useEffect(()=>{
+    if(connect?.account) {
+      handleChange(connect?.account)
+    }
+  },[connect])
 
   const formatWallets = (wallets: any) => {
     return wallets.map((item: any) => ({
@@ -65,195 +80,28 @@ export const Delivery = () => {
     }
   }, [meData]);
 
-  const handleChange = useCallback((value: string) => {
-    setSelectedDeliveryAddress(value);
-  }, []);
-
-  const onConfirmCreditCardPurchase = useCallback(async () => {
-    try {
-      const { keyID, encryptedCardData } = await encryptCardData({
-        number: paymentInfo?.creditCardData?.isNew
-          ? paymentInfo?.creditCardData?.cardNumber?.replace(/\s/g, "")
-          : undefined,
-        cvv: paymentInfo?.creditCardData?.cvv ?? "",
-      });
-      let paymentMethodId = paymentInfo?.creditCardData?.isNew
-        ? undefined
-        : paymentInfo?.creditCardData?.cardId;
-      if (paymentInfo?.creditCardData?.isNew) {
-        const inputData = formCreatePaymentMethodObject(
-          orgId,
-          paymentInfo,
-          billingInfo,
-          keyID,
-          encryptedCardData
-        );
-        const createPaymentMethodResult = await createPaymentMethod({
-          variables: {
-            orgID: orgId,
-            input: inputData,
-          },
-        });
-        paymentMethodId =
-          createPaymentMethodResult?.data?.createPaymentMethod?.id;
-        if (
-          createPaymentMethodResult?.data?.createPaymentMethod?.status !==
-          "complete"
-        ) {
-          await paymentMethodStatus({
-            variables: {
-              paymentMethodID: paymentMethodId,
-            },
-          });
-        }
-      }
-
-      const reserveData = await reserveNow({
-        variables: {
-          input: {
-            marketplaceBuyNowLotID: lotId,
-            itemCount: quantity,
-          },
-        },
-      });
-
-      const reserveLotData: ReserveNow =
-        reserveData?.data?.reserveMarketplaceBuyNowLot?.invoice;
-
-      if (paymentMethodId) {
-        await createPayment({
-          variables: {
-            paymentMethodID: paymentMethodId,
-            invoiceID: reserveLotData?.invoiceID,
-            metadata: {
-              destinationAddress: selectedDeliveryAddress,
-              creditCardData: {
-                keyID,
-                encryptedData: encryptedCardData,
-              },
-            },
-          },
-        });
-        const notificationData = await paymentNotification();
-        const paymentData: PaymentData = {
-          ...paymentInfo,
-          paymentId: paymentMethodId,
-          destinationAddress: selectedDeliveryAddress,
-        };
-        CookieService.billing.setValue(JSON.stringify(billingInfo));
-        CookieService.paymentInfo.setValue(JSON.stringify(paymentData));
-        CookieService.taxes.setValue(JSON.stringify(taxes));
-        CookieService.collectionData.setValue(JSON.stringify(collectionData));
-        CookieService.reserveLotData.setValue(JSON.stringify(reserveLotData));
-
-        window.location.href =
-          notificationData?.data?.getPaymentNotification?.message?.redirectURL;
-      }
-    } catch (e) {
-      console.error("ERROR", e);
+  const getInvoiceData = useCallback(async () => {
+    if (invoiceId) {
+      return {
+        invoiceID: invoiceId,
+        items: [],
+        status: '',
+        __typename: 'BuyNowReserve',
+      } as ReserveNow;
     }
-  }, [
-    orgId,
-    collectionData,
-    paymentInfo,
-    billingInfo,
-    paymentNotification,
-    selectedDeliveryAddress,
-    taxes,
-    createPayment,
-    createPaymentMethod,
-    encryptCardData,
-    paymentMethodStatus,
-    reserveNow,
-    lotId,
-    quantity,
-  ]);
-
-  const onConfirmWireTransferPurchase = useCallback(async () => {
-    try {
-      const inputData: any = {};
-      const copiedBillingDetails = {
-        ...billingInfo,
-        district: billingInfo?.state,
-        address1: billingInfo?.street1,
-      };
-      delete copiedBillingDetails.state;
-      delete copiedBillingDetails.street1;
-      delete copiedBillingDetails.email;
-      delete copiedBillingDetails.phoneNumber;
-      inputData.paymentType = "Wire";
-      inputData.wireData = {
-        ...paymentInfo?.wireData,
-        billingDetails: copiedBillingDetails,
-      };
-      const result = await createPaymentMethod({
-        variables: {
-          orgID: orgId,
-          input: inputData,
+    const reserveData = await reserveNow({
+      variables: {
+        input: {
+          marketplaceBuyNowLotID: lotId,
+          itemCount: quantity,
         },
-      });
-      if (result?.data?.createPaymentMethod?.id) {
-        if (result?.data?.createPaymentMethod?.status !== "complete") {
-          await paymentMethodStatus({
-            variables: {
-              paymentMethodID: result?.data?.createPaymentMethod?.id,
-            },
-          });
-        }
+      },
+    });
 
-        const reserveData = await reserveNow({
-          variables: {
-            marketplaceBuyNowLotID: lotId,
-            itemCount: quantity,
-          },
-        });
+    return reserveData?.data?.reserveMarketplaceBuyNowLot?.invoice as ReserveNow;
+  }, [invoiceId, reserveNow, lotId, quantity]);
 
-        const reserveLotData: ReserveNow =
-          reserveData?.data?.reserveMarketplaceBuyNowLot?.invoice;
 
-        const result1 = await createPayment({
-          variables: {
-            paymentMethodID: result?.data?.createPaymentMethod?.id,
-            invoiceID: reserveLotData?.invoiceID,
-            metadata: {
-              destinationAddress: selectedDeliveryAddress,
-            },
-          },
-        });
-        const paymentData: PaymentData = {
-          ...paymentInfo,
-          deliveryStatus: result1?.data?.createPayment?.status,
-          paymentId: result?.data?.createPaymentMethod?.id ?? "",
-          destinationAddress: selectedDeliveryAddress,
-        };
-        setPaymentInfo(paymentData);
-
-        CookieService.billing.setValue(JSON.stringify(billingInfo));
-        CookieService.paymentInfo.setValue(JSON.stringify(paymentData));
-        CookieService.taxes.setValue(JSON.stringify(taxes));
-        CookieService.collectionData.setValue(JSON.stringify(collectionData));
-        CookieService.reserveLotData.setValue(JSON.stringify(reserveLotData));
-        setContainerState(ContainerTypes.CONFIRMATION);
-      }
-    } catch (e) {
-      console.error("ERROR", e);
-    }
-  }, [
-    paymentInfo,
-    billingInfo,
-    collectionData,
-    selectedDeliveryAddress,
-    taxes,
-    orgId,
-    paymentMethodStatus,
-    setContainerState,
-    setPaymentInfo,
-    createPaymentMethod,
-    createPayment,
-    reserveNow,
-    lotId,
-    quantity,
-  ]);
 
   const onClickConfirmPurchase = useCallback(async () => {
     try {
@@ -271,10 +119,10 @@ export const Delivery = () => {
         return;
       }
       if (paymentInfo?.paymentType === PaymentTypes.WIRE_TRANSFER) {
-        onConfirmWireTransferPurchase();
+        onConfirmWireTransferPurchase(selectedDeliveryAddress);
       }
       if (paymentInfo?.paymentType === PaymentTypes.CREDIT_CARD) {
-        onConfirmCreditCardPurchase();
+        onConfirmCreditCardPurchase(selectedDeliveryAddress);
       }
     } catch (e) {
       console.error("ERROR", e);

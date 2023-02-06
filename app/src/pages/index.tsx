@@ -11,6 +11,7 @@ import { CheckoutLayout } from '../layout/Checkout.Layout';
 export interface ConfigurationValues {
   organization?: string;
   customOrganization?: string;
+  type?: string;
   lotId?: string;
   itemId?: string;
   invoiceId?: string;
@@ -70,6 +71,8 @@ const HomePage: React.FC = () => {
     initialValues: {
       organization: '',
       customOrganization: '',
+      type: '',
+      invoiceId: '',
       lotId: '',
       itemId: '',
       lotUnits: '',

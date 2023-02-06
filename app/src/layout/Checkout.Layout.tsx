@@ -58,7 +58,15 @@ const paymentOptions: CheckboxOptions[] = [
   { field: 'wire', label: 'Wire Transfer', checked: true },
   { field: 'creditcard', label: 'Credit Card', checked: true },
 ];
-
+const PaymentType: DropdownOptions[] = [
+  {
+    label: 'Buy Now',
+    value: 'BUY_NOW',
+  }, {
+    label: 'Auction',
+    value: 'AUCTION',
+  },
+];
 export const CheckoutLayout: React.FC<CheckoutProps> = ({
   show,
   onOpen,
@@ -132,18 +140,24 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
         <Box sx={{ marginTop: 2 }}>
           <Typography fontSize="18px">Lot Data</Typography>
           <Stack flexDirection="row" alignItems="center">
+            <Dropdown
+              title="Payment Type"
+              sx={{ width: '200px' }}
+              options={ PaymentType }
+              value={ values.type }
+              onChange={ handleChange('type') } />
             <TextInput
               title="Lot ID"
               placeholder="Lot ID"
               value={ values.lotId }
               onChange={ handleChange('lotId') }
-              sx={{ width: '250px' }} />
+              sx={{ width: '200px', marginLeft: 2 }} />
             <TextInput
               title="Item ID"
               placeholder="Item ID"
               value={ values.itemId }
               onChange={ handleChange('itemId') }
-              sx={{ width: '250px', marginLeft: 2 }} />
+              sx={{ width: '200px', marginLeft: 2 }} />
             <TextInput
               title="Lot Units"
               placeholder="Lot Units"
@@ -151,6 +165,16 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
               onChange={ handleChange('lotUnits') }
               sx={{ width: '120px', marginLeft: 2 }}
               type="number" />
+            {
+                values.type === 'AUCTION' && (
+                <TextInput
+                  title="Invoice ID"
+                  placeholder="Invoice ID"
+                  value={ values.invoiceId }
+                  onChange={ handleChange('invoiceId') }
+                  sx={{ width: '200px', marginLeft: 2 }} />
+                )
+            }
           </Stack>
         </Box>
         <Box sx={{ marginTop: 2 }}>
