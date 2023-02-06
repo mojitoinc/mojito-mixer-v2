@@ -91,9 +91,8 @@ export const WireTransferForm = ({
         return;
       }
       const isValid = value.match(/^[\d\s]+$/);
-        const aba = value.split(' ').join('');
-        await setFieldValue('aba', aba.replace(/^(.{4})(.*)$/, "$1 $2"));
-      
+      const aba = value.split(' ').join('');
+      await setFieldValue('aba', aba.replace(/^(.{4})(.*)$/, '$1 $2'));
     },
     [setFieldValue, values],
   );

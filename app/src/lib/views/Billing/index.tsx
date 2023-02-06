@@ -1,7 +1,7 @@
 import { BillingFormData, useBilling } from '@lib/providers/BillingProvider';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useFormik } from 'formik';
-import { useQuery } from '@apollo/client';
+import { useLazyQuery, useQuery } from '@apollo/client';
 import { paymentMethodsQuery } from '@lib/queries/billing';
 import { useDelivery } from '@lib/providers/DeliveryProvider';
 import { PaymentMethod } from '@lib/interfaces/PaymentMethods';
@@ -20,12 +20,18 @@ const BillingContainer = () => {
   const { setContainerState } = useContainer();
   const { setPaymentInfo } = usePayment();
 
-  const { data: paymentData } = useQuery(paymentMethodsQuery, {
-    variables: {
-      orgID: orgId,
-    },
-    skip: !orgId,
-  });
+  const [fetchBilling, { data: paymentData }] = useLazyQuery(paymentMethodsQuery);
+
+  useEffect(() => {
+    if (orgId) {
+      console.log('FETCHING');
+      fetchBilling({
+        variables: {
+          orgID: orgId,
+        },
+      });
+    }
+  }, [fetchBilling, orgId]);
 
   const schema = Yup.object().shape({
     country: Yup.string().required('Please select a country'),
@@ -59,7 +65,7 @@ const BillingContainer = () => {
     });
   }, [setPaymentInfo]);
 
-  const setBillingValues = useCallback(() => {
+  const setBillingValues = () => {
     const paymentItem: PaymentMethod = paymentData?.getPaymentMethodList?.find(
       (item: PaymentMethod) => item.type === 'CreditCard' && item.billingDetails,
     );
@@ -81,15 +87,16 @@ const BillingContainer = () => {
     } else {
       setIsEditing(true);
     }
-  }, [billingInfo, setValues, paymentData]);
+  }
 
   useEffect(() => {
     if (paymentData) {
       setBillingValues();
     }
-  }, [paymentData, setBillingValues]);
+  }, [paymentData]);
 
-  useEffect(() => {
+
+  const setValuesToBilling = useCallback(() => {
     if (
       Boolean(values?.city) &&
       Boolean(values?.country) &&
@@ -97,9 +104,13 @@ const BillingContainer = () => {
       Boolean(values?.street1) &&
       Boolean(values?.postalCode)
     ) {
-      // setBillingInfo(values);
+      setBillingInfo(values);
     }
   }, [values, setBillingInfo]);
+
+  useEffect(() => {
+    setValuesToBilling();
+  }, [values, setValuesToBilling]);
 
   const onClickEdit = useCallback(() => {
     setIsEditing(true);

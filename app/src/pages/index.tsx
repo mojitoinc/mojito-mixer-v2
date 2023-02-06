@@ -114,20 +114,20 @@ const HomePage: React.FC = () => {
     }
   }, [meData]);
 
-  useEffect(()=>{
-    setFieldValue('itemId', localStorage.getItem('itemId') ?? '')
-    setFieldValue('lotId', localStorage.getItem('lotId') ?? '')
-  },[]);
+  useEffect(() => {
+    setFieldValue('itemId', localStorage.getItem('itemId') ?? '');
+    setFieldValue('lotId', localStorage.getItem('lotId') ?? '');
+  }, [setFieldValue]);
 
-  useEffect(()=>{
+  useEffect(() => {
     if (values.itemId !== '') {
-      localStorage.setItem("itemId", values.itemId ?? '');  
+      localStorage.setItem('itemId', values.itemId ?? '');
     }
     if (values.lotId !== '') {
-      localStorage.setItem("lotId", values.lotId ?? '');  
+      localStorage.setItem('lotId', values.lotId ?? '');
     }
-    console.log('vv',values)
-  },[values]);
+    console.log('vv', values);
+  }, [values]);
 
   return (
     <CheckoutLayout
