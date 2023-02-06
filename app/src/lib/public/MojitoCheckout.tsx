@@ -1,4 +1,4 @@
-import { Dialog, ThemeProvider, GlobalStyles,Modal } from "@mui/material";
+import { Dialog, ThemeProvider, GlobalStyles } from "@mui/material";
 import React, { useMemo, useState } from "react";
 import ConfigurationContext, {
   ConfigurationType,
@@ -15,6 +15,8 @@ import BillingProvider from "@lib/providers/BillingProvider";
 import PaymentProvider from "@lib/providers/PaymentProvider";
 import ContainerStateProvider from "@lib/providers/ContainerStateProvider";
 import ConnectContext, { ConnectType } from "@lib/state/ConnectContext";
+import Modal from 'react-modal';
+
 
 interface MojitoCheckoutProps {
   uiConfiguration?: ConfigurationType;
@@ -41,20 +43,10 @@ const MojitoCheckout = ({
   );
 
   return (
-      <Modal open={false} 
-      sx={{
-    position:'absolute',
-    top:'0%',
-    left:'0%',
-    overflow:'scroll',
-    height:'100%',
-    width:'100%',
-    display:'block',
-    backgroundColor:'#FFF'
-      }}
-      >
+    <Modal
+    isOpen={show}
+    >
     <ConnectContext.Provider value={{ connect, setConnect }}>
-
         <MojitoApiProvider>
           <ThemeProvider theme={themes}>
             <DeliveryContext.Provider value={deliveryConfiguration}>
@@ -74,7 +66,6 @@ const MojitoCheckout = ({
           </ThemeProvider>
         </MojitoApiProvider>
     </ConnectContext.Provider>
-
       </Modal>
   );
 };
