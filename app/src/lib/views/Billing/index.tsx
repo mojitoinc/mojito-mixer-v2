@@ -97,7 +97,7 @@ const BillingContainer = () => {
       Boolean(values?.street1) &&
       Boolean(values?.postalCode)
     ) {
-      setBillingInfo(values);
+      // setBillingInfo(values);
     }
   }, [values, setBillingInfo]);
 
