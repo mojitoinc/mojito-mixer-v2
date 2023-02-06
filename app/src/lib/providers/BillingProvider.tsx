@@ -1,5 +1,6 @@
 import React, {
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useMemo,
@@ -30,6 +31,7 @@ export interface Billing {
   setBillingInfo: (val: BillingFormData) => void;
   collectionData: CollectionItem;
   taxes: Taxes;
+  refetchTaxes:(val:BillingFormData)=>void;
 }
 const BillingContext = createContext<Billing>({} as Billing);
 
@@ -57,6 +59,25 @@ const BillingProvider = ({ children }: { children?: React.ReactNode }) => {
 
   const [taxQuote, { data: taxQuoteData }] = useLazyQuery(getTaxQuoteQuery);
 
+
+  const refetchTaxes = useCallback((val:BillingFormData)=>{
+    if(orgId && taxablePrice)
+    taxQuote({
+      variables: {
+        input: {
+          address: {
+            city: val?.city,
+            country: val?.country,
+            state: val?.state,
+            street1: val?.street1,
+            postalCode: val?.postalCode,
+          },
+          orgID: orgId,
+          taxablePrice,
+        },
+      },
+    });
+  },[orgId,taxablePrice])
   useEffect(() => {
     fetchCollection({
       variables: {
@@ -67,21 +88,7 @@ const BillingProvider = ({ children }: { children?: React.ReactNode }) => {
 
   useEffect(() => {
     if (billingInfo && orgId && taxablePrice) {
-      taxQuote({
-        variables: {
-          input: {
-            address: {
-              city: billingInfo?.city,
-              country: billingInfo?.country,
-              state: billingInfo?.state,
-              street1: billingInfo?.street1,
-              postalCode: billingInfo?.postalCode,
-            },
-            orgID: orgId,
-            taxablePrice,
-          },
-        },
-      });
+      refetchTaxes(billingInfo)
     }
   }, [billingInfo, taxablePrice, orgId, taxQuote]);
 
@@ -89,12 +96,14 @@ const BillingProvider = ({ children }: { children?: React.ReactNode }) => {
     return taxQuoteData?.getTaxQuote;
   }, [taxQuoteData]);
 
+
   const value = useMemo<Billing>(() => {
     return {
       billingInfo,
       setBillingInfo,
       collectionData,
       taxes,
+      refetchTaxes
     };
   }, [billingInfo, setBillingInfo, collectionData, taxes]);
 
