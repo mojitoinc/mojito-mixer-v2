@@ -8,6 +8,7 @@ stories.add('SHOW Express checkout', () => {
   return (
     <MojitoCheckout
       show
+      debug
       deliveryConfiguration={{
         orgId: 'd086ea16-d40d-454c-84a4-64b5e940670a',
         lotId: '17cd1000-323d-4a20-8e5f-7a8598ffae2a',
@@ -22,6 +23,7 @@ stories.add('Hide Express checkout', () => {
   return (
     <MojitoCheckout
       show
+      debug
       uiConfiguration={{
         billing: {
           hideExpressCheckout: true,
@@ -41,6 +43,7 @@ stories.add('Hide GooglePay', () => {
   return (
     <MojitoCheckout
       show
+      debug
       uiConfiguration={{
         billing: {
           expressCheckoutConfig: {

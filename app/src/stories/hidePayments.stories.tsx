@@ -5,6 +5,7 @@ export const HidePaymentsStories = () => {
   return (
     <MojitoCheckout
       show
+      debug
       uiConfiguration={{
         billing: {
           expressCheckoutConfig: {

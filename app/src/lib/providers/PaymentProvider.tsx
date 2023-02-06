@@ -12,6 +12,8 @@ import React, { createContext, useContext, useState, useMemo, useCallback } from
 import { useBilling } from './BillingProvider';
 import { useContainer } from './ContainerStateProvider';
 import { useDelivery } from './DeliveryProvider';
+import { useDebug, useError } from '@lib/providers';
+
 
 export interface PaymentData {
   creditCardData?: CreditCardFormType;
@@ -39,6 +41,8 @@ export interface Payment {
 const PaymentContext = createContext<Payment>({} as Payment);
 
 const PaymentProvider = ({ children }: { children?: React.ReactNode }) => {
+  const debug = useDebug('PaymentProvider');
+  const { setError } = useError();
   const [paymentInfo, setPaymentInfo] = useState<PaymentData>();
 
 
@@ -83,18 +87,24 @@ const PaymentProvider = ({ children }: { children?: React.ReactNode }) => {
 
   const onConfirmCreditCardPurchase = useCallback(async (deliveryAddress = '') => {
     try {
-      console.log('deliveryAddress', deliveryAddress);
+      debug.info('onConfirm-start', { deliveryAddress, paymentInfo });
+
       const { keyID, encryptedCardData } = await encryptCardData({
         number: paymentInfo?.creditCardData?.isNew
           ? paymentInfo?.creditCardData?.cardNumber?.replace(/\s/g, '')
           : undefined,
         cvv: paymentInfo?.creditCardData?.cvv ?? '',
       });
+      
+      debug.info('onConfirm-encrypt', encryptedCardData);
+
       let paymentMethodId = paymentInfo?.creditCardData?.isNew
         ? undefined
         : paymentInfo?.creditCardData?.cardId;
-      console.log('encryptedCardData', encryptedCardData);
-      if (paymentInfo?.creditCardData?.isNew) {
+
+        debug.info('onConfirm-paymentMethodId', paymentInfo);
+        
+        if (paymentInfo?.creditCardData?.isNew) {
         const inputData = formCreatePaymentMethodObject(
           orgId,
           paymentInfo,
@@ -110,6 +120,8 @@ const PaymentProvider = ({ children }: { children?: React.ReactNode }) => {
         });
         paymentMethodId =
           createPaymentMethodResult?.data?.createPaymentMethod?.id;
+          debug.info('onConfirm-createPaymentMethod', createPaymentMethodResult);
+
         if (
           createPaymentMethodResult?.data?.createPaymentMethod?.status !==
           'complete'
@@ -121,12 +133,12 @@ const PaymentProvider = ({ children }: { children?: React.ReactNode }) => {
           });
         }
       }
-      console.log('paymentMethodId', paymentMethodId);
+      debug.info('onConfirm-paymentMethodId', paymentMethodId);
       const reserveLotData = await getInvoiceData();
-      console.log('reserveLotData', reserveLotData);
+      debug.info('onConfirm-reserveLotData', reserveLotData);
 
       if (paymentMethodId) {
-        console.log('PAYMENT', paymentMethodId, {
+        debug.info('ready-paymentMethodId', {
           paymentMethodID: paymentMethodId,
           invoiceID: reserveLotData?.invoiceID,
           metadata: {
@@ -156,13 +168,17 @@ const PaymentProvider = ({ children }: { children?: React.ReactNode }) => {
           paymentId: paymentMethodId,
           destinationAddress: deliveryAddress,
         };
+        debug.success('paymentData', { paymentData, notificationData});
+
         saveToCookies(paymentData, reserveLotData);
 
         window.location.href =
           notificationData?.data?.getPaymentNotification?.message?.redirectURL;
       }
-    } catch (e) {
-      console.error('ERROR', e);
+    } catch (e: any) {
+      const message = e['message'] ?? '';
+      debug.error('confirm', { message });
+      setError(message)
     }
   }, [
     orgId,
@@ -231,8 +247,10 @@ const PaymentProvider = ({ children }: { children?: React.ReactNode }) => {
 
         setContainerState(ContainerTypes.CONFIRMATION);
       }
-    } catch (e) {
-      console.error('ERROR', e);
+    } catch (e: any) {
+      const message = e['message'] ?? '';
+      console.error('ERROR', { message });
+      setError(message)
     }
   }, [
     paymentInfo,

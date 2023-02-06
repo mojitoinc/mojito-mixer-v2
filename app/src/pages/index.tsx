@@ -126,7 +126,6 @@ const HomePage: React.FC = () => {
     if (values.lotId !== '') {
       localStorage.setItem('lotId', values.lotId ?? '');
     }
-    console.log('vv', values);
   }, [values]);
 
   return (

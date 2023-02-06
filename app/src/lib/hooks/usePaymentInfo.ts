@@ -13,6 +13,12 @@ interface PaymentInfo {
   taxData? : Taxes;
   collection? : CollectionItem;
 }
+const getObject = (value:any) => {
+  if (!value || value === 'undefined') return value;
+  if (typeof value === 'object') return value;
+  if (typeof value === 'string') return JSON.parse(value);
+  return undefined;
+};
 
 const usePaymentInfo = (): PaymentInfo => {
   const billing = CookieService.billing.getValue();
@@ -21,13 +27,7 @@ const usePaymentInfo = (): PaymentInfo => {
   const reserveLotData = CookieService.reserveLotData.getValue();
   const collectionData = CookieService.collectionData.getValue();
 
-  const getObject = (value:any) => {
-    console.log('getObject', value);
-    if (!value || value === 'undefined') return value;
-    if (typeof value === 'object') return value;
-    if (typeof value === 'string') return JSON.parse(value);
-    return undefined;
-  };
+
 
   const billingInfo = useMemo(() => {
     return getObject(billing) as BillingFormData;

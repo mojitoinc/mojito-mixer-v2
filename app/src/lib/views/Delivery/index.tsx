@@ -12,8 +12,10 @@ import { PaymentTypes } from '@lib/constants/states';
 import { RiskRating } from '@lib/constants/riskRating';
 import { useWeb3ModalConnect } from '@lib/state/Web3ModalConnect';
 import DeliveryLayout from './Delivery.layout';
+import { useDebug } from '@lib/providers';
 
 export const Delivery = () => {
+  const debug = useDebug('Delivery');
   const [selectedDeliveryAddress, setSelectedDeliveryAddress] =
     useState<string>('');
   const [walletOptions, setWalletOptions] = useState<DropdownOptions[]>([]);
@@ -70,6 +72,7 @@ export const Delivery = () => {
           },
         },
       });
+      debug.info('onConfirm-start', {screeningData,paymentInfo});
       if (screeningData.data?.addressScreening === RiskRating.High) {
         return;
       }
