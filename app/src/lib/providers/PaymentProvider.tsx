@@ -12,7 +12,7 @@ import React, { createContext, useContext, useState, useMemo, useCallback } from
 import { useBilling } from './BillingProvider';
 import { useContainer } from './ContainerStateProvider';
 import { useDelivery } from './DeliveryProvider';
-import { useDebug } from '@lib/providers';
+import { useDebug, useError } from '@lib/providers';
 
 
 export interface PaymentData {
@@ -42,7 +42,7 @@ const PaymentContext = createContext<Payment>({} as Payment);
 
 const PaymentProvider = ({ children }: { children?: React.ReactNode }) => {
   const debug = useDebug('PaymentProvider');
-
+  const { setError } = useError();
   const [paymentInfo, setPaymentInfo] = useState<PaymentData>();
 
 
@@ -178,6 +178,7 @@ const PaymentProvider = ({ children }: { children?: React.ReactNode }) => {
     } catch (e) {
       console.error('ERROR', e);
       debug.error('confirm', { e });
+      setError(e?.message ?? 'err')
     }
   }, [
     orgId,

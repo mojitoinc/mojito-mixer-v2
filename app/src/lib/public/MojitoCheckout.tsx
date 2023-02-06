@@ -14,7 +14,7 @@ import { MojitoApiProvider } from '@lib/state/MojitoApiProvider';
 import BillingProvider from '@lib/providers/BillingProvider';
 import PaymentProvider from '@lib/providers/PaymentProvider';
 import ContainerStateProvider from '@lib/providers/ContainerStateProvider';
-import { DebugProvider } from '@lib/providers';
+import { DebugProvider, ErrorProvider } from '@lib/providers';
 import ConnectContext, { ConnectType } from '@lib/state/ConnectContext';
 import Modal from 'react-modal';
 
@@ -56,23 +56,25 @@ const MojitoCheckout = ({
       isOpen={ show }>
       <ConnectContext.Provider value={ connectValues }>
         <DebugProvider debug={ debug }>
-          <MojitoApiProvider>
-            <ThemeProvider theme={ themes }>
-              <DeliveryContext.Provider value={ deliveryConfiguration }>
-                <ConfigurationContext.Provider value={ uiConfigurations }>
-                  <ContainerStateProvider
-                    paymentId={ deliveryConfiguration?.paymentId }>
-                    <BillingProvider>
-                      <PaymentProvider>
-                        <GlobalStyles styles={ styles } />
-                        <MojitoCheckoutLayout />
-                      </PaymentProvider>
-                    </BillingProvider>
-                  </ContainerStateProvider>
-                </ConfigurationContext.Provider>
-              </DeliveryContext.Provider>
-            </ThemeProvider>
-          </MojitoApiProvider>
+          <ErrorProvider>
+            <MojitoApiProvider>
+              <ThemeProvider theme={ themes }>
+                <DeliveryContext.Provider value={ deliveryConfiguration }>
+                  <ConfigurationContext.Provider value={ uiConfigurations }>
+                    <ContainerStateProvider
+                      paymentId={ deliveryConfiguration?.paymentId }>
+                      <BillingProvider>
+                        <PaymentProvider>
+                          <GlobalStyles styles={ styles } />
+                          <MojitoCheckoutLayout />
+                        </PaymentProvider>
+                      </BillingProvider>
+                    </ContainerStateProvider>
+                  </ConfigurationContext.Provider>
+                </DeliveryContext.Provider>
+              </ThemeProvider>
+            </MojitoApiProvider>
+          </ErrorProvider>
         </DebugProvider>
       </ConnectContext.Provider>
     </Modal>
