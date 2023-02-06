@@ -4,9 +4,11 @@ import { Icons } from '@lib/assets';
 import { CollectionItem } from '@lib/interfaces/Collections';
 import { Taxes } from '@lib/interfaces/CostBreakDown';
 import { useUIConfiguration } from '@lib/providers/ConfigurationProvider';
+import { useContainer } from '@lib/providers/ContainerStateProvider';
 import { useDelivery } from '@lib/providers/DeliveryProvider';
 import { MixTheme } from '@lib/theme/ThemeOptions';
 import { Box, Divider, Typography, useTheme } from '@mui/material';
+import { ContainerTypes } from '@views/MojitoCheckout/MojitoCheckOut.layout';
 import React from 'react';
 
 interface CostBreakDownProps {
@@ -18,6 +20,7 @@ const CostBreakDownLayout = ({ taxes, collectionData }:CostBreakDownProps) => {
   const theme = useTheme<MixTheme>();
   const { billing } = useUIConfiguration();
   const { quantity } = useDelivery();
+  const { containerState } = useContainer();
 
   const renderTextRow = (text: string, value: string) => {
     return (
@@ -86,7 +89,7 @@ const CostBreakDownLayout = ({ taxes, collectionData }:CostBreakDownProps) => {
           </Box>
         </Box>
         {
-          billing.showDiscountCode && (
+          (billing?.showDiscountCode && containerState !== ContainerTypes.CONFIRMATION) && (
             <>
               <Divider
                 sx={{
