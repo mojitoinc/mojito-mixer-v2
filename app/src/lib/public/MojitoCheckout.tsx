@@ -27,15 +27,6 @@ interface MojitoCheckoutProps {
   debug?: boolean;
 }
 
-const customStyles = {
-  content: {
-    width: '100%',
-    left: 'auto',
-    right: 'auto',
-    bottom: 'auto',
-  },
-};
-
 const MojitoCheckout = ({
   uiConfiguration = DefaultConfiguration,
   theme,
@@ -62,9 +53,20 @@ const MojitoCheckout = ({
 
   return (
     <Modal
-        ariaHideApp={false}
-        style={customStyles}
-      isOpen={ show }>
+      ariaHideApp={false}
+      isOpen={ show }
+      style={{
+        content:{
+          width:'100%',
+          height:'100vh',
+          top:0,
+          left:0,
+          bottom:0,
+          right:0,
+          padding:0,
+        },
+      }}
+      >
       <ConnectContext.Provider value={ connectValues }>
         <DebugProvider debug={ debug }>
           <ErrorProvider>

@@ -26,7 +26,7 @@ export const PaymentContainer = () => {
   const { billingInfo, taxes } = useBilling();
   const { billing } = useUIConfiguration();
 
-  const [paymentType, setPaymentType] = useState<string>('');
+  const [paymentType, setPaymentType] = useState<string>( PaymentTypes.CREDIT_CARD);
   const onChoosePaymentType = useCallback(
     (name: PaymentTypes, value: boolean) => {
       setPaymentType(value ? name : paymentType);
@@ -34,8 +34,10 @@ export const PaymentContainer = () => {
     [paymentType],
   );
 
+  console.log("paymentInfo",paymentInfo)
+
   useEffect(() => {
-    setPaymentType(paymentInfo?.paymentType ?? '');
+    setPaymentType(paymentInfo?.paymentType ?? PaymentTypes.CREDIT_CARD);
   }, [paymentInfo]);
 
   const validationSchema = Yup.object().shape({

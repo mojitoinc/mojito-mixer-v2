@@ -16,11 +16,11 @@ import BillingView from './BillingView';
 const BillingContainer = () => {
   const debug = useDebug('Billing');
   const { orgId } = useDelivery();
-  const { setBillingInfo, billingInfo } = useBilling();
+  const { setBillingInfo, billingInfo,refetchTaxes } = useBilling();
 
   const [isEditing, setIsEditing] = useState<boolean>(true);
   const { setContainerState } = useContainer();
-  const { setPaymentInfo } = usePayment();
+  const { setPaymentInfo,paymentInfo } = usePayment();
 
   const [fetchBilling, { data: paymentData }] = useLazyQuery(paymentMethodsQuery);
 
@@ -61,12 +61,6 @@ const BillingContainer = () => {
     validationSchema: schema,
   });
 
-  useEffect(() => {
-    setPaymentInfo({
-      sessionKey: uuid(),
-    });
-  }, [setPaymentInfo]);
-
   const setBillingValues = useCallback(() => {
     const paymentItem: PaymentMethod = paymentData?.getPaymentMethodList?.find(
       (item: PaymentMethod) => item.type === 'CreditCard' && item.billingDetails,
@@ -98,27 +92,13 @@ const BillingContainer = () => {
     }
   }, [paymentData, setBillingValues]);
 
-
-  const setValuesToBilling = useCallback(() => {
-    debug.info('setValuesToBilling')
-    if (
-      Boolean(values?.city) &&
-      Boolean(values?.country) &&
-      Boolean(values?.state) &&
-      Boolean(values?.street1) &&
-      Boolean(values?.postalCode)
-    ) {
-      // setBillingInfo(values);
-    }
-  }, [values, setBillingInfo]);
-
-  useEffect(() => {
-    setValuesToBilling();
-  }, [values, setValuesToBilling]);
-
   const onClickEdit = useCallback(() => {
     setIsEditing(true);
   }, []);
+
+  useEffect(()=>{
+    refetchTaxes(values)
+  },[values])
 
   const onClickContinue = useCallback(async () => {
     if (isEditing && !isValid) return;
@@ -129,8 +109,12 @@ const BillingContainer = () => {
     }
     setBillingInfo({ ...values });
 
+    setPaymentInfo({
+      sessionKey: uuid(),
+      ...paymentInfo,
+    });
     setContainerState(ContainerTypes.PAYMENT);
-  }, [values, setBillingInfo, isEditing, isValid, setContainerState]);
+  }, [values, setBillingInfo, isEditing, isValid, setContainerState,paymentInfo]);
 
   return (
     <BillingView
