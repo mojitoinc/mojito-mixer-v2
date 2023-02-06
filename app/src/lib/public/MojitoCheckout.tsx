@@ -14,6 +14,7 @@ import { MojitoApiProvider } from '@lib/state/MojitoApiProvider';
 import BillingProvider from '@lib/providers/BillingProvider';
 import PaymentProvider from '@lib/providers/PaymentProvider';
 import ContainerStateProvider from '@lib/providers/ContainerStateProvider';
+import { DebugProvider } from '@lib/providers';
 import ConnectContext, { ConnectType } from '@lib/state/ConnectContext';
 import Modal from 'react-modal';
 
@@ -23,11 +24,13 @@ interface MojitoCheckoutProps {
   deliveryConfiguration: Delivery;
   theme?: ThemeConfiguration;
   show: boolean;
+  debug: boolean;
 }
 const MojitoCheckout = ({
   uiConfiguration = DefaultConfiguration,
   theme,
   show,
+  debug,
   deliveryConfiguration,
 }: MojitoCheckoutProps) => {
   const [connect, setConnect] = useState<ConnectType>({
@@ -37,6 +40,7 @@ const MojitoCheckout = ({
   });
 
   const themes = useMemo(() => makeTheme(theme), [theme]);
+  
   const uiConfigurations = useMemo(
     () => makeUIConfiguration(uiConfiguration),
     [uiConfiguration],
@@ -48,25 +52,28 @@ const MojitoCheckout = ({
 
   return (
     <Modal
+        ariaHideApp={false}
       isOpen={ show }>
       <ConnectContext.Provider value={ connectValues }>
-        <MojitoApiProvider>
-          <ThemeProvider theme={ themes }>
-            <DeliveryContext.Provider value={ deliveryConfiguration }>
-              <ConfigurationContext.Provider value={ uiConfigurations }>
-                <ContainerStateProvider
-                  paymentId={ deliveryConfiguration?.paymentId }>
-                  <BillingProvider>
-                    <PaymentProvider>
-                      <GlobalStyles styles={ styles } />
-                      <MojitoCheckoutLayout />
-                    </PaymentProvider>
-                  </BillingProvider>
-                </ContainerStateProvider>
-              </ConfigurationContext.Provider>
-            </DeliveryContext.Provider>
-          </ThemeProvider>
-        </MojitoApiProvider>
+        <DebugProvider debug={ debug }>
+          <MojitoApiProvider>
+            <ThemeProvider theme={ themes }>
+              <DeliveryContext.Provider value={ deliveryConfiguration }>
+                <ConfigurationContext.Provider value={ uiConfigurations }>
+                  <ContainerStateProvider
+                    paymentId={ deliveryConfiguration?.paymentId }>
+                    <BillingProvider>
+                      <PaymentProvider>
+                        <GlobalStyles styles={ styles } />
+                        <MojitoCheckoutLayout />
+                      </PaymentProvider>
+                    </BillingProvider>
+                  </ContainerStateProvider>
+                </ConfigurationContext.Provider>
+              </DeliveryContext.Provider>
+            </ThemeProvider>
+          </MojitoApiProvider>
+        </DebugProvider>
       </ConnectContext.Provider>
     </Modal>
   );

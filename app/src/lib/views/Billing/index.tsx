@@ -10,9 +10,11 @@ import { useContainer } from '@lib/providers/ContainerStateProvider';
 import { ContainerTypes } from '@views/MojitoCheckout/MojitoCheckOut.layout';
 import { uuid } from 'uuidv4';
 import { usePayment } from '@lib/providers/PaymentProvider';
+import { useDebug } from '@lib/providers';
 import BillingView from './BillingView';
 
 const BillingContainer = () => {
+  const debug = useDebug('Billing');
   const { orgId } = useDelivery();
   const { setBillingInfo, billingInfo } = useBilling();
 
@@ -23,8 +25,8 @@ const BillingContainer = () => {
   const [fetchBilling, { data: paymentData }] = useLazyQuery(paymentMethodsQuery);
 
   useEffect(() => {
+    debug.info('load', {orgId})
     if (orgId) {
-      console.log('FETCHING');
       fetchBilling({
         variables: {
           orgID: orgId,
@@ -90,6 +92,7 @@ const BillingContainer = () => {
   }, [billingInfo, paymentData, setValues]);
 
   useEffect(() => {
+    debug.info('paymentData',paymentData)
     if (paymentData) {
       setBillingValues();
     }
@@ -97,6 +100,7 @@ const BillingContainer = () => {
 
 
   const setValuesToBilling = useCallback(() => {
+    debug.info('setValuesToBilling')
     if (
       Boolean(values?.city) &&
       Boolean(values?.country) &&
@@ -104,7 +108,7 @@ const BillingContainer = () => {
       Boolean(values?.street1) &&
       Boolean(values?.postalCode)
     ) {
-      setBillingInfo(values);
+      // setBillingInfo(values);
     }
   }, [values, setBillingInfo]);
 
@@ -114,10 +118,7 @@ const BillingContainer = () => {
 
   const onClickEdit = useCallback(() => {
     setIsEditing(true);
-    console.log('ISEDITING');
   }, []);
-
-  console.log('ISEDITING,', isEditing);
 
   const onClickContinue = useCallback(async () => {
     if (isEditing && !isValid) return;

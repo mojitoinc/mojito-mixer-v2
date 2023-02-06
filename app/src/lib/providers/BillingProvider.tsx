@@ -37,8 +37,6 @@ const BillingProvider = ({ children }: { children?: React.ReactNode }) => {
   const [billingInfo, setBillingInfo] = useState<BillingFormData>();
   const { quantity, orgId, collectionItemId } = useDelivery();
 
-  console.log('CALLING');
-
   const [fetchCollection, { data: collection }] = useLazyQuery(collectionByIdQuery);
 
   const collectionData: CollectionItem = useMemo<CollectionItem>(() => {
