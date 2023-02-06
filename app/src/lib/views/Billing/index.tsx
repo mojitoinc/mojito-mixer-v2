@@ -103,7 +103,10 @@ const BillingContainer = () => {
 
   const onClickEdit = useCallback(() => {
     setIsEditing(true);
+    console.log('ISEDITING');
   }, []);
+
+  console.log('ISEDITING,', isEditing);
 
   const onClickContinue = useCallback(async () => {
     if (isEditing && !isValid) return;

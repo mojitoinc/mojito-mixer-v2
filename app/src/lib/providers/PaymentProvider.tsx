@@ -43,7 +43,7 @@ const PaymentProvider = ({ children }: { children?: React.ReactNode }) => {
 
 
   const { billingInfo, collectionData, taxes } = useBilling();
-  const { orgId, lotId, quantity,invoiceId } = useDelivery();
+  const { orgId, lotId, quantity, invoiceId } = useDelivery();
   const { setContainerState } = useContainer();
   const [createPaymentMethod] = useMutation(createPaymentMethodQuery);
   const [createPayment] = useMutation(createPaymentQuery);
@@ -74,33 +74,34 @@ const PaymentProvider = ({ children }: { children?: React.ReactNode }) => {
     return reserveData?.data?.reserveMarketplaceBuyNowLot?.invoice as ReserveNow;
   }, [invoiceId, reserveNow, lotId, quantity]);
 
-  const saveToCookies = useCallback((paymentData: PaymentData,reserveLotData:ReserveNow)=>{
+  const saveToCookies = useCallback((paymentData: PaymentData, reserveLotData:ReserveNow) => {
     CookieService.billing.setValue(JSON.stringify(billingInfo));
     CookieService.paymentInfo.setValue(JSON.stringify(paymentData));
     CookieService.taxes.setValue(JSON.stringify(taxes));
     CookieService.collectionData.setValue(JSON.stringify(collectionData));
     CookieService.reserveLotData.setValue(JSON.stringify(reserveLotData));
-  },[])
+  }, [billingInfo, collectionData, taxes]);
 
-  const onConfirmCreditCardPurchase = useCallback(async(deliveryAddress:string = "")=>{
+  const onConfirmCreditCardPurchase = useCallback(async (deliveryAddress = '') => {
     try {
-      console.log("deliveryAddress",deliveryAddress)
+      console.log('deliveryAddress', deliveryAddress);
       const { keyID, encryptedCardData } = await encryptCardData({
         number: paymentInfo?.creditCardData?.isNew
-          ? paymentInfo?.creditCardData?.cardNumber?.replace(/\s/g, "")
+          ? paymentInfo?.creditCardData?.cardNumber?.replace(/\s/g, '')
           : undefined,
-        cvv: paymentInfo?.creditCardData?.cvv ?? "",
+        cvv: paymentInfo?.creditCardData?.cvv ?? '',
       });
       let paymentMethodId = paymentInfo?.creditCardData?.isNew
         ? undefined
         : paymentInfo?.creditCardData?.cardId;
+      console.log('encryptedCardData', encryptedCardData);
       if (paymentInfo?.creditCardData?.isNew) {
         const inputData = formCreatePaymentMethodObject(
           orgId,
           paymentInfo,
           billingInfo,
           keyID,
-          encryptedCardData
+          encryptedCardData,
         );
         const createPaymentMethodResult = await createPaymentMethod({
           variables: {
@@ -112,7 +113,7 @@ const PaymentProvider = ({ children }: { children?: React.ReactNode }) => {
           createPaymentMethodResult?.data?.createPaymentMethod?.id;
         if (
           createPaymentMethodResult?.data?.createPaymentMethod?.status !==
-          "complete"
+          'complete'
         ) {
           await paymentMethodStatus({
             variables: {
@@ -121,13 +122,12 @@ const PaymentProvider = ({ children }: { children?: React.ReactNode }) => {
           });
         }
       }
-      console.log("paymentMethodId",paymentMethodId)
+      console.log('paymentMethodId', paymentMethodId);
       const reserveLotData = await getInvoiceData();
-      console.log("reserveLotData",reserveLotData)
+      console.log('reserveLotData', reserveLotData);
 
       if (paymentMethodId) {
-
-        console.log("PAYMENT",paymentMethodId,{
+        console.log('PAYMENT', paymentMethodId, {
           paymentMethodID: paymentMethodId,
           invoiceID: reserveLotData?.invoiceID,
           metadata: {
@@ -137,7 +137,7 @@ const PaymentProvider = ({ children }: { children?: React.ReactNode }) => {
               encryptedData: encryptedCardData,
             },
           },
-        })
+        });
         await createPayment({
           variables: {
             paymentMethodID: paymentMethodId,
@@ -157,29 +157,28 @@ const PaymentProvider = ({ children }: { children?: React.ReactNode }) => {
           paymentId: paymentMethodId,
           destinationAddress: deliveryAddress,
         };
-        saveToCookies(paymentData,reserveLotData)
+        saveToCookies(paymentData, reserveLotData);
 
         window.location.href =
           notificationData?.data?.getPaymentNotification?.message?.redirectURL;
       }
     } catch (e) {
-      console.error("ERROR", e);
+      console.error('ERROR', e);
     }
-  },[
+  }, [
     orgId,
-    collectionData,
     paymentInfo,
     billingInfo,
     paymentNotification,
-    taxes,
     createPayment,
     createPaymentMethod,
     encryptCardData,
     paymentMethodStatus,
     getInvoiceData,
-  ])
+    saveToCookies,
+  ]);
 
-  const onConfirmWireTransferPurchase = useCallback(async (deliveryAddress:string = "") => {
+  const onConfirmWireTransferPurchase = useCallback(async (deliveryAddress = '') => {
     try {
       const inputData: any = {};
       const copiedBillingDetails = {
@@ -191,7 +190,7 @@ const PaymentProvider = ({ children }: { children?: React.ReactNode }) => {
       delete copiedBillingDetails.street1;
       delete copiedBillingDetails.email;
       delete copiedBillingDetails.phoneNumber;
-      inputData.paymentType = "Wire";
+      inputData.paymentType = 'Wire';
       inputData.wireData = {
         ...paymentInfo?.wireData,
         billingDetails: copiedBillingDetails,
@@ -203,7 +202,7 @@ const PaymentProvider = ({ children }: { children?: React.ReactNode }) => {
         },
       });
       if (result?.data?.createPaymentMethod?.id) {
-        if (result?.data?.createPaymentMethod?.status !== "complete") {
+        if (result?.data?.createPaymentMethod?.status !== 'complete') {
           await paymentMethodStatus({
             variables: {
               paymentMethodID: result?.data?.createPaymentMethod?.id,
@@ -225,22 +224,20 @@ const PaymentProvider = ({ children }: { children?: React.ReactNode }) => {
         const paymentData: PaymentData = {
           ...paymentInfo,
           deliveryStatus: result1?.data?.createPayment?.status,
-          paymentId: result?.data?.createPaymentMethod?.id ?? "",
+          paymentId: result?.data?.createPaymentMethod?.id ?? '',
           destinationAddress: deliveryAddress,
         };
         setPaymentInfo(paymentData);
-        saveToCookies(paymentData,reserveLotData)
+        saveToCookies(paymentData, reserveLotData);
 
         setContainerState(ContainerTypes.CONFIRMATION);
       }
     } catch (e) {
-      console.error("ERROR", e);
+      console.error('ERROR', e);
     }
   }, [
     paymentInfo,
     billingInfo,
-    collectionData,
-    taxes,
     orgId,
     paymentMethodStatus,
     setContainerState,
@@ -248,6 +245,7 @@ const PaymentProvider = ({ children }: { children?: React.ReactNode }) => {
     createPaymentMethod,
     createPayment,
     getInvoiceData,
+    saveToCookies,
   ]);
 
 
@@ -256,9 +254,9 @@ const PaymentProvider = ({ children }: { children?: React.ReactNode }) => {
       paymentInfo,
       setPaymentInfo,
       onConfirmCreditCardPurchase,
-      onConfirmWireTransferPurchase
+      onConfirmWireTransferPurchase,
     };
-  }, [paymentInfo, setPaymentInfo,onConfirmCreditCardPurchase]);
+  }, [paymentInfo, setPaymentInfo, onConfirmCreditCardPurchase, onConfirmWireTransferPurchase]);
 
   return (
     <PaymentContext.Provider value={ values }>{ children }</PaymentContext.Provider>

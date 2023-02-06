@@ -19,6 +19,6 @@ const Context = createContext<ContextType>({} as ContextType);
 
 export default Context;
 
-export const  useConnect =()=> {
+export const useConnect = () => {
   return useContext(Context);
 };

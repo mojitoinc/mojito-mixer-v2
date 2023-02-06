@@ -70,18 +70,32 @@ export const WireTransferForm = ({
 
   const formatAccountNumber = useCallback(
     async (value: string) => {
-      const accountNumberLength = values?.accountNumber ? values?.accountNumber?.length : 0
-      if(accountNumberLength > value.length) {
+      const accountNumberLength = values?.accountNumber ? values?.accountNumber?.length : 0;
+      if (accountNumberLength > value.length) {
         await setFieldValue('accountNumber', value);
         return;
       }
       const isValid = value.match(/^[\d\s]+$/);
       if (isValid) {
-        const accountNumber =  value.split(" ").join('')
+        const accountNumber = value.split(' ').join('');
         await setFieldValue('accountNumber', accountNumber.replace(/\d{4}(?=.)/g, '$& '));
       }
     },
-    [setFieldValue,values],
+    [setFieldValue, values],
+  );
+  const formatRouterNumber = useCallback(
+    async (value: string) => {
+      const abaLength = values?.aba ? values?.aba?.length : 0;
+      if (abaLength > value.length) {
+        await setFieldValue('aba', value);
+        return;
+      }
+      const isValid = value.match(/^[\d\s]+$/);
+        const aba = value.split(' ').join('');
+        await setFieldValue('aba', aba.replace(/^(.{4})(.*)$/, "$1 $2"));
+      
+    },
+    [setFieldValue, values],
   );
 
   return (
@@ -102,7 +116,7 @@ export const WireTransferForm = ({
       <TextInput
         value={ values.aba }
         title="Routing Number (ABA)"
-        onChange={ (val: string) => formatAccountNumberAndAba(val, 'aba') }
+        onChange={ formatRouterNumber }
         sx={{
           marginTop: '16px',
         }}

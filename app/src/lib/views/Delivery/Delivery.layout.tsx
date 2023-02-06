@@ -27,7 +27,7 @@ const DeliveryLayout = ({
   organizationName,
   billingInfo,
   paymentInfo,
-  onClickConnectWallet
+  onClickConnectWallet,
 }: DeliveryLayoutProps) => {
   const theme = useTheme<MixTheme>();
   const isCreditCard = useMemo(
@@ -79,7 +79,7 @@ const DeliveryLayout = ({
             backgroundColor={ theme.global?.white }
             variant="outlined"
             sx={{ marginTop: 2 }}
-            onClick={onClickConnectWallet} />
+            onClick={ onClickConnectWallet } />
         </Stack>
       </Card>
       <Box display="flex" flexDirection="row" justifyContent="flex-end">

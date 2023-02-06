@@ -74,14 +74,14 @@ const CostBreakDownLayout = ({ taxes, collectionData }:CostBreakDownProps) => {
                 { collectionData?.name }
               </Typography>
               <Typography>Qty : { quantity }</Typography>
-              <Typography>{ collectionData?.details?.totalUnits ?? "0" } remaining</Typography>
+              <Typography>{ collectionData?.details?.totalUnits ?? '0' } remaining</Typography>
             </Box>
           </Box>
           <Box
             display="flex"
             flexDirection="column"
             alignItems="flex-end">
-            <Typography fontWeight="700">{ taxes?.taxablePrice ?? "0"} USD</Typography>
+            <Typography fontWeight="700">{ taxes?.taxablePrice ?? '0' } USD</Typography>
             <Typography>2.00 ETH</Typography>
           </Box>
         </Box>
@@ -119,8 +119,8 @@ const CostBreakDownLayout = ({ taxes, collectionData }:CostBreakDownProps) => {
             margin: '20px 0px 10px 0px',
           }} />
         <Box>
-          { renderTextRow('Subtotal', `${ taxes?.taxablePrice ?? "0"} USD`) }
-          { renderTextRow('Taxes', `${ taxes?.totalTaxAmount ?? "0"} USD`) }
+          { renderTextRow('Subtotal', `${ taxes?.taxablePrice ?? '0' } USD`) }
+          { renderTextRow('Taxes', `${ taxes?.totalTaxAmount ?? '0' } USD`) }
           { renderTextRow('Fee', '0 USD') }
         </Box>
 
@@ -139,7 +139,7 @@ const CostBreakDownLayout = ({ taxes, collectionData }:CostBreakDownProps) => {
             display="flex"
             flexDirection="column"
             alignItems="flex-end">
-            <Typography fontWeight="700" fontSize="20px"> { taxes?.totalTaxedPrice ?? "0"} USD</Typography>
+            <Typography fontWeight="700" fontSize="20px"> { taxes?.totalTaxedPrice ?? '0' } USD</Typography>
             <Typography fontSize="16px">2.00 ETH</Typography>
           </Box>
         </Box>

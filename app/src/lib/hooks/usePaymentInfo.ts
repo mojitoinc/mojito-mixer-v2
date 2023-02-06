@@ -22,8 +22,8 @@ const usePaymentInfo = (): PaymentInfo => {
   const collectionData = CookieService.collectionData.getValue();
 
   const getObject = (value:any) => {
-    console.log("getObject",value)
-    if(!value || value === 'undefined') return value;
+    console.log('getObject', value);
+    if (!value || value === 'undefined') return value;
     if (typeof value === 'object') return value;
     if (typeof value === 'string') return JSON.parse(value);
     return undefined;

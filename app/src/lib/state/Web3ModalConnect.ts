@@ -5,27 +5,27 @@ import Web3Modal, { IProviderOptions } from 'web3modal';
 import { useConnect } from './ConnectContext';
 
 export const setupAll = async (tag: string) => {
-  const providerOptions:IProviderOptions = tag == 'wallet' ? {
+  const providerOptions:IProviderOptions = tag === 'wallet' ? {
     walletconnect: {
       package: WalletConnectProvider,
       options: {
-        infuraId: process.env.NEXT_PUBLIC_RUNTIME_WALLETCONNECT_ID
-      }
-    }
+        infuraId: process.env.NEXT_PUBLIC_RUNTIME_WALLETCONNECT_ID,
+      },
+    },
   }
     : {
       walletconnect: {
-        package:null,
+        package: null,
         options: {
-          infuraId: process.env.NEXT_PUBLIC_RUNTIME_WALLETCONNECT_ID
-        }
-      }
+          infuraId: process.env.NEXT_PUBLIC_RUNTIME_WALLETCONNECT_ID,
+        },
+      },
     };
 
   const web3Modal = new Web3Modal({
-    network:'rinkeby', //process.env.NEXT_PUBLIC_RUNTIME_NETWORK, // optional
+    network: 'rinkeby', // process.env.NEXT_PUBLIC_RUNTIME_NETWORK, // optional
     cacheProvider: true, // optional
-    providerOptions // required
+    providerOptions, // required
   });
   // web3Modal.clearCachedProvider();
   return web3Modal;
@@ -35,9 +35,9 @@ export const setupAll = async (tag: string) => {
 export const onConnect = async (web3Modal: Web3Modal, tag: string) => {
   if (web3Modal) {
     try {
-      const provider = tag == 'metamask' ? await web3Modal.connect() : await web3Modal.connect();
+      const provider = tag === 'metamask' ? await web3Modal.connect() : await web3Modal.connect();
       const web3Provider = new Web3Provider(provider);
-    console.log("web3Provider")
+      console.log('web3Provider');
 
       const signedAddress =
         (await provider.selectedAddress) || provider.accounts[0];
@@ -45,7 +45,7 @@ export const onConnect = async (web3Modal: Web3Modal, tag: string) => {
         provider: web3Provider,
         web3: provider,
         account: signedAddress,
-        success: true
+        success: true,
       };
     } catch (err) {
       console.log('error connecting Web3: ', err);
@@ -53,34 +53,34 @@ export const onConnect = async (web3Modal: Web3Modal, tag: string) => {
   } else {
     console.log('No Web3Modal...');
   }
+  return undefined;
 };
 
 export const useWeb3ModalConnect = () => {
-
   const { connect, setConnect } = useConnect();
   const [networkId, setNetworkID] = useState<string | undefined>();
 
   const getSignedAddress = useCallback(async (message: string) => {
     const signer: JsonRpcSigner | undefined = connect?.provider?.getSigner(
-      connect.account
+      connect.account,
     );
     if (signer) {
       const signature = await signer.signMessage(message);
       const address = await signer.getAddress();
       return { address, signature };
     }
-
+    return undefined;
   }, [connect]);
 
   const onWalletConnect = useCallback(async () => {
     const modal = await setupAll('wallet');
 
-    console.log("modal",modal)
+    console.log('modal', modal);
     const provider = await onConnect(modal, 'wallet');
-    console.log("provider",provider)
+    console.log('provider', provider);
 
     if (provider) {
-      let chainId = provider.web3.chainId;
+      let { chainId } = provider.web3;
       if (typeof chainId === 'string') {
         chainId = parseInt(chainId, 16);
       }
@@ -92,16 +92,16 @@ export const useWeb3ModalConnect = () => {
         provider: provider.provider,
         connected: provider.success,
         chainId,
-        modal
+        modal,
       });
 
-      console.log("provider",provider)
+      console.log('provider', provider);
 
       provider.web3.on('accountsChanged', (accounts: string[]) => {
         setConnect(prevValue => ({
           ...prevValue,
           account: accounts[0],
-          signer: provider.provider.getSigner(accounts[0])
+          signer: provider.provider.getSigner(accounts[0]),
         }));
       });
 
@@ -112,7 +112,7 @@ export const useWeb3ModalConnect = () => {
         }
         setConnect(prevValue => ({
           ...prevValue,
-          chainId: updatedChainId
+          chainId: updatedChainId,
         }));
       });
     }
@@ -126,7 +126,7 @@ export const useWeb3ModalConnect = () => {
     const provider = await onConnect(modal, 'metamask');
 
     if (provider) {
-      let chainId = provider.web3.chainId;
+      let { chainId } = provider.web3;
       if (typeof chainId === 'string') {
         chainId = parseInt(chainId, 16);
       }
@@ -138,14 +138,14 @@ export const useWeb3ModalConnect = () => {
         provider: provider.provider,
         connected: provider.success,
         chainId,
-        modal
+        modal,
       });
 
       provider.web3.on('accountsChanged', (accounts: string[]) => {
         setConnect(prevValue => ({
           ...prevValue,
           account: accounts[0],
-          signer: provider.provider.getSigner(accounts[0])
+          signer: provider.provider.getSigner(accounts[0]),
         }));
       });
 
@@ -156,7 +156,7 @@ export const useWeb3ModalConnect = () => {
         }
         setConnect(prevValue => ({
           ...prevValue,
-          chainId: updatedChainId
+          chainId: updatedChainId,
         }));
       });
     }
