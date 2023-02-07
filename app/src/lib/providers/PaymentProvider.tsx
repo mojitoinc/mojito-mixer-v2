@@ -5,7 +5,7 @@ import { getPaymentNotificationQuery } from '../queries/creditCard';
 import { reserveNowBuyLotQuery } from '../queries/invoiceDetails';
 import { createPaymentMethodQuery, createPaymentQuery, getPaymentMethodStatus } from '../queries/Payment';
 import { CookieService } from '../service/CookieService';
-import { formCreatePaymentMethodObject } from '@views/Delivery/Delivery.service';
+import { formCreatePaymentMethodObject } from '../views/Delivery/Delivery.service';
 import React, { createContext, useContext, useState, useMemo, useCallback } from 'react';
 import { useDebug, useError } from '../providers';
 import { ContainerTypes, useContainer } from './ContainerStateProvider';

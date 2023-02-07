@@ -6,7 +6,7 @@ import { useLazyQuery, useQuery } from '@apollo/client';
 import { CreditCardFormType, PaymentMethod } from '../../interfaces';
 import { PaymentTypes } from '../../constants';
 import { ContainerTypes, useContainer, useDelivery, useBilling, useUIConfiguration, PaymentData, usePayment } from '../../providers';
-import { formCardScreeningVariable } from '@views/Delivery/Delivery.service';
+import { formCardScreeningVariable } from '../Delivery/Delivery.service';
 import { cardScreeningQuery } from '../../queries/creditCard';
 import { meQuery } from '../../queries/me';
 import PaymentContainerView from './PaymentContainer';
