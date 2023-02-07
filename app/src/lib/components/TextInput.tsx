@@ -1,4 +1,4 @@
-import { MixTheme } from '@lib/theme/ThemeOptions';
+import { MixTheme } from '@lib/theme';
 import {
   Box,
   InputBaseProps,

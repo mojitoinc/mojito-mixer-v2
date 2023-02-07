@@ -1,5 +1,5 @@
 import React from 'react';
-import DeliveryLayout from '@lib/views/Delivery/Delivery.layout';
+import DeliveryLayout from '@views/Delivery/Delivery';
 
 export const BillingViewStories = () => {
   return (

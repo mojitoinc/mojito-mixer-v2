@@ -1,20 +1,19 @@
-import { MixTheme } from '@lib/theme/ThemeOptions';
+import { MixTheme } from '@lib/theme';
 import { Box, Card, Typography, useTheme } from '@mui/material';
 import React from 'react';
 
-import { PaymentTypes } from '@lib/constants/states';
+import { PaymentTypes } from '@lib/constants';
 import { Icons } from '@lib/assets';
-import Button from '@components/shared/Button';
+import { Button } from '@lib/components';
 import { FormikErrors } from 'formik';
-import { PaymentMethod } from '@lib/interfaces/PaymentMethods';
-import { CreditCardFormType } from '@lib/interfaces/CreditCard';
-import { BillingFormData } from '@lib/providers/BillingProvider';
+import { CreditCardFormType, PaymentMethod } from '@lib/interfaces';
+import { BillingFormData } from '@lib/providers';
 import { PaymentInfoCards } from './InfoCards';
-import { PaymentMethodView } from './PaymentMethod.layout';
+import { PaymentMethodView } from './PaymentMethodView';
 import { WireTransferForm, WireTransferFormData } from './WireTransferForm';
 import { CreditCardForm } from './CreditCardForm';
 
-interface PaymentLayoutProps {
+interface PaymentContainerProps {
   paymentType: string;
   onChoosePaymentType: (name: PaymentTypes, value: boolean) => void;
   wireTransferFormValues: WireTransferFormData;
@@ -46,7 +45,7 @@ interface PaymentLayoutProps {
   billingInfo: BillingFormData | undefined;
 }
 
-const PaymentLayout = ({
+const PaymentContainer = ({
   paymentType,
   onChoosePaymentType,
   wireTransferFormValues,
@@ -61,7 +60,7 @@ const PaymentLayout = ({
   onClickDelivery,
   config,
   billingInfo,
-}: PaymentLayoutProps) => {
+}: PaymentContainerProps) => {
   const theme = useTheme<MixTheme>();
 
   return (
@@ -155,4 +154,4 @@ const PaymentLayout = ({
   );
 };
 
-export default PaymentLayout;
+export default PaymentContainer;

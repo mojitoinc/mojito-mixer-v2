@@ -1,5 +1,5 @@
 // https://mui.com/material-ui/customization/theming/
-import { CheckOutColor, ConfirmationColors, CostBreakDownColors } from '@lib/interfaces/ThemeConfiguration';
+import { CheckOutColor, ConfirmationColors, CostBreakDownColors } from '@lib/interfaces';
 import { ThemeOptions, Theme } from '@mui/material/styles';
 
 export interface ExtendsThemeOptions {

@@ -1,13 +1,10 @@
-import { MixTheme } from '@lib/theme/ThemeOptions';
+import { MixTheme } from '@lib/theme';
 import { Card, useTheme, Box, Typography, Divider, Stack } from '@mui/material';
 import React, { useCallback } from 'react';
 import FileCopyIcon from '@mui/icons-material/FileCopyOutlined';
 import { Icons } from '@lib/assets';
-import { BillingFormData } from '@lib/providers/BillingProvider';
-import { PaymentData } from '@lib/providers/PaymentProvider';
-import { PaymentTypes } from '@lib/constants/states';
-import { useContainer } from '@lib/providers/ContainerStateProvider';
-import { ContainerTypes } from '@views/MojitoCheckout/MojitoCheckOut.layout';
+import { BillingFormData, PaymentData, useContainer, ContainerTypes  } from '@lib/providers';
+import { PaymentTypes } from '@lib/constants';
 
 interface DeliveryInfoCardProps {
   billingInfo: BillingFormData | undefined;

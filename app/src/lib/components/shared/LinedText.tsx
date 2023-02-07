@@ -1,6 +1,6 @@
 import { Box, Typography, useTheme } from '@mui/material';
 import React from 'react';
-import { MixTheme } from '../../theme/ThemeOptions';
+import { MixTheme } from '../../theme';
 
 interface LinedTextProps {
   text: string;

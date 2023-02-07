@@ -3,19 +3,14 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { paymentMethodsQuery } from '@lib/queries/billing';
 import { useLazyQuery, useQuery } from '@apollo/client';
-import { useDelivery } from '@lib/providers/DeliveryProvider';
-import { PaymentMethod } from '@lib/interfaces/PaymentMethods';
-import { CreditCardFormType } from '@lib/interfaces/CreditCard';
-import { PaymentTypes } from '@lib/constants/states';
-import { PaymentData, usePayment } from '@lib/providers/PaymentProvider';
-import { useContainer } from '@lib/providers/ContainerStateProvider';
-import { ContainerTypes } from '@views/MojitoCheckout/MojitoCheckOut.layout';
+import { CreditCardFormType, PaymentMethod } from '@lib/interfaces';
+import { PaymentTypes } from '@lib/constants';
+import { ContainerTypes, useContainer, useDelivery } from '@lib/providers';
 import { formCardScreeningVariable } from '@views/Delivery/Delivery.service';
-import { useBilling } from '@lib/providers/BillingProvider';
+import { useBilling, useUIConfiguration, PaymentData, usePayment } from '@lib/providers';
 import { cardScreeningQuery } from '@lib/queries/creditCard';
 import { meQuery } from '@lib/queries/me';
-import { useUIConfiguration } from '@lib/providers/ConfigurationProvider';
-import PaymentLayout from './Payment.layout';
+import PaymentLayout from './PaymentContainer';
 
 export const PaymentContainer = () => {
   const { orgId } = useDelivery();
@@ -33,9 +28,6 @@ export const PaymentContainer = () => {
     },
     [paymentType],
   );
-
-  console.log("paymentInfo",paymentInfo)
-
   useEffect(() => {
     setPaymentType(paymentInfo?.paymentType ?? PaymentTypes.CREDIT_CARD);
   }, [paymentInfo]);
@@ -50,6 +42,7 @@ export const PaymentContainer = () => {
     bankCountry: Yup.string(),
     bankName: Yup.string(),
   });
+
   const creditCardSchema = Yup.object().shape({
     isNew: Yup.boolean(),
     expiry: Yup.string()
@@ -82,6 +75,7 @@ export const PaymentContainer = () => {
       otherwise: Yup.string().nullable(),
     }),
   });
+
   const { data: paymentData } = useQuery(paymentMethodsQuery, {
     variables: {
       orgID: orgId,

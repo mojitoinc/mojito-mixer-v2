@@ -1,4 +1,4 @@
-import { MixTheme } from '@lib/theme/ThemeOptions';
+import { MixTheme } from '@lib/theme';
 import { Button as MuiButton, SxProps, Theme, useTheme } from '@mui/material';
 import React from 'react';
 

@@ -10,8 +10,7 @@ export interface Delivery {
   invoiceId?: string;
 }
 
-const DeliveryContext = createContext<Delivery>({} as Delivery);
-export default DeliveryContext;
+export const DeliveryContext = createContext<Delivery>({} as Delivery);
 
 
 export const useDelivery = () => {

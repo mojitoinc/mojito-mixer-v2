@@ -1,22 +1,18 @@
-import Button from '@components/shared/Button';
-import TextInput from '@components/shared/TextInput';
-import { Icons } from '@lib/assets';
-import { CollectionItem } from '@lib/interfaces/Collections';
-import { Taxes } from '@lib/interfaces/CostBreakDown';
-import { useUIConfiguration } from '@lib/providers/ConfigurationProvider';
-import { useContainer } from '@lib/providers/ContainerStateProvider';
-import { useDelivery } from '@lib/providers/DeliveryProvider';
-import { MixTheme } from '@lib/theme/ThemeOptions';
-import { Box, Divider, Typography, useTheme } from '@mui/material';
-import { ContainerTypes } from '@views/MojitoCheckout/MojitoCheckOut.layout';
 import React from 'react';
+
+import { Button, TextInput } from '@lib/components';
+import { Icons } from '@lib/assets';
+import { CollectionItem, Taxes } from '@lib/interfaces';
+import { useContainer, ContainerTypes, useUIConfiguration, useDelivery } from '@lib/providers';
+import { MixTheme } from '@lib/theme';
+import { Box, Divider, Typography, useTheme } from '@mui/material';
 
 interface CostBreakDownProps {
   taxes:Taxes;
   collectionData:CollectionItem;
 }
 
-const CostBreakDownLayout = ({ taxes, collectionData }:CostBreakDownProps) => {
+const CostBreakDown = ({ taxes, collectionData }:CostBreakDownProps) => {
   const theme = useTheme<MixTheme>();
   const { billing } = useUIConfiguration();
   const { quantity } = useDelivery();
@@ -150,4 +146,4 @@ const CostBreakDownLayout = ({ taxes, collectionData }:CostBreakDownProps) => {
     </Box>
   );
 };
-export default CostBreakDownLayout;
+export default CostBreakDown;

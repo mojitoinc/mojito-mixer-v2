@@ -1,9 +1,7 @@
-import CreditCardDropdown from '@components/shared/CreditCardDropdown';
-import TextInput from '@components/shared/TextInput';
-import { CreditCardFormType } from '@lib/interfaces/CreditCard';
-import { PaymentMethod } from '@lib/interfaces/PaymentMethods';
-import { useBilling } from '@lib/providers/BillingProvider';
-import { MixTheme } from '@lib/theme/ThemeOptions';
+import { TextInput, CreditCardDropdown} from '@lib/components';
+import { CreditCardFormType, PaymentMethod } from '@lib/interfaces';
+import { useBilling } from '@lib/providers';
+import { MixTheme } from '@lib/theme';
 import {
   Box,
   Checkbox,

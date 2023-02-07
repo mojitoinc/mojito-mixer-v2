@@ -1,6 +1,5 @@
 import { GlobalStyles, ThemeProvider } from "@mui/material";
-import { useMemo } from "react";
-import { makeTheme } from '../src/lib/theme/CreateTheme'
+import { makeTheme } from '../src/lib/theme'
 const themes = makeTheme()
 
 export const decorators = [

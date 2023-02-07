@@ -2,7 +2,7 @@ import MojitoCheckout from '@lib/public/MojitoCheckout';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Config } from '../../lib';
+import { THREEDS_FLOW_SEARCH_PARAM_SUCCESS_KEY } from '../../lib';
 
 const SuccessPage: NextPage = () => {
   const router = useRouter();
@@ -11,7 +11,7 @@ const SuccessPage: NextPage = () => {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
 
-    const paymentIdParam = params.get(Config.THREEDS_FLOW_SEARCH_PARAM_SUCCESS_KEY) || '';
+    const paymentIdParam = params.get(THREEDS_FLOW_SEARCH_PARAM_SUCCESS_KEY) || '';
 
     setPaymentId(paymentIdParam);
   }, []);

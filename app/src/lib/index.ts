@@ -1,9 +1,9 @@
 import MojitoCheckout from './public/MojitoCheckout';
-import * as Config from './constants/config';
 import usePaymentInfo from './hooks/usePaymentInfo';
+
+export * from './config';
 
 export {
   MojitoCheckout,
-  Config,
   usePaymentInfo,
 };

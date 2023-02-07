@@ -19,7 +19,7 @@
     "jsx": "preserve",
     "isolatedModules": true,
     "paths": {
-      "@components/*": [
+      "@components": [
         "lib/components/*"
       ],
       "@services/*": [
@@ -31,8 +31,8 @@
       "@enums/*": [
         "lib/domain/enums/*"
       ],
-      "@interfaces/*": [
-        "lib/domain/interfaces/*"
+      "@interfaces": [
+        "lib/domain/interfaces"
       ],
       "@constants/*": [
         "lib/domain/constants/*"

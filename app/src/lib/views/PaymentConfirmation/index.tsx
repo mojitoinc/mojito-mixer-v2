@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useDelivery } from '@lib/providers/DeliveryProvider';
 import { useQuery } from '@apollo/client';
 import { paymentMethodsQuery } from '@lib/queries/billing';
-import { usePayment } from '@lib/providers/PaymentProvider';
-import { PaymentMethod } from '@lib/interfaces/PaymentMethods';
+import { usePayment, useDelivery } from '@lib/providers';
+import { PaymentMethod } from '@lib/interfaces';
 import ConfirmationView from './ConfirmationView';
 
-const ConfirmationContainer = () => {
+const PaymentConfirmationContainer = () => {
   const { orgId } = useDelivery();
   const { paymentInfo } = usePayment();
   const [paymentStatus, setPaymentStatus] = useState<string>('');
@@ -27,4 +26,4 @@ const ConfirmationContainer = () => {
     <ConfirmationView paymentStatus={ paymentStatus } />
   );
 };
-export default ConfirmationContainer;
+export default PaymentConfirmationContainer;

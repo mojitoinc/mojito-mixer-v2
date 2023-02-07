@@ -1,9 +1,9 @@
-import { MixTheme } from '@lib/theme/ThemeOptions';
+import { MixTheme } from '@lib/theme';
 import { Box, Typography, useTheme } from '@mui/material';
 import CopyIcon from '@mui/icons-material/ContentCopy';
 import React, { useCallback } from 'react';
 
-interface DetailsProps {
+interface RowItemProps {
   title: string;
   children?: JSX.Element;
   value?: string;
@@ -11,18 +11,19 @@ interface DetailsProps {
   showCopy?: boolean;
 }
 
-const OrderDetails = ({
+const RowItem = ({
   showCopy,
   title,
   children,
   copyValue,
   value,
-}: DetailsProps) => {
+}: RowItemProps) => {
   const theme = useTheme<MixTheme>();
 
   const onClickCopy = useCallback(() => {
     navigator.clipboard.writeText(copyValue ?? '');
   }, [copyValue]);
+
   return (
     <Box
       sx={{
@@ -48,9 +49,13 @@ const OrderDetails = ({
             color: theme.global?.confirmationColors?.copyIconColor,
             marginLeft: '8px',
             alignSelf: 'flex-end',
+            '&:active': {
+              transform: 'scale(0.85, 0.85)',
+              opacity: [0.9, 0.8, 0.7],
+            },
           }} />
       ) }
     </Box>
   );
 };
-export default OrderDetails;
+export default RowItem;

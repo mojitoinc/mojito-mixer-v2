@@ -1,13 +1,12 @@
 import { useLazyQuery, useMutation } from '@apollo/client';
-import { useEncryptCardData } from '@lib/hooks/useEncryptCard';
-import { CreditCardFormType } from '@lib/interfaces/CreditCard';
-import { ReserveNow } from '@lib/interfaces/Invoice';
+import { useEncryptCardData } from '@lib/hooks';
+import { CreditCardFormType, ReserveNow } from '@lib/interfaces';
 import { getPaymentNotificationQuery } from '@lib/queries/creditCard';
 import { reserveNowBuyLotQuery } from '@lib/queries/invoiceDetails';
 import { createPaymentMethodQuery, createPaymentQuery, getPaymentMethodStatus } from '@lib/queries/Payment';
-import { CookieService } from '@lib/storage/CookieService';
+import { CookieService } from '@lib/service/CookieService';
 import { formCreatePaymentMethodObject } from '@views/Delivery/Delivery.service';
-import { ContainerTypes } from '@views/MojitoCheckout/MojitoCheckOut.layout';
+import { ContainerTypes } from './ContainerStateProvider';
 import React, { createContext, useContext, useState, useMemo, useCallback } from 'react';
 import { useBilling } from './BillingProvider';
 import { useContainer } from './ContainerStateProvider';
@@ -40,7 +39,7 @@ export interface Payment {
 }
 const PaymentContext = createContext<Payment>({} as Payment);
 
-const PaymentProvider = ({ children }: { children?: React.ReactNode }) => {
+export const PaymentProvider = ({ children }: { children?: React.ReactNode }) => {
   const debug = useDebug('PaymentProvider');
   const { setError } = useError();
   const [paymentInfo, setPaymentInfo] = useState<PaymentData>();
@@ -279,7 +278,7 @@ const PaymentProvider = ({ children }: { children?: React.ReactNode }) => {
     <PaymentContext.Provider value={ values }>{ children }</PaymentContext.Provider>
   );
 };
-export default PaymentProvider;
+
 export const usePayment = () => {
   return useContext(PaymentContext);
 };

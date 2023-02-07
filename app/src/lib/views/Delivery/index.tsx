@@ -1,17 +1,15 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { DropdownOptions } from '@components/shared/Dropdown';
-import { usePayment } from '@lib/providers/PaymentProvider';
+import { DropdownOptions } from '@lib/components';
 import { useMutation, useQuery } from '@apollo/client';
 import { meQuery } from '@lib/queries/me';
 import {
   addressScreeningQuery,
 } from '@lib/queries/Payment';
-import { useDelivery } from '@lib/providers/DeliveryProvider';
-import { useBilling } from '@lib/providers/BillingProvider';
-import { PaymentTypes } from '@lib/constants/states';
-import { RiskRating } from '@lib/constants/riskRating';
+import { useDelivery, useBilling, usePayment } from '@lib/providers';
+import { PaymentTypes } from '@lib/constants';
+import { RiskRating } from '@lib/constants';
 import { useWeb3ModalConnect } from '@lib/state/Web3ModalConnect';
-import DeliveryLayout from './Delivery.layout';
+import DeliveryLayout from './Delivery';
 import { useDebug } from '@lib/providers';
 
 export const Delivery = () => {

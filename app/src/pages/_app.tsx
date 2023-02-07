@@ -4,7 +4,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import React from 'react';
 import Head from 'next/head';
 import { GlobalStyles } from '@mui/material';
-import { MojitoApiProvider } from 'state/MojitoApiProvider';
+import { ExampleApiProvider } from 'state/ExampleApiProvider';
 import { Container, Header, GLOBAL_STYLES } from '../component/core';
 import { RuntimeConfig } from '../constant';
 import './fonts.css';
@@ -17,7 +17,7 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
       domain={ RuntimeConfig.AUTH0_DOMAIN }
       clientId={ RuntimeConfig.AUTH0_CLIENTID }
       redirectUri={ RuntimeConfig.AUTH_REDIRECT_URI }>
-      <MojitoApiProvider>
+      <ExampleApiProvider>
         <Head>
           <title>Mojito - Payment UI Playground</title>
 
@@ -37,7 +37,7 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
           </Container>
 
         </ThemeProvider>
-      </MojitoApiProvider>
+      </ExampleApiProvider>
     </Auth0Provider>
   );
 };
