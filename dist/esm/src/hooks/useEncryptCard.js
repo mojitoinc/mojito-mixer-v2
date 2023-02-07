@@ -1,0 +1,55 @@
+import { __awaiter } from '../../node_modules/tslib/tslib.es6.js';
+import '../../node_modules/@apollo/client/core/index.js';
+import '../../node_modules/@apollo/client/utilities/globals/index.js';
+import { useCallback } from 'react';
+import '../../node_modules/@apollo/client/utilities/graphql/storeUtils.js';
+import '../../node_modules/@apollo/client/utilities/graphql/transform.js';
+import '../../node_modules/@apollo/client/utilities/common/mergeDeep.js';
+import '../../node_modules/@apollo/client/utilities/observables/Observable.js';
+import '../../node_modules/@apollo/client/utilities/observables/Concast.js';
+import '../../node_modules/@apollo/client/utilities/common/canUse.js';
+import { useApolloClient } from '../../node_modules/@apollo/client/react/hooks/useApolloClient.js';
+import '../../node_modules/@apollo/client/react/hooks/useQuery.js';
+import '../../node_modules/@apollo/client/react/parser/index.js';
+import '../../node_modules/@apollo/client/errors/index.js';
+import { publicKeyQuery } from '../queries/creditCard.js';
+import { useDebug } from '../providers/DebugProvider.js';
+import '../providers/ErrorProvider.js';
+import '../providers/BillingProvider.js';
+import '../providers/ContainerStateProvider.js';
+import '../providers/ConfigurationProvider.js';
+import '../providers/DeliveryProvider.js';
+import '../providers/PaymentProvider.js';
+import { encryptCardData } from '../utils/encryptionUtils.js';
+
+function useEncryptCardData({ orgID }) {
+    const debug = useDebug('EncryptCard');
+    const client = useApolloClient();
+    // Changed from usePaymentKeyQuery + skip: true to usePaymentKeyLazyQuery due to https://github.com/apollographql/apollo-client/issues/9101.
+    // const [fetchPaymentKey, { data, loading }] = useLazyQuery(publicKeyQuery);
+    const encryptCardData$1 = useCallback((encryptCardDataOptions) => __awaiter(this, void 0, void 0, function* () {
+        var _a, _b;
+        debug.info('start', orgID);
+        const paymentKeyResult = yield client.query({
+            query: publicKeyQuery,
+            variables: { orgID },
+        });
+        debug.info('start-publicKeyQuery', paymentKeyResult);
+        // const paymentKeyResult = await fetchPaymentKey({ variables: { orgID } });
+        debug.info('end', { paymentKeyResult });
+        const paymentKeyData = paymentKeyResult === null || paymentKeyResult === void 0 ? void 0 : paymentKeyResult.data;
+        const publicKey = (_a = paymentKeyData === null || paymentKeyData === void 0 ? void 0 : paymentKeyData.getPaymentPublicKey) === null || _a === void 0 ? void 0 : _a.publicKey;
+        const keyID = (_b = paymentKeyData === null || paymentKeyData === void 0 ? void 0 : paymentKeyData.getPaymentPublicKey) === null || _b === void 0 ? void 0 : _b.keyID;
+        if (!publicKey || !keyID)
+            throw new Error('Unable to generate key');
+        const encryptedCardData = yield encryptCardData(Object.assign(Object.assign({}, encryptCardDataOptions), { key: publicKey }));
+        return {
+            keyID,
+            encryptedCardData,
+        };
+    }), [client, orgID, debug]);
+    return [encryptCardData$1];
+}
+
+export { useEncryptCardData };
+//# sourceMappingURL=useEncryptCard.js.map
