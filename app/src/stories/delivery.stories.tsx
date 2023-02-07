@@ -1,10 +1,10 @@
 import React from 'react';
-import DeliveryLayout from '@views/Delivery/Delivery';
+import DeliveryContainer from '@views/Delivery/Delivery';
 import { ConnectType } from '@lib/state/ConnectContext';
 
 export const BillingViewStories = () => {
   return (
-    <DeliveryLayout
+    <DeliveryContainer
       onClickConnectWallet={ () => undefined }
       billingInfo={{}}
       paymentInfo={{}}
@@ -25,7 +25,7 @@ export const BillingViewStories = () => {
   );
 };
 const stories = {
-  title: 'views/DeliveryLayout',
-  component: DeliveryLayout,
+  title: 'views/DeliveryContainer',
+  component: DeliveryContainer,
 };
 export default stories;

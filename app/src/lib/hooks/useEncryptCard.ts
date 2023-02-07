@@ -54,7 +54,7 @@ export function useEncryptCardData({ orgID }: UseEncryptCardDataOptions): [
       keyID,
       encryptedCardData,
     };
-  }, [orgID, debug]);
+  }, [client, orgID, debug]);
 
   return [encryptCardData];
 }

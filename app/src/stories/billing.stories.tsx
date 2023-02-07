@@ -9,7 +9,9 @@ export const BillingViewStories = () => {
       onChange={ () => undefined }
       onClickContinue={ () => undefined }
       onClickEdit={ () => undefined }
-      values={{}} />
+      values={{}}
+      isValid={ false }
+      isValidBillingForm={ false } />
   );
 };
 const stories = {
