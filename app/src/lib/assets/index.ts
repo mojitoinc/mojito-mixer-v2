@@ -1,4 +1,5 @@
-import logo from './logo.svg';
+const logo = require('./logo.svg');
+
 import rightArrow from './arrow-right.svg';
 import background from './background.svg';
 import item from './item.svg';
