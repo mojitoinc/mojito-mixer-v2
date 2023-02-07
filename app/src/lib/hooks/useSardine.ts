@@ -1,8 +1,14 @@
 import { SardineEnvironment, SardineConfig } from '@lib/config';
-import { useCallback } from 'react';
+import { useCallback, useRef, useEffect } from 'react';
 import { uuid } from 'uuidv4';
 
 export const useSardine = (sardineEnvironment: SardineEnvironment, enableSardine?: boolean) => {
+  const element = useRef<HTMLScriptElement>();
+  useEffect(() => {
+    return () => {
+      document.body.removeChild(element.current as HTMLScriptElement);
+    };
+  });
   const setup = useCallback(() => {
     if (!enableSardine) { return; }
 
@@ -32,10 +38,7 @@ export const useSardine = (sardineEnvironment: SardineEnvironment, enableSardine
     };
 
     document.body.appendChild(loader);
-
-    return () => {
-      document.body.removeChild(loader);
-    };
+    element.current = loader;
   }, [sardineEnvironment, enableSardine]);
 
   return setup;
