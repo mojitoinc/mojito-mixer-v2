@@ -1,6 +1,6 @@
 import { useCityOptions, useCountryOptions, useStateOptions } from '@lib/hooks';
-import { BillingFormData } from '@lib/providers/BillingProvider';
-import { MixTheme } from '@lib/theme/ThemeOptions';
+import { BillingFormData } from '@lib/providers';
+import { MixTheme } from '@lib/theme';
 import { Card, Typography, useTheme } from '@mui/material';
 import { Box } from '@mui/system';
 import { FormikErrors } from 'formik';

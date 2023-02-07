@@ -1,4 +1,4 @@
-import { MixTheme } from '@lib/theme/ThemeOptions';
+import { MixTheme } from '@lib/theme';
 import { Card, useTheme, Box, Typography, Divider, Stack } from '@mui/material';
 import React, { useCallback } from 'react';
 import FileCopyIcon from '@mui/icons-material/FileCopyOutlined';

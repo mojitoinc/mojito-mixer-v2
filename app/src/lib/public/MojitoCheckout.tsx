@@ -6,8 +6,7 @@ import {
   DefaultConfiguration,
   makeUIConfiguration,
 } from '@providers/ConfigurationProvider';
-import { makeTheme } from '@lib/theme/CreateTheme';
-import { styles } from '@lib/theme/GlobalStyles';
+import { makeTheme, styles } from '@lib/theme';
 import MojitoCheckoutLayout from '@views/index';
 import { ThemeConfiguration } from '@lib/interfaces';
 import { DeliveryContext, Delivery, ContainerStateProvider } from '@lib/providers';

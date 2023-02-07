@@ -4,7 +4,7 @@ import { CreditCardFormType, ReserveNow } from '@lib/interfaces';
 import { getPaymentNotificationQuery } from '@lib/queries/creditCard';
 import { reserveNowBuyLotQuery } from '@lib/queries/invoiceDetails';
 import { createPaymentMethodQuery, createPaymentQuery, getPaymentMethodStatus } from '@lib/queries/Payment';
-import { CookieService } from '@lib/storage/CookieService';
+import { CookieService } from '@lib/service/CookieService';
 import { formCreatePaymentMethodObject } from '@views/Delivery/Delivery.service';
 import { ContainerTypes } from './ContainerStateProvider';
 import React, { createContext, useContext, useState, useMemo, useCallback } from 'react';

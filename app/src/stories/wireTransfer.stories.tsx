@@ -1,6 +1,6 @@
 import React from 'react';
 import { PaymentTypes } from '@lib/constants';
-import PaymentLayout from '@lib/views/Payment/Payment.layout';
+import PaymentLayout from '@views/Payment/PaymentContainer';
 
 export const WireTransferStories = () => {
   return (

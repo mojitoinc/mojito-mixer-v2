@@ -5,7 +5,7 @@ import { usePayment, useDelivery } from '@lib/providers';
 import { PaymentMethod } from '@lib/interfaces';
 import ConfirmationView from './ConfirmationView';
 
-const ConfirmationContainer = () => {
+const PaymentConfirmationContainer = () => {
   const { orgId } = useDelivery();
   const { paymentInfo } = usePayment();
   const [paymentStatus, setPaymentStatus] = useState<string>('');
@@ -26,4 +26,4 @@ const ConfirmationContainer = () => {
     <ConfirmationView paymentStatus={ paymentStatus } />
   );
 };
-export default ConfirmationContainer;
+export default PaymentConfirmationContainer;

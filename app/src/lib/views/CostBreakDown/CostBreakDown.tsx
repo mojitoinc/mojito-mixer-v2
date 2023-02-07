@@ -4,7 +4,7 @@ import { Button, TextInput } from '@lib/components';
 import { Icons } from '@lib/assets';
 import { CollectionItem, Taxes } from '@lib/interfaces';
 import { useContainer, ContainerTypes, useUIConfiguration, useDelivery } from '@lib/providers';
-import { MixTheme } from '@lib/theme/ThemeOptions';
+import { MixTheme } from '@lib/theme';
 import { Box, Divider, Typography, useTheme } from '@mui/material';
 
 interface CostBreakDownProps {

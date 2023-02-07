@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { Box, Card, Typography, useTheme, Stack } from '@mui/material';
-import { MixTheme } from '@lib/theme/ThemeOptions';
+import { MixTheme } from '@lib/theme';
 import { Button, Dropdown, DropdownOptions } from '@lib/components';
 import { BillingFormData, PaymentData } from '@lib/providers';
 import { PaymentTypes } from '@lib/constants';

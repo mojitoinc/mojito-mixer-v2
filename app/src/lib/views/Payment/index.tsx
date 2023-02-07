@@ -10,7 +10,7 @@ import { formCardScreeningVariable } from '@views/Delivery/Delivery.service';
 import { useBilling, useUIConfiguration, PaymentData, usePayment } from '@lib/providers';
 import { cardScreeningQuery } from '@lib/queries/creditCard';
 import { meQuery } from '@lib/queries/me';
-import PaymentLayout from './Payment.layout';
+import PaymentLayout from './PaymentContainer';
 
 export const PaymentContainer = () => {
   const { orgId } = useDelivery();

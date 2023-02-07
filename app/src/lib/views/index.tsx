@@ -1,9 +1,9 @@
 import { Box, useTheme } from '@mui/material';
 import React from 'react';
 import { Header, Stepper } from '@lib/components';
-import { MixTheme } from '@lib/theme/ThemeOptions';
+import { MixTheme } from '@lib/theme';
 import CostBreakDownContainer from '@views/CostBreakDown';
-import ConfirmationContainer from '@views/Confirmation';
+import ConfirmationContainer from '@views/PaymentConfirmation';
 import { PaymentContainer } from '@views/Payment';
 import { Delivery } from '@views/Delivery';
 import { useContainer, ContainerTypes } from '@lib/providers';
@@ -16,6 +16,7 @@ const MojitoCheckoutLayout = () => {
   const theme = useTheme<MixTheme>();
   const { containerState } = useContainer();
   const { error } = useError();
+
   if (error) {
     return <ErrorContainer error={error} />;
   }

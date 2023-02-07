@@ -1,7 +1,7 @@
 import { Box, useTheme } from '@mui/material';
 import React from 'react';
 import { Icons } from '@lib/assets';
-import { MixTheme } from '@lib/theme/ThemeOptions';
+import { MixTheme } from '@lib/theme';
 
 const Header = () => {
   const theme = useTheme<MixTheme>();

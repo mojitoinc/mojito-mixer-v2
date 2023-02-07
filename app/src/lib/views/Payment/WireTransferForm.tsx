@@ -1,7 +1,7 @@
 import { TextInput, Dropdown, DropdownOptions } from '@lib/components';
 import { BanksList } from '@lib/constants';
 import { useCountryOptions } from '@lib/hooks';
-import { MixTheme } from '@lib/theme/ThemeOptions';
+import { MixTheme } from '@lib/theme';
 import { Typography, useTheme } from '@mui/material';
 import { FormikErrors } from 'formik';
 import React, { useCallback, useMemo } from 'react';

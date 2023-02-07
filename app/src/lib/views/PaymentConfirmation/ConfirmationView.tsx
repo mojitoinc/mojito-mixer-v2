@@ -1,11 +1,11 @@
 import { Button } from '@lib/components';
-import { MixTheme } from '@lib/theme/ThemeOptions';
+import { MixTheme } from '@lib/theme';
 import { Box, Card, Typography, useTheme } from '@mui/material';
 import React, { useMemo } from 'react';
 import { PaymentStatus, PaymentTypes } from '@lib/constants';
 import { usePaymentInfo } from '@lib/hooks';
 import { useUIConfiguration } from '@lib/providers';
-import OrderDetails from './OrderDetails';
+import RowItem from './RowItem';
 
 interface ConfirmationViewProps {
   paymentStatus: string;
@@ -96,7 +96,7 @@ const ConfirmationView = ({ paymentStatus }: ConfirmationViewProps) => {
           </Box>
         </Box>
 
-        <OrderDetails
+        <RowItem
           title="Delivery Address"
           value={ paymentInfo?.destinationAddress }
           copyValue={ paymentInfo?.destinationAddress }
@@ -112,23 +112,23 @@ const ConfirmationView = ({ paymentStatus }: ConfirmationViewProps) => {
           </Typography>
         ) }
         { paymentInfo?.paymentType === PaymentTypes.WALLET_CONNECT && (
-          <OrderDetails
+          <RowItem
             title="Transaction Hash"
             value="0x09750ad...360fdb7"
             copyValue="0x09750"
             showCopy />
         ) }
         { paymentInfo?.paymentType === PaymentTypes.WALLET_CONNECT && (
-          <OrderDetails title="Payment Method" copyValue={ paymentInfo?.paymentId } showCopy>
+          <RowItem title="Payment Method" copyValue={ paymentInfo?.paymentId } showCopy>
             <Typography fontSize="16px">
               Wallet Connect
               <br />
               { paymentInfo?.paymentId }
             </Typography>
-          </OrderDetails>
+          </RowItem>
         ) }
         { paymentInfo?.paymentType === PaymentTypes.WIRE_TRANSFER && (
-          <OrderDetails title="Payment Method">
+          <RowItem title="Payment Method">
             <Typography variant="body1" fontSize="16px">
               { paymentInfo.paymentType }
               <br />
@@ -140,9 +140,9 @@ const ConfirmationView = ({ paymentStatus }: ConfirmationViewProps) => {
               <br />
               { paymentInfo?.wireData?.bankAddress?.bankName }
             </Typography>
-          </OrderDetails>
+          </RowItem>
         ) }
-        <OrderDetails title="Billing Information">
+        <RowItem title="Billing Information">
           <Typography fontSize="16px">
             { billingInfo?.name }
             <br />
@@ -151,7 +151,7 @@ const ConfirmationView = ({ paymentStatus }: ConfirmationViewProps) => {
             <br />
             { billingInfo?.phoneNumber }
           </Typography>
-        </OrderDetails>
+        </RowItem>
       </Card>
       <Box display="flex" flexDirection="row" justifyContent="flex-end">
         <Button
