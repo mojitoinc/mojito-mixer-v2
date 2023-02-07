@@ -41,8 +41,12 @@ export default DebugProvider;
 export const useDebug = (tag: string) => {
   const state: DebugState = useContext(DebugContext);
 
+  const handleWarn = useCallback((method?: ErrorMessage, message?: ErrorMessage) => {
+    state.log('🟡', tag, method, message);
+  }, [tag, state]);
+  
   const handleInfo = useCallback((method?: ErrorMessage, message?: ErrorMessage) => {
-    state.log('🟠', tag, method, message);
+    state.log('🔵', tag, method, message);
   }, [tag, state]);
 
   const handleSuccess = useCallback((method?: string, message?: ErrorMessage) => {
@@ -53,5 +57,5 @@ export const useDebug = (tag: string) => {
     state.log('🔴', tag, method, message);
   }, [tag, state]);
 
-  return useMemo(() => ({ success: handleSuccess, info: handleInfo, error: handleError }), [handleSuccess, handleInfo, handleError]);
+  return useMemo(() => ({ success: handleSuccess, info: handleInfo, error: handleError, warn: handleWarn }), [handleSuccess, handleInfo, handleError]);
 };
