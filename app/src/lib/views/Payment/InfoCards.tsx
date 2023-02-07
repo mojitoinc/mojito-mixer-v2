@@ -1,7 +1,6 @@
-import { BillingFormData, useContainer } from '@lib/providers';
+import { BillingFormData, useContainer, ContainerTypes } from '@lib/providers';
 import { MixTheme } from '@lib/theme';
 import { Box, Card, Divider, Typography, useTheme } from '@mui/material';
-import { ContainerTypes } from '@lib/providers';
 import React, { useCallback } from 'react';
 
 interface PaymentInfoCardsProps {

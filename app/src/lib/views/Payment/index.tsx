@@ -5,9 +5,8 @@ import { paymentMethodsQuery } from '@lib/queries/billing';
 import { useLazyQuery, useQuery } from '@apollo/client';
 import { CreditCardFormType, PaymentMethod } from '@lib/interfaces';
 import { PaymentTypes } from '@lib/constants';
-import { ContainerTypes, useContainer, useDelivery } from '@lib/providers';
+import { ContainerTypes, useContainer, useDelivery, useBilling, useUIConfiguration, PaymentData, usePayment } from '@lib/providers';
 import { formCardScreeningVariable } from '@views/Delivery/Delivery.service';
-import { useBilling, useUIConfiguration, PaymentData, usePayment } from '@lib/providers';
 import { cardScreeningQuery } from '@lib/queries/creditCard';
 import { meQuery } from '@lib/queries/me';
 import PaymentLayout from './PaymentContainer';
@@ -21,7 +20,7 @@ export const PaymentContainer = () => {
   const { billingInfo, taxes } = useBilling();
   const { billing } = useUIConfiguration();
 
-  const [paymentType, setPaymentType] = useState<string>( PaymentTypes.CREDIT_CARD);
+  const [paymentType, setPaymentType] = useState<string>(PaymentTypes.CREDIT_CARD);
   const onChoosePaymentType = useCallback(
     (name: PaymentTypes, value: boolean) => {
       setPaymentType(value ? name : paymentType);

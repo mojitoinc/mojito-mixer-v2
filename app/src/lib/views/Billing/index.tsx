@@ -11,16 +11,16 @@ import BillingView from './BillingView';
 const BillingContainer = () => {
   const debug = useDebug('Billing');
   const { orgId } = useDelivery();
-  const { setBillingInfo, billingInfo,refetchTaxes } = useBilling();
+  const { setBillingInfo, billingInfo, refetchTaxes } = useBilling();
 
   const [isEditing, setIsEditing] = useState<boolean>(true);
   const { setContainerState } = useContainer();
-  const { setPaymentInfo,paymentInfo } = usePayment();
+  const { setPaymentInfo, paymentInfo } = usePayment();
 
   const [fetchBilling, { data: paymentData }] = useLazyQuery(paymentMethodsQuery);
 
   useEffect(() => {
-    debug.info('load', {orgId})
+    debug.info('load', { orgId });
     if (orgId) {
       fetchBilling({
         variables: {
@@ -28,7 +28,7 @@ const BillingContainer = () => {
         },
       });
     }
-  }, [fetchBilling, orgId]);
+  }, [fetchBilling, orgId, debug]);
 
   const schema = Yup.object().shape({
     country: Yup.string().required('Please select a country'),
@@ -81,19 +81,19 @@ const BillingContainer = () => {
   }, [billingInfo, paymentData, setValues]);
 
   useEffect(() => {
-    debug.info('paymentData',paymentData)
+    debug.info('paymentData', paymentData);
     if (paymentData) {
       setBillingValues();
     }
-  }, [paymentData, setBillingValues]);
+  }, [paymentData, setBillingValues, debug]);
 
   const onClickEdit = useCallback(() => {
     setIsEditing(true);
   }, []);
 
-  useEffect(()=>{
-    refetchTaxes(values)
-  },[values])
+  useEffect(() => {
+    refetchTaxes(values);
+  }, [values, refetchTaxes]);
 
   const onClickContinue = useCallback(async () => {
     if (isEditing && !isValid) return;
@@ -109,7 +109,7 @@ const BillingContainer = () => {
       ...paymentInfo,
     });
     setContainerState(ContainerTypes.PAYMENT);
-  }, [values, setBillingInfo, isEditing, isValid, setContainerState,paymentInfo]);
+  }, [values, setBillingInfo, isEditing, isValid, setContainerState, paymentInfo, setPaymentInfo]);
 
   return (
     <BillingView

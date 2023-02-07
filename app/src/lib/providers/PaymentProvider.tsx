@@ -6,12 +6,11 @@ import { reserveNowBuyLotQuery } from '@lib/queries/invoiceDetails';
 import { createPaymentMethodQuery, createPaymentQuery, getPaymentMethodStatus } from '@lib/queries/Payment';
 import { CookieService } from '@lib/service/CookieService';
 import { formCreatePaymentMethodObject } from '@views/Delivery/Delivery.service';
-import { ContainerTypes } from './ContainerStateProvider';
 import React, { createContext, useContext, useState, useMemo, useCallback } from 'react';
-import { useBilling } from './BillingProvider';
-import { useContainer } from './ContainerStateProvider';
-import { useDelivery } from './DeliveryProvider';
 import { useDebug, useError } from '@lib/providers';
+import { ContainerTypes, useContainer } from './ContainerStateProvider';
+import { useBilling } from './BillingProvider';
+import { useDelivery } from './DeliveryProvider';
 
 
 export interface PaymentData {
@@ -94,16 +93,16 @@ export const PaymentProvider = ({ children }: { children?: React.ReactNode }) =>
           : undefined,
         cvv: paymentInfo?.creditCardData?.cvv ?? '',
       });
-      
+
       debug.info('onConfirm-encrypt', encryptedCardData);
 
       let paymentMethodId = paymentInfo?.creditCardData?.isNew
         ? undefined
         : paymentInfo?.creditCardData?.cardId;
 
-        debug.info('onConfirm-paymentMethodId', paymentInfo);
-        
-        if (paymentInfo?.creditCardData?.isNew) {
+      debug.info('onConfirm-paymentMethodId', paymentInfo);
+
+      if (paymentInfo?.creditCardData?.isNew) {
         const inputData = formCreatePaymentMethodObject(
           orgId,
           paymentInfo,
@@ -119,7 +118,7 @@ export const PaymentProvider = ({ children }: { children?: React.ReactNode }) =>
         });
         paymentMethodId =
           createPaymentMethodResult?.data?.createPaymentMethod?.id;
-          debug.info('onConfirm-createPaymentMethod', createPaymentMethodResult);
+        debug.info('onConfirm-createPaymentMethod', createPaymentMethodResult);
 
         if (
           createPaymentMethodResult?.data?.createPaymentMethod?.status !==
@@ -167,7 +166,7 @@ export const PaymentProvider = ({ children }: { children?: React.ReactNode }) =>
           paymentId: paymentMethodId,
           destinationAddress: deliveryAddress,
         };
-        debug.success('paymentData', { paymentData, notificationData});
+        debug.success('paymentData', { paymentData, notificationData });
 
         saveToCookies(paymentData, reserveLotData);
 
@@ -175,14 +174,16 @@ export const PaymentProvider = ({ children }: { children?: React.ReactNode }) =>
           notificationData?.data?.getPaymentNotification?.message?.redirectURL;
       }
     } catch (e: any) {
-      const message = e['message'] ?? '';
+      const message = e.message ?? '';
       debug.error('confirm', { message });
-      setError(message)
+      setError(message);
     }
   }, [
+    debug,
     orgId,
     paymentInfo,
     billingInfo,
+    setError,
     paymentNotification,
     createPayment,
     createPaymentMethod,
@@ -247,14 +248,16 @@ export const PaymentProvider = ({ children }: { children?: React.ReactNode }) =>
         setContainerState(ContainerTypes.CONFIRMATION);
       }
     } catch (e: any) {
-      const message = e['message'] ?? '';
-      console.error('ERROR', { message });
-      setError(message)
+      const message = e.message ?? '';
+      debug.error('confirm', { message });
+      setError(message);
     }
   }, [
+    debug,
     paymentInfo,
     billingInfo,
     orgId,
+    setError,
     paymentMethodStatus,
     setContainerState,
     setPaymentInfo,

@@ -20,7 +20,7 @@ const ErrorContainer = ({ error }: ErrorContainerProps) => {
           textAlign: 'center',
           marginTop: '24px',
         }}>
-       {error}
+        { error }
       </Typography>
     </Box>
   );

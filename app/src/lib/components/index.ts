@@ -9,12 +9,12 @@ import LinedText from './shared/LinedText';
 
 
 export {
-    Button,
-    Dropdown,
-    type DropdownOptions,
-    Header,
-    Stepper,
-    TextInput,
-    CreditCardDropdown,
-    LinedText,
-}
+  Button,
+  Dropdown,
+  type DropdownOptions,
+  Header,
+  Stepper,
+  TextInput,
+  CreditCardDropdown,
+  LinedText,
+};

@@ -15,7 +15,8 @@ import visaCard from './visa.svg';
 import masterCard from './masterCard.svg';
 import americanExpress from './americanExpress.svg';
 import loading from './loading.svg';
-export const DEFAULT_ERROR_IMAGE_SRC = "https://raw.githubusercontent.com/mojitoinc/mojito-mixers/main/app/src/lib/assets/mojito-error-loader.gif";
+
+export const DEFAULT_ERROR_IMAGE_SRC = 'https://raw.githubusercontent.com/mojitoinc/mojito-mixers/main/app/src/lib/assets/mojito-error-loader.gif';
 
 export const Icons = {
   logo,
