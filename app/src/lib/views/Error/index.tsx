@@ -1,11 +1,14 @@
 import { Icons } from '@lib/assets';
-import { Box, FormHelperText } from '@mui/material';
+import { MixTheme } from '@lib/theme';
+import { Box, FormHelperText, useTheme } from '@mui/material';
 import React from 'react';
 
 interface ErrorContainerProps {
   error: string;
 }
 const ErrorContainer = ({ error }: ErrorContainerProps) => {
+  const theme = useTheme<MixTheme>();
+  
   return (
     <Box
       display="flex"
@@ -13,6 +16,19 @@ const ErrorContainer = ({ error }: ErrorContainerProps) => {
       justifyContent="center"
       flexDirection="column"
       height="100%">
+
+    <Box
+      sx={{
+        backgroundColor: theme.global?.background,
+        padding: '16px',
+        display: 'flex',
+        alignItems: "center",
+        justifyContent: "center",
+        flexDirection: "column",
+        margin: '8px 0px',
+        border: `1px solid ${ theme.global?.cardBorder }`,
+        borderRadius: '4px',
+      }}>
       <img
         alt="loading"
         src={ Icons.ErrorLoader }
@@ -28,6 +44,7 @@ const ErrorContainer = ({ error }: ErrorContainerProps) => {
         }}>
         { error }
       </FormHelperText>
+      </Box>
     </Box>
   );
 };

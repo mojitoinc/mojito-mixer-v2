@@ -49,7 +49,7 @@ export const PaymentProvider = ({ children }: { children?: React.ReactNode }) =>
   const { setContainerState } = useContainer();
   const [createPaymentMethod] = useMutation(createPaymentMethodQuery);
   const [createPayment] = useMutation(createPaymentQuery);
-  const [encryptCardData] = useEncryptCardData({ orgID: orgId });
+  const [encryptCardData] = useEncryptCardData({ orgID: orgId ?? "" });
   const [paymentMethodStatus] = useLazyQuery(getPaymentMethodStatus);
   const [paymentNotification] = useLazyQuery(getPaymentNotificationQuery);
   const [reserveNow] = useMutation(reserveNowBuyLotQuery);
@@ -84,6 +84,7 @@ export const PaymentProvider = ({ children }: { children?: React.ReactNode }) =>
   }, [billingInfo, collectionData, taxes]);
 
   const onConfirmCreditCardPurchase = useCallback(async (deliveryAddress = '') => {
+    setContainerState(ContainerTypes.LOADING)
     try {
       debug.info('onConfirm-start', { deliveryAddress, paymentInfo });
 
@@ -109,7 +110,7 @@ export const PaymentProvider = ({ children }: { children?: React.ReactNode }) =>
 
       if (paymentInfo?.creditCardData?.isNew) {
         const inputData = formCreatePaymentMethodObject(
-          orgId,
+          orgId ?? "",
           paymentInfo,
           billingInfo,
           keyID,
@@ -199,6 +200,7 @@ export const PaymentProvider = ({ children }: { children?: React.ReactNode }) =>
   ]);
 
   const onConfirmWireTransferPurchase = useCallback(async (deliveryAddress = '') => {
+    setContainerState(ContainerTypes.LOADING)
     try {
       const inputData: any = {};
       const copiedBillingDetails = {

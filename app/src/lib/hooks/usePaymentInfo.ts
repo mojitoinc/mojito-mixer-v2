@@ -24,20 +24,27 @@ const usePaymentInfo = (): PaymentInfo => {
   const reserveLotData = CookieService.reserveLotData.getValue();
   const collectionData = CookieService.collectionData.getValue();
 
+  
+
 
   const billingInfo = useMemo(() => {
+    CookieService.billing.remove()
     return getObject(billing) as BillingFormData;
   }, [billing]);
   const paymentInfo = useMemo(() => {
+    CookieService.paymentInfo.remove()
     return getObject(payment) as PaymentData;
   }, [payment]);
   const lotData = useMemo(() => {
+    CookieService.reserveLotData.remove()
     return getObject(reserveLotData) as ReserveNow;
   }, [reserveLotData]);
   const taxData = useMemo(() => {
+    CookieService.taxes.remove()
     return getObject(taxes) as Taxes;
   }, [taxes]);
   const collection = useMemo(() => {
+    CookieService.collectionData.remove()
     return getObject(collectionData) as CollectionItem;
   }, [collectionData]);
 
