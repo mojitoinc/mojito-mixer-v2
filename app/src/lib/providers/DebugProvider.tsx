@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useCallback } from 'react';
+import React, { createContext, useContext, useCallback, useMemo } from 'react';
 
 type ErrorMessage = string | object | undefined | null;
 
@@ -49,5 +49,5 @@ export const useDebug = (tag: string) => {
     state.log('🔴', tag, method, message);
   }, [tag, state]);
 
-  return { success: handleSuccess, info: handleInfo, error: handleError };
+  return useMemo(()=> ({ success: handleSuccess, info: handleInfo, error: handleError }), [handleSuccess, handleInfo, handleError]);
 };
