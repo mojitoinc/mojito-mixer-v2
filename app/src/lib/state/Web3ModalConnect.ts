@@ -132,7 +132,7 @@ export const useWeb3ModalConnect = () => {
       }
 
       setNetworkID('f7babe75-2dfc-434a-9e3b-a28e101c4863');
-      
+
       setConnect({
         account: provider.account,
         signer: provider.provider.getSigner(provider.account),
@@ -163,13 +163,13 @@ export const useWeb3ModalConnect = () => {
     }
   }, [setConnect]);
 
-  const onDisconnect = useCallback(()=>{
-    connect.modal?.clearCachedProvider()
-      setConnect({
-        connected: false,
-        account: '',
-        chainId: 4,
-      })
-  },[connect])
-  return { connect, setConnect, networkId, onWalletConnect, getSignedAddress, onMetaMaskConnect,onDisconnect };
+  const onDisconnect = useCallback(() => {
+    connect.modal?.clearCachedProvider();
+    setConnect({
+      connected: false,
+      account: '',
+      chainId: 4,
+    });
+  }, [connect, setConnect]);
+  return { connect, setConnect, networkId, onWalletConnect, getSignedAddress, onMetaMaskConnect, onDisconnect };
 };

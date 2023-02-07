@@ -9,6 +9,7 @@ const DefaultThemes: ThemeConfiguration = {
     primary: '#6663FD',
     secondary: '#FFFFFF',
     background: '#FAFAFC',
+    errorBackground: '#FEE3E5',
     text: '#000000',
     cardBackground: '#FFFFFF',
     checkOutColors: {

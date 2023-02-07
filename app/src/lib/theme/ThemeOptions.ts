@@ -11,6 +11,7 @@ export interface ExtendsThemeOptions {
     };
     global?: {
         background: string;
+        errorBackground: string;
         highlightedText: string;
         unHighlightedText: string;
         linksText:string;

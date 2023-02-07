@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useMemo } from 'react';
+import React, { createContext, useContext, useMemo, useState } from 'react';
 
 
 export interface ErrorState {
@@ -16,10 +16,13 @@ const ErrorProvider = ({
   children,
 }: ErrorProps) => {
   const [error, setError] = useState();
- // const
+  // const
+  const values = useMemo<ErrorState>(() => {
+    return { error, setError } as ErrorState;
+  }, [error, setError]);
 
   return (
-    <ErrorContext.Provider value={{ error, setError } as ErrorState}>
+    <ErrorContext.Provider value={ values }>
       { children }
     </ErrorContext.Provider>
   );

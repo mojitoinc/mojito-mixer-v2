@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useLazyQuery } from '@apollo/client';
@@ -39,6 +39,7 @@ const BillingContainer = () => {
       .email('Please enter valid email')
       .required('Please enter email'),
     phoneNumber: Yup.string().required('Please enter a mobile number'),
+    street1: Yup.string().required('Please enter your address'),
   });
 
   const { values, errors, handleChange, setValues, isValid } = useFormik({
@@ -56,7 +57,11 @@ const BillingContainer = () => {
     validationSchema: schema,
   });
 
-  const setBillingValues = useCallback(() => {
+  const isValidBillingForm = useMemo<boolean>(() => {
+    return !(errors?.country || errors?.state || errors?.city || errors?.postalCode || errors?.phoneNumber || errors?.name);
+  }, [errors]);
+
+  const setBillingValues = useCallback(async () => {
     const paymentItem: PaymentMethod = paymentData?.getPaymentMethodList?.find(
       (item: PaymentMethod) => item.type === 'CreditCard' && item.billingDetails,
     );
@@ -92,8 +97,10 @@ const BillingContainer = () => {
   }, []);
 
   useEffect(() => {
-    refetchTaxes(values);
-  }, [values, refetchTaxes]);
+    if (isValidBillingForm) { refetchTaxes(values); } else {
+      setIsEditing(true);
+    }
+  }, [values, refetchTaxes, isValidBillingForm]);
 
   const onClickContinue = useCallback(async () => {
     if (isEditing && !isValid) return;
@@ -118,7 +125,9 @@ const BillingContainer = () => {
       errors={ errors }
       onChange={ handleChange }
       onClickEdit={ onClickEdit }
-      onClickContinue={ onClickContinue } />
+      onClickContinue={ onClickContinue }
+      isValidBillingForm={ isValidBillingForm }
+      isValid={ isValid } />
   );
 };
 

@@ -6,17 +6,20 @@ import { Box } from '@mui/system';
 import { FormikErrors } from 'formik';
 import React from 'react';
 import { TextInput, Dropdown } from '@lib/components';
+import ErrorIcon from '@mui/icons-material/Error';
 
 interface BillingFormProps {
   values: BillingFormData;
   errors: FormikErrors<BillingFormData>;
   onChange: any;
+  isValid: boolean;
 }
 
 const BillingForm = ({
   values,
   errors,
   onChange,
+  isValid,
 }: BillingFormProps) => {
   const countries = useCountryOptions();
   const states = useStateOptions(values?.country);
@@ -31,19 +34,41 @@ const BillingForm = ({
         boxShadow: `0px 4px 16px ${ theme.global?.cardShadow }`,
         margin: '0px 0px 24px 0px',
       }}>
-      <Box padding="14px">
+      <Box padding="24px">
         <Typography
           color={ theme.palette?.text?.primary }
           fontWeight="500"
           fontSize="20px">
           Billing Info
         </Typography>
+        {
+          !isValid && (
+          <Box
+            display="flex"
+            flexDirection="row"
+            alignItems="center"
+            marginTop="16px"
+            sx={{
+              background: theme.global?.errorBackground,
+              padding: '14px',
+              borderRadius: '4px',
+            }}>
+            <ErrorIcon sx={{
+              color: theme.global?.required,
+              marginRight: '10px',
+            }} />
+            <Typography
+              fontWeight="400"
+              fontSize="16px">
+              Complete necessary changes to continue
+            </Typography>
+          </Box>
+          )
+}
         <Box
           display="flex"
           flexDirection="row"
-          sx={{
-            marginTop: '16px',
-          }}>
+          marginTop="16px">
           <Dropdown
             value={ values?.country }
             onChange={ onChange('country') }
@@ -83,7 +108,7 @@ const BillingForm = ({
           <TextInput
             value={ values?.postalCode }
             onChange={ onChange('postalCode') }
-            title="postalCode"
+            title="Zip code"
             sx={{
               marginLeft: '8px',
             }}
@@ -91,6 +116,17 @@ const BillingForm = ({
             error={ errors?.postalCode }
             placeholder="e.g. 10005" />
         </Box>
+
+        <TextInput
+          value={ values?.street1 }
+          onChange={ onChange('street1') }
+          title="Address"
+          sx={{
+            marginTop: '16px',
+          }}
+          required
+          error={ errors?.street1 }
+          placeholder="" />
         <TextInput
           value={ values?.phoneNumber }
           onChange={ onChange('phoneNumber') }
