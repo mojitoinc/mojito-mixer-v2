@@ -24,6 +24,7 @@ interface ThemeColor {
     primary?: string;
     secondary?: string;
     background?: string;
+    errorBackground?: string;
     text?: string;
     cardBackground?: string;
     checkOutColors?: CheckOutColor;

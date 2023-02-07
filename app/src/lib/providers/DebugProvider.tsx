@@ -24,8 +24,12 @@ const DebugProvider = ({
     if (debug) console.log(`${ emoji } [${ tag }]--${ id }--`, content);
   }, [debug]);
 
+  const values = useMemo<DebugState>(() => {
+    return { debug, log: handleLog } as DebugState;
+  }, [debug, handleLog]);
+
   return (
-    <DebugContext.Provider value={{ debug, log: handleLog } as DebugState}>
+    <DebugContext.Provider value={ values }>
       { children }
     </DebugContext.Provider>
   );

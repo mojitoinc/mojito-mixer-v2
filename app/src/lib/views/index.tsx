@@ -34,7 +34,7 @@ const MojitoCheckoutLayout = () => {
       }}>
       <Box width="100%" padding="30px">
         <Header />
-        <Stepper currentState={ containerState } />
+        { containerState !== ContainerTypes.CONFIRMATION && <Stepper currentState={ containerState } /> }
         { containerState === ContainerTypes.CHECKOUT && <BillingContainer /> }
         { containerState === ContainerTypes.CONFIRMATION && <ConfirmationContainer /> }
         { containerState === ContainerTypes.PAYMENT && <PaymentContainer /> }

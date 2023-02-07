@@ -142,7 +142,7 @@ export const DeliveryInfoCard = ({
                     paymentInfo?.wireData?.accountNumber?.length ?? 0 - 4,
                   ) }
                 </Typography>
-                <CopyButton copyValue={ paymentInfo?.wireData?.accountNumber ?? '' } />
+                <CopyButton copyValue={ paymentInfo?.wireData?.accountNumber ?? ''} />
               </Stack>
             </Box>
           ) }

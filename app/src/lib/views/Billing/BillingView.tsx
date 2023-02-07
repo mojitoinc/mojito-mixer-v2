@@ -15,6 +15,8 @@ interface BillingProps {
   onChange: any;
   onClickEdit: () => void;
   onClickContinue: () => void;
+  isValid: boolean;
+  isValidBillingForm: boolean;
 }
 
 const BillingView = ({
@@ -24,6 +26,8 @@ const BillingView = ({
   onChange,
   onClickEdit,
   onClickContinue,
+  isValid,
+  isValidBillingForm,
 }: BillingProps) => {
   const theme = useTheme<MixTheme>();
   const { billing } = useUIConfiguration();
@@ -40,7 +44,7 @@ const BillingView = ({
           boxShadow: `0px 4px 16px ${ theme.global?.cardShadow }`,
           margin: '24px 0px',
         }}>
-        <Box padding="14px">
+        <Box padding="24px">
           <Typography
             color={ theme.palette?.text?.primary }
             fontWeight="500"
@@ -58,7 +62,7 @@ const BillingView = ({
         </Box>
       </Card>
       { isEditing ? (
-        <BillingForm values={ values } errors={ errors } onChange={ onChange } />
+        <BillingForm values={ values } errors={ errors } onChange={ onChange } isValid={ isValidBillingForm } />
       ) : (
         <BillingDetails values={ values } onClickEdit={ onClickEdit } />
       ) }
@@ -70,8 +74,9 @@ const BillingView = ({
           textColor={ theme.global?.checkOutColors?.continueButtonTextColor }
           onClick={ onClickContinue }
           sx={{
-            marginTop: '24px',
-          }} />
+            margin: '24px 0px',
+          }}
+          disabled={ !isValid } />
       </Box>
     </Box>
   );

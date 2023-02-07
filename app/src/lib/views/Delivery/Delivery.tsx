@@ -5,7 +5,6 @@ import { Button, Dropdown, DropdownOptions, CopyButton } from '@lib/components';
 import { BillingFormData, PaymentData } from '@lib/providers';
 import { PaymentTypes } from '@lib/constants';
 import { ConnectType } from '@lib/state/ConnectContext';
-import CopyIcon from '@mui/icons-material/ContentCopy';
 import { Icons } from '@lib/assets';
 import { DeliveryInfoCard } from './DeliveryInfoCard';
 import { NEW_MULTI_SIG } from './index';
@@ -111,7 +110,7 @@ const Delivery = ({
                   display="flex"
                   flexDirection="row"
                   alignItems="center">
-                  <img src={ Icons.walletAddress } />
+                  <img src={ Icons.walletAddress } alt="wallet address" />
                   <Typography
                     fontSize="16px"
                     marginLeft="12px"
