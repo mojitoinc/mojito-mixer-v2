@@ -166,6 +166,7 @@ export const PaymentProvider = ({ children }: { children?: React.ReactNode }) =>
             },
           },
         });
+        debug.info('ready-createPayment',);
         const notificationData = await paymentNotification();
         const paymentData: PaymentData = {
           ...paymentInfo,

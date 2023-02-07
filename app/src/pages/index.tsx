@@ -111,6 +111,7 @@ const HomePage: React.FC = () => {
         value: 'custom-org-id',
       });
       setOrganizations(formattedData);
+      setFieldValue('organization', formattedData[0].value)
     }
   }, [meData]);
 
