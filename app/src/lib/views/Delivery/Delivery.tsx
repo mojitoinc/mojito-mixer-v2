@@ -1,10 +1,14 @@
 import React, { useMemo } from 'react';
-import { Box, Card, Typography, useTheme, Stack } from '@mui/material';
+import { Box, Card, Typography, useTheme, Stack, FormHelperText } from '@mui/material';
 import { MixTheme } from '@lib/theme';
-import { Button, Dropdown, DropdownOptions } from '@lib/components';
+import { Button, Dropdown, DropdownOptions,CopyButton } from '@lib/components';
 import { BillingFormData, PaymentData } from '@lib/providers';
 import { PaymentTypes } from '@lib/constants';
 import { DeliveryInfoCard } from './DeliveryInfoCard';
+import { ConnectType } from '@lib/state/ConnectContext';
+import CopyIcon from '@mui/icons-material/ContentCopy'
+import { Icons } from '@lib/assets';
+import {NEW_MULTI_SIG} from './index'
 
 interface DeliveryProps {
   onWalletChange: (val: string) => void;
@@ -15,6 +19,9 @@ interface DeliveryProps {
   billingInfo: BillingFormData | undefined;
   paymentInfo: PaymentData | undefined;
   onClickConnectWallet: ()=>void;
+  connect: ConnectType;
+  onDisconnect:()=>void;
+  error?: string;
 }
 
 const Delivery = ({
@@ -26,6 +33,9 @@ const Delivery = ({
   billingInfo,
   paymentInfo,
   onClickConnectWallet,
+  connect,
+  onDisconnect,
+  error
 }: DeliveryProps) => {
   const theme = useTheme<MixTheme>();
 
@@ -54,13 +64,16 @@ const Delivery = ({
                   out for 14 days.`
             : `All related NFT purchase and delivery fees will be covered by ${ organizationName }.` }
         </Typography>
-        <Dropdown
+        {
+          !connect?.connected ?
+          <>
+           <Dropdown
           value={ selectedDeliveryAddress }
           onChange={ onWalletChange }
           placeholder="Select or Enter Wallet Address"
           sx={{ marginRight: '8px' }}
           options={ walletOptions } />
-        { selectedDeliveryAddress === 'new-multi-sig' && (
+        { selectedDeliveryAddress === NEW_MULTI_SIG  && (
           <Typography
             variant="body2"
             sx={{ marginTop: '6px', color: theme.global?.cardGrayedText }}>
@@ -80,12 +93,59 @@ const Delivery = ({
             sx={{ marginTop: 2 }}
             onClick={ onClickConnectWallet } />
         </Stack>
+          </>
+          :
+          <Box
+            display={'flex'}
+            flexDirection={'row'}
+            alignItems={'center'}
+            justifyContent={'space-between'}
+            border={`1px solid ${theme.global?.cardBorder}`}
+            padding={'16px'}
+            sx={{
+              background:theme.global?.background
+            }}
+          >
+            <Box
+            display={'flex'}
+            flexDirection={'row'}
+            alignItems={'center'}
+            >
+              <img src={Icons.walletAddress} />
+            <Typography fontSize={'16px'} marginLeft={'12px'} width={'150px'}
+              sx={{
+                overflow: "hidden", textOverflow: "ellipsis",
+              }}
+            >
+              {connect?.account} 
+            </Typography>
+            <CopyButton 
+              copyValue={connect?.account}
+              sx={{
+                alignSelf:'center'
+              }}
+            />
+            </Box>
+          <Button
+            title="Disconnect"
+            textColor={ theme.global?.highlightedText }
+            backgroundColor={ theme.global?.white }
+            variant="outlined"
+            sx={{ 
+              justifySelf:'flex-end'
+             }}
+            onClick={ onDisconnect } />
+          </Box>
+        }
+       
       </Card>
-      <Box display="flex" flexDirection="row" justifyContent="flex-end">
+      <Box display="flex" flexDirection="row" justifyContent="space-between">
+        <FormHelperText error >{error}</FormHelperText>
         <Button
           title="Confirm purchase"
           backgroundColor={ theme.global?.checkOutColors?.continueButtonBackground }
           textColor={ theme.global?.checkOutColors?.continueButtonTextColor }
+          disabled={ !Boolean(connect?.connected || selectedDeliveryAddress) }
           onClick={ onClickConfirmPurchase } />
       </Box>
     </>

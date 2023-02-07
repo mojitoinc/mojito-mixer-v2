@@ -1,10 +1,10 @@
 import { MixTheme } from '@lib/theme';
 import { Card, useTheme, Box, Typography, Divider, Stack } from '@mui/material';
 import React, { useCallback } from 'react';
-import FileCopyIcon from '@mui/icons-material/FileCopyOutlined';
 import { Icons } from '@lib/assets';
 import { BillingFormData, PaymentData, useContainer, ContainerTypes } from '@lib/providers';
 import { PaymentTypes } from '@lib/constants';
+import {CopyButton} from '@lib/components';
 
 interface DeliveryInfoCardProps {
   billingInfo: BillingFormData | undefined;
@@ -142,14 +142,7 @@ export const DeliveryInfoCard = ({
                     paymentInfo?.wireData?.accountNumber?.length ?? 0 - 4,
                   ) }
                 </Typography>
-                <FileCopyIcon
-                  sx={{
-                    width: '14px',
-                    padding: '4px',
-                    marginLeft: '4px',
-                    height: '14px',
-                    color: theme.global?.confirmationColors?.copyIconColor,
-                  }} />
+                <CopyButton copyValue={paymentInfo?.wireData?.accountNumber} />
               </Stack>
             </Box>
           ) }
