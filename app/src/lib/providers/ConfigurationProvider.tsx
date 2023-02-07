@@ -1,6 +1,6 @@
 import { Typography } from '@mui/material';
 import React, { createContext, useContext } from 'react';
-import { wireTransferInstructions,creditCardInstructions } from '@lib/configure/paymentConfiguration'
+import { wireTransferInstructions,creditCardInstructions } from '@lib/config'
 
 export interface ConfigurationType {
   billing?: {
