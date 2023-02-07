@@ -49,5 +49,5 @@ export const useDebug = (tag: string) => {
     state.log('🔴', tag, method, message);
   }, [tag, state]);
 
-  return useMemo(()=> ({ success: handleSuccess, info: handleInfo, error: handleError }), [handleSuccess, handleInfo, handleError]);
+  return useMemo(() => ({ success: handleSuccess, info: handleInfo, error: handleError }), [handleSuccess, handleInfo, handleError]);
 };

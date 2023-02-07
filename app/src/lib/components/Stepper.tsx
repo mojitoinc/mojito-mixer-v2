@@ -2,6 +2,7 @@ import { Box, Typography, useTheme } from '@mui/material';
 import React from 'react';
 import { Icons } from '@lib/assets';
 import { MixTheme } from '@lib/theme';
+import { ContainerTypes } from '@lib/providers';
 
 interface StepsType {
   title: string;
@@ -10,15 +11,15 @@ interface StepsType {
 const steps: StepsType[] = [
   {
     title: 'Info',
-    value: 'Checkout',
+    value: ContainerTypes.CHECKOUT,
   },
   {
     title: 'Payment',
-    value: 'Payment',
+    value: ContainerTypes.PAYMENT,
   },
   {
     title: 'Delivery',
-    value: 'Delivery',
+    value: ContainerTypes.DELIVERY,
   },
 ];
 interface StepperProps {

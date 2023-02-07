@@ -21,7 +21,7 @@ const Button = ({
   sx,
   children,
   variant,
-  disabled
+  disabled,
 }: ButtonProps) => {
   const theme = useTheme<MixTheme>();
 
@@ -30,7 +30,7 @@ const Button = ({
       title={ title }
       autoCapitalize="none"
       size="small"
-      disabled={disabled}
+      disabled={ disabled }
       variant={ variant }
       sx={{
         backgroundColor: disabled ? theme.palette?.secondary?.main : backgroundColor ?? theme.palette?.primary?.main,

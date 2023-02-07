@@ -43,6 +43,7 @@ interface PaymentContainerProps {
     creditCard?: boolean;
   };
   billingInfo: BillingFormData | undefined;
+  buttonDisabled: boolean;
 }
 
 const PaymentContainer = ({
@@ -60,6 +61,7 @@ const PaymentContainer = ({
   onClickDelivery,
   config,
   billingInfo,
+  buttonDisabled
 }: PaymentContainerProps) => {
   const theme = useTheme<MixTheme>();
 
@@ -146,6 +148,7 @@ const PaymentContainer = ({
           backgroundColor={ theme.global?.checkOutColors?.continueButtonBackground }
           textColor={ theme.global?.checkOutColors?.continueButtonTextColor }
           onClick={ onClickDelivery }
+          disabled={buttonDisabled}
           sx={{
             margin: '24px 0',
           }} />

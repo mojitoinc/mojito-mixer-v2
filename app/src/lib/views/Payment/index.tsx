@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { paymentMethodsQuery } from '@lib/queries/billing';
@@ -34,12 +34,12 @@ export const PaymentContainer = () => {
   const validationSchema = Yup.object().shape({
     accountNumber: Yup.string()
       .matches(/^[\d\s]+$/, 'Invalid account number')
-      .min(9, 'Invalid account number'),
+      .min(9, 'Invalid account number').required('Please enter account number'),
     aba: Yup.string()
       .matches(/^[\d\s]+$/, 'Invalid aba')
-      .min(10, 'Invalid aba'),
-    bankCountry: Yup.string(),
-    bankName: Yup.string(),
+      .min(10, 'Invalid aba').required('Please enter aba'),
+    bankCountry: Yup.string().required('Please select bank country'),
+    bankName: Yup.string().required('Please select bank name'),
   });
 
   const creditCardSchema = Yup.object().shape({
@@ -109,6 +109,7 @@ export const PaymentContainer = () => {
     handleChange: onChangeWireTransferField,
     setFieldValue: onSetWireTransferField,
     errors: wireTransferFormErrors,
+    isValid : isValidWireTransfer
   } = useFormik({
     initialValues: {
       accountNumber: paymentInfo?.wireData?.accountNumber ?? '',
@@ -118,6 +119,8 @@ export const PaymentContainer = () => {
     },
     validationSchema,
     onSubmit: () => undefined,
+    validateOnChange:true,
+    validateOnMount:true
   });
 
   const {
@@ -141,6 +144,8 @@ export const PaymentContainer = () => {
     } as CreditCardFormType,
     validationSchema: creditCardSchema,
     onSubmit: () => undefined,
+    validateOnChange:true,
+    validateOnMount:true
   });
 
   const onSubmitCreditCard = useCallback(async () => {
@@ -223,13 +228,23 @@ export const PaymentContainer = () => {
 
   const onClickDelivery = useCallback(() => {
     if (paymentType === PaymentTypes.CREDIT_CARD && !billingInfo?.phoneNumber) return;
-    if (paymentType === PaymentTypes.WIRE_TRANSFER) {
+    if (paymentType === PaymentTypes.WIRE_TRANSFER && isValidWireTransfer) {
       onSubmitWireTransfer();
     }
     if (paymentType === PaymentTypes.CREDIT_CARD) {
       onSubmitCreditCard();
     }
-  }, [paymentType, onSubmitCreditCard, onSubmitWireTransfer, billingInfo]);
+  }, [paymentType, onSubmitCreditCard, onSubmitWireTransfer, billingInfo,isValidWireTransfer]);
+
+  const buttonDisabled = useMemo<boolean>(()=>{
+    if(paymentType === PaymentTypes.CREDIT_CARD) {
+      return !isValidCreditCardValues
+    }
+    if(paymentType === PaymentTypes.WIRE_TRANSFER) {
+      return !isValidWireTransfer
+    }
+    return true;
+  },[isValidCreditCardValues,isValidWireTransfer,paymentType])
 
   return (
     <PaymentLayout
@@ -246,6 +261,8 @@ export const PaymentContainer = () => {
       creditCardList={ creditCardList }
       onClickDelivery={ onClickDelivery }
       config={ billing?.paymentMethods }
-      billingInfo={ billingInfo } />
+      billingInfo={ billingInfo }
+      buttonDisabled= {buttonDisabled}
+      />
   );
 };

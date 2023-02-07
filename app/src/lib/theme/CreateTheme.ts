@@ -49,6 +49,7 @@ export const makeTheme = (themeConfiguration?: ThemeConfiguration) => {
     },
     global: {
       background: themeConfiguration?.color?.background ?? DefaultThemes.color?.background,
+      errorBackground: themeConfiguration?.color?.errorBackground ?? DefaultThemes.color?.errorBackground,
       highlightedText: '#6663FD',
       unHighlightedText: '#8A8AB9',
       linksText: '#8A8AB9',
