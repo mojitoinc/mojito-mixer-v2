@@ -3,7 +3,7 @@ import { useDelivery } from '@lib/providers/DeliveryProvider';
 import { useQuery } from '@apollo/client';
 import { paymentMethodsQuery } from '@lib/queries/billing';
 import { usePayment } from '@lib/providers/PaymentProvider';
-import { PaymentMethod } from '@lib/interfaces/PaymentMethods';
+import { PaymentMethod } from '@lib/interfaces';
 import ConfirmationView from './ConfirmationView';
 
 const ConfirmationContainer = () => {

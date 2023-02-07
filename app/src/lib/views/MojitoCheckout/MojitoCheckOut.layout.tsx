@@ -1,7 +1,6 @@
 import { Box, useTheme } from '@mui/material';
 import React from 'react';
-import Header from '@components/shared/Header';
-import Stepper from '@components/shared/Stepper';
+import { Header, Stepper } from '@lib/components';
 import { MixTheme } from '@lib/theme/ThemeOptions';
 import CostBreakDownContainer from '@views/CostBreakDown';
 import ConfirmationContainer from '@views/Confirmation';

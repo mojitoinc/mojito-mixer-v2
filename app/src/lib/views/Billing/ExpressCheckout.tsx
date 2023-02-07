@@ -1,7 +1,6 @@
-import LinedText from '@components/shared/LinedText';
+import { Button, LinedText } from '@lib/components';
 import { Box, useTheme } from '@mui/material';
 import React from 'react';
-import Button from '@components/shared/Button';
 import { MixTheme } from '@lib/theme/ThemeOptions';
 import { Icons } from '@lib/assets';
 

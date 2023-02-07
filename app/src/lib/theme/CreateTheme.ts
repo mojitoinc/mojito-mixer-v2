@@ -1,5 +1,5 @@
-import DefaultThemes from '@lib/constants/themes';
-import { ThemeConfiguration } from '@lib/interfaces/ThemeConfiguration';
+import { DefaultThemes } from '@lib/config';
+import { ThemeConfiguration } from '@lib/interfaces';
 import { createTheme } from '@mui/material/styles';
 import { MixThemeOptions, MixTheme } from './ThemeOptions';
 

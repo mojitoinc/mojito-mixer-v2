@@ -1,5 +1,5 @@
 import React from 'react';
-import { PaymentTypes } from '@lib/constants/states';
+import { PaymentTypes } from '@lib/constants';
 import PaymentLayout from '@lib/views/Payment/Payment.layout';
 
 export const CreditCardStories = () => {

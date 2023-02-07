@@ -1,4 +1,4 @@
-import { Taxes } from '@lib/interfaces/CostBreakDown';
+import { Taxes } from '@lib/interfaces';
 import { BillingFormData } from '@lib/providers/BillingProvider';
 import { PaymentData } from '@lib/providers/PaymentProvider';
 

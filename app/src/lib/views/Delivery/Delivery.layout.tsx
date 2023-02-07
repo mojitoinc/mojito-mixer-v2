@@ -1,11 +1,10 @@
 import React, { useMemo } from 'react';
 import { Box, Card, Typography, useTheme, Stack } from '@mui/material';
 import { MixTheme } from '@lib/theme/ThemeOptions';
-import Dropdown, { DropdownOptions } from '@components/shared/Dropdown';
-import Button from '@components/shared/Button';
+import { Button, Dropdown, DropdownOptions } from '@lib/components';
 import { BillingFormData } from '@lib/providers/BillingProvider';
 import { PaymentData } from '@lib/providers/PaymentProvider';
-import { PaymentTypes } from '@lib/constants/states';
+import { PaymentTypes } from '@lib/constants';
 import { DeliveryInfoCard } from './DeliveryInfoCard';
 
 interface DeliveryLayoutProps {

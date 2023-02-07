@@ -6,7 +6,7 @@ import {
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { useAuth0 } from '@auth0/auth0-react';
-import { Configuration } from '@lib/constants/configuration';
+import { RuntimeConfiguration } from '@lib/config';
 import React, { FC } from 'react';
 
 interface MojitoApiProviderProps {
@@ -17,7 +17,7 @@ export const MojitoApiProvider: FC<MojitoApiProviderProps> = ({ children }) => {
   const { getIdTokenClaims } = useAuth0();
 
   const httpLink = createHttpLink({
-    uri: Configuration.API_HOST_URL,
+    uri: RuntimeConfiguration.API_HOST_URL,
   });
   const authLink = setContext(async (_, { headers }) => {
     // get the authentication token from local storage if it exists

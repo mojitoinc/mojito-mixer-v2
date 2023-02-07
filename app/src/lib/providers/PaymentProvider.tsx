@@ -1,7 +1,6 @@
 import { useLazyQuery, useMutation } from '@apollo/client';
-import { useEncryptCardData } from '@lib/hooks/useEncryptCard';
-import { CreditCardFormType } from '@lib/interfaces/CreditCard';
-import { ReserveNow } from '@lib/interfaces/Invoice';
+import { useEncryptCardData } from '@lib/hooks';
+import { CreditCardFormType, ReserveNow } from '@lib/interfaces';
 import { getPaymentNotificationQuery } from '@lib/queries/creditCard';
 import { reserveNowBuyLotQuery } from '@lib/queries/invoiceDetails';
 import { createPaymentMethodQuery, createPaymentQuery, getPaymentMethodStatus } from '@lib/queries/Payment';

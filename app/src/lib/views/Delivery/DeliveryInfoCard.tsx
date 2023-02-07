@@ -5,7 +5,7 @@ import FileCopyIcon from '@mui/icons-material/FileCopyOutlined';
 import { Icons } from '@lib/assets';
 import { BillingFormData } from '@lib/providers/BillingProvider';
 import { PaymentData } from '@lib/providers/PaymentProvider';
-import { PaymentTypes } from '@lib/constants/states';
+import { PaymentTypes } from '@lib/constants';
 import { useContainer } from '@lib/providers/ContainerStateProvider';
 import { ContainerTypes } from '@views/MojitoCheckout/MojitoCheckOut.layout';
 

@@ -8,7 +8,7 @@ import ConfigurationContext, {
 import { makeTheme } from '@lib/theme/CreateTheme';
 import { styles } from '@lib/theme/GlobalStyles';
 import MojitoCheckoutLayout from '@views/MojitoCheckout/MojitoCheckOut.layout';
-import { ThemeConfiguration } from '@lib/interfaces/ThemeConfiguration';
+import { ThemeConfiguration } from '@lib/interfaces';
 import DeliveryContext, { Delivery } from '@lib/providers/DeliveryProvider';
 import { MojitoApiProvider } from '@lib/state/MojitoApiProvider';
 import BillingProvider from '@lib/providers/BillingProvider';

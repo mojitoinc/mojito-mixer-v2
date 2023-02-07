@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from '@lib/components/shared/Header';
+import { Header } from '@lib/components';
 
 export const HeaderStories = () => {
   return <Header />;

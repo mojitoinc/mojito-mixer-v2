@@ -1,8 +1,6 @@
-import Button from '@components/shared/Button';
-import TextInput from '@components/shared/TextInput';
+import { Button, TextInput } from '@lib/components';
 import { Icons } from '@lib/assets';
-import { CollectionItem } from '@lib/interfaces/Collections';
-import { Taxes } from '@lib/interfaces/CostBreakDown';
+import { CollectionItem, Taxes } from '@lib/interfaces';
 import { useUIConfiguration } from '@lib/providers/ConfigurationProvider';
 import { useContainer } from '@lib/providers/ContainerStateProvider';
 import { useDelivery } from '@lib/providers/DeliveryProvider';

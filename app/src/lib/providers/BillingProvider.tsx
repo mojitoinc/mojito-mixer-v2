@@ -10,9 +10,8 @@ import { useLazyQuery } from '@apollo/client';
 import {
   getTaxQuoteQuery,
 } from '@lib/queries/invoiceDetails';
-import { Taxes } from '@lib/interfaces/CostBreakDown';
+import { CollectionItem, Taxes } from '@lib/interfaces';
 import { collectionByIdQuery } from '@lib/queries/collection';
-import { CollectionItem } from '@lib/interfaces/Collections';
 import { useDelivery } from './DeliveryProvider';
 
 export interface BillingFormData {

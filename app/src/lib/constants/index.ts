@@ -1,3 +1,8 @@
+export enum RiskRating {
+  High = 'High',
+  Low = 'Low',
+}
+
 export enum PaymentTypes {
   CREDIT_CARD = 'CreditCard',
   WALLET_CONNECT = 'Crypto',

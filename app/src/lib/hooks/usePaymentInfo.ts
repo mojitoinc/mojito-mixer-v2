@@ -1,6 +1,4 @@
-import { CollectionItem } from '@lib/interfaces/Collections';
-import { Taxes } from '@lib/interfaces/CostBreakDown';
-import { ReserveNow } from '@lib/interfaces/Invoice';
+import { CollectionItem, Taxes, ReserveNow } from '@lib/interfaces';
 import { BillingFormData } from '@lib/providers/BillingProvider';
 import { PaymentData } from '@lib/providers/PaymentProvider';
 import { CookieService } from '@lib/storage/CookieService';

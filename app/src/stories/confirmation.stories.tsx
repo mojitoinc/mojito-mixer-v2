@@ -1,5 +1,5 @@
 import React from 'react';
-import { PaymentStatus } from '@lib/constants/states';
+import { PaymentStatus } from '@lib/constants';
 import ConfirmationView from '@lib/views/Confirmation/ConfirmationView';
 
 export const BillingViewStories = () => {

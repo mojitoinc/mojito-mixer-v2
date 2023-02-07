@@ -1,4 +1,4 @@
-import usePaymentInfo from '@lib/hooks/usePaymentInfo';
+import {usePaymentInfo} from '@lib/hooks';
 import { useBilling } from '@lib/providers/BillingProvider';
 import React from 'react';
 import CostBreakDownLayout from './CostBreakDownLayout';

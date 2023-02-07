@@ -4,7 +4,7 @@ import { useFormik } from 'formik';
 import { useLazyQuery } from '@apollo/client';
 import { paymentMethodsQuery } from '@lib/queries/billing';
 import { useDelivery } from '@lib/providers/DeliveryProvider';
-import { PaymentMethod } from '@lib/interfaces/PaymentMethods';
+import { PaymentMethod } from '@lib/interfaces';
 import * as Yup from 'yup';
 import { useContainer } from '@lib/providers/ContainerStateProvider';
 import { ContainerTypes } from '@views/MojitoCheckout/MojitoCheckOut.layout';

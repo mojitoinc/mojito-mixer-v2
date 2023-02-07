@@ -1,4 +1,4 @@
-import { ThemeConfiguration } from '@lib/interfaces/ThemeConfiguration';
+import { ThemeConfiguration } from '@lib/interfaces';
 
 const DefaultThemes: ThemeConfiguration = {
   font: {
