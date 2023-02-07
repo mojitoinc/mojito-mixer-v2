@@ -9,7 +9,7 @@ import { ContainerTypes, useContainer, useDelivery, useBilling, useUIConfigurati
 import { formCardScreeningVariable } from '@views/Delivery/Delivery.service';
 import { cardScreeningQuery } from '@lib/queries/creditCard';
 import { meQuery } from '@lib/queries/me';
-import PaymentLayout from './PaymentContainer';
+import PaymentContainerView from './PaymentContainer';
 
 export const PaymentContainer = () => {
   const { orgId } = useDelivery();
@@ -247,7 +247,7 @@ export const PaymentContainer = () => {
   }, [isValidCreditCardValues, isValidWireTransfer, paymentType]);
 
   return (
-    <PaymentLayout
+    <PaymentContainerView
       paymentType={ paymentType }
       onChoosePaymentType={ onChoosePaymentType }
       wireTransferFormValues={ wireTransferFormValues }

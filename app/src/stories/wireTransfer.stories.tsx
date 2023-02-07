@@ -1,10 +1,10 @@
 import React from 'react';
 import { PaymentTypes } from '@lib/constants';
-import PaymentLayout from '@views/Payment/PaymentContainer';
+import PaymentContainer from '@views/Payment/PaymentContainer';
 
 export const WireTransferStories = () => {
   return (
-    <PaymentLayout
+    <PaymentContainer
       creditCardFormErrors={{}}
       creditCardFormValues={{
         isNew: false,
@@ -31,11 +31,12 @@ export const WireTransferStories = () => {
         walletConnect: true,
         wire: true,
         creditCard: true,
-      }} />
+      }}
+      buttonDisabled={ false } />
   );
 };
 const stories = {
   title: 'views/payments/WireTransfer',
-  component: PaymentLayout,
+  component: PaymentContainer,
 };
 export default stories;

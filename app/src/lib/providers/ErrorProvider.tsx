@@ -16,7 +16,7 @@ const ErrorProvider = ({
   children,
 }: ErrorProps) => {
   const [error, setError] = useState();
-  // const
+
   const values = useMemo<ErrorState>(() => {
     return { error, setError } as ErrorState;
   }, [error, setError]);
