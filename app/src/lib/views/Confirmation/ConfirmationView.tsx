@@ -4,7 +4,7 @@ import { Box, Card, Typography, useTheme } from '@mui/material';
 import React, { useMemo } from 'react';
 import { PaymentStatus, PaymentTypes } from '@lib/constants';
 import { usePaymentInfo } from '@lib/hooks';
-import { useUIConfiguration } from '@lib/providers/ConfigurationProvider';
+import { useUIConfiguration } from '@lib/providers';
 import OrderDetails from './OrderDetails';
 
 interface ConfirmationViewProps {
@@ -23,6 +23,7 @@ const ConfirmationView = ({ paymentStatus }: ConfirmationViewProps) => {
         ? theme.global?.confirmationColors?.processedBackground
         : theme.global?.confirmationColors?.awaitingPaymentBackground;
   }, [paymentStatus, theme]);
+
   const textColor = useMemo(
     () => (paymentStatus === PaymentStatus.PENDING
       ? theme.global?.confirmationColors?.awaitingPaymentTextColor
@@ -31,6 +32,7 @@ const ConfirmationView = ({ paymentStatus }: ConfirmationViewProps) => {
         : theme.global?.confirmationColors?.awaitingPaymentTextColor),
     [paymentStatus, theme],
   );
+
   const status = useMemo(() => {
     return paymentStatus === PaymentStatus.PENDING
       ? 'Awaiting Payment'
@@ -38,6 +40,7 @@ const ConfirmationView = ({ paymentStatus }: ConfirmationViewProps) => {
         ? 'Processed'
         : 'Inprogress';
   }, [paymentStatus]);
+
   return (
     <Box>
       <Card

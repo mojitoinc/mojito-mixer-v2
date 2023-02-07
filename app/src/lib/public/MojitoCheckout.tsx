@@ -1,20 +1,18 @@
 import { ThemeProvider, GlobalStyles } from '@mui/material';
 import React, { useMemo, useState } from 'react';
-import ConfigurationContext, {
+import {
+  ConfigurationContext,
   ConfigurationType,
   DefaultConfiguration,
   makeUIConfiguration,
 } from '@providers/ConfigurationProvider';
 import { makeTheme } from '@lib/theme/CreateTheme';
 import { styles } from '@lib/theme/GlobalStyles';
-import MojitoCheckoutLayout from '@views/MojitoCheckout/MojitoCheckOut.layout';
+import MojitoCheckoutLayout from '@views/index';
 import { ThemeConfiguration } from '@lib/interfaces';
-import DeliveryContext, { Delivery } from '@lib/providers/DeliveryProvider';
+import { DeliveryContext, Delivery, ContainerStateProvider } from '@lib/providers';
 import { MojitoApiProvider } from '@lib/state/MojitoApiProvider';
-import BillingProvider from '@lib/providers/BillingProvider';
-import PaymentProvider from '@lib/providers/PaymentProvider';
-import ContainerStateProvider from '@lib/providers/ContainerStateProvider';
-import { DebugProvider, ErrorProvider } from '@lib/providers';
+import { BillingProvider, PaymentProvider, DebugProvider, ErrorProvider } from '@lib/providers';
 import ConnectContext, { ConnectType } from '@lib/state/ConnectContext';
 import Modal from 'react-modal';
 

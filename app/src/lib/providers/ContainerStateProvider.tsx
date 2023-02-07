@@ -1,4 +1,3 @@
-import { ContainerTypes } from '@views/MojitoCheckout/MojitoCheckOut.layout';
 import React, {
   createContext,
   useContext,
@@ -7,6 +6,13 @@ import React, {
   useState,
 } from 'react';
 
+export enum ContainerTypes {
+  CHECKOUT = 'CHECKOUT',
+  PAYMENT = 'PAYMENT',
+  DELIVERY = 'DELIVERY',
+  CONFIRMATION = 'CONFIRMATION',
+  LOADING = 'LOADING'
+}
 export interface Container {
   containerState: ContainerTypes;
   setContainerState: (value: ContainerTypes) => void;
@@ -18,7 +24,7 @@ interface ContainerStateProps {
   children?: React.ReactNode;
 }
 
-const ContainerStateProvider = ({
+export const ContainerStateProvider = ({
   paymentId,
   children,
 }: ContainerStateProps) => {
@@ -40,7 +46,7 @@ const ContainerStateProvider = ({
     </ContainerStateContext.Provider>
   );
 };
-export default ContainerStateProvider;
+
 export const useContainer = () => {
   return useContext(ContainerStateContext);
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import CostBreakDownLayout from '@lib/views/CostBreakDown/CostBreakDownLayout';
+import CostBreakDownLayout from '@views/CostBreakDown/CostBreakDown';
 
 export const CostBreakDownStories = () => {
   return (

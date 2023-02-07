@@ -6,20 +6,11 @@ import CostBreakDownContainer from '@views/CostBreakDown';
 import ConfirmationContainer from '@views/Confirmation';
 import { PaymentContainer } from '@views/Payment';
 import { Delivery } from '@views/Delivery';
-import { useContainer } from '@lib/providers/ContainerStateProvider';
+import { useContainer, ContainerTypes } from '@lib/providers';
 import { useError } from '@lib/providers';
 import LoadingContainer from '@views/Loading';
 import ErrorContainer from '@views/Error';
-import BillingContainer from '../Billing';
-
-
-export enum ContainerTypes {
-  CHECKOUT = 'CHECKOUT',
-  PAYMENT = 'PAYMENT',
-  DELIVERY = 'DELIVERY',
-  CONFIRMATION = 'CONFIRMATION',
-  LOADING = 'LOADING'
-}
+import BillingContainer from './Billing';
 
 const MojitoCheckoutLayout = () => {
   const theme = useTheme<MixTheme>();

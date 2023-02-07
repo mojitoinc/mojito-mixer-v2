@@ -34,7 +34,7 @@ export interface Billing {
 }
 const BillingContext = createContext<Billing>({} as Billing);
 
-const BillingProvider = ({ children }: { children?: React.ReactNode }) => {
+export const BillingProvider = ({ children }: { children?: React.ReactNode }) => {
   const [billingInfo, setBillingInfo] = useState<BillingFormData>();
   const { quantity, orgId, collectionItemId } = useDelivery();
 
@@ -108,8 +108,6 @@ const BillingProvider = ({ children }: { children?: React.ReactNode }) => {
     <BillingContext.Provider value={ value }>{ children }</BillingContext.Provider>
   );
 };
-
-export default BillingProvider;
 
 export const useBilling = () => {
   return useContext(BillingContext);

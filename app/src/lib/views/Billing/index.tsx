@@ -1,16 +1,11 @@
-import { BillingFormData, useBilling } from '@lib/providers/BillingProvider';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useFormik } from 'formik';
+import * as Yup from 'yup';
 import { useLazyQuery } from '@apollo/client';
 import { paymentMethodsQuery } from '@lib/queries/billing';
-import { useDelivery } from '@lib/providers/DeliveryProvider';
 import { PaymentMethod } from '@lib/interfaces';
-import * as Yup from 'yup';
-import { useContainer } from '@lib/providers/ContainerStateProvider';
-import { ContainerTypes } from '@views/MojitoCheckout/MojitoCheckOut.layout';
+import { useContainer, ContainerTypes, useDelivery, BillingFormData, useBilling, useDebug, usePayment } from '@lib/providers';
 import { uuid } from 'uuidv4';
-import { usePayment } from '@lib/providers/PaymentProvider';
-import { useDebug } from '@lib/providers';
 import BillingView from './BillingView';
 
 const BillingContainer = () => {

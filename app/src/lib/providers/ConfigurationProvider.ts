@@ -53,8 +53,8 @@ export const DefaultConfiguration: ConfigurationType = {
     onClickGoToMarketPlace: () => undefined,
   },
 };
-const ConfigurationContext = createContext<ConfigurationType>(DefaultConfiguration);
-export default ConfigurationContext;
+
+export const ConfigurationContext = createContext<ConfigurationType>(DefaultConfiguration);
 
 
 export const useUIConfiguration = () => {

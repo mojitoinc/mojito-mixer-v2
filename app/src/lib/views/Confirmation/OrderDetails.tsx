@@ -23,6 +23,7 @@ const OrderDetails = ({
   const onClickCopy = useCallback(() => {
     navigator.clipboard.writeText(copyValue ?? '');
   }, [copyValue]);
+  
   return (
     <Box
       sx={{

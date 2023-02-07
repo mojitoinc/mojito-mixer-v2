@@ -9,11 +9,11 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { RuntimeConfiguration } from '@lib/config';
 import React, { FC } from 'react';
 
-interface MojitoApiProviderProps {
+interface ExampleApiProviderProps {
   children: React.ReactNode;
 }
 
-export const MojitoApiProvider: FC<MojitoApiProviderProps> = ({ children }) => {
+export const ExampleApiProvider: FC<ExampleApiProviderProps> = ({ children }) => {
   const { getIdTokenClaims } = useAuth0();
 
   const httpLink = createHttpLink({

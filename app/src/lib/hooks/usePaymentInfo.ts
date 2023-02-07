@@ -1,6 +1,5 @@
 import { CollectionItem, Taxes, ReserveNow } from '@lib/interfaces';
-import { BillingFormData } from '@lib/providers/BillingProvider';
-import { PaymentData } from '@lib/providers/PaymentProvider';
+import { BillingFormData, PaymentData } from '@lib/providers';
 import { CookieService } from '@lib/storage/CookieService';
 import { useMemo } from 'react';
 

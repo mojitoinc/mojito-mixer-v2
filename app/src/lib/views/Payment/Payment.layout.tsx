@@ -7,7 +7,7 @@ import { Icons } from '@lib/assets';
 import { Button } from '@lib/components';
 import { FormikErrors } from 'formik';
 import { CreditCardFormType, PaymentMethod } from '@lib/interfaces';
-import { BillingFormData } from '@lib/providers/BillingProvider';
+import { BillingFormData } from '@lib/providers';
 import { PaymentInfoCards } from './InfoCards';
 import { PaymentMethodView } from './PaymentMethod.layout';
 import { WireTransferForm, WireTransferFormData } from './WireTransferForm';

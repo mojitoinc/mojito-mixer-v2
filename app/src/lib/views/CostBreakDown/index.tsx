@@ -1,7 +1,7 @@
 import {usePaymentInfo} from '@lib/hooks';
-import { useBilling } from '@lib/providers/BillingProvider';
+import { useBilling } from '@lib/providers';
 import React from 'react';
-import CostBreakDownLayout from './CostBreakDownLayout';
+import CostBreakDownLayout from './CostBreakDown';
 
 const CostBreakdownContainer = () => {
   const { taxes, collectionData } = useBilling();
