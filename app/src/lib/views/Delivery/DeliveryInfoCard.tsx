@@ -4,7 +4,7 @@ import React, { useCallback } from 'react';
 import { Icons } from '@lib/assets';
 import { BillingFormData, PaymentData, useContainer, ContainerTypes } from '@lib/providers';
 import { PaymentTypes } from '@lib/constants';
-import {CopyButton} from '@lib/components';
+import { CopyButton } from '@lib/components';
 
 interface DeliveryInfoCardProps {
   billingInfo: BillingFormData | undefined;
@@ -142,7 +142,7 @@ export const DeliveryInfoCard = ({
                     paymentInfo?.wireData?.accountNumber?.length ?? 0 - 4,
                   ) }
                 </Typography>
-                <CopyButton copyValue={paymentInfo?.wireData?.accountNumber} />
+                <CopyButton copyValue={ paymentInfo?.wireData?.accountNumber ?? '' } />
               </Stack>
             </Box>
           ) }

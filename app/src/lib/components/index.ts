@@ -8,13 +8,13 @@ import LinedText from './shared/LinedText';
 import CopyButton from './shared/CopyButton';
 
 export {
-    Button,
-    Dropdown,
-    type DropdownOptions,
-    Header,
-    Stepper,
-    TextInput,
-    CreditCardDropdown,
-    LinedText,
-    CopyButton
-}
+  Button,
+  Dropdown,
+  type DropdownOptions,
+  Header,
+  Stepper,
+  TextInput,
+  CreditCardDropdown,
+  LinedText,
+  CopyButton,
+};

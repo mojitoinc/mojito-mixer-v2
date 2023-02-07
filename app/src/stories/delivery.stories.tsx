@@ -1,5 +1,6 @@
 import React from 'react';
 import DeliveryLayout from '@views/Delivery/Delivery';
+import { ConnectType } from '@lib/state/ConnectContext';
 
 export const BillingViewStories = () => {
   return (
@@ -16,7 +17,11 @@ export const BillingViewStories = () => {
           label: 'Showri',
           value: '0xaldjkaslk',
         },
-      ] } />
+      ] }
+      connect={{} as ConnectType}
+      onDisconnect={ function (): void {
+
+      } } />
   );
 };
 const stories = {

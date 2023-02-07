@@ -87,12 +87,17 @@ export const PaymentProvider = ({ children }: { children?: React.ReactNode }) =>
     try {
       debug.info('onConfirm-start', { deliveryAddress, paymentInfo });
 
-      const { keyID, encryptedCardData } = await encryptCardData({
-        number: paymentInfo?.creditCardData?.isNew
-          ? paymentInfo?.creditCardData?.cardNumber?.replace(/\s/g, '')
-          : undefined,
+      const newCreditCard = paymentInfo?.creditCardData?.isNew ?? false;
+
+      const creditCardPayload = newCreditCard ? {
+        number: paymentInfo?.creditCardData?.cardNumber?.replace(/\s/g, ''),
         cvv: paymentInfo?.creditCardData?.cvv ?? '',
-      });
+      }
+        : { cvv: paymentInfo?.creditCardData?.cvv ?? '' };
+
+      debug.info('onConfirm-encryptCardData', { newCreditCard, creditCardPayload });
+
+      const { keyID, encryptedCardData } = await encryptCardData(creditCardPayload);
 
       debug.info('onConfirm-encrypt', encryptedCardData);
 

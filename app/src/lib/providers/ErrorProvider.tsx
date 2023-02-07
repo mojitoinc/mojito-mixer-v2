@@ -16,7 +16,7 @@ const ErrorProvider = ({
   children,
 }: ErrorProps) => {
   const [error, setError] = useState();
- // const
+  // const
 
   return (
     <ErrorContext.Provider value={{ error, setError } as ErrorState}>

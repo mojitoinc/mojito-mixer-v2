@@ -10,7 +10,7 @@ import { PaymentTypes, RiskRating } from '@lib/constants';
 import { useWeb3ModalConnect } from '@lib/state/Web3ModalConnect';
 import DeliveryLayout from './Delivery';
 
-export const NEW_MULTI_SIG = 'NEW_MULTI_SIG'
+export const NEW_MULTI_SIG = 'NEW_MULTI_SIG';
 
 export const Delivery = () => {
   const debug = useDebug('Delivery');
@@ -22,12 +22,12 @@ export const Delivery = () => {
   const { paymentInfo, onConfirmCreditCardPurchase, onConfirmWireTransferPurchase } = usePayment();
   const { data: meData } = useQuery(meQuery);
   const [addressScreening] = useMutation(addressScreeningQuery);
-  const [error,setError] = useState<string>()
+  const [error, setError] = useState<string>();
 
   const {
     connect,
     onWalletConnect,
-    onDisconnect
+    onDisconnect,
   } = useWeb3ModalConnect();
 
 
@@ -56,25 +56,25 @@ export const Delivery = () => {
 
   const onClickConfirmPurchase = useCallback(async () => {
     try {
-      const deliveryAddress = connect?.connected ? connect?.account : selectedDeliveryAddress === NEW_MULTI_SIG ? "" : selectedDeliveryAddress
-      if(!deliveryAddress) {
-        setError('Please select a delivery address')
+      const deliveryAddress = connect?.connected ? connect?.account : selectedDeliveryAddress === NEW_MULTI_SIG ? '' : selectedDeliveryAddress;
+      if (!deliveryAddress) {
+        setError('Please select a delivery address');
         return;
       }
-      if(deliveryAddress !== "" ) {
+      if (deliveryAddress !== '') {
         const screeningData = await addressScreening({
           variables: {
             orgID: orgId,
             input: {
-              address:deliveryAddress,
+              address: deliveryAddress,
               network: 'ethereum',
               asset: 'ETH',
             },
           },
         });
-        debug.info('onConfirm-start', {screeningData,paymentInfo});
+        debug.info('onConfirm-start', { screeningData, paymentInfo });
         if (screeningData.data?.addressScreening === RiskRating.High) {
-          setError('Please select a different delivery address')
+          setError('Please select a different delivery address');
           return;
         }
       }
@@ -95,7 +95,7 @@ export const Delivery = () => {
     orgId,
     selectedDeliveryAddress,
     addressScreening,
-    connect
+    connect,
   ]);
 
   return (
@@ -108,9 +108,8 @@ export const Delivery = () => {
       billingInfo={ billingInfo }
       paymentInfo={ paymentInfo }
       onClickConnectWallet={ onWalletConnect }
-      connect={connect}
-      onDisconnect={onDisconnect}
-      error={error}
-      />
+      connect={ connect }
+      onDisconnect={ onDisconnect }
+      error={ error } />
   );
 };
