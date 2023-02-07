@@ -22,8 +22,8 @@
     "url": "https://github.com/mojitoinc/mojito-mixers/issues",
     "email": "dev-support@mojito.xyz"
   },
-  "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js",
+  "main": "dist/cjs/src/index.js",
+  "module": "dist/esm/src/index.js",
   "types": "dist/index.d.ts",
   "files": [
     "dist"
