@@ -164,7 +164,7 @@ export const PaymentContainer = () => {
       try {
         if (creditCardFormValues?.isNew) {
           const variables = formCardScreeningVariable(
-            orgId,
+            orgId ?? '',
             paymentInfoData,
             billingInfo,
             taxes,

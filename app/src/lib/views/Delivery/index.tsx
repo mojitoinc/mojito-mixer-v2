@@ -74,7 +74,7 @@ export const Delivery = () => {
         });
         debug.info('onConfirm-start', { screeningData, paymentInfo });
         if (screeningData.data?.addressScreening === RiskRating.High) {
-          setError('Please select a different delivery address');
+          setError('Please contact support team to use this delivery address');
           return;
         }
       }

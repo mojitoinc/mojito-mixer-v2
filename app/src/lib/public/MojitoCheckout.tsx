@@ -1,5 +1,5 @@
 import { ThemeProvider, GlobalStyles } from '@mui/material';
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useEffect } from 'react';
 import {
   ConfigurationContext,
   ConfigurationType,
@@ -9,11 +9,26 @@ import {
 import { makeTheme, styles } from '@lib/theme';
 import MojitoCheckoutLayout from '@views/index';
 import { ThemeConfiguration } from '@lib/interfaces';
-import { DeliveryContext, Delivery, ContainerStateProvider, BillingProvider, PaymentProvider, DebugProvider, ErrorProvider } from '@lib/providers';
+import {
+  DeliveryContext,
+  Delivery,
+  ContainerStateProvider,
+  BillingProvider,
+  PaymentProvider,
+  DebugProvider,
+  ErrorProvider,
+} from '@lib/providers';
 import { MojitoApiProvider } from '@lib/state/MojitoApiProvider';
-import ConnectContext, { ConnectType } from '@lib/state/ConnectContext';
+import { ConnectProvider } from '@lib/state/ConnectContext';
 import Modal from 'react-modal';
+import { SardineEnvironment } from '@lib/config';
+import { useSardine } from '@lib/hooks';
 
+declare global {
+  interface Window {
+    _Sardine: any;
+  }
+}
 
 interface MojitoCheckoutProps {
   uiConfiguration?: ConfigurationType;
@@ -21,6 +36,8 @@ interface MojitoCheckoutProps {
   theme?: ThemeConfiguration;
   show: boolean;
   debug?: boolean;
+  sardineEnvironment?: SardineEnvironment;
+  enableSardine?: boolean;
 }
 
 const MojitoCheckout = ({
@@ -29,12 +46,14 @@ const MojitoCheckout = ({
   show,
   debug = false,
   deliveryConfiguration,
+  enableSardine = false,
+  sardineEnvironment = 'production',
 }: MojitoCheckoutProps) => {
-  const [connect, setConnect] = useState<ConnectType>({
-    connected: false,
-    account: '',
-    chainId: 4,
-  });
+  const setupSardine = useSardine(sardineEnvironment, enableSardine);
+
+  useEffect(() => {
+    setupSardine();
+  }, [setupSardine]);
 
   const themes = useMemo(() => makeTheme(theme), [theme]);
 
@@ -42,10 +61,6 @@ const MojitoCheckout = ({
     () => makeUIConfiguration(uiConfiguration),
     [uiConfiguration],
   );
-
-  const connectValues = useMemo(() => {
-    return { connect, setConnect };
-  }, [connect, setConnect]);
 
   return (
     <Modal
@@ -62,29 +77,29 @@ const MojitoCheckout = ({
           padding: 0,
         },
       }}>
-      <ConnectContext.Provider value={ connectValues }>
+      <MojitoApiProvider>
         <DebugProvider debug={ debug }>
-          <ErrorProvider>
-            <MojitoApiProvider>
-              <ThemeProvider theme={ themes }>
-                <DeliveryContext.Provider value={ deliveryConfiguration }>
-                  <ConfigurationContext.Provider value={ uiConfigurations }>
-                    <ContainerStateProvider
-                      paymentId={ deliveryConfiguration?.paymentId }>
-                      <BillingProvider>
-                        <PaymentProvider>
+          <ThemeProvider theme={ themes }>
+            <DeliveryContext.Provider value={ deliveryConfiguration }>
+              <ConfigurationContext.Provider value={ uiConfigurations }>
+                <ContainerStateProvider
+                  paymentId={ deliveryConfiguration?.paymentId }>
+                  <ErrorProvider>
+                    <BillingProvider>
+                      <PaymentProvider>
+                        <ConnectProvider>
                           <GlobalStyles styles={ styles } />
                           <MojitoCheckoutLayout />
-                        </PaymentProvider>
-                      </BillingProvider>
-                    </ContainerStateProvider>
-                  </ConfigurationContext.Provider>
-                </DeliveryContext.Provider>
-              </ThemeProvider>
-            </MojitoApiProvider>
-          </ErrorProvider>
+                        </ConnectProvider>
+                      </PaymentProvider>
+                    </BillingProvider>
+                  </ErrorProvider>
+                </ContainerStateProvider>
+              </ConfigurationContext.Provider>
+            </DeliveryContext.Provider>
+          </ThemeProvider>
         </DebugProvider>
-      </ConnectContext.Provider>
+      </MojitoApiProvider>
     </Modal>
   );
 };

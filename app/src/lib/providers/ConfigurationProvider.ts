@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react';
-
+import { wireTransferInstructions, creditCardInstructions } from '@lib/config';
 
 export interface ConfigurationType {
   billing?: {
@@ -9,20 +9,21 @@ export interface ConfigurationType {
       applepay?: boolean;
       walletConnect?: boolean;
       metaMask?: boolean;
-    },
+    };
     paymentMethods?: {
       gpay?: boolean;
       applepay?: boolean;
       walletConnect?: boolean;
       wire?: boolean;
       creditCard?: boolean;
-    },
+    };
     showDiscountCode?: boolean;
-  },
-  paymentConfiguration?:{
-    instruction? : string;
-    onClickGoToMarketPlace? : ()=>void;
-  }
+  };
+  paymentConfiguration?: {
+    wireTransferInstructions?: JSX.Element;
+    creditCardInstructions?: JSX.Element;
+    onClickGoToMarketPlace?: () => void;
+  };
 }
 
 export const DefaultConfiguration: ConfigurationType = {
@@ -44,31 +45,36 @@ export const DefaultConfiguration: ConfigurationType = {
     showDiscountCode: true,
   },
   paymentConfiguration: {
-    instruction: `If you selected to have your NFT(s) transferred directly to your
-    non-custodial wallet (such as MetaMask), we will do so as soon as
-    payment confirmation is received; otherwise, your NFT(s) will be
-    transferred to a MultiSig wallet (also known as a custodial wallet)
-    for safekeeping. You can view your NFT(s) on your Account page at
-    any time.`,
+    wireTransferInstructions,
+    creditCardInstructions,
     onClickGoToMarketPlace: () => undefined,
   },
 };
 
-export const ConfigurationContext = createContext<ConfigurationType>(DefaultConfiguration);
-
+export const ConfigurationContext =
+  createContext<ConfigurationType>(DefaultConfiguration);
 
 export const useUIConfiguration = () => {
   return useContext(ConfigurationContext);
 };
 
-
 export const makeUIConfiguration = (configurations: ConfigurationType) => {
   return {
     billing: {
-      showDiscountCode: configurations?.billing?.showDiscountCode ?? DefaultConfiguration?.billing?.showDiscountCode,
-      expressCheckoutConfig: { ...DefaultConfiguration?.billing?.expressCheckoutConfig, ...configurations?.billing?.expressCheckoutConfig },
-      hideExpressCheckout: configurations?.billing?.hideExpressCheckout ?? DefaultConfiguration?.billing?.hideExpressCheckout,
-      paymentMethods: { ...DefaultConfiguration?.billing?.paymentMethods, ...configurations?.billing?.paymentMethods },
+      showDiscountCode:
+        configurations?.billing?.showDiscountCode ??
+        DefaultConfiguration?.billing?.showDiscountCode,
+      expressCheckoutConfig: {
+        ...DefaultConfiguration?.billing?.expressCheckoutConfig,
+        ...configurations?.billing?.expressCheckoutConfig,
+      },
+      hideExpressCheckout:
+        configurations?.billing?.hideExpressCheckout ??
+        DefaultConfiguration?.billing?.hideExpressCheckout,
+      paymentMethods: {
+        ...DefaultConfiguration?.billing?.paymentMethods,
+        ...configurations?.billing?.paymentMethods,
+      },
     },
     paymentConfiguration: {
       ...DefaultConfiguration.paymentConfiguration,

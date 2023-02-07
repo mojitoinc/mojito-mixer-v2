@@ -19,9 +19,7 @@ export const BillingViewStories = () => {
         },
       ] }
       connect={{} as ConnectType}
-      onDisconnect={ function (): void {
-
-      } } />
+      onDisconnect={ () => undefined } />
   );
 };
 const stories = {

@@ -2,11 +2,11 @@ import { createContext, useContext } from 'react';
 
 
 export interface Delivery {
-  orgId: string;
+  orgId?: string;
   lotId?: string;
-  quantity: number;
+  quantity?: number;
   paymentId?: string;
-  collectionItemId: string;
+  collectionItemId?: string;
   invoiceId?: string;
 }
 
