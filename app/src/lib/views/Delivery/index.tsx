@@ -12,6 +12,8 @@ import { useWeb3ModalConnect } from '@lib/state/Web3ModalConnect';
 import DeliveryLayout from './Delivery';
 import { useDebug } from '@lib/providers';
 
+export const NEW_MULTI_SIG = 'NEW_MULTI_SIG'
+
 export const Delivery = () => {
   const debug = useDebug('Delivery');
   const [selectedDeliveryAddress, setSelectedDeliveryAddress] =
@@ -22,22 +24,18 @@ export const Delivery = () => {
   const { paymentInfo, onConfirmCreditCardPurchase, onConfirmWireTransferPurchase } = usePayment();
   const { data: meData } = useQuery(meQuery);
   const [addressScreening] = useMutation(addressScreeningQuery);
+  const [error,setError] = useState<string>()
 
   const {
     connect,
     onWalletConnect,
+    onDisconnect
   } = useWeb3ModalConnect();
 
 
   const handleChange = useCallback((value: string) => {
     setSelectedDeliveryAddress(value);
   }, []);
-
-  useEffect(() => {
-    if (connect?.account) {
-      handleChange(connect?.account);
-    }
-  }, [connect, handleChange]);
 
   const formatWallets = (wallets: any) => {
     return wallets.map((item: any) => ({
@@ -52,7 +50,7 @@ export const Delivery = () => {
       formattedWallets = formatWallets(meData.me?.wallets);
       formattedWallets.push({
         label: 'I don’t have a wallet / Create a new Multi-sig',
-        value: 'new-multi-sig',
+        value: NEW_MULTI_SIG,
       });
       setWalletOptions(formattedWallets);
     }
@@ -60,25 +58,33 @@ export const Delivery = () => {
 
   const onClickConfirmPurchase = useCallback(async () => {
     try {
-      const screeningData = await addressScreening({
-        variables: {
-          orgID: orgId,
-          input: {
-            address: selectedDeliveryAddress,
-            network: 'ethereum',
-            asset: 'ETH',
-          },
-        },
-      });
-      debug.info('onConfirm-start', {screeningData,paymentInfo});
-      if (screeningData.data?.addressScreening === RiskRating.High) {
+      const deliveryAddress = connect?.connected ? connect?.account : selectedDeliveryAddress === NEW_MULTI_SIG ? "" : selectedDeliveryAddress
+      if(!deliveryAddress) {
+        setError('Please select a delivery address')
         return;
       }
+      if(deliveryAddress !== "" ) {
+        const screeningData = await addressScreening({
+          variables: {
+            orgID: orgId,
+            input: {
+              address:deliveryAddress,
+              network: 'ethereum',
+              asset: 'ETH',
+            },
+          },
+        });
+        debug.info('onConfirm-start', {screeningData,paymentInfo});
+        if (screeningData.data?.addressScreening === RiskRating.High) {
+          setError('Please select a different delivery address')
+          return;
+        }
+      }
       if (paymentInfo?.paymentType === PaymentTypes.WIRE_TRANSFER) {
-        onConfirmWireTransferPurchase(selectedDeliveryAddress);
+        onConfirmWireTransferPurchase(deliveryAddress);
       }
       if (paymentInfo?.paymentType === PaymentTypes.CREDIT_CARD) {
-        onConfirmCreditCardPurchase(selectedDeliveryAddress);
+        onConfirmCreditCardPurchase(deliveryAddress);
       }
     } catch (e) {
       console.error('ERROR', e);
@@ -90,6 +96,7 @@ export const Delivery = () => {
     orgId,
     selectedDeliveryAddress,
     addressScreening,
+    connect
   ]);
 
   return (
@@ -101,6 +108,10 @@ export const Delivery = () => {
       organizationName={ meData?.me?.userOrgs[0]?.organization?.name }
       billingInfo={ billingInfo }
       paymentInfo={ paymentInfo }
-      onClickConnectWallet={ onWalletConnect } />
+      onClickConnectWallet={ onWalletConnect }
+      connect={connect}
+      onDisconnect={onDisconnect}
+      error={error}
+      />
   );
 };

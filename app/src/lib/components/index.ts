@@ -3,11 +3,11 @@ import Dropdown, { DropdownOptions } from './Dropdown';
 import Header from './Header';
 import Stepper from './Stepper';
 import TextInput from './TextInput';
-
 import CreditCardDropdown from './shared/CreditCardDropdown';
 import LinedText from './shared/LinedText';
+import CopyButton from './shared/CopyButton';
 
-
+CopyButton
 export {
     Button,
     Dropdown,
@@ -17,4 +17,5 @@ export {
     TextInput,
     CreditCardDropdown,
     LinedText,
+    CopyButton
 }

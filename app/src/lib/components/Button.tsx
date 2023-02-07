@@ -10,6 +10,7 @@ interface ButtonProps {
   sx?: SxProps<Theme>;
   children? : JSX.Element;
   variant?: 'text' | 'outlined' | 'contained';
+  disabled?: boolean
 }
 
 const Button = ({
@@ -20,6 +21,7 @@ const Button = ({
   sx,
   children,
   variant,
+  disabled
 }: ButtonProps) => {
   const theme = useTheme<MixTheme>();
 
@@ -28,9 +30,10 @@ const Button = ({
       title={ title }
       autoCapitalize="none"
       size="small"
+      disabled={disabled}
       variant={ variant }
       sx={{
-        backgroundColor: backgroundColor ?? theme.palette?.primary?.main,
+        backgroundColor: disabled ? theme.palette?.secondary?.main : backgroundColor ?? theme.palette?.primary?.main,
         color: textColor ?? theme.palette?.secondary?.main,
         textTransform: 'none',
         fontWeight: '700',
