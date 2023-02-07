@@ -1,5 +1,5 @@
 import { ThemeProvider, GlobalStyles } from '@mui/material';
-import React, { useMemo, useEffect } from 'react';
+import React, { useMemo } from 'react';
 import {
   ConfigurationContext,
   ConfigurationType,
@@ -7,7 +7,7 @@ import {
   makeUIConfiguration,
 } from '../providers/ConfigurationProvider';
 import { makeTheme, styles } from '../theme';
-import MojitoCheckoutLayout from '@views/index';
+import MojitoCheckoutView from '../views/index';
 import { ThemeConfiguration } from '../interfaces';
 import {
   DeliveryContext,
@@ -22,7 +22,6 @@ import { MojitoApiProvider } from '../state/MojitoApiProvider';
 import { ConnectProvider } from '../state/ConnectContext';
 import Modal from 'react-modal';
 import { SardineEnvironment } from '../config';
-import { useSardine } from '../hooks';
 
 declare global {
   interface Window {
@@ -49,12 +48,6 @@ const MojitoCheckout = ({
   enableSardine = false,
   sardineEnvironment = 'production',
 }: MojitoCheckoutProps) => {
-  const setupSardine = useSardine(sardineEnvironment, enableSardine);
-
-  useEffect(() => {
-    setupSardine();
-  }, [setupSardine]);
-
   const themes = useMemo(() => makeTheme(theme), [theme]);
 
   const uiConfigurations = useMemo(
@@ -77,8 +70,8 @@ const MojitoCheckout = ({
           padding: 0,
         },
       }}>
-      <MojitoApiProvider>
-        <DebugProvider debug={ debug }>
+      <DebugProvider debug={ debug }>
+        <MojitoApiProvider>
           <ThemeProvider theme={ themes }>
             <DeliveryContext.Provider value={ deliveryConfiguration }>
               <ConfigurationContext.Provider value={ uiConfigurations }>
@@ -89,7 +82,7 @@ const MojitoCheckout = ({
                       <PaymentProvider>
                         <ConnectProvider>
                           <GlobalStyles styles={ styles } />
-                          <MojitoCheckoutLayout />
+                          <MojitoCheckoutView enableSardine={ enableSardine } sardineEnvironment={ sardineEnvironment } />
                         </ConnectProvider>
                       </PaymentProvider>
                     </BillingProvider>
@@ -98,8 +91,8 @@ const MojitoCheckout = ({
               </ConfigurationContext.Provider>
             </DeliveryContext.Provider>
           </ThemeProvider>
-        </DebugProvider>
-      </MojitoApiProvider>
+        </MojitoApiProvider>
+      </DebugProvider>
     </Modal>
   );
 };

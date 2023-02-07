@@ -1,5 +1,5 @@
 import { Box, useTheme } from '@mui/material';
-import React from 'react';
+import React,{useEffect} from 'react';
 import { Header, Stepper } from '../components';
 import { MixTheme } from '../theme';
 import CostBreakDownContainer from '@views/CostBreakDown';
@@ -9,12 +9,23 @@ import { Delivery } from '@views/Delivery';
 import { useContainer, ContainerTypes, useError } from '../providers';
 import LoadingContainer from '@views/Loading';
 import ErrorContainer from '@views/Error';
+import { useSardine } from '@lib/hooks';
 import BillingContainer from './Billing';
+import { SardineEnvironment } from '..';
 
-const MojitoCheckoutLayout = () => {
+interface MojitoCheckoutProps {
+  sardineEnvironment: SardineEnvironment;
+  enableSardine: boolean;
+}
+const MojitoCheckoutLayout = ({ sardineEnvironment, enableSardine }:MojitoCheckoutProps) => {
   const theme = useTheme<MixTheme>();
   const { containerState } = useContainer();
   const { error } = useError();
+  const setupSardine = useSardine(sardineEnvironment, enableSardine);
+
+  useEffect(() => {
+    setupSardine();
+  }, [setupSardine]);
 
   if (error) {
     return <ErrorContainer error={ error } />;
