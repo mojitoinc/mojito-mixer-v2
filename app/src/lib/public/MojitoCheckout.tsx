@@ -21,7 +21,6 @@ import {
 import { MojitoApiProvider } from '@lib/state/MojitoApiProvider';
 import { ConnectProvider } from '@lib/state/ConnectContext';
 import Modal from 'react-modal';
-import { uuid } from 'uuidv4';
 import { SardineEnvironment } from '@lib/config';
 import { useSardine } from '@lib/hooks';
 
@@ -48,15 +47,14 @@ const MojitoCheckout = ({
   debug = false,
   deliveryConfiguration,
   enableSardine = false,
-  sardineEnvironment = 'production'
+  sardineEnvironment = 'production',
 }: MojitoCheckoutProps) => {
-
   const setupSardine = useSardine(sardineEnvironment, enableSardine);
 
-  useEffect(()=>{
+  useEffect(() => {
     setupSardine();
-  }, [ setupSardine]);
-  
+  }, [setupSardine]);
+
   const themes = useMemo(() => makeTheme(theme), [theme]);
 
   const uiConfigurations = useMemo(
