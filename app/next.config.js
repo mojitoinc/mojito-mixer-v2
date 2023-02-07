@@ -5,7 +5,13 @@ const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 
 module.exports = withImages({
   inlineImageLimit: false,
-
+  typescript: {
+    // !! WARN !!
+    // Dangerously allow production builds to successfully complete even if
+    // your project has type errors.
+    // !! WARN !!
+    ignoreBuildErrors: true,
+  },
   images: {
     // Do not add due to vulnerability: https://github.com/mojitoinc/mojito-mixers/security/dependabot/6
     loader: "imgix",
