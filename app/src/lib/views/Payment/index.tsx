@@ -109,7 +109,7 @@ export const PaymentContainer = () => {
     handleChange: onChangeWireTransferField,
     setFieldValue: onSetWireTransferField,
     errors: wireTransferFormErrors,
-    isValid : isValidWireTransfer
+    isValid: isValidWireTransfer,
   } = useFormik({
     initialValues: {
       accountNumber: paymentInfo?.wireData?.accountNumber ?? '',
@@ -119,8 +119,8 @@ export const PaymentContainer = () => {
     },
     validationSchema,
     onSubmit: () => undefined,
-    validateOnChange:true,
-    validateOnMount:true
+    validateOnChange: true,
+    validateOnMount: true,
   });
 
   const {
@@ -144,8 +144,8 @@ export const PaymentContainer = () => {
     } as CreditCardFormType,
     validationSchema: creditCardSchema,
     onSubmit: () => undefined,
-    validateOnChange:true,
-    validateOnMount:true
+    validateOnChange: true,
+    validateOnMount: true,
   });
 
   const onSubmitCreditCard = useCallback(async () => {
@@ -234,17 +234,17 @@ export const PaymentContainer = () => {
     if (paymentType === PaymentTypes.CREDIT_CARD) {
       onSubmitCreditCard();
     }
-  }, [paymentType, onSubmitCreditCard, onSubmitWireTransfer, billingInfo,isValidWireTransfer]);
+  }, [paymentType, onSubmitCreditCard, onSubmitWireTransfer, billingInfo, isValidWireTransfer]);
 
-  const buttonDisabled = useMemo<boolean>(()=>{
-    if(paymentType === PaymentTypes.CREDIT_CARD) {
-      return !isValidCreditCardValues
+  const buttonDisabled = useMemo<boolean>(() => {
+    if (paymentType === PaymentTypes.CREDIT_CARD) {
+      return !isValidCreditCardValues;
     }
-    if(paymentType === PaymentTypes.WIRE_TRANSFER) {
-      return !isValidWireTransfer
+    if (paymentType === PaymentTypes.WIRE_TRANSFER) {
+      return !isValidWireTransfer;
     }
     return true;
-  },[isValidCreditCardValues,isValidWireTransfer,paymentType])
+  }, [isValidCreditCardValues, isValidWireTransfer, paymentType]);
 
   return (
     <PaymentLayout
@@ -262,7 +262,6 @@ export const PaymentContainer = () => {
       onClickDelivery={ onClickDelivery }
       config={ billing?.paymentMethods }
       billingInfo={ billingInfo }
-      buttonDisabled= {buttonDisabled}
-      />
+      buttonDisabled={ buttonDisabled } />
   );
 };

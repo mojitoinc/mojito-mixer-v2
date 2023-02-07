@@ -1,5 +1,5 @@
 import { Icons } from '@lib/assets';
-import { Box, FormHelperText, Typography } from '@mui/material';
+import { Box, FormHelperText } from '@mui/material';
 import React from 'react';
 
 interface ErrorContainerProps {
@@ -13,16 +13,19 @@ const ErrorContainer = ({ error }: ErrorContainerProps) => {
       justifyContent="center"
       flexDirection="column"
       height="100%">
-      <img alt="loading" src={ Icons.ErrorLoader } style={{
-        height:200
-      }} />
-      <FormHelperText error 
-      sx={{
-        width: '280px',
-        textAlign: 'center',
-        fontSize:'14px'
-      }}
-      >
+      <img
+        alt="loading"
+        src={ Icons.ErrorLoader }
+        style={{
+          height: 200,
+        }} />
+      <FormHelperText
+        error
+        sx={{
+          width: '280px',
+          textAlign: 'center',
+          fontSize: '14px',
+        }}>
         { error }
       </FormHelperText>
     </Box>

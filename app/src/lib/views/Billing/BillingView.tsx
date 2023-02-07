@@ -27,7 +27,7 @@ const BillingView = ({
   onClickEdit,
   onClickContinue,
   isValid,
-  isValidBillingForm
+  isValidBillingForm,
 }: BillingProps) => {
   const theme = useTheme<MixTheme>();
   const { billing } = useUIConfiguration();
@@ -75,9 +75,8 @@ const BillingView = ({
           onClick={ onClickContinue }
           sx={{
             margin: '24px 0px',
-          }} 
-          disabled={!isValid}
-          />
+          }}
+          disabled={ !isValid } />
       </Box>
     </Box>
   );

@@ -170,6 +170,6 @@ export const useWeb3ModalConnect = () => {
       account: '',
       chainId: 4,
     });
-  }, [connect]);
+  }, [connect, setConnect]);
   return { connect, setConnect, networkId, onWalletConnect, getSignedAddress, onMetaMaskConnect, onDisconnect };
 };

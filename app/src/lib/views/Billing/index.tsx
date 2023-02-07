@@ -39,10 +39,10 @@ const BillingContainer = () => {
       .email('Please enter valid email')
       .required('Please enter email'),
     phoneNumber: Yup.string().required('Please enter a mobile number'),
-    street1:Yup.string().required('Please enter your address')
+    street1: Yup.string().required('Please enter your address'),
   });
 
-  const { values, errors, handleChange, setValues, isValid,validateField } = useFormik({
+  const { values, errors, handleChange, setValues, isValid } = useFormik({
     initialValues: {
       email: '',
       country: '',
@@ -57,11 +57,11 @@ const BillingContainer = () => {
     validationSchema: schema,
   });
 
-  const isValidBillingForm = useMemo<boolean>(()=>{
-    return !Boolean(errors?.country || errors?.state || errors?.city || errors?.postalCode || errors?.phoneNumber || errors?.name)
-  },[errors])
+  const isValidBillingForm = useMemo<boolean>(() => {
+    return !(errors?.country || errors?.state || errors?.city || errors?.postalCode || errors?.phoneNumber || errors?.name);
+  }, [errors]);
 
-  const setBillingValues = useCallback(async() => {
+  const setBillingValues = useCallback(async () => {
     const paymentItem: PaymentMethod = paymentData?.getPaymentMethodList?.find(
       (item: PaymentMethod) => item.type === 'CreditCard' && item.billingDetails,
     );
@@ -97,12 +97,10 @@ const BillingContainer = () => {
   }, []);
 
   useEffect(() => {
-    if(isValidBillingForm) 
-      refetchTaxes(values);
-    else {
-      setIsEditing(true)
+    if (isValidBillingForm) { refetchTaxes(values); } else {
+      setIsEditing(true);
     }
-  }, [values, refetchTaxes,isValidBillingForm]);
+  }, [values, refetchTaxes, isValidBillingForm]);
 
   const onClickContinue = useCallback(async () => {
     if (isEditing && !isValid) return;
@@ -128,9 +126,8 @@ const BillingContainer = () => {
       onChange={ handleChange }
       onClickEdit={ onClickEdit }
       onClickContinue={ onClickContinue }
-      isValidBillingForm={isValidBillingForm}
-      isValid={isValid}
-      />
+      isValidBillingForm={ isValidBillingForm }
+      isValid={ isValid } />
   );
 };
 

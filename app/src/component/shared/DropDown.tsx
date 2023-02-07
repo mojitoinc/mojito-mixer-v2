@@ -98,7 +98,7 @@ const Dropdown = ({
             return <MenuItem value={ item.value } key={ item.value }>{ item.label }</MenuItem>;
           }) }
         </Select>
-        { error && <FormHelperText error >{ error }</FormHelperText> }
+        { error && <FormHelperText error>{ error }</FormHelperText> }
       </FormControl>
     </Box>
   );

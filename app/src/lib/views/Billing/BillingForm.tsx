@@ -19,7 +19,7 @@ const BillingForm = ({
   values,
   errors,
   onChange,
-  isValid
+  isValid,
 }: BillingFormProps) => {
   const countries = useCountryOptions();
   const states = useStateOptions(values?.country);
@@ -42,34 +42,33 @@ const BillingForm = ({
           Billing Info
         </Typography>
         {
-          !isValid &&
+          !isValid && (
           <Box
-          display="flex"
-          flexDirection="row"
-          alignItems={'center'}
-          marginTop={'16px'}
-          sx={{
-            background : theme.global?.errorBackground,
-            padding:'14px',
-            borderRadius:'4px'
-          }}
-          >
-          <ErrorIcon sx={{
-            color:theme.global?.required,
-            marginRight:'10px'
-          }}/>
+            display="flex"
+            flexDirection="row"
+            alignItems="center"
+            marginTop="16px"
+            sx={{
+              background: theme.global?.errorBackground,
+              padding: '14px',
+              borderRadius: '4px',
+            }}>
+            <ErrorIcon sx={{
+              color: theme.global?.required,
+              marginRight: '10px',
+            }} />
             <Typography
               fontWeight="400"
               fontSize="16px">
-              {'Complete necessary changes to continue'}
+              Complete necessary changes to continue
             </Typography>
           </Box>
-        }
+          )
+}
         <Box
           display="flex"
           flexDirection="row"
-          marginTop={'16px'}
-          >
+          marginTop="16px">
           <Dropdown
             value={ values?.country }
             onChange={ onChange('country') }
@@ -119,15 +118,15 @@ const BillingForm = ({
         </Box>
 
         <TextInput
-            value={ values?.street1 }
-            onChange={ onChange('street1') }
-            title="Address"
-            sx={{
-              marginTop: '16px',
-            }}
-            required
-            error={ errors?.street1 }
-            placeholder="" />
+          value={ values?.street1 }
+          onChange={ onChange('street1') }
+          title="Address"
+          sx={{
+            marginTop: '16px',
+          }}
+          required
+          error={ errors?.street1 }
+          placeholder="" />
         <TextInput
           value={ values?.phoneNumber }
           onChange={ onChange('phoneNumber') }

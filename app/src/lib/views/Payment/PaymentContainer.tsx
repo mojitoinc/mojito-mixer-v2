@@ -61,7 +61,7 @@ const PaymentContainer = ({
   onClickDelivery,
   config,
   billingInfo,
-  buttonDisabled
+  buttonDisabled,
 }: PaymentContainerProps) => {
   const theme = useTheme<MixTheme>();
 
@@ -148,7 +148,7 @@ const PaymentContainer = ({
           backgroundColor={ theme.global?.checkOutColors?.continueButtonBackground }
           textColor={ theme.global?.checkOutColors?.continueButtonTextColor }
           onClick={ onClickDelivery }
-          disabled={buttonDisabled}
+          disabled={ buttonDisabled }
           sx={{
             margin: '24px 0',
           }} />
