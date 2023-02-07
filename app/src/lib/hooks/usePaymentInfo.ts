@@ -25,7 +25,6 @@ const usePaymentInfo = (): PaymentInfo => {
   const collectionData = CookieService.collectionData.getValue();
 
 
-
   const billingInfo = useMemo(() => {
     return getObject(billing) as BillingFormData;
   }, [billing]);

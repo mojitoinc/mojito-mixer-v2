@@ -1,7 +1,8 @@
- import usePaymentInfo from './usePaymentInfo';''
-export * from  './useEncryptCard';
-export * from  './useDropdowns';
+import usePaymentInfo from './usePaymentInfo';
+
+export * from './useEncryptCard';
+export * from './useDropdowns';
 
 export {
-    usePaymentInfo
-}
+  usePaymentInfo,
+};

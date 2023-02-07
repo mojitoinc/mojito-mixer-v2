@@ -2,7 +2,7 @@ import { MixTheme } from '@lib/theme';
 import { Card, useTheme, Box, Typography, Divider, Stack } from '@mui/material';
 import React, { useCallback } from 'react';
 import { Icons } from '@lib/assets';
-import { BillingFormData, PaymentData, useContainer, ContainerTypes  } from '@lib/providers';
+import { BillingFormData, PaymentData, useContainer, ContainerTypes } from '@lib/providers';
 import { PaymentTypes } from '@lib/constants';
 import {CopyButton} from '@lib/components';
 

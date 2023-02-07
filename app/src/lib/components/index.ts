@@ -7,7 +7,6 @@ import CreditCardDropdown from './shared/CreditCardDropdown';
 import LinedText from './shared/LinedText';
 import CopyButton from './shared/CopyButton';
 
-CopyButton
 export {
     Button,
     Dropdown,

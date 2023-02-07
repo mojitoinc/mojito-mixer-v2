@@ -225,7 +225,7 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
       </Box>
       { isAuthenticated && (
         <MojitoCheckout
-          debug={true}
+          debug
           deliveryConfiguration={{
             orgId,
             lotId: values.lotId ?? '',

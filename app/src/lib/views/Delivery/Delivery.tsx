@@ -37,7 +37,6 @@ const Delivery = ({
   onDisconnect,
   error
 }: DeliveryProps) => {
-  
   const theme = useTheme<MixTheme>();
 
   const isCreditCard = useMemo(
