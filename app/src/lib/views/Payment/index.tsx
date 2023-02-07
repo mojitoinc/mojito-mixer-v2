@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { paymentMethodsQuery } from '@lib/queries/billing';
+import { paymentMethodsQuery } from '../../queries/billing';
 import { useLazyQuery, useQuery } from '@apollo/client';
-import { CreditCardFormType, PaymentMethod } from '@lib/interfaces';
-import { PaymentTypes } from '@lib/constants';
-import { ContainerTypes, useContainer, useDelivery, useBilling, useUIConfiguration, PaymentData, usePayment } from '@lib/providers';
+import { CreditCardFormType, PaymentMethod } from '../../interfaces';
+import { PaymentTypes } from '../../constants';
+import { ContainerTypes, useContainer, useDelivery, useBilling, useUIConfiguration, PaymentData, usePayment } from '../../providers';
 import { formCardScreeningVariable } from '@views/Delivery/Delivery.service';
-import { cardScreeningQuery } from '@lib/queries/creditCard';
-import { meQuery } from '@lib/queries/me';
+import { cardScreeningQuery } from '../../queries/creditCard';
+import { meQuery } from '../../queries/me';
 import PaymentContainerView from './PaymentContainer';
 
 export const PaymentContainer = () => {

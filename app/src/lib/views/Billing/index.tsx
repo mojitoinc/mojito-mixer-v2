@@ -2,9 +2,9 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useLazyQuery } from '@apollo/client';
-import { paymentMethodsQuery } from '@lib/queries/billing';
-import { PaymentMethod } from '@lib/interfaces';
-import { useContainer, ContainerTypes, useDelivery, BillingFormData, useBilling, useDebug, usePayment } from '@lib/providers';
+import { paymentMethodsQuery } from '../../queries/billing';
+import { PaymentMethod } from '../../interfaces';
+import { useContainer, ContainerTypes, useDelivery, BillingFormData, useBilling, useDebug, usePayment } from '../../providers';
 import { uuid } from 'uuidv4';
 import BillingView from './BillingView';
 

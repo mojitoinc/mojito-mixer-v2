@@ -1,6 +1,6 @@
-import { Icons } from '@lib/assets';
-import { PaymentTypes } from '@lib/constants';
-import { MixTheme } from '@lib/theme';
+import { Icons } from '../../assets';
+import { PaymentTypes } from '../../constants';
+import { MixTheme } from '../../theme';
 import {
   Card,
   Typography,

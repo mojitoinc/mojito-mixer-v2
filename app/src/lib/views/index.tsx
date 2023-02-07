@@ -1,12 +1,12 @@
 import { Box, useTheme } from '@mui/material';
 import React from 'react';
-import { Header, Stepper } from '@lib/components';
-import { MixTheme } from '@lib/theme';
+import { Header, Stepper } from '../components';
+import { MixTheme } from '../theme';
 import CostBreakDownContainer from '@views/CostBreakDown';
 import ConfirmationContainer from '@views/PaymentConfirmation';
 import { PaymentContainer } from '@views/Payment';
 import { Delivery } from '@views/Delivery';
-import { useContainer, ContainerTypes, useError } from '@lib/providers';
+import { useContainer, ContainerTypes, useError } from '../providers';
 import LoadingContainer from '@views/Loading';
 import ErrorContainer from '@views/Error';
 import BillingContainer from './Billing';

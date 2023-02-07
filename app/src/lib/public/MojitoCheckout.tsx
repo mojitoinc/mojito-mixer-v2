@@ -5,10 +5,10 @@ import {
   ConfigurationType,
   DefaultConfiguration,
   makeUIConfiguration,
-} from '@providers/ConfigurationProvider';
-import { makeTheme, styles } from '@lib/theme';
+} from '../providers/ConfigurationProvider';
+import { makeTheme, styles } from '../theme';
 import MojitoCheckoutLayout from '@views/index';
-import { ThemeConfiguration } from '@lib/interfaces';
+import { ThemeConfiguration } from '../interfaces';
 import {
   DeliveryContext,
   Delivery,
@@ -17,12 +17,12 @@ import {
   PaymentProvider,
   DebugProvider,
   ErrorProvider,
-} from '@lib/providers';
-import { MojitoApiProvider } from '@lib/state/MojitoApiProvider';
-import { ConnectProvider } from '@lib/state/ConnectContext';
+} from '../providers';
+import { MojitoApiProvider } from '../state/MojitoApiProvider';
+import { ConnectProvider } from '../state/ConnectContext';
 import Modal from 'react-modal';
-import { SardineEnvironment } from '@lib/config';
-import { useSardine } from '@lib/hooks';
+import { SardineEnvironment } from '../config';
+import { useSardine } from '../hooks';
 
 declare global {
   interface Window {

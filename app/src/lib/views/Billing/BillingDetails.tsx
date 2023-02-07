@@ -1,5 +1,5 @@
-import { BillingFormData } from '@lib/providers';
-import { MixTheme } from '@lib/theme';
+import { BillingFormData } from '../../providers';
+import { MixTheme } from '../../theme';
 import { Box, Card, Typography, useTheme } from '@mui/material';
 import React from 'react';
 

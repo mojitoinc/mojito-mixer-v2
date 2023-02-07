@@ -1,8 +1,8 @@
-import { Button, LinedText } from '@lib/components';
+import { Button, LinedText } from '../../components';
 import { Box, useTheme } from '@mui/material';
 import React from 'react';
-import { MixTheme } from '@lib/theme';
-import { Icons } from '@lib/assets';
+import { MixTheme } from '../../theme';
+import { Icons } from '../../assets';
 
 interface ExpressCheckoutViewProps {
   config?: {

@@ -1,4 +1,4 @@
-import { SardineEnvironment, SardineConfig } from '@lib/config';
+import { SardineEnvironment, SardineConfig } from '../config';
 import { useCallback } from 'react';
 import { uuid } from 'uuidv4';
 

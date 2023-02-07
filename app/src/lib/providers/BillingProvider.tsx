@@ -9,9 +9,9 @@ import React, {
 import { useLazyQuery } from '@apollo/client';
 import {
   getTaxQuoteQuery,
-} from '@lib/queries/invoiceDetails';
-import { CollectionItem, Taxes } from '@lib/interfaces';
-import { collectionByIdQuery } from '@lib/queries/collection';
+} from '../queries/invoiceDetails';
+import { CollectionItem, Taxes } from '../interfaces';
+import { collectionByIdQuery } from '../queries/collection';
 import { useDelivery } from './DeliveryProvider';
 
 export interface BillingFormData {

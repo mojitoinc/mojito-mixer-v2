@@ -1,5 +1,5 @@
-import { BillingFormData, useContainer, ContainerTypes } from '@lib/providers';
-import { MixTheme } from '@lib/theme';
+import { BillingFormData, useContainer, ContainerTypes } from '../../providers';
+import { MixTheme } from '../../theme';
 import { Box, Card, Divider, Typography, useTheme } from '@mui/material';
 import React, { useCallback } from 'react';
 

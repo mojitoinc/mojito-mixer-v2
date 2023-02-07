@@ -1,8 +1,8 @@
 import { Box, Typography, useTheme } from '@mui/material';
 import React from 'react';
-import { Icons } from '@lib/assets';
-import { MixTheme } from '@lib/theme';
-import { ContainerTypes } from '@lib/providers';
+import { Icons } from '../assets';
+import { MixTheme } from '../theme';
+import { ContainerTypes } from '../providers';
 
 interface StepsType {
   title: string;

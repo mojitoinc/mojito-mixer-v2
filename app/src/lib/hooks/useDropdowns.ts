@@ -1,4 +1,4 @@
-import { DropdownOptions } from '@lib/components';
+import { DropdownOptions } from '../components';
 import { useMemo } from 'react';
 import { Country, State, City, ICountry, IState, ICity } from 'country-state-city';
 

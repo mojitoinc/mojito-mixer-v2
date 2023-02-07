@@ -1,9 +1,9 @@
 import { Box, Card, Typography, useTheme } from '@mui/material';
 import React from 'react';
-import { useUIConfiguration, BillingFormData } from '@lib/providers';
+import { useUIConfiguration, BillingFormData } from '../../providers';
 import { FormikErrors } from 'formik';
-import { Button, TextInput } from '@lib/components';
-import { MixTheme } from '@lib/theme';
+import { Button, TextInput } from '../../components';
+import { MixTheme } from '../../theme';
 import BillingForm from './BillingForm';
 import ExpressCheckoutView from './ExpressCheckout';
 import BillingDetails from './BillingDetails';

@@ -1,11 +1,11 @@
-import { useCityOptions, useCountryOptions, useStateOptions } from '@lib/hooks';
-import { BillingFormData } from '@lib/providers';
-import { MixTheme } from '@lib/theme';
+import { useCityOptions, useCountryOptions, useStateOptions } from '../../hooks';
+import { BillingFormData } from '../../providers';
+import { MixTheme } from '../../theme';
 import { Card, Typography, useTheme } from '@mui/material';
 import { Box } from '@mui/system';
 import { FormikErrors } from 'formik';
 import React from 'react';
-import { TextInput, Dropdown } from '@lib/components';
+import { TextInput, Dropdown } from '../../components';
 import ErrorIcon from '@mui/icons-material/Error';
 
 interface BillingFormProps {

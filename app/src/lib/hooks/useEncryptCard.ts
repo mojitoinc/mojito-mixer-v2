@@ -1,7 +1,7 @@
 import { useApolloClient } from '@apollo/client';
-import { publicKeyQuery } from '@lib/queries/creditCard';
+import { publicKeyQuery } from '../queries/creditCard';
 import { useCallback } from 'react';
-import { useDebug } from '@lib/providers';
+import { useDebug } from '../providers';
 import { encryptCardData as encryptCardDataUtil } from '../utils/encryptionUtils';
 
 export interface EncryptCardDataOptions {

@@ -1,5 +1,5 @@
-import { usePaymentInfo } from '@lib/hooks';
-import { useBilling } from '@lib/providers';
+import { usePaymentInfo } from '../../hooks';
+import { useBilling } from '../../providers';
 import React from 'react';
 import CostBreakDownLayout from './CostBreakDown';
 

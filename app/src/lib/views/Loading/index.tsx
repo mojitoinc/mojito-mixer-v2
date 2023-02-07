@@ -1,4 +1,4 @@
-import { Icons } from '@lib/assets';
+import { Icons } from '../../assets';
 import { Box, Typography } from '@mui/material';
 import React from 'react';
 

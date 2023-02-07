@@ -1,13 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { DropdownOptions } from '@lib/components';
+import { DropdownOptions } from '../../components';
 import { useMutation, useQuery } from '@apollo/client';
-import { meQuery } from '@lib/queries/me';
+import { meQuery } from '../../queries/me';
 import {
   addressScreeningQuery,
-} from '@lib/queries/Payment';
-import { useDelivery, useBilling, usePayment, useDebug } from '@lib/providers';
-import { PaymentTypes, RiskRating } from '@lib/constants';
-import { useWeb3ModalConnect } from '@lib/state/Web3ModalConnect';
+} from '../../queries/Payment';
+import { useDelivery, useBilling, usePayment, useDebug } from '../../providers';
+import { PaymentTypes, RiskRating } from '../../constants';
+import { useWeb3ModalConnect } from '../../state/Web3ModalConnect';
 import DeliveryLayout from './Delivery';
 
 export const NEW_MULTI_SIG = 'NEW_MULTI_SIG';

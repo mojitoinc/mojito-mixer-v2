@@ -1,4 +1,4 @@
-import MojitoCheckout from '@lib/public/MojitoCheckout';
+import MojitoCheckout from '../../lib/public/MojitoCheckout';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react';
