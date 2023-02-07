@@ -1,7 +1,7 @@
-import { Icons } from '../../assets';
-import { MixTheme } from '../../theme';
 import { Box, FormHelperText, useTheme } from '@mui/material';
 import React from 'react';
+import { Icons } from '../../assets';
+import { MixTheme } from '../../theme';
 
 interface ErrorContainerProps {
   error: string;

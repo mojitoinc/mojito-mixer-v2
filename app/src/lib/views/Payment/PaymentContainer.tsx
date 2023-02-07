@@ -1,11 +1,11 @@
-import { MixTheme } from '../../theme';
 import { Box, Card, Typography, useTheme } from '@mui/material';
 import React from 'react';
+import { FormikErrors } from 'formik';
+import { MixTheme } from '../../theme';
 
 import { PaymentTypes } from '../../constants';
 import { Icons } from '../../assets';
 import { Button } from '../../components';
-import { FormikErrors } from 'formik';
 import { CreditCardFormType, PaymentMethod } from '../../interfaces';
 import { BillingFormData } from '../../providers';
 import { PaymentInfoCards } from './InfoCards';

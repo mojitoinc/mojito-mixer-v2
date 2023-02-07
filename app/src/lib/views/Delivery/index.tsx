@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { DropdownOptions } from '../../components';
 import { useMutation, useQuery } from '@apollo/client';
+import { DropdownOptions } from '../../components';
 import { meQuery } from '../../queries/me';
 import {
   addressScreeningQuery,

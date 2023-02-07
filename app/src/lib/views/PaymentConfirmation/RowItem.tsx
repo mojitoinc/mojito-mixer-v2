@@ -1,7 +1,7 @@
-import { MixTheme } from '../../theme';
 import { Box, Typography, useTheme } from '@mui/material';
 import CopyIcon from '@mui/icons-material/ContentCopy';
 import React, { useCallback } from 'react';
+import { MixTheme } from '../../theme';
 
 interface RowItemProps {
   title: string;

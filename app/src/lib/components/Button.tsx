@@ -1,6 +1,6 @@
-import { MixTheme } from '../theme';
 import { Button as MuiButton, SxProps, Theme, useTheme } from '@mui/material';
 import React from 'react';
+import { MixTheme } from '../theme';
 
 interface ButtonProps {
   title?: string;

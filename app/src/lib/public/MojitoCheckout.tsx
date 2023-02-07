@@ -1,5 +1,6 @@
 import { ThemeProvider, GlobalStyles } from '@mui/material';
 import React, { useMemo } from 'react';
+import Modal from 'react-modal';
 import {
   ConfigurationContext,
   ConfigurationType,
@@ -20,7 +21,6 @@ import {
 } from '../providers';
 import { MojitoApiProvider } from '../state/MojitoApiProvider';
 import { ConnectProvider } from '../state/ConnectContext';
-import Modal from 'react-modal';
 import { SardineEnvironment } from '../config';
 
 declare global {

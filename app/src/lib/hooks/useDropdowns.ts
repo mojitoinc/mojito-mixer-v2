@@ -1,6 +1,6 @@
-import { DropdownOptions } from '../components';
 import { useMemo } from 'react';
 import { Country, State, City, ICountry, IState, ICity } from 'country-state-city';
+import { DropdownOptions } from '../components';
 
 
 const countryIsAvailable = (country: ICountry) => State.getStatesOfCountry(country.isoCode).length > 0;

@@ -1,6 +1,6 @@
+import React from 'react';
 import { usePaymentInfo } from '../../hooks';
 import { useBilling } from '../../providers';
-import React from 'react';
 import CostBreakDownLayout from './CostBreakDown';
 
 const CostBreakdownContainer = () => {

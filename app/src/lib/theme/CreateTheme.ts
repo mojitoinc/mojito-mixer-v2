@@ -1,6 +1,6 @@
+import { createTheme } from '@mui/material/styles';
 import { DefaultThemes } from '../config';
 import { ThemeConfiguration } from '../interfaces';
-import { createTheme } from '@mui/material/styles';
 import { MixThemeOptions, MixTheme } from '.';
 
 export const makeTheme = (themeConfiguration?: ThemeConfiguration) => {

@@ -1,5 +1,5 @@
 import { Box, useTheme } from '@mui/material';
-import React,{useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { Header, Stepper } from '../components';
 import { MixTheme } from '../theme';
 import CostBreakDownContainer from './CostBreakDown';

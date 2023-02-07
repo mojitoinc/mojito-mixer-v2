@@ -1,4 +1,5 @@
 import { useLazyQuery, useMutation } from '@apollo/client';
+import React, { createContext, useContext, useState, useMemo, useCallback } from 'react';
 import { useEncryptCardData } from '../hooks';
 import { CreditCardFormType, ReserveNow } from '../interfaces';
 import { getPaymentNotificationQuery } from '../queries/creditCard';
@@ -6,8 +7,7 @@ import { reserveNowBuyLotQuery } from '../queries/invoiceDetails';
 import { createPaymentMethodQuery, createPaymentQuery, getPaymentMethodStatus } from '../queries/Payment';
 import { CookieService } from '../service/CookieService';
 import { formCreatePaymentMethodObject } from '../views/Delivery/Delivery.service';
-import React, { createContext, useContext, useState, useMemo, useCallback } from 'react';
-import { useDebug, useError } from '../providers';
+import { useDebug, useError } from '.';
 import { ContainerTypes, useContainer } from './ContainerStateProvider';
 import { useBilling } from './BillingProvider';
 import { useDelivery } from './DeliveryProvider';

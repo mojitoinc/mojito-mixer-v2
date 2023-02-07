@@ -1,7 +1,7 @@
+import { useEffect, useState } from 'react';
 import { CollectionItem, Taxes, ReserveNow } from '../interfaces';
 import { BillingFormData, PaymentData } from '../providers';
 import { CookieService } from '../service/CookieService';
-import { useEffect, useState } from 'react';
 
 interface PaymentInfo {
   billingInfo?: BillingFormData;
