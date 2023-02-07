@@ -44,7 +44,7 @@ export const useDebug = (tag: string) => {
   const handleWarn = useCallback((method?: ErrorMessage, message?: ErrorMessage) => {
     state.log('🟡', tag, method, message);
   }, [tag, state]);
-  
+
   const handleInfo = useCallback((method?: ErrorMessage, message?: ErrorMessage) => {
     state.log('🔵', tag, method, message);
   }, [tag, state]);
@@ -57,5 +57,6 @@ export const useDebug = (tag: string) => {
     state.log('🔴', tag, method, message);
   }, [tag, state]);
 
-  return useMemo(() => ({ success: handleSuccess, info: handleInfo, error: handleError, warn: handleWarn }), [handleSuccess, handleInfo, handleError]);
+  return useMemo(() => ({ success: handleSuccess, info: handleInfo, error: handleError, warn: handleWarn }),
+    [handleSuccess, handleInfo, handleError, handleWarn]);
 };

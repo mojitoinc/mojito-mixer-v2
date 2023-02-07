@@ -8,7 +8,7 @@ interface ErrorContainerProps {
 }
 const ErrorContainer = ({ error }: ErrorContainerProps) => {
   const theme = useTheme<MixTheme>();
-  
+
   return (
     <Box
       display="flex"
@@ -17,33 +17,33 @@ const ErrorContainer = ({ error }: ErrorContainerProps) => {
       flexDirection="column"
       height="100%">
 
-    <Box
-      sx={{
-        backgroundColor: theme.global?.background,
-        padding: '16px',
-        display: 'flex',
-        alignItems: "center",
-        justifyContent: "center",
-        flexDirection: "column",
-        margin: '8px 0px',
-        border: `1px solid ${ theme.global?.cardBorder }`,
-        borderRadius: '4px',
-      }}>
-      <img
-        alt="loading"
-        src={ Icons.ErrorLoader }
-        style={{
-          height: 200,
-        }} />
-      <FormHelperText
-        error
+      <Box
         sx={{
-          width: '280px',
-          textAlign: 'center',
-          fontSize: '14px',
+          backgroundColor: theme.global?.background,
+          padding: '16px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexDirection: 'column',
+          margin: '8px 0px',
+          border: `1px solid ${ theme.global?.cardBorder }`,
+          borderRadius: '4px',
         }}>
-        { error }
-      </FormHelperText>
+        <img
+          alt="loading"
+          src={ Icons.ErrorLoader }
+          style={{
+            height: 200,
+          }} />
+        <FormHelperText
+          error
+          sx={{
+            width: '280px',
+            textAlign: 'center',
+            fontSize: '14px',
+          }}>
+          { error }
+        </FormHelperText>
       </Box>
     </Box>
   );

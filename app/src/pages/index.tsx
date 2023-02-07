@@ -111,9 +111,9 @@ const HomePage: React.FC = () => {
         value: 'custom-org-id',
       });
       setOrganizations(formattedData);
-      setFieldValue('organization', formattedData[0].value)
+      setFieldValue('organization', formattedData[0].value);
     }
-  }, [meData]);
+  }, [meData, setFieldValue]);
 
   useEffect(() => {
     setFieldValue('itemId', localStorage.getItem('itemId') ?? '');

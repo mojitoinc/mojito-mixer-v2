@@ -49,7 +49,7 @@ export const PaymentProvider = ({ children }: { children?: React.ReactNode }) =>
   const { setContainerState } = useContainer();
   const [createPaymentMethod] = useMutation(createPaymentMethodQuery);
   const [createPayment] = useMutation(createPaymentQuery);
-  const [encryptCardData] = useEncryptCardData({ orgID: orgId ?? "" });
+  const [encryptCardData] = useEncryptCardData({ orgID: orgId ?? '' });
   const [paymentMethodStatus] = useLazyQuery(getPaymentMethodStatus);
   const [paymentNotification] = useLazyQuery(getPaymentNotificationQuery);
   const [reserveNow] = useMutation(reserveNowBuyLotQuery);
@@ -84,7 +84,7 @@ export const PaymentProvider = ({ children }: { children?: React.ReactNode }) =>
   }, [billingInfo, collectionData, taxes]);
 
   const onConfirmCreditCardPurchase = useCallback(async (deliveryAddress = '') => {
-    setContainerState(ContainerTypes.LOADING)
+    setContainerState(ContainerTypes.LOADING);
     try {
       debug.info('onConfirm-start', { deliveryAddress, paymentInfo });
 
@@ -110,7 +110,7 @@ export const PaymentProvider = ({ children }: { children?: React.ReactNode }) =>
 
       if (paymentInfo?.creditCardData?.isNew) {
         const inputData = formCreatePaymentMethodObject(
-          orgId ?? "",
+          orgId ?? '',
           paymentInfo,
           billingInfo,
           keyID,
@@ -166,7 +166,7 @@ export const PaymentProvider = ({ children }: { children?: React.ReactNode }) =>
             },
           },
         });
-        debug.info('ready-createPayment',);
+        debug.info('ready-createPayment');
         const notificationData = await paymentNotification();
         const paymentData: PaymentData = {
           ...paymentInfo,
@@ -198,10 +198,11 @@ export const PaymentProvider = ({ children }: { children?: React.ReactNode }) =>
     paymentMethodStatus,
     getInvoiceData,
     saveToCookies,
+    setContainerState,
   ]);
 
   const onConfirmWireTransferPurchase = useCallback(async (deliveryAddress = '') => {
-    setContainerState(ContainerTypes.LOADING)
+    setContainerState(ContainerTypes.LOADING);
     try {
       const inputData: any = {};
       const copiedBillingDetails = {
