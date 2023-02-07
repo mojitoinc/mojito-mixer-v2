@@ -5,12 +5,10 @@ import { meQuery } from '@lib/queries/me';
 import {
   addressScreeningQuery,
 } from '@lib/queries/Payment';
-import { useDelivery, useBilling, usePayment } from '@lib/providers';
-import { PaymentTypes } from '@lib/constants';
-import { RiskRating } from '@lib/constants';
+import { useDelivery, useBilling, usePayment, useDebug } from '@lib/providers';
+import { PaymentTypes, RiskRating } from '@lib/constants';
 import { useWeb3ModalConnect } from '@lib/state/Web3ModalConnect';
 import DeliveryLayout from './Delivery';
-import { useDebug } from '@lib/providers';
 
 export const Delivery = () => {
   const debug = useDebug('Delivery');
@@ -70,7 +68,7 @@ export const Delivery = () => {
           },
         },
       });
-      debug.info('onConfirm-start', {screeningData,paymentInfo});
+      debug.info('onConfirm-start', { screeningData, paymentInfo });
       if (screeningData.data?.addressScreening === RiskRating.High) {
         return;
       }
@@ -81,9 +79,10 @@ export const Delivery = () => {
         onConfirmCreditCardPurchase(selectedDeliveryAddress);
       }
     } catch (e) {
-      console.error('ERROR', e);
+      debug.error('onConfirm-start', { e });
     }
   }, [
+    debug,
     onConfirmCreditCardPurchase,
     onConfirmWireTransferPurchase,
     paymentInfo,

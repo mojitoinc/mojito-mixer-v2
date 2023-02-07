@@ -3,7 +3,7 @@ import { Card, useTheme, Box, Typography, Divider, Stack } from '@mui/material';
 import React, { useCallback } from 'react';
 import FileCopyIcon from '@mui/icons-material/FileCopyOutlined';
 import { Icons } from '@lib/assets';
-import { BillingFormData, PaymentData, useContainer, ContainerTypes  } from '@lib/providers';
+import { BillingFormData, PaymentData, useContainer, ContainerTypes } from '@lib/providers';
 import { PaymentTypes } from '@lib/constants';
 
 interface DeliveryInfoCardProps {

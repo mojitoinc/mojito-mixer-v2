@@ -57,24 +57,25 @@ export const BillingProvider = ({ children }: { children?: React.ReactNode }) =>
   const [taxQuote, { data: taxQuoteData }] = useLazyQuery(getTaxQuoteQuery);
 
 
-  const refetchTaxes = useCallback((val:BillingFormData)=>{
-    if(orgId && taxablePrice)
-    taxQuote({
-      variables: {
-        input: {
-          address: {
-            city: val?.city,
-            country: val?.country,
-            state: val?.state,
-            street1: val?.street1,
-            postalCode: val?.postalCode,
+  const refetchTaxes = useCallback((val:BillingFormData) => {
+    if (orgId && taxablePrice) {
+      taxQuote({
+        variables: {
+          input: {
+            address: {
+              city: val?.city,
+              country: val?.country,
+              state: val?.state,
+              street1: val?.street1,
+              postalCode: val?.postalCode,
+            },
+            orgID: orgId,
+            taxablePrice,
           },
-          orgID: orgId,
-          taxablePrice,
         },
-      },
-    });
-  },[orgId,taxablePrice])
+      });
+    }
+  }, [orgId, taxablePrice, taxQuote]);
   useEffect(() => {
     fetchCollection({
       variables: {
@@ -85,9 +86,9 @@ export const BillingProvider = ({ children }: { children?: React.ReactNode }) =>
 
   useEffect(() => {
     if (billingInfo && orgId && taxablePrice) {
-      refetchTaxes(billingInfo)
+      refetchTaxes(billingInfo);
     }
-  }, [billingInfo, taxablePrice, orgId, taxQuote]);
+  }, [billingInfo, taxablePrice, orgId, taxQuote, refetchTaxes]);
 
   const taxes: Taxes = useMemo<Taxes>(() => {
     return taxQuoteData?.getTaxQuote;
@@ -100,9 +101,9 @@ export const BillingProvider = ({ children }: { children?: React.ReactNode }) =>
       setBillingInfo,
       collectionData,
       taxes,
-      refetchTaxes
+      refetchTaxes,
     };
-  }, [billingInfo, setBillingInfo, collectionData, taxes]);
+  }, [billingInfo, setBillingInfo, collectionData, taxes, refetchTaxes]);
 
   return (
     <BillingContext.Provider value={ value }>{ children }</BillingContext.Provider>

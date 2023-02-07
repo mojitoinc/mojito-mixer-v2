@@ -27,7 +27,6 @@ const Delivery = ({
   paymentInfo,
   onClickConnectWallet,
 }: DeliveryProps) => {
-  
   const theme = useTheme<MixTheme>();
 
   const isCreditCard = useMemo(

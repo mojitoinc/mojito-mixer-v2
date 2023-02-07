@@ -99,7 +99,11 @@ module.exports = {
     // typescript-eslint:
     '@typescript-eslint/explicit-module-boundary-types': 0,
     '@typescript-eslint/no-explicit-any': TEMPORARILY_DISABLED,
-    '@typescript-eslint/no-shadow': 2
+    '@typescript-eslint/no-shadow': 2,
+
+    //nextjs
+    "@next/next/no-img-element": "off"
+
   },
   ignorePatterns: ["dist/*", "generated.tsx", "graphqlGenerated.tsx"]
 };

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useMemo } from 'react';
 
 
 export interface ErrorState {
@@ -10,17 +10,19 @@ export interface ErrorProps {
   children?: React.ReactNode;
 }
 
-const ErrorContext = createContext<ErrorState>({ error: null} as ErrorState);
+const ErrorContext = createContext<ErrorState>({ error: null } as ErrorState);
 
 const ErrorProvider = ({
   children,
 }: ErrorProps) => {
+  const [error, setError] = useState();
+ // const
 
-  const [error, setError]= useState();
-
- return (<ErrorContext.Provider value={ { error, setError} as ErrorState }>
-          { children }
-        </ErrorContext.Provider>);
+  return (
+    <ErrorContext.Provider value={{ error, setError } as ErrorState}>
+      { children }
+    </ErrorContext.Provider>
+  );
 };
 
 export default ErrorProvider;

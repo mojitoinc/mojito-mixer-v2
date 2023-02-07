@@ -9,9 +9,8 @@ import {
 import { makeTheme, styles } from '@lib/theme';
 import MojitoCheckoutLayout from '@views/index';
 import { ThemeConfiguration } from '@lib/interfaces';
-import { DeliveryContext, Delivery, ContainerStateProvider } from '@lib/providers';
+import { DeliveryContext, Delivery, ContainerStateProvider, BillingProvider, PaymentProvider, DebugProvider, ErrorProvider } from '@lib/providers';
 import { MojitoApiProvider } from '@lib/state/MojitoApiProvider';
-import { BillingProvider, PaymentProvider, DebugProvider, ErrorProvider } from '@lib/providers';
 import ConnectContext, { ConnectType } from '@lib/state/ConnectContext';
 import Modal from 'react-modal';
 
@@ -38,7 +37,7 @@ const MojitoCheckout = ({
   });
 
   const themes = useMemo(() => makeTheme(theme), [theme]);
-  
+
   const uiConfigurations = useMemo(
     () => makeUIConfiguration(uiConfiguration),
     [uiConfiguration],
@@ -50,20 +49,19 @@ const MojitoCheckout = ({
 
   return (
     <Modal
-      ariaHideApp={false}
+      ariaHideApp={ false }
       isOpen={ show }
       style={{
-        content:{
-          width:'100%',
-          height:'100vh',
-          top:0,
-          left:0,
-          bottom:0,
-          right:0,
-          padding:0,
+        content: {
+          width: '100%',
+          height: '100vh',
+          top: 0,
+          left: 0,
+          bottom: 0,
+          right: 0,
+          padding: 0,
         },
-      }}
-      >
+      }}>
       <ConnectContext.Provider value={ connectValues }>
         <DebugProvider debug={ debug }>
           <ErrorProvider>

@@ -1,4 +1,4 @@
-import { TextInput, CreditCardDropdown} from '@lib/components';
+import { TextInput, CreditCardDropdown } from '@lib/components';
 import { CreditCardFormType, PaymentMethod } from '@lib/interfaces';
 import { useBilling } from '@lib/providers';
 import { MixTheme } from '@lib/theme';

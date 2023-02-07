@@ -6,8 +6,7 @@ import CostBreakDownContainer from '@views/CostBreakDown';
 import ConfirmationContainer from '@views/PaymentConfirmation';
 import { PaymentContainer } from '@views/Payment';
 import { Delivery } from '@views/Delivery';
-import { useContainer, ContainerTypes } from '@lib/providers';
-import { useError } from '@lib/providers';
+import { useContainer, ContainerTypes, useError } from '@lib/providers';
 import LoadingContainer from '@views/Loading';
 import ErrorContainer from '@views/Error';
 import BillingContainer from './Billing';
@@ -18,7 +17,7 @@ const MojitoCheckoutLayout = () => {
   const { error } = useError();
 
   if (error) {
-    return <ErrorContainer error={error} />;
+    return <ErrorContainer error={ error } />;
   }
   if (containerState === ContainerTypes.LOADING) {
     return <LoadingContainer />;
