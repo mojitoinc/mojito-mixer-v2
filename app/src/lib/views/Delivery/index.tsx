@@ -57,7 +57,7 @@ export const Delivery = () => {
   const onClickConfirmPurchase = useCallback(async () => {
     try {
       const deliveryAddress = connect?.connected ? connect?.account : selectedDeliveryAddress === NEW_MULTI_SIG ? '' : selectedDeliveryAddress;
-      if (!deliveryAddress) {
+      if (!deliveryAddress && selectedDeliveryAddress !== NEW_MULTI_SIG) {
         setError('Please select a delivery address');
         return;
       }
