@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import MojitoCheckout from '@lib/public/MojitoCheckout';
+import { MojitoCheckout } from '../lib';
 
 const stories = storiesOf('Mojito Payment', module);
 
