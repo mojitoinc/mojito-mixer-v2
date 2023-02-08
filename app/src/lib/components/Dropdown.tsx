@@ -42,9 +42,12 @@ const Dropdown = ({
 }: DropdownProps) => {
   const theme = useTheme<MixTheme>();
 
-  const onChangeValue = useCallback((e: SelectChangeEvent<string>) => {
-    onChange?.(e.target.value);
-  }, [onChange]);
+  const onChangeValue = useCallback(
+    (e: SelectChangeEvent<string>) => {
+      onChange?.(e.target.value);
+    },
+    [onChange],
+  );
 
   return (
     <Box
@@ -54,7 +57,10 @@ const Dropdown = ({
       }}>
       { title && (
         <Box display="flex" flexDirection="row">
-          <Typography color={ theme.palette?.text?.primary } fontSize="16px">
+          <Typography
+            variant="body1"
+            color={ theme.palette?.text?.primary }
+            fontSize="16px">
             { title }
           </Typography>
 
@@ -95,7 +101,11 @@ const Dropdown = ({
             </Typography>
           </MenuItem>
           { options.map((item: DropdownOptions) => {
-            return <MenuItem value={ item?.value } key={ item?.value }>{ item.label }</MenuItem>;
+            return (
+              <MenuItem value={ item?.value } key={ item?.value }>
+                { item.label }
+              </MenuItem>
+            );
           }) }
         </Select>
         { error && <FormHelperText>{ error }</FormHelperText> }

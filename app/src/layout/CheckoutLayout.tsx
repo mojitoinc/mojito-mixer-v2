@@ -1,4 +1,3 @@
-import { MojitoCheckout, RuntimeConfiguration } from '../lib';
 // import { MojitoCheckout, RuntimeConfiguration } from '@mojitonft/mojito-mixers';
 import React, { useCallback, useMemo } from 'react';
 import {
@@ -20,7 +19,8 @@ import {
 } from 'pages';
 import { FormikErrors } from 'formik';
 import { useRouter } from 'next/router';
- 
+import { MojitoCheckout, RuntimeConfiguration } from 'lib';
+
 export interface CheckboxOptions {
   field: string;
   label: string;
@@ -81,7 +81,7 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
   getAuthenticationToken,
 }: CheckoutProps) => {
   const router = useRouter();
- 
+
 
   const handleFieldChange = useCallback(
     async (fieldName: string, value: boolean | string) => {
@@ -239,7 +239,7 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
         <MojitoCheckout
           debug
           uri={ RuntimeConfiguration.API_HOST_URL ?? '' }
-          getAuthenticationToken={getAuthenticationToken}
+          getAuthenticationToken={ getAuthenticationToken }
           deliveryConfiguration={{
             orgId,
             lotId: values.lotId ?? '',
@@ -269,7 +269,7 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
               onClickGoToMarketPlace,
             },
           }}
-          show={show} />
+          show={ show } />
       ) }
     </>
   );

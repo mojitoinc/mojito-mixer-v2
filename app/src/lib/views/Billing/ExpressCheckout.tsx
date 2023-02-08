@@ -16,7 +16,7 @@ interface ExpressCheckoutViewProps {
 const ExpressCheckoutView = ({ config }: ExpressCheckoutViewProps) => {
   const theme = useTheme<MixTheme>();
   return (
-    <Box margin="8px 0px">
+    <Box marginBottom="24px">
       <LinedText text="Express Checkout" />
       <Box
         display="flex"
@@ -24,7 +24,7 @@ const ExpressCheckoutView = ({ config }: ExpressCheckoutViewProps) => {
         alignItems="center"
         justifyContent="center"
         sx={{
-          margin: '30px 0px',
+          margin: '24px 0px',
         }}>
         { config?.gpay && (
           <Button

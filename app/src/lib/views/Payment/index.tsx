@@ -5,7 +5,15 @@ import { useLazyQuery, useQuery } from '@apollo/client';
 import { paymentMethodsQuery } from '../../queries/billing';
 import { CreditCardFormType, PaymentMethod } from '../../interfaces';
 import { PaymentTypes } from '../../constants';
-import { ContainerTypes, useContainer, useDelivery, useBilling, useUIConfiguration, PaymentData, usePayment } from '../../providers';
+import {
+  ContainerTypes,
+  useContainer,
+  useDelivery,
+  useBilling,
+  useUIConfiguration,
+  PaymentData,
+  usePayment,
+} from '../../providers';
 import { formCardScreeningVariable } from '../Delivery/Delivery.service';
 import { cardScreeningQuery } from '../../queries/creditCard';
 import { meQuery } from '../../queries/me';
@@ -20,7 +28,9 @@ export const PaymentContainer = () => {
   const { billingInfo, taxes } = useBilling();
   const { billing } = useUIConfiguration();
 
-  const [paymentType, setPaymentType] = useState<string>(PaymentTypes.CREDIT_CARD);
+  const [paymentType, setPaymentType] = useState<string>(
+    PaymentTypes.CREDIT_CARD,
+  );
   const onChoosePaymentType = useCallback(
     (name: PaymentTypes, value: boolean) => {
       setPaymentType(value ? name : paymentType);
@@ -34,10 +44,12 @@ export const PaymentContainer = () => {
   const validationSchema = Yup.object().shape({
     accountNumber: Yup.string()
       .matches(/^[\d\s]+$/, 'Invalid account number')
-      .min(9, 'Invalid account number').required('Please enter account number'),
+      .min(9, 'Invalid account number')
+      .required('Please enter account number'),
     aba: Yup.string()
       .matches(/^[\d\s]+$/, 'Invalid aba')
-      .min(10, 'Invalid aba').required('Please enter aba'),
+      .min(10, 'Invalid aba')
+      .required('Please enter aba'),
     bankCountry: Yup.string().required('Please select bank country'),
     bankName: Yup.string().required('Please select bank name'),
   });
@@ -234,7 +246,13 @@ export const PaymentContainer = () => {
     if (paymentType === PaymentTypes.CREDIT_CARD) {
       onSubmitCreditCard();
     }
-  }, [paymentType, onSubmitCreditCard, onSubmitWireTransfer, billingInfo, isValidWireTransfer]);
+  }, [
+    paymentType,
+    onSubmitCreditCard,
+    onSubmitWireTransfer,
+    billingInfo,
+    isValidWireTransfer,
+  ]);
 
   const buttonDisabled = useMemo<boolean>(() => {
     if (paymentType === PaymentTypes.CREDIT_CARD) {

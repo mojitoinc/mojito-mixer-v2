@@ -1,7 +1,6 @@
-import { useAuth0 } from '@auth0/auth0-react';
-import { MojitoCheckout } from '../lib';
 import React, { useCallback } from 'react';
 import { useRouter } from 'next/router';
+import { MojitoCheckout } from 'lib';
 
 interface CheckoutProps {
   show: boolean;
@@ -11,7 +10,6 @@ export const CheckoutComponent: React.FC<CheckoutProps> = ({
   show,
   paymentId,
 }: CheckoutProps) => {
- 
   const router = useRouter();
 
   const onClickGoToMarketPlace = useCallback(() => {
@@ -34,6 +32,8 @@ export const CheckoutComponent: React.FC<CheckoutProps> = ({
           onClickGoToMarketPlace,
         },
       }}
-      show={show} uri={undefined} getAuthenticationToken={undefined} />
+      show={ show }
+      uri={ undefined }
+      getAuthenticationToken={ undefined } />
   );
 };

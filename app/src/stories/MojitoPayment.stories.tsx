@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { MojitoCheckout } from '../lib';
+import { MojitoCheckout } from 'lib';
 
 const stories = storiesOf('Mojito Payment', module);
 
@@ -44,7 +44,7 @@ stories.add('Hide GooglePay', () => {
     <MojitoCheckout
       show
       debug
-      uri={''}
+      uri=""
       uiConfiguration={{
         billing: {
           expressCheckoutConfig: {

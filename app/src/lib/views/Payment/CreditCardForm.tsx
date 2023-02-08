@@ -44,7 +44,9 @@ export const CreditCardForm = ({
 
   const formatCardNumber = useCallback(
     async (value: string) => {
-      const cardNumberLength = values?.cardNumber ? values?.cardNumber?.length : 0;
+      const cardNumberLength = values?.cardNumber
+        ? values?.cardNumber?.length
+        : 0;
       if (cardNumberLength > value.length) {
         await setFieldValue('cardNumber', value);
         return;
@@ -52,7 +54,10 @@ export const CreditCardForm = ({
       const isValid = value.match(/^[\d\s]+$/);
       if (isValid) {
         const cardNumber = value.split(' ').join('');
-        await setFieldValue('cardNumber', cardNumber.replace(/\d{4}(?=.)/g, '$& '));
+        await setFieldValue(
+          'cardNumber',
+          cardNumber.replace(/\d{4}(?=.)/g, '$& '),
+        );
       }
     },
     [setFieldValue, values],
@@ -81,6 +86,7 @@ export const CreditCardForm = ({
         title="Card info"
         sx={{ marginRight: '8px' }}
         options={ creditCardList } />
+
       { !billingInfo?.phoneNumber && (
         <FormHelperText error>
           Phone number is mandatory for credit card payment

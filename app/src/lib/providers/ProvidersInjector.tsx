@@ -1,8 +1,8 @@
-import React, { ErrorInfo, useEffect, useMemo } from "react";
-import { Theme, ThemeOptions, ThemeProvider } from "@mui/material/styles";
-import { AuthorizedApolloProvider, AuthorizedApolloProviderProps } from "./AuthorizedApolloProvider";
-import { EXCEPTIONS } from "../constants/exceptions";
-import { ErrorBoundary } from "../components";
+import React, { ErrorInfo, useEffect } from 'react';
+import { Theme, ThemeOptions } from '@mui/material/styles';
+import { AuthorizedApolloProvider, AuthorizedApolloProviderProps } from './AuthorizedApolloProvider';
+import { EXCEPTIONS } from '../constants/exceptions';
+import { ErrorBoundary } from '../components';
 
 export interface CommonProviderProps {
   // eslint-disable-next-line react/no-unused-prop-types
@@ -46,13 +46,13 @@ export const ProviderInjector: React.FC<ProvidersInjectorProps> = ({
   //     throw new Error(EXCEPTIONS.DEV.APOLLO_PROVIDER_MISSING);
   //   }
   // }, [apolloClient, uri]);
-console.log('uri',{uri})
+
   return uri ? (
     <AuthorizedApolloProvider apolloClient={ apolloClient } uri={ uri } getAuthenticationToken={ getAuthenticationToken }>
-      {/* { theme ? <ThemeProvider theme={ theme }>{ children }</ThemeProvider> : children } */}
-      {children}
+      { /* { theme ? <ThemeProvider theme={ theme }>{ children }</ThemeProvider> : children } */ }
+      { children }
     </AuthorizedApolloProvider>
-  ) : <>{children}</>;
+  ) : <>{ children }</>;
 };
 
 export function withThemeProvider<P extends object>(Component: React.ComponentType<P>) {
@@ -64,15 +64,15 @@ export function withThemeProvider<P extends object>(Component: React.ComponentTy
   }) => {
     return (
       <ErrorBoundary onCatch={ onCatch }>
-          <ProviderInjector
-            apolloClient={ null }
-            uri=""
-            getAuthenticationToken={ null }
-            theme={ theme }
-            themeOptions={ themeOptions }>
-            <Component { ...componentProps as P } />
-          </ProviderInjector>
-        </ErrorBoundary>
+        <ProviderInjector
+          apolloClient={ null }
+          uri=""
+          getAuthenticationToken={ null }
+          theme={ theme }
+          themeOptions={ themeOptions }>
+          <Component { ...componentProps as P } />
+        </ProviderInjector>
+      </ErrorBoundary>
     );
   };
 
@@ -91,6 +91,7 @@ export function withProviders<P extends object>(Component: React.ComponentType<P
     ...componentProps
   }) => {
     return (
+      <ErrorBoundary onCatch={ onCatch }>
         <ProviderInjector
           apolloClient={ apolloClient }
           uri={ uri }
@@ -99,6 +100,7 @@ export function withProviders<P extends object>(Component: React.ComponentType<P
           themeOptions={ themeOptions }>
           <Component { ...componentProps as P } />
         </ProviderInjector>
+      </ErrorBoundary>
     );
   };
 

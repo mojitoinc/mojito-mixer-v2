@@ -6,7 +6,11 @@ import ErrorIcon from '@mui/icons-material/Error';
 import { TextInput, Dropdown } from '../../components';
 import { MixTheme } from '../../theme';
 import { BillingFormData } from '../../providers';
-import { useCityOptions, useCountryOptions, useStateOptions } from '../../hooks';
+import {
+  useCityOptions,
+  useCountryOptions,
+  useStateOptions,
+} from '../../hooks';
 
 interface BillingFormProps {
   values: BillingFormData;
@@ -32,7 +36,6 @@ const BillingForm = ({
         border: `1px solid ${ theme.global?.cardBorder }`,
         backgroundColor: theme.global?.cardBackground,
         boxShadow: `0px 4px 16px ${ theme.global?.cardShadow }`,
-        margin: '0px 0px 24px 0px',
       }}>
       <Box padding="24px">
         <Typography
@@ -41,8 +44,7 @@ const BillingForm = ({
           fontSize="20px">
           Billing Info
         </Typography>
-        {
-          !isValid && (
+        { !isValid && (
           <Box
             display="flex"
             flexDirection="row"
@@ -53,22 +55,17 @@ const BillingForm = ({
               padding: '14px',
               borderRadius: '4px',
             }}>
-            <ErrorIcon sx={{
-              color: theme.global?.required,
-              marginRight: '10px',
-            }} />
-            <Typography
-              fontWeight="400"
-              fontSize="16px">
+            <ErrorIcon
+              sx={{
+                color: theme.global?.required,
+                marginRight: '10px',
+              }} />
+            <Typography fontWeight="400" fontSize="16px">
               Complete necessary changes to continue
             </Typography>
           </Box>
-          )
-}
-        <Box
-          display="flex"
-          flexDirection="row"
-          marginTop="16px">
+        ) }
+        <Box display="flex" flexDirection="row" marginTop="16px">
           <Dropdown
             value={ values?.country }
             onChange={ onChange('country') }

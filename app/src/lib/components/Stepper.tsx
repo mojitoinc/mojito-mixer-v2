@@ -25,9 +25,7 @@ const steps: StepsType[] = [
 interface StepperProps {
   currentState: string;
 }
-const Stepper = ({
-  currentState,
-}:StepperProps) => {
+const Stepper = ({ currentState }: StepperProps) => {
   const theme = useTheme<MixTheme>();
   return (
     <Box
@@ -36,11 +34,15 @@ const Stepper = ({
         backgroundColor: theme.global?.background,
         display: 'flex',
         flexDirection: 'row',
-        margin: '8px 0px',
+        margin: '24px 0px',
       }}>
       { steps.map((item: StepsType, index: number) => {
         return (
-          <Box display="flex" flexDirection="row" alignItems="center" key={ item.value }>
+          <Box
+            display="flex"
+            flexDirection="row"
+            alignItems="center"
+            key={ item.value }>
             <Typography
               fontWeight="700"
               fontSize="12px"

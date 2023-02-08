@@ -43,7 +43,6 @@ interface PaymentContainerProps {
     creditCard?: boolean;
   };
   billingInfo: BillingFormData | undefined;
-  buttonDisabled: boolean;
 }
 
 const PaymentContainer = ({
@@ -61,7 +60,6 @@ const PaymentContainer = ({
   onClickDelivery,
   config,
   billingInfo,
-  buttonDisabled,
 }: PaymentContainerProps) => {
   const theme = useTheme<MixTheme>();
 
@@ -75,7 +73,9 @@ const PaymentContainer = ({
           boxShadow: `0px 4px 16px ${ theme.global?.cardShadow }`,
           padding: '24px',
         }}>
-        <Typography sx={{ fontSize: '20px' }}>Payment Method</Typography>
+        <Typography sx={{ fontSize: '20px', fontWeight: 500 }}>
+          Payment Method
+        </Typography>
         { config?.creditCard && (
           <PaymentMethodView
             logo={ Icons.creditCards }
@@ -148,9 +148,12 @@ const PaymentContainer = ({
           backgroundColor={ theme.global?.checkOutColors?.continueButtonBackground }
           textColor={ theme.global?.checkOutColors?.continueButtonTextColor }
           onClick={ onClickDelivery }
-          disabled={ buttonDisabled }
+          // disabled={buttonDisabled}
           sx={{
             margin: '24px 0',
+            '&: hover': {
+              backgroundColor: 'rgba(102, 99, 253, 0.8)',
+            },
           }} />
       </Box>
     </>

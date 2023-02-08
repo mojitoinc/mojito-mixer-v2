@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'Sneak';
-    src: url('../assets/fonts/Sneak-Regular.otf') format('opentype');
+    src: url('../assets/fonts/Sneak-Regular.ttf') format('truetype');
 }
 
 .disabled-link {

@@ -79,33 +79,33 @@ const MojitoCheckout: React.FC<MojitoCheckoutProps> = ({
           padding: 0,
         },
       }}>
-                <input style={{width: 320, height: 50, backgroundColor: 'red'}} placeholder='enter' />
+      <input style={{ width: 320, height: 50, backgroundColor: 'red' }} placeholder="enter" />
 
       <DebugProvider debug={ debug }>
-          <ThemeProvider theme={ themes }>
-            <DeliveryContext.Provider value={ deliveryConfiguration }>
-              <ConfigurationContext.Provider value={ uiConfigurations }>
-                <ContainerStateProvider
-                  paymentId={ deliveryConfiguration?.paymentId }>
-                  <ErrorProvider>
-                    <BillingProvider>
-                      <PaymentProvider>
-                        <ConnectProvider>
-                          <GlobalStyles styles={ styles } />
-                          <MojitoCheckoutView enableSardine={ enableSardine } sardineEnvironment={ sardineEnvironment } />
-                        </ConnectProvider>
-                      </PaymentProvider>
-                    </BillingProvider>
-                  </ErrorProvider>
-                </ContainerStateProvider>
-              </ConfigurationContext.Provider>
-            </DeliveryContext.Provider>
-          </ThemeProvider>
+        <ThemeProvider theme={ themes }>
+          <DeliveryContext.Provider value={ deliveryConfiguration }>
+            <ConfigurationContext.Provider value={ uiConfigurations }>
+              <ContainerStateProvider
+                paymentId={ deliveryConfiguration?.paymentId }>
+                <ErrorProvider>
+                  <BillingProvider>
+                    <PaymentProvider>
+                      <ConnectProvider>
+                        <GlobalStyles styles={ styles } />
+                        <MojitoCheckoutView enableSardine={ enableSardine } sardineEnvironment={ sardineEnvironment } />
+                      </ConnectProvider>
+                    </PaymentProvider>
+                  </BillingProvider>
+                </ErrorProvider>
+              </ContainerStateProvider>
+            </ConfigurationContext.Provider>
+          </DeliveryContext.Provider>
+        </ThemeProvider>
       </DebugProvider>
     </Modal>
   );
 };
 export type PUICheckoutProps = MojitoCheckoutProps & ProvidersInjectorProps;
- const PUIMojitoCheckout: React.FC<PUICheckoutProps> = withProviders(MojitoCheckout);
+const PUIMojitoCheckout: React.FC<PUICheckoutProps> = withProviders(MojitoCheckout);
 
 export default PUIMojitoCheckout;

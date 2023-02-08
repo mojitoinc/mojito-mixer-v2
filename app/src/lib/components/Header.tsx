@@ -18,7 +18,7 @@ const Header = () => {
           justifyContent: 'center',
           display: 'flex',
         }}>
-        <img src={ Icons.logo } width="163px" height="37px" alt="logo" />
+        <img src={ Icons.logo } width="162px" height="37px" alt="logo" />
       </Box>
     </Box>
   );
