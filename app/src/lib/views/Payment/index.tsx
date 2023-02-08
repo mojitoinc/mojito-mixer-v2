@@ -26,7 +26,7 @@ export const PaymentContainer = () => {
   const { setContainerState } = useContainer();
 
   const { billingInfo, taxes } = useBilling();
-  const { billing } = useUIConfiguration();
+  const uiConfiguration = useUIConfiguration();
 
   const [paymentType, setPaymentType] = useState<string>(
     PaymentTypes.CREDIT_CARD,
@@ -286,7 +286,7 @@ export const PaymentContainer = () => {
       creditCardFormErrors={ creditCardFormErrors }
       creditCardList={ creditCardList }
       onClickDelivery={ onClickDelivery }
-      config={ billing?.paymentMethods }
+      config={ uiConfiguration?.payment }
       billingInfo={ billingInfo }
       buttonDisabled={ buttonDisabled } />
   );

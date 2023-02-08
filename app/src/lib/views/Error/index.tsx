@@ -26,7 +26,7 @@ const ErrorContainer = ({ error }: ErrorContainerProps) => {
           justifyContent: 'center',
           flexDirection: 'column',
           margin: '8px 0px',
-         
+
         }}>
         <img
           alt="loading"
@@ -34,14 +34,15 @@ const ErrorContainer = ({ error }: ErrorContainerProps) => {
           style={{
             height: 200,
           }} />
-          <Typography sx={{
-            width: '280px',
-            textAlign: 'center',
-            fontSize: '14px',
-            border: `1px solid ${ theme.global?.cardBorder }`,
-            borderRadius: '4px',
-            padding: '30px',
-          }}>{ error }</Typography>
+        <Typography sx={{
+          width: '280px',
+          textAlign: 'center',
+          fontSize: '14px',
+          border: `1px solid ${ theme.global?.cardBorder }`,
+          borderRadius: '4px',
+          padding: '30px',
+        }}>{ error }
+        </Typography>
       </Box>
     </Box>
   );

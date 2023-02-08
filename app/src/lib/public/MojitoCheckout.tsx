@@ -2,11 +2,8 @@ import { ThemeProvider, GlobalStyles } from '@mui/material';
 import React, { useMemo } from 'react';
 import Modal from 'react-modal';
 import {
-  ConfigurationContext,
-  ConfigurationType,
-  DefaultConfiguration,
-  makeUIConfiguration,
-} from '../providers/ConfigurationProvider';
+  UIConfigurationContext,
+} from '../providers/UIConfigurationProvider';
 import { makeTheme, styles } from '../theme';
 import MojitoCheckoutView from '../views/index';
 import { ThemeConfiguration } from '../interfaces';
@@ -22,6 +19,7 @@ import {
 import { ConnectProvider } from '../providers/ConnectContext';
 import { SardineEnvironment } from '../config';
 import { ProvidersInjectorProps, withProviders } from '../providers/ProvidersInjector';
+import { UIConfiguration, DefaultUIConfiguration, makeUIConfiguration } from '../config/UIConfiguration';
 
 declare global {
   interface Window {
@@ -30,7 +28,7 @@ declare global {
 }
 
 interface MojitoCheckoutProps {
-  uiConfiguration?: ConfigurationType;
+  uiConfiguration?: UIConfiguration;
   deliveryConfiguration: Delivery;
   theme?: ThemeConfiguration;
   show: boolean;
@@ -39,8 +37,7 @@ interface MojitoCheckoutProps {
   enableSardine?: boolean;
 }
 const MojitoCheckout: React.FC<MojitoCheckoutProps> = ({
-// const MojitoCheckout = ({
-  uiConfiguration = DefaultConfiguration,
+  uiConfiguration = DefaultUIConfiguration,
   theme,
   show,
   debug = false,
@@ -82,7 +79,7 @@ const MojitoCheckout: React.FC<MojitoCheckoutProps> = ({
       <DebugProvider debug={ debug }>
         <ThemeProvider theme={ themes }>
           <DeliveryContext.Provider value={ deliveryConfiguration }>
-            <ConfigurationContext.Provider value={ uiConfigurations }>
+            <UIConfigurationContext.Provider value={ uiConfigurations }>
               <ContainerStateProvider
                 paymentId={ deliveryConfiguration?.paymentId }>
                 <ErrorProvider>
@@ -96,7 +93,7 @@ const MojitoCheckout: React.FC<MojitoCheckoutProps> = ({
                   </BillingProvider>
                 </ErrorProvider>
               </ContainerStateProvider>
-            </ConfigurationContext.Provider>
+            </UIConfigurationContext.Provider>
           </DeliveryContext.Provider>
         </ThemeProvider>
       </DebugProvider>

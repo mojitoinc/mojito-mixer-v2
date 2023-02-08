@@ -248,23 +248,23 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
             invoiceId: values?.invoiceId,
           }}
           uiConfiguration={{
+
+            hideExpressCheckout: Boolean(!values.express ?? true),
             billing: {
-              hideExpressCheckout: Boolean(!values.express ?? true),
-              expressCheckoutConfig: {
-                gpay: Boolean(values.expressGpay ?? true),
-                applepay: Boolean(values.expressApplepay ?? true),
-                walletConnect: Boolean(values.expressWalletconnect ?? true),
-                metaMask: Boolean(values.expressMetamask ?? true),
-              },
-              paymentMethods: {
-                creditCard: Boolean(values.creditcard ?? true),
-                gpay: Boolean(values.gpay ?? true),
-                applepay: Boolean(values.applepay ?? true),
-                walletConnect: Boolean(values.walletconnect ?? true),
-                wire: Boolean(values.wire ?? true),
-              },
-              showDiscountCode: Boolean(values.discountCode ?? true),
+              gpay: Boolean(values.expressGpay ?? true),
+              applepay: Boolean(values.expressApplepay ?? true),
+              walletConnect: Boolean(values.expressWalletconnect ?? true),
+              metaMask: Boolean(values.expressMetamask ?? true),
             },
+            payment: {
+              creditCard: Boolean(values.creditcard ?? true),
+              gpay: Boolean(values.gpay ?? true),
+              applepay: Boolean(values.applepay ?? true),
+              walletConnect: Boolean(values.walletconnect ?? true),
+              wire: Boolean(values.wire ?? true),
+            },
+            showDiscountCode: Boolean(values.discountCode ?? true),
+
             paymentConfiguration: {
               onClickGoToMarketPlace,
             },

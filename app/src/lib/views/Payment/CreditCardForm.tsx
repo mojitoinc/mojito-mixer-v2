@@ -34,11 +34,9 @@ export const CreditCardForm = ({
   const theme = useTheme<MixTheme>();
   const { billingInfo } = useBilling();
 
-  const isNewCreditCard = useMemo(()=>{
-    if (values?.isNew || (creditCardList && creditCardList.length === 0)){
-      return true;
-    }
-  },[values, creditCardList]);
+  const isNewCreditCard = useMemo(() => {
+    return (values?.isNew || (creditCardList && creditCardList.length === 0));
+  }, [values, creditCardList]);
 
   const handleCardChange = useCallback(
     (val: string) => {

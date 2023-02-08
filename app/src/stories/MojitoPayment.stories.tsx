@@ -25,9 +25,7 @@ stories.add('Hide Express checkout', () => {
       show
       debug
       uiConfiguration={{
-        billing: {
-          hideExpressCheckout: true,
-        },
+        hideExpressCheckout: true,
       }}
       deliveryConfiguration={{
         orgId: 'd086ea16-d40d-454c-84a4-64b5e940670a',
@@ -46,15 +44,14 @@ stories.add('Hide GooglePay', () => {
       debug
       uri=""
       uiConfiguration={{
+
         billing: {
-          expressCheckoutConfig: {
-            gpay: false,
-            applepay: false,
-          },
-          paymentMethods: {
-            gpay: false,
-            applepay: false,
-          },
+          gpay: false,
+          applepay: false,
+        },
+        payment: {
+          gpay: false,
+          applepay: false,
         },
       }}
       deliveryConfiguration={{

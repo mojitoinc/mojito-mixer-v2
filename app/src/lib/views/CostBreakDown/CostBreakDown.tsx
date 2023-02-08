@@ -19,7 +19,7 @@ interface CostBreakDownProps {
 
 const CostBreakDown = ({ taxes, collectionData }: CostBreakDownProps) => {
   const theme = useTheme<MixTheme>();
-  const { billing } = useUIConfiguration();
+  const uiConfiguration = useUIConfiguration();
   const { quantity } = useDelivery();
   const { containerState } = useContainer();
 
@@ -108,7 +108,7 @@ const CostBreakDown = ({ taxes, collectionData }: CostBreakDownProps) => {
             </Typography>
           </Box>
         </Box>
-        { billing?.showDiscountCode &&
+        { uiConfiguration?.showDiscountCode &&
           containerState !== ContainerTypes.CONFIRMATION && (
             <>
               <Divider

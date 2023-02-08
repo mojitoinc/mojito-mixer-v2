@@ -1,5 +1,5 @@
 import React from 'react';
-import { MojitoCheckout } from '@lib/index';
+import { MojitoCheckout } from 'lib';
 
 export const HidePaymentsStories = () => {
   return (
@@ -7,16 +7,16 @@ export const HidePaymentsStories = () => {
       show
       debug
       uiConfiguration={{
+
         billing: {
-          expressCheckoutConfig: {
-            gpay: false,
-            applepay: false,
-          },
-          paymentMethods: {
-            gpay: false,
-            applepay: false,
-          },
+          gpay: false,
+          applepay: false,
         },
+        payment: {
+          gpay: false,
+          applepay: false,
+        },
+
       }}
       deliveryConfiguration={{
         orgId: 'd086ea16-d40d-454c-84a4-64b5e940670a',
