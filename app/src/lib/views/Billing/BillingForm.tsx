@@ -76,7 +76,7 @@ const BillingForm = ({
             required
             sx={{ marginRight: '8px' }}
             error={ errors?.country }
-            placeholder="Select one,,,"
+            placeholder="Select one..."
             options={ countries } />
           <Dropdown
             value={ values?.state }
@@ -85,7 +85,7 @@ const BillingForm = ({
             sx={{
               marginLeft: '8px',
             }}
-            placeholder="Select one,,,"
+            placeholder="Select one..."
             options={ states }
             error={ errors?.state }
             required />
@@ -101,7 +101,7 @@ const BillingForm = ({
             onChange={ onChange('city') }
             title="City"
             required
-            placeholder="Select one,,,"
+            placeholder="Select one..."
             sx={{ marginRight: '8px' }}
             error={ errors?.city }
             options={ cities } />

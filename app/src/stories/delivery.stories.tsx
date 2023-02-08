@@ -1,6 +1,6 @@
 import React from 'react';
 import DeliveryContainer from '@views/Delivery/Delivery';
-import { ConnectType } from '@lib/state/ConnectContext';
+import { ConnectType } from '@lib/providers/ConnectContext';
 
 export const BillingViewStories = () => {
   return (
