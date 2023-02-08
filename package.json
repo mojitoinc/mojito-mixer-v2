@@ -1,6 +1,6 @@
 {
   "name": "@mojitonft/mojito-mixers",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "🍸 React components for the Mojito Platform, Reference App and third-party projects.",
   "keywords": [
     "react",
@@ -94,7 +94,8 @@
   "peerDependencies": {
     "@emotion/styled": "^11.8.1",
     "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
-    "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0"
+    "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0",
+    "patch-package": "^6.5.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.12",
