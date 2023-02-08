@@ -12,9 +12,9 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
-import { MixTheme } from '@lib/theme';
-import { Icons } from '@lib/assets';
-import { PaymentMethod } from '@lib/interfaces';
+import { MixTheme } from '../../theme';
+import { Icons } from '../../assets';
+import { PaymentMethod } from '../../interfaces';
 
 export interface DropdownOptions {
   label: string | JSX.Element;

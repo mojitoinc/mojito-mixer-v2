@@ -1,8 +1,8 @@
-import { CreditCardFormType, ReserveNow } from '@lib/interfaces';
-import { CookieService } from '@lib/service/CookieService';
 import React, { createContext, useContext, useState, useMemo, useCallback } from 'react';
-import { useDebug, useError } from '@lib/providers';
-import { useCreatePayment } from '@lib/hooks/useCreatePayment';
+import { useCreatePayment } from '../hooks';
+import { CreditCardFormType, ReserveNow } from '../interfaces';
+import { CookieService } from '../service/CookieService';
+import { useDebug, useError } from '.';
 import { ContainerTypes, useContainer } from './ContainerStateProvider';
 import { useBilling } from './BillingProvider';
 import { useDelivery } from './DeliveryProvider';

@@ -1,4 +1,3 @@
-import { MixTheme } from '@lib/theme';
 import {
   Box,
   InputBaseProps,
@@ -9,6 +8,7 @@ import {
   useTheme,
 } from '@mui/material';
 import React, { useCallback } from 'react';
+import { MixTheme } from '../theme';
 
 interface TextInputProps {
   value?: string;

@@ -1,6 +1,6 @@
-import { usePaymentInfo } from '@lib/hooks';
-import { useBilling } from '@lib/providers';
 import React from 'react';
+import { usePaymentInfo } from '../../hooks';
+import { useBilling } from '../../providers';
 import CostBreakDownLayout from './CostBreakDown';
 
 const CostBreakdownContainer = () => {

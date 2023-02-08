@@ -1,6 +1,6 @@
-import { Icons } from '@lib/assets';
 import { Box, Typography } from '@mui/material';
 import React from 'react';
+import { Icons } from '../../assets';
 
 const LoadingContainer = () => {
   return (

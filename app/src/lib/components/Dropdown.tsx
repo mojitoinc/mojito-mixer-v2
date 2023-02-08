@@ -11,7 +11,7 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
-import { MixTheme } from '@lib/theme';
+import { MixTheme } from '../theme';
 
 export interface DropdownOptions {
   label: string | JSX.Element;

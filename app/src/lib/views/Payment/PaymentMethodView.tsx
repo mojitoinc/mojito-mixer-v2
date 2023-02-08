@@ -1,6 +1,3 @@
-import { Icons } from '@lib/assets';
-import { PaymentTypes } from '@lib/constants';
-import { MixTheme } from '@lib/theme';
 import {
   Card,
   Typography,
@@ -10,6 +7,9 @@ import {
   CardContent,
 } from '@mui/material';
 import React, { useMemo } from 'react';
+import { Icons } from '../../assets';
+import { PaymentTypes } from '../../constants';
+import { MixTheme } from '../../theme';
 
 interface PaymentMethodProps {
   isSelected: string;

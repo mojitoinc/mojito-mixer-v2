@@ -1,11 +1,11 @@
 import React, { useMemo } from 'react';
 import { Box, Card, Typography, useTheme, Stack, FormHelperText } from '@mui/material';
-import { MixTheme } from '@lib/theme';
-import { Button, Dropdown, DropdownOptions, CopyButton } from '@lib/components';
-import { BillingFormData, PaymentData } from '@lib/providers';
-import { PaymentTypes } from '@lib/constants';
-import { ConnectType } from '@lib/state/ConnectContext';
-import { Icons } from '@lib/assets';
+import { MixTheme } from '../../theme';
+import { Button, Dropdown, DropdownOptions, CopyButton } from '../../components';
+import { BillingFormData, PaymentData } from '../../providers';
+import { PaymentTypes } from '../../constants';
+import { ConnectType } from '../../state/ConnectContext';
+import { Icons } from '../../assets';
 import { DeliveryInfoCard } from './DeliveryInfoCard';
 import { NEW_MULTI_SIG } from './index';
 

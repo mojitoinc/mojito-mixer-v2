@@ -1,13 +1,13 @@
-import { MixTheme } from '@lib/theme';
 import { Box, Card, Typography, useTheme } from '@mui/material';
 import React from 'react';
-
-import { PaymentTypes } from '@lib/constants';
-import { Icons } from '@lib/assets';
-import { Button } from '@lib/components';
 import { FormikErrors } from 'formik';
-import { CreditCardFormType, PaymentMethod } from '@lib/interfaces';
-import { BillingFormData } from '@lib/providers';
+import { MixTheme } from '../../theme';
+
+import { PaymentTypes } from '../../constants';
+import { Icons } from '../../assets';
+import { Button } from '../../components';
+import { CreditCardFormType, PaymentMethod } from '../../interfaces';
+import { BillingFormData } from '../../providers';
 import { PaymentInfoCards } from './InfoCards';
 import { PaymentMethodView } from './PaymentMethodView';
 import { WireTransferForm, WireTransferFormData } from './WireTransferForm';

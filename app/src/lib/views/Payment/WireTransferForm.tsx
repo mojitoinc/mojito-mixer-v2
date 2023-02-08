@@ -1,10 +1,10 @@
-import { TextInput, Dropdown, DropdownOptions } from '@lib/components';
-import { BanksList } from '@lib/constants';
-import { useCountryOptions } from '@lib/hooks';
-import { MixTheme } from '@lib/theme';
 import { Typography, useTheme } from '@mui/material';
 import { FormikErrors } from 'formik';
 import React, { useCallback, useMemo } from 'react';
+import { TextInput, Dropdown, DropdownOptions } from '../../components';
+import { BanksList } from '../../constants';
+import { useCountryOptions } from '../../hooks';
+import { MixTheme } from '../../theme';
 
 export interface WireTransferFormData {
   accountNumber: string;

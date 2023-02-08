@@ -1,5 +1,5 @@
-import { Taxes } from '@lib/interfaces';
-import { BillingFormData, PaymentData } from '@lib/providers';
+import { Taxes } from '../interfaces';
+import { BillingFormData, PaymentData } from '../providers';
 
 export const formCardScreeningVariable = (
   orgId: string,
