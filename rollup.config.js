@@ -109,7 +109,8 @@ export default [{
     }),
     copy({
       targets: [
-        { src: 'src/assets/*.svg', dest: 'dist/public' },
+        { src: 'src/assets/*.svg', dest: 'dist/esm/src/assets' },
+        { src: 'src/assets/*.svg', dest: 'dist/cjs/src/assets' },
       ]
     }),
 
