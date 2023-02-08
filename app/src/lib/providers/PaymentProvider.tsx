@@ -1,12 +1,7 @@
-import { useLazyQuery, useMutation } from '@apollo/client';
 import React, { createContext, useContext, useState, useMemo, useCallback } from 'react';
-import { useEncryptCardData } from '../hooks';
+import { useCreatePayment } from '../hooks';
 import { CreditCardFormType, ReserveNow } from '../interfaces';
-import { getPaymentNotificationQuery } from '../queries/creditCard';
-import { reserveNowBuyLotQuery } from '../queries/invoiceDetails';
-import { createPaymentMethodQuery, createPaymentQuery, getPaymentMethodStatus } from '../queries/Payment';
 import { CookieService } from '../service/CookieService';
-import { formCreatePaymentMethodObject } from '../views/Delivery/Delivery.service';
 import { useDebug, useError } from '.';
 import { ContainerTypes, useContainer } from './ContainerStateProvider';
 import { useBilling } from './BillingProvider';
@@ -43,37 +38,10 @@ export const PaymentProvider = ({ children }: { children?: React.ReactNode }) =>
   const { setError } = useError();
   const [paymentInfo, setPaymentInfo] = useState<PaymentData>();
 
-
   const { billingInfo, collectionData, taxes } = useBilling();
   const { orgId, lotId, quantity, invoiceId } = useDelivery();
   const { setContainerState } = useContainer();
-  const [createPaymentMethod] = useMutation(createPaymentMethodQuery);
-  const [createPayment] = useMutation(createPaymentQuery);
-  const [encryptCardData] = useEncryptCardData({ orgID: orgId ?? '' });
-  const [paymentMethodStatus] = useLazyQuery(getPaymentMethodStatus);
-  const [paymentNotification] = useLazyQuery(getPaymentNotificationQuery);
-  const [reserveNow] = useMutation(reserveNowBuyLotQuery);
-
-  const getInvoiceData = useCallback(async () => {
-    if (invoiceId) {
-      return {
-        invoiceID: invoiceId,
-        items: [],
-        status: '',
-        __typename: 'BuyNowReserve',
-      } as ReserveNow;
-    }
-    const reserveData = await reserveNow({
-      variables: {
-        input: {
-          marketplaceBuyNowLotID: lotId,
-          itemCount: quantity,
-        },
-      },
-    });
-
-    return reserveData?.data?.reserveMarketplaceBuyNowLot?.invoice as ReserveNow;
-  }, [invoiceId, reserveNow, lotId, quantity]);
+  const { makeCreditCardPurchase, makeWireTransferPurchase } = useCreatePayment(paymentInfo, orgId);
 
   const saveToCookies = useCallback((paymentData: PaymentData, reserveLotData:ReserveNow) => {
     CookieService.billing.setValue(JSON.stringify(billingInfo));
@@ -86,100 +54,14 @@ export const PaymentProvider = ({ children }: { children?: React.ReactNode }) =>
   const onConfirmCreditCardPurchase = useCallback(async (deliveryAddress = '') => {
     setContainerState(ContainerTypes.LOADING);
     try {
-      debug.info('onConfirm-start', { deliveryAddress, paymentInfo });
+      const paymentReceipt = await makeCreditCardPurchase({ deliveryAddress, lotId, quantity: quantity ?? 1, invoiceId, billingInfo });
 
-      const newCreditCard = paymentInfo?.creditCardData?.isNew ?? false;
+      debug.success('paymentData', { paymentReceipt });
 
-      const creditCardPayload = newCreditCard ? {
-        number: paymentInfo?.creditCardData?.cardNumber?.replace(/\s/g, ''),
-        cvv: paymentInfo?.creditCardData?.cvv ?? '',
-      }
-        : { cvv: paymentInfo?.creditCardData?.cvv ?? '' };
+      saveToCookies(paymentReceipt.paymentData, paymentReceipt.reserveLotData);
 
-      debug.info('onConfirm-encryptCardData', { newCreditCard, creditCardPayload });
-
-      const { keyID, encryptedCardData } = await encryptCardData(creditCardPayload);
-
-      debug.info('onConfirm-encrypt', encryptedCardData);
-
-      let paymentMethodId = paymentInfo?.creditCardData?.isNew
-        ? undefined
-        : paymentInfo?.creditCardData?.cardId;
-
-      debug.info('onConfirm-paymentMethodId', paymentInfo);
-
-      if (paymentInfo?.creditCardData?.isNew) {
-        const inputData = formCreatePaymentMethodObject(
-          orgId ?? '',
-          paymentInfo,
-          billingInfo,
-          keyID,
-          encryptedCardData,
-        );
-        const createPaymentMethodResult = await createPaymentMethod({
-          variables: {
-            orgID: orgId,
-            input: inputData,
-          },
-        });
-        paymentMethodId =
-          createPaymentMethodResult?.data?.createPaymentMethod?.id;
-        debug.info('onConfirm-createPaymentMethod', createPaymentMethodResult);
-
-        if (
-          createPaymentMethodResult?.data?.createPaymentMethod?.status !==
-          'complete'
-        ) {
-          await paymentMethodStatus({
-            variables: {
-              paymentMethodID: paymentMethodId,
-            },
-          });
-        }
-      }
-      debug.info('onConfirm-paymentMethodId', paymentMethodId);
-      const reserveLotData = await getInvoiceData();
-      debug.info('onConfirm-reserveLotData', reserveLotData);
-
-      if (paymentMethodId) {
-        debug.info('ready-paymentMethodId', {
-          paymentMethodID: paymentMethodId,
-          invoiceID: reserveLotData?.invoiceID,
-          metadata: {
-            destinationAddress: deliveryAddress,
-            creditCardData: {
-              keyID,
-              encryptedData: encryptedCardData,
-            },
-          },
-        });
-        await createPayment({
-          variables: {
-            paymentMethodID: paymentMethodId,
-            invoiceID: reserveLotData?.invoiceID,
-            metadata: {
-              destinationAddress: deliveryAddress,
-              creditCardData: {
-                keyID,
-                encryptedData: encryptedCardData,
-              },
-            },
-          },
-        });
-        debug.info('ready-createPayment');
-        const notificationData = await paymentNotification();
-        const paymentData: PaymentData = {
-          ...paymentInfo,
-          paymentId: paymentMethodId,
-          destinationAddress: deliveryAddress,
-        };
-        debug.success('paymentData', { paymentData, notificationData });
-
-        saveToCookies(paymentData, reserveLotData);
-
-        window.location.href =
-          notificationData?.data?.getPaymentNotification?.message?.redirectURL;
-      }
+      window.location.href = paymentReceipt
+        .notificationData?.getPaymentNotification?.message?.redirectURL;
     } catch (e: any) {
       const message = e.message ?? '';
       debug.error('confirm', { message });
@@ -187,75 +69,26 @@ export const PaymentProvider = ({ children }: { children?: React.ReactNode }) =>
     }
   }, [
     debug,
-    orgId,
-    paymentInfo,
     billingInfo,
+    invoiceId,
+    lotId,
+    quantity,
     setError,
-    paymentNotification,
-    createPayment,
-    createPaymentMethod,
-    encryptCardData,
-    paymentMethodStatus,
-    getInvoiceData,
     saveToCookies,
     setContainerState,
+    makeCreditCardPurchase,
   ]);
 
   const onConfirmWireTransferPurchase = useCallback(async (deliveryAddress = '') => {
     setContainerState(ContainerTypes.LOADING);
     try {
-      const inputData: any = {};
-      const copiedBillingDetails = {
-        ...billingInfo,
-        district: billingInfo?.state,
-        address1: billingInfo?.street1,
-      };
-      delete copiedBillingDetails.state;
-      delete copiedBillingDetails.street1;
-      delete copiedBillingDetails.email;
-      delete copiedBillingDetails.phoneNumber;
-      inputData.paymentType = 'Wire';
-      inputData.wireData = {
-        ...paymentInfo?.wireData,
-        billingDetails: copiedBillingDetails,
-      };
-      const result = await createPaymentMethod({
-        variables: {
-          orgID: orgId,
-          input: inputData,
-        },
-      });
-      if (result?.data?.createPaymentMethod?.id) {
-        if (result?.data?.createPaymentMethod?.status !== 'complete') {
-          await paymentMethodStatus({
-            variables: {
-              paymentMethodID: result?.data?.createPaymentMethod?.id,
-            },
-          });
-        }
+      const paymentReceipt = await makeWireTransferPurchase({ deliveryAddress, lotId, quantity: quantity ?? 1, invoiceId, billingInfo });
 
-        const reserveLotData = await getInvoiceData();
+      debug.success('paymentData-wire', { paymentReceipt });
 
-        const result1 = await createPayment({
-          variables: {
-            paymentMethodID: result?.data?.createPaymentMethod?.id,
-            invoiceID: reserveLotData?.invoiceID,
-            metadata: {
-              destinationAddress: deliveryAddress,
-            },
-          },
-        });
-        const paymentData: PaymentData = {
-          ...paymentInfo,
-          deliveryStatus: result1?.data?.createPayment?.status,
-          paymentId: result?.data?.createPaymentMethod?.id ?? '',
-          destinationAddress: deliveryAddress,
-        };
-        setPaymentInfo(paymentData);
-        saveToCookies(paymentData, reserveLotData);
-
-        setContainerState(ContainerTypes.CONFIRMATION);
-      }
+      saveToCookies(paymentReceipt.paymentData, paymentReceipt.reserveLotData);
+      setPaymentInfo(paymentReceipt.paymentData);
+      setContainerState(ContainerTypes.CONFIRMATION);
     } catch (e: any) {
       const message = e.message ?? '';
       debug.error('confirm', { message });
@@ -263,17 +96,15 @@ export const PaymentProvider = ({ children }: { children?: React.ReactNode }) =>
     }
   }, [
     debug,
-    paymentInfo,
     billingInfo,
-    orgId,
+    invoiceId,
+    lotId,
+    quantity,
     setError,
-    paymentMethodStatus,
     setContainerState,
     setPaymentInfo,
-    createPaymentMethod,
-    createPayment,
-    getInvoiceData,
     saveToCookies,
+    makeWireTransferPurchase,
   ]);
 
 

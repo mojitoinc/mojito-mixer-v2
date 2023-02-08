@@ -6,9 +6,9 @@ export const useSardine = (sardineEnvironment: SardineEnvironment, enableSardine
   const element = useRef<HTMLScriptElement>();
   useEffect(() => {
     return () => {
-      document.body.removeChild(element.current as HTMLScriptElement);
+      if (element.current) document.body.removeChild(element.current as HTMLScriptElement);
     };
-  });
+  }, [element]);
   const setup = useCallback(() => {
     if (!enableSardine) { return; }
 

@@ -25,3 +25,13 @@ While this project will be installed as a dependency in other apps, it also prov
     ```
 
 <br />
+## Building this project as a library
+
+The project includes a separated Rollup build to build it as a library that can be installed and consumed by other projects.
+
+To build the lib:
+
+```bash
+yarn install
+yarn dist:build
+```
