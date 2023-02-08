@@ -12,7 +12,7 @@ class CookieStorage {
 
   setValue = (value: any) => {
     this.cookies.set(this.key, value, {
-      maxAge: 15 * 60,
+      maxAge: 5 * 60,
     });
   };
 
@@ -24,7 +24,7 @@ class CookieStorage {
   };
 
   remove = () => {
-    this.cookies.remove(this.key);
+    this.cookies.remove(this.key, { path: '/' });
   };
 }
 

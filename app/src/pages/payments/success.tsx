@@ -17,6 +17,7 @@ const SuccessPage: NextPage = () => {
   }, []);
 
   useEffect(() => {
+    console.log('paymentId', { paymentId });
     if (paymentId === '') router.replace('/');
   }, [paymentId, router]);
 

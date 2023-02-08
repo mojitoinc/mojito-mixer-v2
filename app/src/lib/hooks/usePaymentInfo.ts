@@ -32,7 +32,11 @@ const usePaymentInfo = (): PaymentInfo => {
     const lotData = getObject(reserveLotData) as ReserveNow;
     const taxData = getObject(taxes) as Taxes;
     const collection = getObject(collectionData) as CollectionItem;
-
+    CookieService.billing.remove();
+    CookieService.paymentInfo.remove();
+    CookieService.taxes.remove();
+    CookieService.reserveLotData.remove();
+    CookieService.collectionData.remove();
     setPaymentData({
       billingInfo,
       paymentInfo,

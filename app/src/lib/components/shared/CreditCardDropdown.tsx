@@ -115,7 +115,6 @@ const CreditCardDropdown = ({
         }}>
         <Select
           value={ value }
-          disabled={ options.length === 0 }
           displayEmpty
           fullWidth
           error={ Boolean(error) }
