@@ -7,7 +7,7 @@ import typescript from "rollup-plugin-typescript2";
 import { visualizer } from 'rollup-plugin-visualizer';
 import pkg from "./package.json";
 import { typescriptPaths } from 'rollup-plugin-typescript-paths';
-// import copy from 'rollup-plugin-copy'
+import copy from 'rollup-plugin-copy'
 
 
 // import { terser } from "rollup-plugin-terser";
@@ -107,13 +107,14 @@ export default [{
       useTsconfigDeclarationDir: true,
       tsconfig: "rollup.tsconfig.json",
     }),
-    // copy({
-    //   targets: [
-    //     { src: 'src/assets/*.svg', dest: 'dist/esm/src/assets' },
-    //     { src: 'src/assets/*.svg', dest: 'dist/cjs/src/assets' },
-    //     { src: 'node_modules/country-state-city/lib/assets', dest: 'dist/cjs/node_modules/country-state-city/lib' },
-    //   ]
-    // }),
+    copy({
+      targets: [
+        // { src: 'src/assets/*.svg', dest: 'dist/cjs/src/assets' },
+        // { src: 'src/assets/*.svg', dest: 'dist/esm/src/assets' },
+        { src: 'node_modules/country-state-city/lib/assets', dest: 'dist/cjs/node_modules/country-state-city/lib' },
+        { src: 'node_modules/country-state-city/lib/assets', dest: 'dist/esm/node_modules/country-state-city/lib' },
+      ]
+    }),
 
     // babel({
     //   configFile: "./rollup.babel.json",
