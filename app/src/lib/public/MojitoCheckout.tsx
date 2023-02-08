@@ -5,7 +5,7 @@ import {
   ConfigurationType,
   DefaultConfiguration,
   makeUIConfiguration,
-} from '@lib/providers/ConfigurationProvider';
+} from '@lib/providers';
 import { makeTheme, styles } from '@lib/theme';
 import MojitoCheckoutView from '@views/index';
 import { ThemeConfiguration } from '@lib/interfaces';
