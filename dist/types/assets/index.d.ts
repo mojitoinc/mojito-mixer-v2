@@ -1,0 +1,22 @@
+export declare const DEFAULT_ERROR_IMAGE_SRC = "https://raw.githubusercontent.com/mojitoinc/mojito-mixers/main/app/src/lib/assets/mojito-error-loader.gif";
+export declare const Icons: {
+    logo: string;
+    rightArrow: string;
+    background: string;
+    item: string;
+    gpay: string;
+    applepay: string;
+    metamask: string;
+    walletConnect: string;
+    wireTransfer: string;
+    lock: string;
+    creditCards: string;
+    gpayDark: string;
+    applepayDark: string;
+    visaCard: string;
+    masterCard: string;
+    americanExpress: string;
+    loading: string;
+    ErrorLoader: string;
+    walletAddress: string;
+};
