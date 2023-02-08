@@ -7,6 +7,7 @@ import typescript from "rollup-plugin-typescript2";
 import { visualizer } from 'rollup-plugin-visualizer';
 import pkg from "./package.json";
 import { typescriptPaths } from 'rollup-plugin-typescript-paths';
+import copy from 'rollup-plugin-copy'
 
 
 // import { terser } from "rollup-plugin-terser";
@@ -107,12 +108,9 @@ export default [{
       tsconfig: "rollup.tsconfig.json",
     }),
     copy({
-      assets: [
-        // You can include directories
-        "src/assets",
-        // You can also include files
-        "src/external/buffer.bin",
-      ],
+      targets: [
+        { src: 'src/assets/*.svg', dest: 'dist/public' },
+      ]
     }),
 
     // babel({
