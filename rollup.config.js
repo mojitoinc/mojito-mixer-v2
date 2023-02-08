@@ -6,6 +6,7 @@ import dts from "rollup-plugin-dts";
 import typescript from "rollup-plugin-typescript2";
 import { visualizer } from 'rollup-plugin-visualizer';
 import pkg from "./package.json";
+import { typescriptPaths } from 'rollup-plugin-typescript-paths';
 
 
 // import { terser } from "rollup-plugin-terser";
@@ -104,6 +105,7 @@ export default [{
       useTsconfigDeclarationDir: true,
       tsconfig: "rollup.tsconfig.json",
     }),
+    typescriptPaths()],
 
     // babel({
     //   configFile: "./rollup.babel.json",
