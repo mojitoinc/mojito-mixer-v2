@@ -299,6 +299,7 @@ import { Icons } from '../../assets/index.js';
 import '../../components/Stepper.js';
 import TextInput from '../../components/TextInput.js';
 import '@mui/icons-material/ContentCopy';
+import '../../components/shared/ErrorBoundary.js';
 import '../../providers/DebugProvider.js';
 import '../../providers/ErrorProvider.js';
 import '../../providers/BillingProvider.js';

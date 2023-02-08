@@ -299,6 +299,7 @@ import { Icons } from '../../assets/index.js';
 import '../../components/Stepper.js';
 import LinedText from '../../components/shared/LinedText.js';
 import '@mui/icons-material/ContentCopy';
+import '../../components/shared/ErrorBoundary.js';
 
 const ExpressCheckoutView = ({ config }) => {
     var _a, _b, _c, _d, _e, _f, _g, _h;

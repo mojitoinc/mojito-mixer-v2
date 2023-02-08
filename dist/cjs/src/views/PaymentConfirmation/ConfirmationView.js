@@ -301,6 +301,7 @@ require('../../../node_modules/@mui/base/FocusTrap/FocusTrap.js');
 var Button = require('../../components/Button.js');
 require('../../components/Stepper.js');
 require('@mui/icons-material/ContentCopy');
+require('../../components/shared/ErrorBoundary.js');
 var index = require('../../constants/index.js');
 var usePaymentInfo = require('../../hooks/usePaymentInfo.js');
 require('../../providers/DebugProvider.js');

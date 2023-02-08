@@ -308,7 +308,7 @@ var BillingProvider = require('../providers/BillingProvider.js');
 var ContainerStateProvider = require('../providers/ContainerStateProvider.js');
 var DeliveryProvider = require('../providers/DeliveryProvider.js');
 var PaymentProvider = require('../providers/PaymentProvider.js');
-var ConnectContext = require('../state/ConnectContext.js');
+var ConnectContext = require('../providers/ConnectContext.js');
 var ProvidersInjector = require('../providers/ProvidersInjector.js');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }

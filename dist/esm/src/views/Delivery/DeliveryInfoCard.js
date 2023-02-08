@@ -305,6 +305,7 @@ import '../../providers/PaymentProvider.js';
 import { PaymentTypes } from '../../constants/index.js';
 import '../../components/Stepper.js';
 import CopyButton from '../../components/shared/CopyButton.js';
+import '../../components/shared/ErrorBoundary.js';
 
 const DeliveryInfoCard = ({ billingInfo, paymentInfo, }) => {
     var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4;

@@ -21,7 +21,7 @@ import '../../providers/ConfigurationProvider.js';
 import { useDelivery } from '../../providers/DeliveryProvider.js';
 import { usePayment } from '../../providers/PaymentProvider.js';
 import { RiskRating, PaymentTypes } from '../../constants/index.js';
-import { useWeb3ModalConnect } from '../../state/Web3ModalConnect.js';
+import { useWeb3ModalConnect } from '../../providers/Web3ModalConnect.js';
 import Delivery$1 from './Delivery.js';
 
 const NEW_MULTI_SIG = 'NEW_MULTI_SIG';
@@ -62,7 +62,7 @@ const Delivery = () => {
         var _d;
         try {
             const deliveryAddress = (connect === null || connect === void 0 ? void 0 : connect.connected) ? connect === null || connect === void 0 ? void 0 : connect.account : selectedDeliveryAddress === NEW_MULTI_SIG ? '' : selectedDeliveryAddress;
-            if (!deliveryAddress) {
+            if (!deliveryAddress && selectedDeliveryAddress !== NEW_MULTI_SIG) {
                 setError('Please select a delivery address');
                 return;
             }

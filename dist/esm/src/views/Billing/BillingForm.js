@@ -299,6 +299,7 @@ import Dropdown from '../../components/Dropdown.js';
 import '../../components/Stepper.js';
 import TextInput from '../../components/TextInput.js';
 import '@mui/icons-material/ContentCopy';
+import '../../components/shared/ErrorBoundary.js';
 import '../../service/CookieService.js';
 import '../../providers/DebugProvider.js';
 import '../../providers/ErrorProvider.js';
@@ -354,14 +355,14 @@ const BillingForm = ({ values, errors, onChange, isValid, }) => {
                     } }),
                 React__default.createElement(Typography, { fontWeight: "400", fontSize: "16px" }, "Complete necessary changes to continue"))),
             React__default.createElement(Box, { display: "flex", flexDirection: "row", marginTop: "16px" },
-                React__default.createElement(Dropdown, { value: values === null || values === void 0 ? void 0 : values.country, onChange: onChange('country'), title: "Country/Region", required: true, sx: { marginRight: '8px' }, error: errors === null || errors === void 0 ? void 0 : errors.country, placeholder: "Select one,,,", options: countries }),
+                React__default.createElement(Dropdown, { value: values === null || values === void 0 ? void 0 : values.country, onChange: onChange('country'), title: "Country/Region", required: true, sx: { marginRight: '8px' }, error: errors === null || errors === void 0 ? void 0 : errors.country, placeholder: "Select one...", options: countries }),
                 React__default.createElement(Dropdown, { value: values === null || values === void 0 ? void 0 : values.state, onChange: onChange('state'), title: "State", sx: {
                         marginLeft: '8px',
-                    }, placeholder: "Select one,,,", options: states, error: errors === null || errors === void 0 ? void 0 : errors.state, required: true })),
+                    }, placeholder: "Select one...", options: states, error: errors === null || errors === void 0 ? void 0 : errors.state, required: true })),
             React__default.createElement(Box, { display: "flex", flexDirection: "row", sx: {
                     marginTop: '16px',
                 } },
-                React__default.createElement(Dropdown, { value: values === null || values === void 0 ? void 0 : values.city, onChange: onChange('city'), title: "City", required: true, placeholder: "Select one,,,", sx: { marginRight: '8px' }, error: errors === null || errors === void 0 ? void 0 : errors.city, options: cities }),
+                React__default.createElement(Dropdown, { value: values === null || values === void 0 ? void 0 : values.city, onChange: onChange('city'), title: "City", required: true, placeholder: "Select one...", sx: { marginRight: '8px' }, error: errors === null || errors === void 0 ? void 0 : errors.city, options: cities }),
                 React__default.createElement(TextInput, { value: values === null || values === void 0 ? void 0 : values.postalCode, onChange: onChange('postalCode'), title: "Zip code", sx: {
                         marginLeft: '8px',
                     }, required: true, error: errors === null || errors === void 0 ? void 0 : errors.postalCode, placeholder: "e.g. 10005" })),

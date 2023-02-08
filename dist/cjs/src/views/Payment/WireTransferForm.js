@@ -303,6 +303,7 @@ var Dropdown = require('../../components/Dropdown.js');
 require('../../components/Stepper.js');
 var TextInput = require('../../components/TextInput.js');
 require('@mui/icons-material/ContentCopy');
+require('../../components/shared/ErrorBoundary.js');
 var index = require('../../constants/index.js');
 require('../../service/CookieService.js');
 require('../../providers/DebugProvider.js');

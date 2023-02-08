@@ -297,6 +297,7 @@ import '../../../node_modules/@mui/base/FocusTrap/FocusTrap.js';
 import Button from '../../components/Button.js';
 import '../../components/Stepper.js';
 import '@mui/icons-material/ContentCopy';
+import '../../components/shared/ErrorBoundary.js';
 import { PaymentStatus, PaymentTypes } from '../../constants/index.js';
 import usePaymentInfo from '../../hooks/usePaymentInfo.js';
 import '../../providers/DebugProvider.js';

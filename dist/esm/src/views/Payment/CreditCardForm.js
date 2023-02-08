@@ -299,6 +299,7 @@ import '../../components/Stepper.js';
 import TextInput from '../../components/TextInput.js';
 import CreditCardDropdown from '../../components/shared/CreditCardDropdown.js';
 import '@mui/icons-material/ContentCopy';
+import '../../components/shared/ErrorBoundary.js';
 import '../../providers/DebugProvider.js';
 import '../../providers/ErrorProvider.js';
 import { useBilling } from '../../providers/BillingProvider.js';

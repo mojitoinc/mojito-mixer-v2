@@ -299,6 +299,7 @@ import Dropdown from '../../components/Dropdown.js';
 import '../../components/Stepper.js';
 import TextInput from '../../components/TextInput.js';
 import '@mui/icons-material/ContentCopy';
+import '../../components/shared/ErrorBoundary.js';
 import { BanksList } from '../../constants/index.js';
 import '../../service/CookieService.js';
 import '../../providers/DebugProvider.js';

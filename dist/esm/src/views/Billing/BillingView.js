@@ -305,6 +305,7 @@ import Button from '../../components/Button.js';
 import '../../components/Stepper.js';
 import TextInput from '../../components/TextInput.js';
 import '@mui/icons-material/ContentCopy';
+import '../../components/shared/ErrorBoundary.js';
 import BillingForm from './BillingForm.js';
 import ExpressCheckoutView from './ExpressCheckout.js';
 import BillingDetails from './BillingDetails.js';

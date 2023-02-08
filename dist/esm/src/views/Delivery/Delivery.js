@@ -299,6 +299,7 @@ import Dropdown from '../../components/Dropdown.js';
 import { Icons } from '../../assets/index.js';
 import '../../components/Stepper.js';
 import CopyButton from '../../components/shared/CopyButton.js';
+import '../../components/shared/ErrorBoundary.js';
 import { PaymentTypes } from '../../constants/index.js';
 import { DeliveryInfoCard } from './DeliveryInfoCard.js';
 import { NEW_MULTI_SIG } from './index.js';

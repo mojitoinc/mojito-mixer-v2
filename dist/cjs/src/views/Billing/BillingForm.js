@@ -303,6 +303,7 @@ var Dropdown = require('../../components/Dropdown.js');
 require('../../components/Stepper.js');
 var TextInput = require('../../components/TextInput.js');
 require('@mui/icons-material/ContentCopy');
+require('../../components/shared/ErrorBoundary.js');
 require('../../service/CookieService.js');
 require('../../providers/DebugProvider.js');
 require('../../providers/ErrorProvider.js');
@@ -363,14 +364,14 @@ const BillingForm = ({ values, errors, onChange, isValid, }) => {
                     } }),
                 React__default["default"].createElement(Typography["default"], { fontWeight: "400", fontSize: "16px" }, "Complete necessary changes to continue"))),
             React__default["default"].createElement(Box["default"], { display: "flex", flexDirection: "row", marginTop: "16px" },
-                React__default["default"].createElement(Dropdown["default"], { value: values === null || values === void 0 ? void 0 : values.country, onChange: onChange('country'), title: "Country/Region", required: true, sx: { marginRight: '8px' }, error: errors === null || errors === void 0 ? void 0 : errors.country, placeholder: "Select one,,,", options: countries }),
+                React__default["default"].createElement(Dropdown["default"], { value: values === null || values === void 0 ? void 0 : values.country, onChange: onChange('country'), title: "Country/Region", required: true, sx: { marginRight: '8px' }, error: errors === null || errors === void 0 ? void 0 : errors.country, placeholder: "Select one...", options: countries }),
                 React__default["default"].createElement(Dropdown["default"], { value: values === null || values === void 0 ? void 0 : values.state, onChange: onChange('state'), title: "State", sx: {
                         marginLeft: '8px',
-                    }, placeholder: "Select one,,,", options: states, error: errors === null || errors === void 0 ? void 0 : errors.state, required: true })),
+                    }, placeholder: "Select one...", options: states, error: errors === null || errors === void 0 ? void 0 : errors.state, required: true })),
             React__default["default"].createElement(Box["default"], { display: "flex", flexDirection: "row", sx: {
                     marginTop: '16px',
                 } },
-                React__default["default"].createElement(Dropdown["default"], { value: values === null || values === void 0 ? void 0 : values.city, onChange: onChange('city'), title: "City", required: true, placeholder: "Select one,,,", sx: { marginRight: '8px' }, error: errors === null || errors === void 0 ? void 0 : errors.city, options: cities }),
+                React__default["default"].createElement(Dropdown["default"], { value: values === null || values === void 0 ? void 0 : values.city, onChange: onChange('city'), title: "City", required: true, placeholder: "Select one...", sx: { marginRight: '8px' }, error: errors === null || errors === void 0 ? void 0 : errors.city, options: cities }),
                 React__default["default"].createElement(TextInput["default"], { value: values === null || values === void 0 ? void 0 : values.postalCode, onChange: onChange('postalCode'), title: "Zip code", sx: {
                         marginLeft: '8px',
                     }, required: true, error: errors === null || errors === void 0 ? void 0 : errors.postalCode, placeholder: "e.g. 10005" })),

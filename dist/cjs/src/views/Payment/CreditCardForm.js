@@ -303,6 +303,7 @@ require('../../components/Stepper.js');
 var TextInput = require('../../components/TextInput.js');
 var CreditCardDropdown = require('../../components/shared/CreditCardDropdown.js');
 require('@mui/icons-material/ContentCopy');
+require('../../components/shared/ErrorBoundary.js');
 require('../../providers/DebugProvider.js');
 require('../../providers/ErrorProvider.js');
 var BillingProvider = require('../../providers/BillingProvider.js');

@@ -299,6 +299,7 @@ import { Icons } from '../../assets/index.js';
 import Button from '../../components/Button.js';
 import '../../components/Stepper.js';
 import '@mui/icons-material/ContentCopy';
+import '../../components/shared/ErrorBoundary.js';
 import { PaymentInfoCards } from './InfoCards.js';
 import { PaymentMethodView } from './PaymentMethodView.js';
 import { WireTransferForm } from './WireTransferForm.js';

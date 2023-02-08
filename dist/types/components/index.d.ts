@@ -6,4 +6,5 @@ import TextInput from './TextInput';
 import CreditCardDropdown from './shared/CreditCardDropdown';
 import LinedText from './shared/LinedText';
 import CopyButton from './shared/CopyButton';
-export { Button, Dropdown, type DropdownOptions, Header, Stepper, TextInput, CreditCardDropdown, LinedText, CopyButton, };
+import { ErrorBoundary } from './shared/ErrorBoundary';
+export { Button, Dropdown, type DropdownOptions, Header, Stepper, TextInput, CreditCardDropdown, LinedText, CopyButton, ErrorBoundary };

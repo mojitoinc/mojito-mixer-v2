@@ -303,6 +303,7 @@ var Dropdown = require('../../components/Dropdown.js');
 var index$2 = require('../../assets/index.js');
 require('../../components/Stepper.js');
 var CopyButton = require('../../components/shared/CopyButton.js');
+require('../../components/shared/ErrorBoundary.js');
 var index = require('../../constants/index.js');
 var DeliveryInfoCard = require('./DeliveryInfoCard.js');
 var index$1 = require('./index.js');

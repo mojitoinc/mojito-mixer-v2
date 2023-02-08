@@ -309,6 +309,7 @@ require('../../providers/PaymentProvider.js');
 var index$1 = require('../../constants/index.js');
 require('../../components/Stepper.js');
 var CopyButton = require('../../components/shared/CopyButton.js');
+require('../../components/shared/ErrorBoundary.js');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 

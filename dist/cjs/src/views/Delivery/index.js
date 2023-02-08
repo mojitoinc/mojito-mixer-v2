@@ -25,7 +25,7 @@ require('../../providers/ConfigurationProvider.js');
 var DeliveryProvider = require('../../providers/DeliveryProvider.js');
 var PaymentProvider = require('../../providers/PaymentProvider.js');
 var index = require('../../constants/index.js');
-var Web3ModalConnect = require('../../state/Web3ModalConnect.js');
+var Web3ModalConnect = require('../../providers/Web3ModalConnect.js');
 var Delivery$1 = require('./Delivery.js');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
@@ -70,7 +70,7 @@ const Delivery = () => {
         var _d;
         try {
             const deliveryAddress = (connect === null || connect === void 0 ? void 0 : connect.connected) ? connect === null || connect === void 0 ? void 0 : connect.account : selectedDeliveryAddress === NEW_MULTI_SIG ? '' : selectedDeliveryAddress;
-            if (!deliveryAddress) {
+            if (!deliveryAddress && selectedDeliveryAddress !== NEW_MULTI_SIG) {
                 setError('Please select a delivery address');
                 return;
             }

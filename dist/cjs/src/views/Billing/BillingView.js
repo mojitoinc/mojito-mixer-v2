@@ -309,6 +309,7 @@ var Button = require('../../components/Button.js');
 require('../../components/Stepper.js');
 var TextInput = require('../../components/TextInput.js');
 require('@mui/icons-material/ContentCopy');
+require('../../components/shared/ErrorBoundary.js');
 var BillingForm = require('./BillingForm.js');
 var ExpressCheckout = require('./ExpressCheckout.js');
 var BillingDetails = require('./BillingDetails.js');

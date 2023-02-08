@@ -303,6 +303,7 @@ var index = require('../../assets/index.js');
 var Button = require('../../components/Button.js');
 require('../../components/Stepper.js');
 require('@mui/icons-material/ContentCopy');
+require('../../components/shared/ErrorBoundary.js');
 var InfoCards = require('./InfoCards.js');
 var PaymentMethodView = require('./PaymentMethodView.js');
 var WireTransferForm = require('./WireTransferForm.js');

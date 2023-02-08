@@ -303,6 +303,7 @@ var index = require('../../assets/index.js');
 require('../../components/Stepper.js');
 var TextInput = require('../../components/TextInput.js');
 require('@mui/icons-material/ContentCopy');
+require('../../components/shared/ErrorBoundary.js');
 require('../../providers/DebugProvider.js');
 require('../../providers/ErrorProvider.js');
 require('../../providers/BillingProvider.js');

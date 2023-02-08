@@ -297,6 +297,7 @@ import '../../node_modules/@mui/base/FocusTrap/FocusTrap.js';
 import Header from '../components/Header.js';
 import Stepper from '../components/Stepper.js';
 import '@mui/icons-material/ContentCopy';
+import '../components/shared/ErrorBoundary.js';
 import CostBreakdownContainer from './CostBreakDown/index.js';
 import PaymentConfirmationContainer from './PaymentConfirmation/index.js';
 import { PaymentContainer } from './Payment/index.js';

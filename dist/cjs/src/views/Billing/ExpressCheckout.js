@@ -303,6 +303,7 @@ var index = require('../../assets/index.js');
 require('../../components/Stepper.js');
 var LinedText = require('../../components/shared/LinedText.js');
 require('@mui/icons-material/ContentCopy');
+require('../../components/shared/ErrorBoundary.js');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 

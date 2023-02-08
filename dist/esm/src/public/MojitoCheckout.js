@@ -304,7 +304,7 @@ import { BillingProvider } from '../providers/BillingProvider.js';
 import { ContainerStateProvider } from '../providers/ContainerStateProvider.js';
 import { DeliveryContext } from '../providers/DeliveryProvider.js';
 import { PaymentProvider } from '../providers/PaymentProvider.js';
-import { ConnectProvider } from '../state/ConnectContext.js';
+import { ConnectProvider } from '../providers/ConnectContext.js';
 import { withProviders } from '../providers/ProvidersInjector.js';
 
 const MojitoCheckout = ({ 

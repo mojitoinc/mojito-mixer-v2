@@ -1,7 +1,7 @@
 /// <reference types="react" />
 import { DropdownOptions } from '../../components';
 import { BillingFormData, PaymentData } from '../../providers';
-import { ConnectType } from '../../state/ConnectContext';
+import { ConnectType } from '../../providers/ConnectContext';
 interface DeliveryProps {
     onWalletChange: (val: string) => void;
     walletOptions: DropdownOptions[];
