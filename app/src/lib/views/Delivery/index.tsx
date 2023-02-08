@@ -7,7 +7,7 @@ import {
 } from '../../queries/Payment';
 import { useDelivery, useBilling, usePayment, useDebug } from '../../providers';
 import { PaymentTypes, RiskRating } from '../../constants';
-import { useWeb3ModalConnect } from '../../state/Web3ModalConnect';
+import { useWeb3ModalConnect } from '../../providers/Web3ModalConnect';
 import DeliveryLayout from './Delivery';
 
 export const NEW_MULTI_SIG = 'NEW_MULTI_SIG';

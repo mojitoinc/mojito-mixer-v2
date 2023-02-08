@@ -19,8 +19,7 @@ import {
   DebugProvider,
   ErrorProvider,
 } from '../providers';
-import { MojitoApiProvider } from '../state/MojitoApiProvider';
-import { ConnectProvider } from '../state/ConnectContext';
+import { ConnectProvider } from '../providers/ConnectContext';
 import { SardineEnvironment } from '../config';
 import { ProvidersInjectorProps, withProviders } from '../providers/ProvidersInjector';
 
@@ -81,7 +80,6 @@ const MojitoCheckout: React.FC<MojitoCheckoutProps> = ({
         },
       }}>
       <DebugProvider debug={ debug }>
-        {/* <MojitoApiProvider> */}
           <ThemeProvider theme={ themes }>
             <DeliveryContext.Provider value={ deliveryConfiguration }>
               <ConfigurationContext.Provider value={ uiConfigurations }>
@@ -101,7 +99,6 @@ const MojitoCheckout: React.FC<MojitoCheckoutProps> = ({
               </ConfigurationContext.Provider>
             </DeliveryContext.Provider>
           </ThemeProvider>
-        {/* </MojitoApiProvider> */}
       </DebugProvider>
     </Modal>
   );

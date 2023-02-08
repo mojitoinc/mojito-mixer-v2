@@ -4,7 +4,7 @@ import { MixTheme } from '../../theme';
 import { Button, Dropdown, DropdownOptions, CopyButton } from '../../components';
 import { BillingFormData, PaymentData } from '../../providers';
 import { PaymentTypes } from '../../constants';
-import { ConnectType } from '../../state/ConnectContext';
+import { ConnectType } from '../../providers/ConnectContext';
 import { Icons } from '../../assets';
 import { DeliveryInfoCard } from './DeliveryInfoCard';
 import { NEW_MULTI_SIG } from './index';
