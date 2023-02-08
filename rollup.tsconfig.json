@@ -19,7 +19,7 @@
       "@services/*": ["services/*"],
       "@views/*": ["views/*"],
       "@lib/*": ["/*"],
-      "@lib/interfaces": ["/*"],
+      "@lib/interfaces": ["/interfaces/index.ts"],
       "@enums/*": ["domain/enums/*"],
       "@lib/interfaces/*": ["interfaces/*"],
       "@constants/*": ["domain/constants/*"],
