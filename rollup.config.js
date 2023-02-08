@@ -105,7 +105,7 @@ export default [{
       useTsconfigDeclarationDir: true,
       tsconfig: "rollup.tsconfig.json",
     }),
-    typescriptPaths()],
+    typescriptPaths(),
 
     // babel({
     //   configFile: "./rollup.babel.json",
