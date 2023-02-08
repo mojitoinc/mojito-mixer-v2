@@ -102,7 +102,8 @@ module.exports = {
     '@typescript-eslint/no-shadow': 2,
 
     //nextjs
-    "@next/next/no-img-element": "off"
+    "@next/next/no-img-element": "off",
+    '@typescript-eslint/no-var-requires': 0,
 
   },
   ignorePatterns: ["dist/*", "generated.tsx", "graphqlGenerated.tsx"]

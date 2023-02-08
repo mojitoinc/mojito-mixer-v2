@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react';
-import { wireTransferInstructions, creditCardInstructions } from '@lib/config';
+import { wireTransferInstructions, creditCardInstructions } from '../config';
 
 export interface ConfigurationType {
   billing?: {

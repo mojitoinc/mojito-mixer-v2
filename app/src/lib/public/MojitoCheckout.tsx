@@ -1,14 +1,15 @@
 import { ThemeProvider, GlobalStyles } from '@mui/material';
 import React, { useMemo } from 'react';
+import Modal from 'react-modal';
 import {
   ConfigurationContext,
   ConfigurationType,
   DefaultConfiguration,
   makeUIConfiguration,
-} from '@providers/ConfigurationProvider';
-import { makeTheme, styles } from '@lib/theme';
-import MojitoCheckoutView from '@views/index';
-import { ThemeConfiguration } from '@lib/interfaces';
+} from '../providers/ConfigurationProvider';
+import { makeTheme, styles } from '../theme';
+import MojitoCheckoutView from '../views/index';
+import { ThemeConfiguration } from '../interfaces';
 import {
   DeliveryContext,
   Delivery,
@@ -17,11 +18,10 @@ import {
   PaymentProvider,
   DebugProvider,
   ErrorProvider,
-} from '@lib/providers';
-import { MojitoApiProvider } from '@lib/state/MojitoApiProvider';
-import { ConnectProvider } from '@lib/state/ConnectContext';
-import Modal from 'react-modal';
-import { SardineEnvironment } from '@lib/config';
+} from '../providers';
+import { MojitoApiProvider } from '../state/MojitoApiProvider';
+import { ConnectProvider } from '../state/ConnectContext';
+import { SardineEnvironment } from '../config';
 
 declare global {
   interface Window {

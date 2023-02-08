@@ -1,6 +1,6 @@
-import { SardineEnvironment, SardineConfig } from '@lib/config';
 import { useCallback, useRef, useEffect } from 'react';
 import { uuid } from 'uuidv4';
+import { SardineEnvironment, SardineConfig } from '../config';
 
 export const useSardine = (sardineEnvironment: SardineEnvironment, enableSardine?: boolean) => {
   const element = useRef<HTMLScriptElement>();

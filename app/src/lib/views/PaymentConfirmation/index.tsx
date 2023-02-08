@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useQuery } from '@apollo/client';
-import { paymentMethodsQuery } from '@lib/queries/billing';
-import { usePayment, useDelivery } from '@lib/providers';
-import { PaymentMethod } from '@lib/interfaces';
+import { paymentMethodsQuery } from '../../queries/billing';
+import { usePayment, useDelivery } from '../../providers';
+import { PaymentMethod } from '../../interfaces';
 import ConfirmationView from './ConfirmationView';
 
 const PaymentConfirmationContainer = () => {

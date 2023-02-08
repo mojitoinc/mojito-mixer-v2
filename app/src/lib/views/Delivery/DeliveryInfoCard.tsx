@@ -1,10 +1,10 @@
-import { MixTheme } from '@lib/theme';
 import { Card, useTheme, Box, Typography, Divider, Stack } from '@mui/material';
 import React, { useCallback } from 'react';
-import { Icons } from '@lib/assets';
-import { BillingFormData, PaymentData, useContainer, ContainerTypes } from '@lib/providers';
-import { PaymentTypes } from '@lib/constants';
-import { CopyButton } from '@lib/components';
+import { MixTheme } from '../../theme';
+import { Icons } from '../../assets';
+import { BillingFormData, PaymentData, useContainer, ContainerTypes } from '../../providers';
+import { PaymentTypes } from '../../constants';
+import { CopyButton } from '../../components';
 
 interface DeliveryInfoCardProps {
   billingInfo: BillingFormData | undefined;

@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import CopyIcon from '@mui/icons-material/ContentCopy';
 import { SxProps, Theme, useTheme } from '@mui/material';
-import { MixTheme } from '@lib/theme';
+import { MixTheme } from '../../theme';
 
 interface CopyProps {
   copyValue: string;

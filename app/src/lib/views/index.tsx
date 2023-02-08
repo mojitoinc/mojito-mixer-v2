@@ -1,15 +1,15 @@
 import { Box, useTheme } from '@mui/material';
 import React, { useEffect } from 'react';
-import { Header, Stepper } from '@lib/components';
-import { MixTheme } from '@lib/theme';
-import CostBreakDownContainer from '@views/CostBreakDown';
-import ConfirmationContainer from '@views/PaymentConfirmation';
-import { PaymentContainer } from '@views/Payment';
-import { Delivery } from '@views/Delivery';
-import { useContainer, ContainerTypes, useError } from '@lib/providers';
-import LoadingContainer from '@views/Loading';
-import ErrorContainer from '@views/Error';
-import { useSardine } from '@lib/hooks';
+import { Header, Stepper } from '../components';
+import { MixTheme } from '../theme';
+import CostBreakDownContainer from './CostBreakDown';
+import ConfirmationContainer from './PaymentConfirmation';
+import { PaymentContainer } from './Payment';
+import { Delivery } from './Delivery';
+import { useContainer, ContainerTypes, useError } from '../providers';
+import LoadingContainer from './Loading';
+import ErrorContainer from './Error';
+import { useSardine } from '../hooks';
 import BillingContainer from './Billing';
 import { SardineEnvironment } from '..';
 

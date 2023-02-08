@@ -1,10 +1,10 @@
-import { Button } from '@lib/components';
-import { MixTheme } from '@lib/theme';
 import { Box, Card, Typography, useTheme } from '@mui/material';
 import React, { useMemo } from 'react';
-import { PaymentStatus, PaymentTypes } from '@lib/constants';
-import { usePaymentInfo } from '@lib/hooks';
-import { useUIConfiguration } from '@lib/providers';
+import { Button } from '../../components';
+import { MixTheme } from '../../theme';
+import { PaymentStatus, PaymentTypes } from '../../constants';
+import { usePaymentInfo } from '../../hooks';
+import { useUIConfiguration } from '../../providers';
 import RowItem from './RowItem';
 
 interface ConfirmationViewProps {
