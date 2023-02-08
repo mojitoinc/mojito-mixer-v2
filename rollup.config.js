@@ -106,6 +106,14 @@ export default [{
       useTsconfigDeclarationDir: true,
       tsconfig: "rollup.tsconfig.json",
     }),
+    copy({
+      assets: [
+        // You can include directories
+        "src/assets",
+        // You can also include files
+        "src/external/buffer.bin",
+      ],
+    }),
 
     // babel({
     //   configFile: "./rollup.babel.json",
