@@ -46,6 +46,8 @@
   "dependencies": {
     "@apollo/client": "3.7.3",
     "@auth0/auth0-react": "^1.12.0",
+    "@emotion/react": "^11.9.3",
+    "@emotion/styled": "^11.9.3",
     "@ethersproject/abstract-provider": "^5.7.0",
     "@ethersproject/abstract-signer": "^5.7.0",
     "@ethersproject/providers": "^5.7.2",
@@ -82,7 +84,8 @@
     "uuidv4": "^6.2.13",
     "web3-utils": "^1.7.4",
     "web3modal": "^1.9.12",
-    "yup": "^0.32.11"
+    "yup": "^0.32.11",
+    "@mojitonft/mojito-mixers": "git+https://github.com/mojitoinc/mojito-mixer-v2.git#8f564402ac8b8a4b261f0a8ca745f206caa9a301"
   },
   "devDependencies": {
     "@babel/core": "^7.20.12",

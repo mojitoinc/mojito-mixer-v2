@@ -44,6 +44,7 @@ stories.add('Hide GooglePay', () => {
     <MojitoCheckout
       show
       debug
+      uri={''}
       uiConfiguration={{
         billing: {
           expressCheckoutConfig: {

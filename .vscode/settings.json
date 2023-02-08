@@ -6,5 +6,9 @@
   "eslint.workingDirectories": [
     "./app",
   ],
-  "editor.rulers": [80, 120, 160]
+  "editor.rulers": [
+    80,
+    120,
+    160
+  ]
 }

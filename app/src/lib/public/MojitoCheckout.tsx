@@ -22,6 +22,7 @@ import {
 import { MojitoApiProvider } from '../state/MojitoApiProvider';
 import { ConnectProvider } from '../state/ConnectContext';
 import { SardineEnvironment } from '../config';
+import { ProvidersInjectorProps, withProviders } from '../providers/ProvidersInjector';
 
 declare global {
   interface Window {
@@ -38,8 +39,8 @@ interface MojitoCheckoutProps {
   sardineEnvironment?: SardineEnvironment;
   enableSardine?: boolean;
 }
-
-const MojitoCheckout = ({
+const MojitoCheckout: React.FC<MojitoCheckoutProps> = ({
+// const MojitoCheckout = ({
   uiConfiguration = DefaultConfiguration,
   theme,
   show,
@@ -80,7 +81,7 @@ const MojitoCheckout = ({
         },
       }}>
       <DebugProvider debug={ debug }>
-        <MojitoApiProvider>
+        {/* <MojitoApiProvider> */}
           <ThemeProvider theme={ themes }>
             <DeliveryContext.Provider value={ deliveryConfiguration }>
               <ConfigurationContext.Provider value={ uiConfigurations }>
@@ -100,9 +101,12 @@ const MojitoCheckout = ({
               </ConfigurationContext.Provider>
             </DeliveryContext.Provider>
           </ThemeProvider>
-        </MojitoApiProvider>
+        {/* </MojitoApiProvider> */}
       </DebugProvider>
     </Modal>
   );
 };
-export default MojitoCheckout;
+export type PUICheckoutProps = MojitoCheckoutProps & ProvidersInjectorProps;
+ const PUIMojitoCheckout: React.FC<PUICheckoutProps> = withProviders(MojitoCheckout);
+
+export default PUIMojitoCheckout;
