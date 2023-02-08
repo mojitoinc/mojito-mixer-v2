@@ -46,13 +46,13 @@ export const ProviderInjector: React.FC<ProvidersInjectorProps> = ({
   //     throw new Error(EXCEPTIONS.DEV.APOLLO_PROVIDER_MISSING);
   //   }
   // }, [apolloClient, uri]);
-
-  return (
+console.log('uri',{uri})
+  return uri ? (
     <AuthorizedApolloProvider apolloClient={ apolloClient } uri={ uri } getAuthenticationToken={ getAuthenticationToken }>
       {/* { theme ? <ThemeProvider theme={ theme }>{ children }</ThemeProvider> : children } */}
       {children}
     </AuthorizedApolloProvider>
-  );
+  ) : <>{children}</>;
 };
 
 export function withThemeProvider<P extends object>(Component: React.ComponentType<P>) {

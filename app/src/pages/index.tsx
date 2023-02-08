@@ -6,7 +6,7 @@ import { UserOrg } from 'interface/meQuery';
 import { DropdownOptions } from 'component/shared/DropDown';
 import { useFormik } from 'formik';
 // import * as Yup from 'yup';
-import { CheckoutLayout } from '../layout/Checkout.Layout';
+import { CheckoutLayout } from '../layout/CheckoutLayout';
 
 export interface ConfigurationValues {
   organization?: string;
@@ -71,6 +71,7 @@ const HomePage: React.FC = () => {
 
   const getAuthenticationToken = useCallback(async () => {
     const token = await getIdTokenClaims();
+    console.log('token',{token})
     // eslint-disable-next-line no-underscore-dangle
     return token?.__raw || "";
   }, [getIdTokenClaims]);

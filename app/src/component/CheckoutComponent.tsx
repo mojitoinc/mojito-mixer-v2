@@ -1,6 +1,7 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import { MojitoCheckout } from '../lib';
 import React, { useCallback } from 'react';
+import { useRouter } from 'next/router';
 
 interface CheckoutProps {
   show: boolean;
@@ -10,15 +11,14 @@ export const CheckoutComponent: React.FC<CheckoutProps> = ({
   show,
   paymentId,
 }: CheckoutProps) => {
+ 
+  const router = useRouter();
 
-  const { loginWithPopup, isAuthenticated, isLoading: isAuthenticatedLoading, getIdTokenClaims } = useAuth0();
+  const onClickGoToMarketPlace = useCallback(() => {
+    router.replace('/');
+  }, [router]);
 
-  const getAuthenticationToken = useCallback(async () => {
-    const token = await getIdTokenClaims();
-    // eslint-disable-next-line no-underscore-dangle
-    return token?.__raw || "";
-  }, [getIdTokenClaims]);
-  
+
   return (
     <MojitoCheckout
       debug
@@ -28,6 +28,11 @@ export const CheckoutComponent: React.FC<CheckoutProps> = ({
         quantity: 1,
         paymentId,
         collectionItemId: '64e99437-ac2e-45bc-b4a6-4750985b4e81',
+      }}
+      uiConfiguration={{
+        paymentConfiguration: {
+          onClickGoToMarketPlace,
+        },
       }}
       show={show} uri={undefined} getAuthenticationToken={undefined} />
   );
