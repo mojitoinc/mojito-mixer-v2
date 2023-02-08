@@ -1,5 +1,5 @@
-// import { MojitoCheckout, RuntimeConfiguration } from '../lib';
-import { MojitoCheckout, RuntimeConfiguration } from '@mojitonft/mojito-mixers';
+import { MojitoCheckout, RuntimeConfiguration } from '../lib';
+// import { MojitoCheckout, RuntimeConfiguration } from '@mojitonft/mojito-mixers';
 import React, { useCallback, useMemo } from 'react';
 import {
   Box,
