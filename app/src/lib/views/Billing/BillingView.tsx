@@ -1,7 +1,7 @@
 import { Box, Card, Typography, useTheme } from '@mui/material';
 import React from 'react';
-import { useUIConfiguration, BillingFormData } from '../../providers';
 import { FormikErrors } from 'formik';
+import { useUIConfiguration, BillingFormData } from '../../providers';
 import { Button, TextInput } from '../../components';
 import { MixTheme } from '../../theme';
 import BillingForm from './BillingForm';

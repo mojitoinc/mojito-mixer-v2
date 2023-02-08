@@ -6,8 +6,8 @@ import {
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { useAuth0 } from '@auth0/auth0-react';
-import { RuntimeConfiguration } from '../config';
 import React, { FC } from 'react';
+import { RuntimeConfiguration } from '../config';
 import { useDebug } from '../providers';
 
 interface MojitoApiProviderProps {

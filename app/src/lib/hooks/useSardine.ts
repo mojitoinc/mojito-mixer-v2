@@ -1,14 +1,14 @@
-import { SardineEnvironment, SardineConfig } from '../config';
 import { useCallback, useRef, useEffect } from 'react';
 import { uuid } from 'uuidv4';
+import { SardineEnvironment, SardineConfig } from '../config';
 
 export const useSardine = (sardineEnvironment: SardineEnvironment, enableSardine?: boolean) => {
   const element = useRef<HTMLScriptElement>();
   useEffect(() => {
     return () => {
-      (element.current) && document.body.removeChild(element.current as HTMLScriptElement);
+      if (element.current) document.body.removeChild(element.current as HTMLScriptElement);
     };
-  });
+  }, [element]);
   const setup = useCallback(() => {
     if (!enableSardine) { return; }
 

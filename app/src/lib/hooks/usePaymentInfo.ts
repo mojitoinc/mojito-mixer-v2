@@ -1,7 +1,7 @@
+import { useEffect, useState } from 'react';
 import { CollectionItem, Taxes, ReserveNow } from '../interfaces';
 import { BillingFormData, PaymentData } from '../providers';
 import { CookieService } from '../service/CookieService';
-import { useEffect, useState } from 'react';
 
 interface PaymentInfo {
   billingInfo?: BillingFormData;
@@ -32,7 +32,11 @@ const usePaymentInfo = (): PaymentInfo => {
     const lotData = getObject(reserveLotData) as ReserveNow;
     const taxData = getObject(taxes) as Taxes;
     const collection = getObject(collectionData) as CollectionItem;
-
+    // CookieService.billing.remove();
+    // CookieService.paymentInfo.remove();
+    // CookieService.taxes.remove();
+    // CookieService.reserveLotData.remove();
+    // CookieService.collectionData.remove();
     setPaymentData({
       billingInfo,
       paymentInfo,

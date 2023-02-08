@@ -1,7 +1,3 @@
-import { TextInput, CreditCardDropdown } from '../../components';
-import { CreditCardFormType, PaymentMethod } from '../../interfaces';
-import { useBilling } from '../../providers';
-import { MixTheme } from '../../theme';
 import {
   Box,
   Checkbox,
@@ -11,6 +7,10 @@ import {
 } from '@mui/material';
 import { FormikErrors } from 'formik';
 import React, { useCallback } from 'react';
+import { TextInput, CreditCardDropdown } from '../../components';
+import { CreditCardFormType, PaymentMethod } from '../../interfaces';
+import { useBilling } from '../../providers';
+import { MixTheme } from '../../theme';
 
 interface CreditCardProps {
   creditCardList: PaymentMethod[];

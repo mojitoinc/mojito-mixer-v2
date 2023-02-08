@@ -1,6 +1,6 @@
-import { Button, LinedText } from '../../components';
 import { Box, useTheme } from '@mui/material';
 import React from 'react';
+import { Button, LinedText } from '../../components';
 import { MixTheme } from '../../theme';
 import { Icons } from '../../assets';
 

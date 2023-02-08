@@ -1,5 +1,6 @@
 import { ThemeProvider, GlobalStyles } from '@mui/material';
 import React, { useMemo } from 'react';
+import Modal from 'react-modal';
 import {
   ConfigurationContext,
   ConfigurationType,
@@ -20,7 +21,6 @@ import {
 } from '../providers';
 import { MojitoApiProvider } from '../state/MojitoApiProvider';
 import { ConnectProvider } from '../state/ConnectContext';
-import Modal from 'react-modal';
 import { SardineEnvironment } from '../config';
 
 declare global {
@@ -55,6 +55,15 @@ const MojitoCheckout = ({
     [uiConfiguration],
   );
 
+  // useEffect(() => {
+  //   const params = new URLSearchParams(window.location.search);
+
+  //   params.delete(THREEDS_FLOW_SEARCH_PARAM_SUCCESS_KEY);
+  //   // window.location.replace(pathnameOrUrl);
+  //   window.history.replaceState(null, '', window.location.pathname);
+
+  //   // params.delete(THREEDS_FLOW_SEARCH_PARAM_ERROR_KEY);
+  // }, []);
   return (
     <Modal
       ariaHideApp={ false }

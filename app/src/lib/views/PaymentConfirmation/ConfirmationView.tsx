@@ -1,7 +1,7 @@
-import { Button } from '../../components';
-import { MixTheme } from '../../theme';
 import { Box, Card, Typography, useTheme } from '@mui/material';
 import React, { useMemo } from 'react';
+import { Button } from '../../components';
+import { MixTheme } from '../../theme';
 import { PaymentStatus, PaymentTypes } from '../../constants';
 import { usePaymentInfo } from '../../hooks';
 import { useUIConfiguration } from '../../providers';

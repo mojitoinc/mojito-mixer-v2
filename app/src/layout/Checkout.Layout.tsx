@@ -18,6 +18,7 @@ import {
   PaymentMethodTypes,
 } from 'pages';
 import { FormikErrors } from 'formik';
+import { useRouter } from 'next/router';
 
 export interface CheckboxOptions {
   field: string;
@@ -76,6 +77,9 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
   values,
   setFieldValue,
 }: CheckoutProps) => {
+  const router = useRouter();
+
+
   const handleFieldChange = useCallback(
     async (fieldName: string, value: boolean | string) => {
       await setFieldValue(fieldName, value);
@@ -106,6 +110,11 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
     },
     [handleFieldChange],
   );
+
+  const onClickGoToMarketPlace = useCallback(() => {
+    router.replace('/');
+  }, [router]);
+
 
   return (
     <>
@@ -250,6 +259,9 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
                 wire: Boolean(values.wire ?? true),
               },
               showDiscountCode: Boolean(values.discountCode ?? true),
+            },
+            paymentConfiguration: {
+              onClickGoToMarketPlace,
             },
           }}
           show={ show } />

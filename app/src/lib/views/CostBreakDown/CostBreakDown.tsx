@@ -1,11 +1,11 @@
 import React from 'react';
 
+import { Box, Divider, Typography, useTheme } from '@mui/material';
 import { Button, TextInput } from '../../components';
 import { Icons } from '../../assets';
 import { CollectionItem, Taxes } from '../../interfaces';
 import { useContainer, ContainerTypes, useUIConfiguration, useDelivery } from '../../providers';
 import { MixTheme } from '../../theme';
-import { Box, Divider, Typography, useTheme } from '@mui/material';
 
 interface CostBreakDownProps {
   taxes:Taxes;

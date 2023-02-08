@@ -1,7 +1,7 @@
-import MojitoCheckout from '../../lib/public/MojitoCheckout';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react';
+import MojitoCheckout from '../../lib/public/MojitoCheckout';
 import { THREEDS_FLOW_SEARCH_PARAM_SUCCESS_KEY } from '../../lib';
 
 const SuccessPage: NextPage = () => {
@@ -17,6 +17,7 @@ const SuccessPage: NextPage = () => {
   }, []);
 
   useEffect(() => {
+    console.log('paymentId', { paymentId });
     if (paymentId === '') router.replace('/');
   }, [paymentId, router]);
 

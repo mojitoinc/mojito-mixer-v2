@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { paymentMethodsQuery } from '../../queries/billing';
 import { useLazyQuery, useQuery } from '@apollo/client';
+import { paymentMethodsQuery } from '../../queries/billing';
 import { CreditCardFormType, PaymentMethod } from '../../interfaces';
 import { PaymentTypes } from '../../constants';
 import { ContainerTypes, useContainer, useDelivery, useBilling, useUIConfiguration, PaymentData, usePayment } from '../../providers';

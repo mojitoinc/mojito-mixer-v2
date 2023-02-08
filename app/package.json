@@ -46,8 +46,6 @@
   "dependencies": {
     "@apollo/client": "3.7.3",
     "@auth0/auth0-react": "^1.12.0",
-    "@emotion/react": "^11.10.5",
-    "@emotion/styled": "^11.10.5",
     "@ethersproject/abstract-provider": "^5.7.0",
     "@ethersproject/abstract-signer": "^5.7.0",
     "@ethersproject/providers": "^5.7.2",
