@@ -1,7 +1,7 @@
 import { useMemo, useCallback } from 'react';
 import { useApolloClient } from '@apollo/client';
-import { publicKeyQuery, getPaymentNotificationQuery } from '@lib/queries/creditCard';
-import { useDebug } from '@lib/providers';
+import { publicKeyQuery, getPaymentNotificationQuery } from '../queries/creditCard';
+import { useDebug } from '../providers';
 
 
 export interface APIClientOptions {

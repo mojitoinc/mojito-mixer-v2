@@ -1,11 +1,11 @@
 import { useLazyQuery, useMutation } from '@apollo/client';
-import { useEncryptCardData } from '@lib/hooks';
+import { useEncryptCardData } from './useEncryptCard';
 import { CreditCardFormType, ReserveNow } from '@lib/interfaces';
-import { reserveNowBuyLotQuery } from '@lib/queries/invoiceDetails';
-import { createPaymentMethodQuery, createPaymentQuery, getPaymentMethodStatus } from '@lib/queries/Payment';
+import { reserveNowBuyLotQuery } from '../queries/invoiceDetails';
+import { createPaymentMethodQuery, createPaymentQuery, getPaymentMethodStatus } from '../queries/Payment';
 import { formCreatePaymentMethodObject } from '@views/Delivery/Delivery.service';
 import { useMemo, useCallback } from 'react';
-import { BillingFormData, useDebug } from '@lib/providers';
+import { BillingFormData, useDebug } from '../providers';
 import { useAPIService } from './useAPIService';
 
 
