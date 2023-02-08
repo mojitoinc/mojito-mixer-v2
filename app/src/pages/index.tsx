@@ -66,7 +66,15 @@ export interface PaymentMethodTypes {
 
 const HomePage: React.FC = () => {
   const [show, setShow] = useState<boolean>(false);
-  const { isAuthenticated } = useAuth0();
+
+  const { loginWithPopup, isAuthenticated, isLoading: isAuthenticatedLoading, getIdTokenClaims } = useAuth0();
+
+  const getAuthenticationToken = useCallback(async () => {
+    const token = await getIdTokenClaims();
+    // eslint-disable-next-line no-underscore-dangle
+    return token?.__raw || "";
+  }, [getIdTokenClaims]);
+  
   const { values, handleChange, setFieldValue } = useFormik({
     initialValues: {
       organization: '',
@@ -135,6 +143,7 @@ const HomePage: React.FC = () => {
       onOpen={ handleOpen }
       isAuthenticated={ isAuthenticated }
       organizationOptions={ organizations }
+      getAuthenticationToken= { getAuthenticationToken }
       handleChange={ handleChange }
       setFieldValue={ setFieldValue }
       values={ values } />

@@ -1,4 +1,4 @@
-import { MojitoCheckout } from '@mojitonft/mojito-mixers';
+import { MojitoCheckout, RuntimeConfiguration } from '../lib';
 import React, { useCallback, useMemo } from 'react';
 import {
   Box,
@@ -29,6 +29,7 @@ export interface CheckboxOptions {
 interface CheckoutProps {
   show: boolean;
   onOpen: () => void;
+  getAuthenticationToken: () => Promise<string>;
   isAuthenticated: boolean;
   organizationOptions: DropdownOptions[];
   handleChange: any;
@@ -76,6 +77,7 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
   handleChange,
   values,
   setFieldValue,
+  getAuthenticationToken,
 }: CheckoutProps) => {
   const router = useRouter();
 
@@ -235,6 +237,8 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
       { isAuthenticated && (
         <MojitoCheckout
           debug
+          uri={ RuntimeConfiguration.API_HOST_URL }
+          getAuthenticationToken={getAuthenticationToken}
           deliveryConfiguration={{
             orgId,
             lotId: values.lotId ?? '',
@@ -264,7 +268,7 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
               onClickGoToMarketPlace,
             },
           }}
-          show={ show } />
+          show={show} />
       ) }
     </>
   );

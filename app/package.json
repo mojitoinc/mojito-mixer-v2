@@ -85,7 +85,7 @@
     "web3-utils": "^1.7.4",
     "web3modal": "^1.9.12",
     "yup": "^0.32.11",
-    "@mojitonft/mojito-mixers": "git+https://github.com/mojitoinc/mojito-mixer-v2.git#41376968f95559a0b25144902275f306be4927b9"
+    "@mojitonft/mojito-mixers": "git+https://github.com/mojitoinc/mojito-mixer-v2.git#8f564402ac8b8a4b261f0a8ca745f206caa9a301"
   },
   "devDependencies": {
     "@babel/core": "^7.20.12",

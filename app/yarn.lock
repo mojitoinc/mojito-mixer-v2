@@ -2037,9 +2037,9 @@
   resolved "https://registry.yarnpkg.com/@metamask/safe-event-emitter/-/safe-event-emitter-2.0.0.tgz#af577b477c683fad17c619a78208cede06f9605c"
   integrity sha512-/kSXhY692qiV1MXu6EeOZvg5nECLclxNXcKCxJ3cXQgYuRymRHpdx/t7JXfsK+JLjwA1e1c1/SBrlQYpusC29Q==
 
-"@mojitonft/mojito-mixers@git+https://github.com/mojitoinc/mojito-mixer-v2.git#41376968f95559a0b25144902275f306be4927b9":
+"@mojitonft/mojito-mixers@git+https://github.com/mojitoinc/mojito-mixer-v2.git#8f564402ac8b8a4b261f0a8ca745f206caa9a301":
   version "0.0.6"
-  resolved "git+https://github.com/mojitoinc/mojito-mixer-v2.git#41376968f95559a0b25144902275f306be4927b9"
+  resolved "git+https://github.com/mojitoinc/mojito-mixer-v2.git#8f564402ac8b8a4b261f0a8ca745f206caa9a301"
   dependencies:
     "@apollo/client" "3.7.3"
     "@auth0/auth0-react" "^1.12.0"
