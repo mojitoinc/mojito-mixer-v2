@@ -1,8 +1,7 @@
-import { useApolloClient } from '@apollo/client';
-import { publicKeyQuery } from '@lib/queries/creditCard';
 import { useCallback } from 'react';
 import { useDebug } from '@lib/providers';
 import { encryptCardData as encryptCardDataUtil } from '../utils/encryptionUtils';
+import { useAPIService } from './useAPIService';
 
 export interface EncryptCardDataOptions {
   number?: string;
@@ -21,18 +20,15 @@ export interface UseEncryptCardDataOptions {
 export function useEncryptCardData({ orgID }: UseEncryptCardDataOptions): [
   (encryptCardDataOptions: EncryptCardDataOptions) => Promise<UseEncryptedDataResult>,
 ] {
-  const debug = useDebug('EncryptCard');
-  const client = useApolloClient();
+  const debug = useDebug('useEncryptCardData');
+  const { getCreditCardPublicKey } = useAPIService();
 
   // Changed from usePaymentKeyQuery + skip: true to usePaymentKeyLazyQuery due to https://github.com/apollographql/apollo-client/issues/9101.
   // const [fetchPaymentKey, { data, loading }] = useLazyQuery(publicKeyQuery);
 
   const encryptCardData = useCallback(async (encryptCardDataOptions: EncryptCardDataOptions) => {
     debug.info('start', orgID);
-    const paymentKeyResult = await client.query({
-      query: publicKeyQuery,
-      variables: { orgID },
-    });
+    const paymentKeyResult = await getCreditCardPublicKey(orgID);
 
     debug.info('start-publicKeyQuery', paymentKeyResult);
 
@@ -54,7 +50,7 @@ export function useEncryptCardData({ orgID }: UseEncryptCardDataOptions): [
       keyID,
       encryptedCardData,
     };
-  }, [client, orgID, debug]);
+  }, [orgID, debug, getCreditCardPublicKey]);
 
   return [encryptCardData];
 }

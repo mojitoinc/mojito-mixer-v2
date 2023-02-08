@@ -5,8 +5,8 @@ import { reserveNowBuyLotQuery } from '@lib/queries/invoiceDetails';
 import { createPaymentMethodQuery, createPaymentQuery, getPaymentMethodStatus } from '@lib/queries/Payment';
 import { formCreatePaymentMethodObject } from '@views/Delivery/Delivery.service';
 import { useMemo, useCallback } from 'react';
-import { BillingFormData, useDebug, useError } from '@lib/providers';
-import { useAPIService } from './useAPIClient';
+import { BillingFormData, useDebug } from '@lib/providers';
+import { useAPIService } from './useAPIService';
 
 
 export interface PaymentData {
@@ -47,7 +47,6 @@ export interface UseCreatePaymentData {
 
 export const useCreatePayment = (paymentInfo: PaymentData | undefined, orgId: string | undefined): UseCreatePaymentData => {
   const debug = useDebug('useCreatePayment');
-  const { setError } = useError();
   const { getPaymentNotification } = useAPIService();
   const [createPaymentMethod] = useMutation(createPaymentMethodQuery);
   const [createPayment] = useMutation(createPaymentQuery);
@@ -174,11 +173,11 @@ export const useCreatePayment = (paymentInfo: PaymentData | undefined, orgId: st
     debug,
     orgId,
     paymentInfo,
-    setError,
     createPayment,
     createPaymentMethod,
     encryptCardData,
     paymentMethodStatus,
+    getPaymentNotification,
     getInvoiceData,
   ]);
 
@@ -234,10 +233,8 @@ export const useCreatePayment = (paymentInfo: PaymentData | undefined, orgId: st
     }
     throw new Error('unable to create paymentMethod');
   }, [
-    debug,
     paymentInfo,
     orgId,
-    setError,
     paymentMethodStatus,
     createPaymentMethod,
     createPayment,

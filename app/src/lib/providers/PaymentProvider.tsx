@@ -1,9 +1,4 @@
-import { useLazyQuery, useMutation } from '@apollo/client';
-import { useEncryptCardData } from '@lib/hooks';
 import { CreditCardFormType, ReserveNow } from '@lib/interfaces';
-import { getPaymentNotificationQuery } from '@lib/queries/creditCard';
-import { reserveNowBuyLotQuery } from '@lib/queries/invoiceDetails';
-import { createPaymentMethodQuery, createPaymentQuery, getPaymentMethodStatus } from '@lib/queries/Payment';
 import { CookieService } from '@lib/service/CookieService';
 import React, { createContext, useContext, useState, useMemo, useCallback } from 'react';
 import { useDebug, useError } from '@lib/providers';
@@ -46,12 +41,6 @@ export const PaymentProvider = ({ children }: { children?: React.ReactNode }) =>
   const { billingInfo, collectionData, taxes } = useBilling();
   const { orgId, lotId, quantity, invoiceId } = useDelivery();
   const { setContainerState } = useContainer();
-  const [createPaymentMethod] = useMutation(createPaymentMethodQuery);
-  const [createPayment] = useMutation(createPaymentQuery);
-  const [encryptCardData] = useEncryptCardData({ orgID: orgId ?? '' });
-  const [paymentMethodStatus] = useLazyQuery(getPaymentMethodStatus);
-  const [paymentNotification] = useLazyQuery(getPaymentNotificationQuery);
-  const [reserveNow] = useMutation(reserveNowBuyLotQuery);
   const { makeCreditCardPurchase, makeWireTransferPurchase } = useCreatePayment(paymentInfo, orgId);
 
   const saveToCookies = useCallback((paymentData: PaymentData, reserveLotData:ReserveNow) => {
@@ -80,9 +69,10 @@ export const PaymentProvider = ({ children }: { children?: React.ReactNode }) =>
     }
   }, [
     debug,
-    orgId,
-    paymentInfo,
     billingInfo,
+    invoiceId,
+    lotId,
+    quantity,
     setError,
     saveToCookies,
     setContainerState,
@@ -94,7 +84,7 @@ export const PaymentProvider = ({ children }: { children?: React.ReactNode }) =>
     try {
       const paymentReceipt = await makeWireTransferPurchase({ deliveryAddress, lotId, quantity: quantity ?? 1, invoiceId, billingInfo });
 
-      debug.success('paymentData', { paymentReceipt });
+      debug.success('paymentData-wire', { paymentReceipt });
 
       saveToCookies(paymentReceipt.paymentData, paymentReceipt.reserveLotData);
       setPaymentInfo(paymentReceipt.paymentData);
@@ -106,16 +96,15 @@ export const PaymentProvider = ({ children }: { children?: React.ReactNode }) =>
     }
   }, [
     debug,
-    paymentInfo,
     billingInfo,
-    orgId,
+    invoiceId,
+    lotId,
+    quantity,
     setError,
-    paymentMethodStatus,
     setContainerState,
     setPaymentInfo,
-    createPaymentMethod,
-    createPayment,
     saveToCookies,
+    makeWireTransferPurchase,
   ]);
 
 
