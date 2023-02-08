@@ -111,6 +111,7 @@ export default [{
       targets: [
         { src: 'src/assets/*.svg', dest: 'dist/esm/src/assets' },
         { src: 'src/assets/*.svg', dest: 'dist/cjs/src/assets' },
+        { src: 'node_modules/country-state-city/lib/assets', dest: 'dist/cjs/node_modules/country-state-city/lib' },
       ]
     }),
 
