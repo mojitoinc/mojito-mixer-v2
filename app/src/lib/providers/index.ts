@@ -4,7 +4,7 @@ import ErrorProvider, { useError } from './ErrorProvider';
 export * from './BillingProvider';
 export * from './ContainerStateProvider';
 export * from './UIConfigurationProvider';
-export * from './DeliveryProvider';
+export * from './CheckoutProvider';
 export * from './PaymentProvider';
 
 export { DebugProvider, useDebug, ErrorProvider, useError };

@@ -12,7 +12,7 @@ import {
 } from '../queries/invoiceDetails';
 import { CollectionItem, Taxes } from '../interfaces';
 import { collectionByIdQuery } from '../queries/collection';
-import { useDelivery } from './DeliveryProvider';
+import { useCheckout } from './CheckoutProvider';
 
 export interface BillingFormData {
   email?: string;
@@ -36,7 +36,7 @@ const BillingContext = createContext<Billing>({} as Billing);
 
 export const BillingProvider = ({ children }: { children?: React.ReactNode }) => {
   const [billingInfo, setBillingInfo] = useState<BillingFormData>();
-  const { quantity, orgId, collectionItemId } = useDelivery();
+  const { quantity, orgId, collectionItemId } = useCheckout();
 
   const [fetchCollection, { data: collection }] = useLazyQuery(collectionByIdQuery);
 

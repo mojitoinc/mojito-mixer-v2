@@ -8,7 +8,7 @@ import { PaymentTypes } from '../../constants';
 import {
   ContainerTypes,
   useContainer,
-  useDelivery,
+  useCheckout,
   useBilling,
   useUIConfiguration,
   PaymentData,
@@ -20,7 +20,7 @@ import { meQuery } from '../../queries/me';
 import PaymentContainerView from './PaymentContainer';
 
 export const PaymentContainer = () => {
-  const { orgId } = useDelivery();
+  const { orgId } = useCheckout();
 
   const { setPaymentInfo, paymentInfo } = usePayment();
   const { setContainerState } = useContainer();

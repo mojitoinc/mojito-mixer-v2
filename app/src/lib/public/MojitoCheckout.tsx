@@ -8,8 +8,8 @@ import { makeTheme, styles } from '../theme';
 import MojitoCheckoutView from '../views/index';
 import { ThemeConfiguration } from '../interfaces';
 import {
-  DeliveryContext,
-  Delivery,
+  CheckoutContext,
+  CheckoutOptions,
   ContainerStateProvider,
   BillingProvider,
   PaymentProvider,
@@ -29,7 +29,7 @@ declare global {
 
 interface MojitoCheckoutProps {
   uiConfiguration?: UIConfiguration;
-  deliveryConfiguration: Delivery;
+  deliveryConfiguration: CheckoutOptions;
   theme?: ThemeConfiguration;
   show: boolean;
   debug?: boolean;
@@ -78,7 +78,7 @@ const MojitoCheckout: React.FC<MojitoCheckoutProps> = ({
       }}>
       <DebugProvider debug={ debug }>
         <ThemeProvider theme={ themes }>
-          <DeliveryContext.Provider value={ deliveryConfiguration }>
+          <CheckoutContext.Provider value={ deliveryConfiguration }>
             <UIConfigurationContext.Provider value={ uiConfigurations }>
               <ContainerStateProvider
                 paymentId={ deliveryConfiguration?.paymentId }>
@@ -94,7 +94,7 @@ const MojitoCheckout: React.FC<MojitoCheckoutProps> = ({
                 </ErrorProvider>
               </ContainerStateProvider>
             </UIConfigurationContext.Provider>
-          </DeliveryContext.Provider>
+          </CheckoutContext.Provider>
         </ThemeProvider>
       </DebugProvider>
     </Modal>
