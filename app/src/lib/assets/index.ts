@@ -1,21 +1,23 @@
-const logo = require('./logo.svg');
-const rightArrow = require('./arrow-right.svg');
-const background = require('./background.svg');
-const item = require('./item.svg');
-const gpay = require('./gpay.svg');
-const applepay = require('./applepay.svg');
-const metamask = require('./metamask.svg');
-const walletConnect = require('./wallet-connect.svg');
-const wireTransfer = require('./wiretransfer.svg');
-const lock = require('./lock.svg');
-const creditCards = require('./creditcards.svg');
-const gpayDark = require('./gpay-dark.svg');
-const applepayDark = require('./applepay-dark.svg');
-const visaCard = require('./visa.svg');
-const masterCard = require('./masterCard.svg');
-const americanExpress = require('./americanExpress.svg');
-const loading = require('./loading.svg');
-const walletAddress = require('./walletAddress.svg');
+const BASE_URL = 'https://raw.githubusercontent.com/mojitoinc/mojito-mixer-v2/develop/app/src/lib/assets/';
+
+const logo = BASE_URL + 'logo.svg';
+const rightArrow = BASE_URL + './arrow-right.svg';
+const background = BASE_URL + './background.svg';
+const item = BASE_URL + './item.svg';
+const gpay = BASE_URL + './gpay.svg';
+const applepay = BASE_URL + './applepay.svg';
+const metamask = BASE_URL + './metamask.svg';
+const walletConnect = BASE_URL + './wallet-connect.svg';
+const wireTransfer = BASE_URL + './wiretransfer.svg';
+const lock = BASE_URL + './lock.svg';
+const creditCards = BASE_URL + './creditcards.svg';
+const gpayDark = BASE_URL + './gpay-dark.svg';
+const applepayDark = BASE_URL + './applepay-dark.svg';
+const visaCard = BASE_URL + './visa.svg';
+const masterCard = BASE_URL + './masterCard.svg';
+const americanExpress = BASE_URL + './americanExpress.svg';
+const loading = BASE_URL + './loading.svg';
+const walletAddress = BASE_URL + './walletAddress.svg';
 
 
 export const DEFAULT_ERROR_IMAGE_SRC = 'https://raw.githubusercontent.com/mojitoinc/mojito-mixers/main/app/src/lib/assets/mojito-error-loader.gif';
