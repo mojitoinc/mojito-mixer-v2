@@ -6,7 +6,7 @@ import {
   useTheme,
 } from '@mui/material';
 import { FormikErrors } from 'formik';
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { TextInput, CreditCardDropdown } from '../../components';
 import { CreditCardFormType, PaymentMethod } from '../../interfaces';
 import { useBilling } from '../../providers';
@@ -33,6 +33,12 @@ export const CreditCardForm = ({
 }: CreditCardProps) => {
   const theme = useTheme<MixTheme>();
   const { billingInfo } = useBilling();
+
+  const isNewCreditCard = useMemo(()=>{
+    if (values?.isNew || (creditCardList && creditCardList.length === 0)){
+      return true;
+    }
+  },[values, creditCardList]);
 
   const handleCardChange = useCallback(
     (val: string) => {
@@ -80,7 +86,7 @@ export const CreditCardForm = ({
   return (
     <>
       <CreditCardDropdown
-        value={ values?.cardId }
+        value={ isNewCreditCard ? 'true' : values?.cardId }
         onChange={ handleCardChange }
         error={ errors?.cardId }
         title="Card info"
@@ -92,7 +98,7 @@ export const CreditCardForm = ({
           Phone number is mandatory for credit card payment
         </FormHelperText>
       ) }
-      { values?.isNew && (
+      { isNewCreditCard && (
         <Box display="flex" justifyContent="space-between">
           <TextInput
             value={ values?.firstName }
@@ -120,7 +126,7 @@ export const CreditCardForm = ({
             type="text" />
         </Box>
       ) }
-      { values?.isNew && (
+      { isNewCreditCard && (
         <TextInput
           value={ values?.cardNumber }
           onChange={ formatCardNumber }
@@ -175,7 +181,7 @@ export const CreditCardForm = ({
         NFTs purchased by credit card can only be transferred to your multi-sig
         wallet and cannot be transferred out for 14 days.
       </Typography>
-      { values?.isNew && (
+      { isNewCreditCard && (
         <Box display="flex" alignItems="center" marginTop={ 2 }>
           <Checkbox
             sx={{ padding: 0 }}

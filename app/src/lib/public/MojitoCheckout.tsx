@@ -79,8 +79,6 @@ const MojitoCheckout: React.FC<MojitoCheckoutProps> = ({
           padding: 0,
         },
       }}>
-      <input style={{ width: 320, height: 50, backgroundColor: 'red' }} placeholder="enter" />
-
       <DebugProvider debug={ debug }>
         <ThemeProvider theme={ themes }>
           <DeliveryContext.Provider value={ deliveryConfiguration }>
