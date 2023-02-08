@@ -8,7 +8,7 @@ const useSardine = (sardineEnvironment, enableSardine) => {
     const element = useRef();
     useEffect(() => {
         return () => {
-            document.body.removeChild(element.current);
+            (element.current) && document.body.removeChild(element.current);
         };
     });
     const setup = useCallback(() => {

@@ -12,7 +12,7 @@ const useSardine = (sardineEnvironment, enableSardine) => {
     const element = React.useRef();
     React.useEffect(() => {
         return () => {
-            document.body.removeChild(element.current);
+            (element.current) && document.body.removeChild(element.current);
         };
     });
     const setup = React.useCallback(() => {

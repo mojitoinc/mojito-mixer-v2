@@ -1,4 +1,4 @@
-import MojitoCheckout from '@lib/public/MojitoCheckout';
+import { MojitoCheckout } from '@mojitonft/mojito-mixers';
 import React from 'react';
 
 interface CheckoutProps {
