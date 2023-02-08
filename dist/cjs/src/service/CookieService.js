@@ -8,7 +8,7 @@ class CookieStorage {
     constructor(key) {
         this.setValue = (value) => {
             this.cookies.set(this.key, value, {
-                maxAge: 15 * 60,
+                maxAge: 5 * 60,
             });
         };
         this.getValue = () => {
@@ -18,7 +18,7 @@ class CookieStorage {
             return undefined;
         };
         this.remove = () => {
-            this.cookies.remove(this.key);
+            this.cookies.remove(this.key, { path: '/' });
         };
         this.key = key;
         this.cookies = new Cookies["default"]();

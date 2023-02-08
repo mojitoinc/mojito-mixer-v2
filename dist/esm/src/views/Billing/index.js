@@ -22,6 +22,7 @@ import { useLazyQuery } from '../../../node_modules/@apollo/client/react/hooks/u
 import '../../../node_modules/@apollo/client/react/parser/index.js';
 import '../../../node_modules/@apollo/client/errors/index.js';
 import '../../../node_modules/@apollo/client/react/hooks/useQuery.js';
+import { uuid } from 'uuidv4';
 import { paymentMethodsQuery } from '../../queries/billing.js';
 import { useDebug } from '../../providers/DebugProvider.js';
 import '../../providers/ErrorProvider.js';
@@ -30,7 +31,6 @@ import { useContainer, ContainerTypes } from '../../providers/ContainerStateProv
 import '../../providers/ConfigurationProvider.js';
 import { useDelivery } from '../../providers/DeliveryProvider.js';
 import { usePayment } from '../../providers/PaymentProvider.js';
-import { uuid } from 'uuidv4';
 import BillingView from './BillingView.js';
 
 const BillingContainer = () => {

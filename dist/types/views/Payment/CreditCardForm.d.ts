@@ -1,6 +1,6 @@
 /// <reference types="react" />
-import { CreditCardFormType, PaymentMethod } from '../../interfaces';
 import { FormikErrors } from 'formik';
+import { CreditCardFormType, PaymentMethod } from '../../interfaces';
 interface CreditCardProps {
     creditCardList: PaymentMethod[];
     values: CreditCardFormType;

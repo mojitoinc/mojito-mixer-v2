@@ -1,6 +1,6 @@
 /// <reference types="react" />
-import { PaymentTypes } from '../../constants';
 import { FormikErrors } from 'formik';
+import { PaymentTypes } from '../../constants';
 import { CreditCardFormType, PaymentMethod } from '../../interfaces';
 import { BillingFormData } from '../../providers';
 import { WireTransferFormData } from './WireTransferForm';

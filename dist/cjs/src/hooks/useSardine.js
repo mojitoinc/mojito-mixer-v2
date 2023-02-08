@@ -2,19 +2,20 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
+var React = require('react');
+var uuidv4 = require('uuidv4');
 require('../config/RuntimeConfiguration.js');
 var SardineConfig = require('../config/SardineConfig.js');
 require('../config/paymentConfiguration.js');
-var React = require('react');
-var uuidv4 = require('uuidv4');
 
 const useSardine = (sardineEnvironment, enableSardine) => {
     const element = React.useRef();
     React.useEffect(() => {
         return () => {
-            (element.current) && document.body.removeChild(element.current);
+            if (element.current)
+                document.body.removeChild(element.current);
         };
-    });
+    }, [element]);
     const setup = React.useCallback(() => {
         if (!enableSardine) {
             return;

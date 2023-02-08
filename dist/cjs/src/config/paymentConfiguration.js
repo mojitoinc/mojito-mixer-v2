@@ -10,7 +10,7 @@ require('../../node_modules/@mui/utils/esm/refType.js');
 var React = require('react');
 require('../../node_modules/@mui/utils/esm/integerPropType.js');
 require('@emotion/styled');
-require('../../node_modules/@emotion/react/dist/emotion-react.esm.js');
+require('@emotion/react');
 require('../../node_modules/@mui/styled-engine/StyledEngineProvider/StyledEngineProvider.js');
 require('../../node_modules/@mui/styled-engine/GlobalStyles/GlobalStyles.js');
 require('../../node_modules/@mui/system/esm/borders.js');

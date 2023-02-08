@@ -10,7 +10,6 @@ import '../../../node_modules/yup/es/date.js';
 import { create } from '../../../node_modules/yup/es/object.js';
 import '../../../node_modules/yup/es/Reference.js';
 import 'property-expr';
-import { paymentMethodsQuery } from '../../queries/billing.js';
 import '../../../node_modules/@apollo/client/core/index.js';
 import '../../../node_modules/@apollo/client/utilities/globals/index.js';
 import '../../../node_modules/@apollo/client/utilities/graphql/storeUtils.js';
@@ -23,6 +22,7 @@ import { useLazyQuery } from '../../../node_modules/@apollo/client/react/hooks/u
 import '../../../node_modules/@apollo/client/react/parser/index.js';
 import '../../../node_modules/@apollo/client/errors/index.js';
 import { useQuery } from '../../../node_modules/@apollo/client/react/hooks/useQuery.js';
+import { paymentMethodsQuery } from '../../queries/billing.js';
 import { PaymentTypes } from '../../constants/index.js';
 import '../../providers/DebugProvider.js';
 import '../../providers/ErrorProvider.js';

@@ -10,7 +10,7 @@ require('../../node_modules/@mui/utils/esm/refType.js');
 var React = require('react');
 require('../../node_modules/@mui/utils/esm/integerPropType.js');
 require('@emotion/styled');
-require('../../node_modules/@emotion/react/dist/emotion-react.esm.js');
+require('@emotion/react');
 require('../../node_modules/@mui/styled-engine/StyledEngineProvider/StyledEngineProvider.js');
 require('../../node_modules/@mui/styled-engine/GlobalStyles/GlobalStyles.js');
 require('../../node_modules/@mui/system/esm/borders.js');
@@ -297,6 +297,7 @@ require('../../node_modules/@mui/material/Typography/typographyClasses.js');
 require('../../node_modules/@mui/material/Zoom/Zoom.js');
 var GlobalStyles = require('../../node_modules/@mui/material/GlobalStyles/GlobalStyles.js');
 require('../../node_modules/@mui/base/FocusTrap/FocusTrap.js');
+var Modal = require('react-modal');
 var ConfigurationProvider = require('../providers/ConfigurationProvider.js');
 var CreateTheme = require('../theme/CreateTheme.js');
 var GlobalStyles$1 = require('../theme/GlobalStyles.js');
@@ -309,7 +310,6 @@ var DeliveryProvider = require('../providers/DeliveryProvider.js');
 var PaymentProvider = require('../providers/PaymentProvider.js');
 var MojitoApiProvider = require('../state/MojitoApiProvider.js');
 var ConnectContext = require('../state/ConnectContext.js');
-var Modal = require('react-modal');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -319,6 +319,13 @@ var Modal__default = /*#__PURE__*/_interopDefaultLegacy(Modal);
 const MojitoCheckout = ({ uiConfiguration = ConfigurationProvider.DefaultConfiguration, theme, show, debug = false, deliveryConfiguration, enableSardine = false, sardineEnvironment = 'production', }) => {
     const themes = React.useMemo(() => CreateTheme.makeTheme(theme), [theme]);
     const uiConfigurations = React.useMemo(() => ConfigurationProvider.makeUIConfiguration(uiConfiguration), [uiConfiguration]);
+    // useEffect(() => {
+    //   const params = new URLSearchParams(window.location.search);
+    //   params.delete(THREEDS_FLOW_SEARCH_PARAM_SUCCESS_KEY);
+    //   // window.location.replace(pathnameOrUrl);
+    //   window.history.replaceState(null, '', window.location.pathname);
+    //   // params.delete(THREEDS_FLOW_SEARCH_PARAM_ERROR_KEY);
+    // }, []);
     return (React__default["default"].createElement(Modal__default["default"], { ariaHideApp: false, isOpen: show, style: {
             content: {
                 width: '100%',

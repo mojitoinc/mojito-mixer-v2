@@ -1,5 +1,5 @@
-import { CreditCardFormType } from '../interfaces';
 import React from 'react';
+import { CreditCardFormType } from '../interfaces';
 export interface PaymentData {
     creditCardData?: CreditCardFormType;
     wireData?: {

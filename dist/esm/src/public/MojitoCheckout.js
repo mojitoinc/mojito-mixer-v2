@@ -6,7 +6,7 @@ import '../../node_modules/@mui/utils/esm/refType.js';
 import React__default, { useMemo } from 'react';
 import '../../node_modules/@mui/utils/esm/integerPropType.js';
 import '@emotion/styled';
-import '../../node_modules/@emotion/react/dist/emotion-react.esm.js';
+import '@emotion/react';
 import '../../node_modules/@mui/styled-engine/StyledEngineProvider/StyledEngineProvider.js';
 import '../../node_modules/@mui/styled-engine/GlobalStyles/GlobalStyles.js';
 import '../../node_modules/@mui/system/esm/borders.js';
@@ -293,6 +293,7 @@ import '../../node_modules/@mui/material/Typography/typographyClasses.js';
 import '../../node_modules/@mui/material/Zoom/Zoom.js';
 import GlobalStyles from '../../node_modules/@mui/material/GlobalStyles/GlobalStyles.js';
 import '../../node_modules/@mui/base/FocusTrap/FocusTrap.js';
+import Modal from 'react-modal';
 import { makeUIConfiguration, ConfigurationContext, DefaultConfiguration } from '../providers/ConfigurationProvider.js';
 import { makeTheme } from '../theme/CreateTheme.js';
 import { styles } from '../theme/GlobalStyles.js';
@@ -305,11 +306,17 @@ import { DeliveryContext } from '../providers/DeliveryProvider.js';
 import { PaymentProvider } from '../providers/PaymentProvider.js';
 import { MojitoApiProvider } from '../state/MojitoApiProvider.js';
 import { ConnectProvider } from '../state/ConnectContext.js';
-import Modal from 'react-modal';
 
 const MojitoCheckout = ({ uiConfiguration = DefaultConfiguration, theme, show, debug = false, deliveryConfiguration, enableSardine = false, sardineEnvironment = 'production', }) => {
     const themes = useMemo(() => makeTheme(theme), [theme]);
     const uiConfigurations = useMemo(() => makeUIConfiguration(uiConfiguration), [uiConfiguration]);
+    // useEffect(() => {
+    //   const params = new URLSearchParams(window.location.search);
+    //   params.delete(THREEDS_FLOW_SEARCH_PARAM_SUCCESS_KEY);
+    //   // window.location.replace(pathnameOrUrl);
+    //   window.history.replaceState(null, '', window.location.pathname);
+    //   // params.delete(THREEDS_FLOW_SEARCH_PARAM_ERROR_KEY);
+    // }, []);
     return (React__default.createElement(Modal, { ariaHideApp: false, isOpen: show, style: {
             content: {
                 width: '100%',

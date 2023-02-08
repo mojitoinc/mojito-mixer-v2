@@ -1,18 +1,5 @@
 import { __awaiter } from '../../node_modules/tslib/tslib.es6.js';
-import '../../node_modules/@apollo/client/core/index.js';
-import '../../node_modules/@apollo/client/utilities/globals/index.js';
 import { useCallback } from 'react';
-import '../../node_modules/@apollo/client/utilities/graphql/storeUtils.js';
-import '../../node_modules/@apollo/client/utilities/graphql/transform.js';
-import '../../node_modules/@apollo/client/utilities/common/mergeDeep.js';
-import '../../node_modules/@apollo/client/utilities/observables/Observable.js';
-import '../../node_modules/@apollo/client/utilities/observables/Concast.js';
-import '../../node_modules/@apollo/client/utilities/common/canUse.js';
-import { useApolloClient } from '../../node_modules/@apollo/client/react/hooks/useApolloClient.js';
-import '../../node_modules/@apollo/client/react/hooks/useQuery.js';
-import '../../node_modules/@apollo/client/react/parser/index.js';
-import '../../node_modules/@apollo/client/errors/index.js';
-import { publicKeyQuery } from '../queries/creditCard.js';
 import { useDebug } from '../providers/DebugProvider.js';
 import '../providers/ErrorProvider.js';
 import '../providers/BillingProvider.js';
@@ -21,19 +8,17 @@ import '../providers/ConfigurationProvider.js';
 import '../providers/DeliveryProvider.js';
 import '../providers/PaymentProvider.js';
 import { encryptCardData } from '../utils/encryptionUtils.js';
+import { useAPIService } from './useAPIService.js';
 
 function useEncryptCardData({ orgID }) {
-    const debug = useDebug('EncryptCard');
-    const client = useApolloClient();
+    const debug = useDebug('useEncryptCardData');
+    const { getCreditCardPublicKey } = useAPIService();
     // Changed from usePaymentKeyQuery + skip: true to usePaymentKeyLazyQuery due to https://github.com/apollographql/apollo-client/issues/9101.
     // const [fetchPaymentKey, { data, loading }] = useLazyQuery(publicKeyQuery);
     const encryptCardData$1 = useCallback((encryptCardDataOptions) => __awaiter(this, void 0, void 0, function* () {
         var _a, _b;
         debug.info('start', orgID);
-        const paymentKeyResult = yield client.query({
-            query: publicKeyQuery,
-            variables: { orgID },
-        });
+        const paymentKeyResult = yield getCreditCardPublicKey(orgID);
         debug.info('start-publicKeyQuery', paymentKeyResult);
         // const paymentKeyResult = await fetchPaymentKey({ variables: { orgID } });
         debug.info('end', { paymentKeyResult });
@@ -47,7 +32,7 @@ function useEncryptCardData({ orgID }) {
             keyID,
             encryptedCardData,
         };
-    }), [client, orgID, debug]);
+    }), [orgID, debug, getCreditCardPublicKey]);
     return [encryptCardData$1];
 }
 

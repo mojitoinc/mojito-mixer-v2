@@ -1,4 +1,3 @@
-import { Icons } from '../../assets/index.js';
 import '../../../node_modules/@mui/utils/esm/elementAcceptingRef.js';
 import '../../../node_modules/@mui/utils/esm/elementTypeAcceptingRef.js';
 import 'react-is';
@@ -7,7 +6,7 @@ import '../../../node_modules/@mui/utils/esm/refType.js';
 import React__default from 'react';
 import '../../../node_modules/@mui/utils/esm/integerPropType.js';
 import '@emotion/styled';
-import '../../../node_modules/@emotion/react/dist/emotion-react.esm.js';
+import '@emotion/react';
 import '../../../node_modules/@mui/styled-engine/StyledEngineProvider/StyledEngineProvider.js';
 import '../../../node_modules/@mui/styled-engine/GlobalStyles/GlobalStyles.js';
 import '../../../node_modules/@mui/system/esm/borders.js';
@@ -294,6 +293,7 @@ import '../../../node_modules/@mui/material/Typography/typographyClasses.js';
 import '../../../node_modules/@mui/material/Zoom/Zoom.js';
 import '../../../node_modules/@mui/material/GlobalStyles/GlobalStyles.js';
 import '../../../node_modules/@mui/base/FocusTrap/FocusTrap.js';
+import { Icons } from '../../assets/index.js';
 
 const LoadingContainer = () => {
     return (React__default.createElement(Box, { display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", height: "100%" },

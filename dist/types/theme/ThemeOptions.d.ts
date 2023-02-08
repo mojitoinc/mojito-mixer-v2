@@ -1,5 +1,5 @@
-import { CheckOutColor, ConfirmationColors, CostBreakDownColors } from '../interfaces';
 import { ThemeOptions, Theme } from '@mui/material/styles';
+import { CheckOutColor, ConfirmationColors, CostBreakDownColors } from '../interfaces';
 export interface ExtendsThemeOptions {
     font?: {
         primary?: string;

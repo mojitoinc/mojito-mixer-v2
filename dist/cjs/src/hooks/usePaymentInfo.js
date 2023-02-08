@@ -2,8 +2,8 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-var CookieService = require('../service/CookieService.js');
 var React = require('react');
+var CookieService = require('../service/CookieService.js');
 
 const getObject = (value) => {
     if (!value || value === 'undefined')
@@ -27,6 +27,11 @@ const usePaymentInfo = () => {
         const lotData = getObject(reserveLotData);
         const taxData = getObject(taxes);
         const collection = getObject(collectionData);
+        // CookieService.billing.remove();
+        // CookieService.paymentInfo.remove();
+        // CookieService.taxes.remove();
+        // CookieService.reserveLotData.remove();
+        // CookieService.collectionData.remove();
         setPaymentData({
             billingInfo,
             paymentInfo,

@@ -1,16 +1,17 @@
+import { useRef, useEffect, useCallback } from 'react';
+import { uuid } from 'uuidv4';
 import '../config/RuntimeConfiguration.js';
 import { SardineConfig } from '../config/SardineConfig.js';
 import '../config/paymentConfiguration.js';
-import { useRef, useEffect, useCallback } from 'react';
-import { uuid } from 'uuidv4';
 
 const useSardine = (sardineEnvironment, enableSardine) => {
     const element = useRef();
     useEffect(() => {
         return () => {
-            (element.current) && document.body.removeChild(element.current);
+            if (element.current)
+                document.body.removeChild(element.current);
         };
-    });
+    }, [element]);
     const setup = useCallback(() => {
         if (!enableSardine) {
             return;

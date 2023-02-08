@@ -14,7 +14,6 @@ require('../../../node_modules/yup/es/date.js');
 var object = require('../../../node_modules/yup/es/object.js');
 require('../../../node_modules/yup/es/Reference.js');
 require('property-expr');
-var billing = require('../../queries/billing.js');
 require('../../../node_modules/@apollo/client/core/index.js');
 require('../../../node_modules/@apollo/client/utilities/globals/index.js');
 require('../../../node_modules/@apollo/client/utilities/graphql/storeUtils.js');
@@ -27,6 +26,7 @@ var useLazyQuery = require('../../../node_modules/@apollo/client/react/hooks/use
 require('../../../node_modules/@apollo/client/react/parser/index.js');
 require('../../../node_modules/@apollo/client/errors/index.js');
 var useQuery = require('../../../node_modules/@apollo/client/react/hooks/useQuery.js');
+var billing = require('../../queries/billing.js');
 var index = require('../../constants/index.js');
 require('../../providers/DebugProvider.js');
 require('../../providers/ErrorProvider.js');

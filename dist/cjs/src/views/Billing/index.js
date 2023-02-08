@@ -26,6 +26,7 @@ var useLazyQuery = require('../../../node_modules/@apollo/client/react/hooks/use
 require('../../../node_modules/@apollo/client/react/parser/index.js');
 require('../../../node_modules/@apollo/client/errors/index.js');
 require('../../../node_modules/@apollo/client/react/hooks/useQuery.js');
+var uuidv4 = require('uuidv4');
 var billing = require('../../queries/billing.js');
 var DebugProvider = require('../../providers/DebugProvider.js');
 require('../../providers/ErrorProvider.js');
@@ -34,7 +35,6 @@ var ContainerStateProvider = require('../../providers/ContainerStateProvider.js'
 require('../../providers/ConfigurationProvider.js');
 var DeliveryProvider = require('../../providers/DeliveryProvider.js');
 var PaymentProvider = require('../../providers/PaymentProvider.js');
-var uuidv4 = require('uuidv4');
 var BillingView = require('./BillingView.js');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }

@@ -1,6 +1,6 @@
 /// <reference types="react" />
-import { BillingFormData } from '../../providers';
 import { FormikErrors } from 'formik';
+import { BillingFormData } from '../../providers';
 interface BillingFormProps {
     values: BillingFormData;
     errors: FormikErrors<BillingFormData>;
