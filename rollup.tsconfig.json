@@ -19,8 +19,9 @@
       "@services/*": ["services/*"],
       "@views/*": ["views/*"],
       "@lib/*": ["/*"],
+      "@lib/interfaces": ["/*"],
       "@enums/*": ["domain/enums/*"],
-      "@interfaces/*": ["domain/interfaces/*"],
+      "@lib/interfaces/*": ["interfaces/*"],
       "@constants/*": ["domain/constants/*"],
       "@hooks/*": ["utils/hooks/*"]
     },
