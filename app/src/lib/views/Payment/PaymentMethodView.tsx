@@ -5,11 +5,11 @@ import {
   Box,
   Radio,
   CardContent,
-} from '@mui/material';
-import React, { useMemo } from 'react';
-import { Icons } from '../../assets';
-import { PaymentTypes } from '../../constants';
-import { MixTheme } from '../../theme';
+} from "@mui/material";
+import React, { useMemo } from "react";
+import { Icons } from "../../assets";
+import { PaymentTypes } from "../../constants";
+import { MixTheme } from "../../theme";
 
 interface PaymentMethodProps {
   isSelected: string;
@@ -21,7 +21,7 @@ interface PaymentMethodProps {
 }
 
 export const PaymentMethodView = ({
-  isSelected = '',
+  isSelected = "",
   name,
   logo,
   bodyContent,
@@ -43,32 +43,38 @@ export const PaymentMethodView = ({
             ? theme.global?.highlightedText
             : theme.global?.cardBorder
         }`,
-      }}>
+      }}
+    >
       <Box display="flex" alignItems="center" justifyContent="space-between">
         <Box display="flex" alignItems="center">
           <Radio
-            sx={{ padding: '0 9px' }}
-            checked={ isSelected === type }
-            onChange={ handleChange } />
-          { !isCreditCard && (
+            sx={{ padding: "0 9px 0 0" }}
+            checked={isSelected === type}
+            onChange={handleChange}
+          />
+          {!isCreditCard && (
             <Box
-              sx={{ border: `1px solid ${ theme.global?.cardBorder }` }}
+              sx={{ border: `1px solid ${theme.global?.cardBorder}` }}
               width="48px"
               height="24px"
               display="flex"
-              justifyContent="center">
-              <img src={ logo ?? Icons.item } width={ 32 } alt="logo" />
+              justifyContent="center"
+            >
+              <img src={logo ?? Icons.item} width={32} alt="logo" />
             </Box>
-          ) }
+          )}
           <Typography
             variant="subtitle1"
-            sx={{ marginLeft: 1, fontWeight: 700 }}>
-            { name }
+            sx={{ marginLeft: isCreditCard ? 0 : 1, fontWeight: 700 }}
+          >
+            {name}
           </Typography>
         </Box>
-        { Boolean(isCreditCard) && <img src={ logo ?? Icons.item } alt="logo" /> }
+        {Boolean(isCreditCard) && <img src={logo ?? Icons.item} alt="logo" />}
       </Box>
-      { isSelected === type && <CardContent>{ bodyContent }</CardContent> }
+      {isSelected === type && (
+        <CardContent sx={{ padding: 0 }}>{bodyContent}</CardContent>
+      )}
     </Card>
   );
 };

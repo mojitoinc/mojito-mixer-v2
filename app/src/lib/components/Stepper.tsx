@@ -1,8 +1,8 @@
-import { Box, Typography, useTheme } from '@mui/material';
-import React from 'react';
-import { Icons } from '../assets';
-import { MixTheme } from '../theme';
-import { ContainerTypes } from '../providers';
+import { Box, Typography, useTheme } from "@mui/material";
+import React from "react";
+import { Icons } from "../assets";
+import { MixTheme } from "../theme";
+import { ContainerTypes } from "../providers";
 
 interface StepsType {
   title: string;
@@ -10,61 +10,71 @@ interface StepsType {
 }
 const steps: StepsType[] = [
   {
-    title: 'Info',
+    title: "Info",
     value: ContainerTypes.CHECKOUT,
   },
   {
-    title: 'Payment',
+    title: "Payment",
     value: ContainerTypes.PAYMENT,
   },
   {
-    title: 'Delivery',
+    title: "Delivery",
     value: ContainerTypes.DELIVERY,
   },
 ];
 interface StepperProps {
   currentState: string;
 }
-const Stepper = ({
-  currentState,
-}:StepperProps) => {
+const Stepper = ({ currentState }: StepperProps) => {
   const theme = useTheme<MixTheme>();
   return (
     <Box
       sx={{
-        width: '100%',
+        width: "100%",
         backgroundColor: theme.global?.background,
-        display: 'flex',
-        flexDirection: 'row',
-        margin: '8px 0px',
-      }}>
-      { steps.map((item: StepsType, index: number) => {
+        display: "flex",
+        flexDirection: "row",
+        margin: "24px 0px",
+      }}
+    >
+      {steps.map((item: StepsType, index: number) => {
         return (
-          <Box display="flex" flexDirection="row" alignItems="center" key={ item.value }>
+          <Box
+            display="flex"
+            flexDirection="row"
+            alignItems="center"
+            key={item.value}
+          >
             <Typography
               fontWeight="700"
               fontSize="12px"
-              color={ item.value === currentState
-                ? theme.global?.highlightedText
-                : theme.global?.unHighlightedText }>
-              { item.title }
+              color={
+                item.value === currentState
+                  ? theme.global?.highlightedText
+                  : theme.global?.unHighlightedText
+              }
+            >
+              {item.title}
             </Typography>
-            { index !== steps.length - 1 && (
+            {index !== steps.length - 1 && (
               <img
-                src={ Icons.rightArrow }
+                src={Icons.rightArrow}
                 width="14px"
                 height="14px"
                 style={{
-                  margin: '0px 10px',
+                  margin: "0px 10px",
                 }}
                 alt="arrow"
-                color={ item.value === currentState
-                  ? theme.global?.highlightedText
-                  : theme.global?.unHighlightedText } />
-            ) }
+                color={
+                  item.value === currentState
+                    ? theme.global?.highlightedText
+                    : theme.global?.unHighlightedText
+                }
+              />
+            )}
           </Box>
         );
-      }) }
+      })}
     </Box>
   );
 };

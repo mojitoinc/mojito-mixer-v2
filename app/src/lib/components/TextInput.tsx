@@ -6,9 +6,9 @@ import {
   Theme,
   Typography,
   useTheme,
-} from '@mui/material';
-import React, { useCallback } from 'react';
-import { MixTheme } from '../theme';
+} from "@mui/material";
+import React, { useCallback } from "react";
+import { MixTheme } from "../theme";
 
 interface TextInputProps {
   value?: string;
@@ -17,9 +17,9 @@ interface TextInputProps {
   placeholder?: string;
   error?: string;
   sx?: SxProps<Theme>;
-  inputProps?: InputBaseProps['inputProps'];
+  inputProps?: InputBaseProps["inputProps"];
   required?: boolean;
-  type?: React.InputHTMLAttributes<unknown>['type'];
+  type?: React.InputHTMLAttributes<unknown>["type"];
 }
 
 const TextInput = ({
@@ -39,46 +39,54 @@ const TextInput = ({
     (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
       onChange?.(e.target.value);
     },
-    [onChange],
+    [onChange]
   );
 
   return (
     <Box
       sx={{
-        width: '100%',
+        width: "100%",
         ...sx,
-      }}>
-      { title && (
+      }}
+    >
+      {title && (
         <Box
           display="flex"
           flexDirection="row"
           sx={{
-            marginBottom: '6px',
-          }}>
-          <Typography color={ theme.palette?.text?.primary } fontSize="16px">
-            { title }
+            marginBottom: "6px",
+          }}
+        >
+          <Typography
+            variant={"body1"}
+            color={theme.palette?.text?.primary}
+            fontSize="16px"
+          >
+            {title}
           </Typography>
 
-          { required && (
+          {required && (
             <Typography
-              color={ theme.global?.required }
+              color={theme.global?.required}
               fontSize="16px"
-              marginLeft="4px">
+              marginLeft="4px"
+            >
               *
             </Typography>
-          ) }
+          )}
         </Box>
-      ) }
+      )}
       <TextField
-        value={ value }
-        error={ Boolean(error) }
-        placeholder={ placeholder }
-        onChange={ onChangeText }
+        value={value}
+        error={Boolean(error)}
+        placeholder={placeholder}
+        onChange={onChangeText}
         fullWidth
-        inputProps={ inputProps }
+        inputProps={inputProps}
         size="small"
-        helperText={ error }
-        type={ type } />
+        helperText={error}
+        type={type}
+      />
     </Box>
   );
 };

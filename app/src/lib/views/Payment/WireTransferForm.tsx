@@ -1,10 +1,10 @@
-import { Typography, useTheme } from '@mui/material';
-import { FormikErrors } from 'formik';
-import React, { useCallback, useMemo } from 'react';
-import { TextInput, Dropdown, DropdownOptions } from '../../components';
-import { BanksList } from '../../constants';
-import { useCountryOptions } from '../../hooks';
-import { MixTheme } from '../../theme';
+import { Typography, useTheme } from "@mui/material";
+import { FormikErrors } from "formik";
+import React, { useCallback, useMemo } from "react";
+import { TextInput, Dropdown, DropdownOptions } from "../../components";
+import { BanksList } from "../../constants";
+import { useCountryOptions } from "../../hooks";
+import { MixTheme } from "../../theme";
 
 export interface WireTransferFormData {
   accountNumber: string;
@@ -41,82 +41,92 @@ export const WireTransferForm = ({
 
   const formatAccountNumber = useCallback(
     async (value: string) => {
-      const accountNumberLength = values?.accountNumber ? values?.accountNumber?.length : 0;
+      const accountNumberLength = values?.accountNumber
+        ? values?.accountNumber?.length
+        : 0;
       if (accountNumberLength > value.length) {
-        await setFieldValue('accountNumber', value);
+        await setFieldValue("accountNumber", value);
         return;
       }
       const isValid = value.match(/^[\d\s]+$/);
       if (isValid) {
-        const accountNumber = value.split(' ').join('');
-        await setFieldValue('accountNumber', accountNumber.replace(/\d{4}(?=.)/g, '$& '));
+        const accountNumber = value.split(" ").join("");
+        await setFieldValue(
+          "accountNumber",
+          accountNumber.replace(/\d{4}(?=.)/g, "$& ")
+        );
       }
     },
-    [setFieldValue, values],
+    [setFieldValue, values]
   );
   const formatRouterNumber = useCallback(
     async (value: string) => {
       const abaLength = values?.aba ? values?.aba?.length : 0;
       if (abaLength > value.length) {
-        await setFieldValue('aba', value);
+        await setFieldValue("aba", value);
         return;
       }
-      const aba = value.split(' ').join('');
-      await setFieldValue('aba', aba.replace(/^(.{4})(.*)$/, '$1 $2'));
+      const aba = value.split(" ").join("");
+      await setFieldValue("aba", aba.replace(/^(.{4})(.*)$/, "$1 $2"));
     },
-    [setFieldValue, values],
+    [setFieldValue, values]
   );
 
   return (
     <>
-      <Typography variant="body2">
+      <Typography variant="body2" sx={{ marginTop: 2 }}>
         Third-party wire transfers are not accepted.
       </Typography>
       <TextInput
-        value={ values.accountNumber }
+        value={values.accountNumber}
         title="Account Number"
-        onChange={ formatAccountNumber }
+        onChange={formatAccountNumber}
         sx={{
-          marginTop: '16px',
+          marginTop: "16px",
         }}
         placeholder="Enter account number"
         type="text"
-        error={ errors.accountNumber } />
+        error={errors.accountNumber}
+      />
       <TextInput
-        value={ values.aba }
+        value={values.aba}
         title="Routing Number (ABA)"
-        onChange={ formatRouterNumber }
+        onChange={formatRouterNumber}
         sx={{
-          marginTop: '16px',
+          marginTop: "16px",
         }}
         placeholder="Enter routing number"
         type="text"
-        error={ errors.aba } />
+        error={errors.aba}
+      />
       <Dropdown
-        value={ values.bankCountry }
-        onChange={ handleChange('bankCountry') }
+        value={values.bankCountry}
+        onChange={handleChange("bankCountry")}
         title="Bank Country"
-        sx={{ marginRight: '8px', marginTop: 2 }}
+        sx={{ marginRight: "8px", marginTop: 2 }}
         placeholder="Select one"
-        options={ countryOptions }
-        error={ errors.bankCountry } />
+        options={countryOptions}
+        error={errors.bankCountry}
+      />
       <Dropdown
-        value={ values.bankName }
-        onChange={ handleChange('bankName') }
+        value={values.bankName}
+        onChange={handleChange("bankName")}
         title="Bank Name"
         placeholder="Type to search or select"
-        sx={{ marginRight: '8px', marginTop: 2 }}
-        options={ bankOptions }
-        error={ errors.bankName } />
+        sx={{ marginRight: "8px", marginTop: 2 }}
+        options={bankOptions}
+        error={errors.bankName}
+      />
       <Typography
         variant="body2"
         sx={{
           color: theme.global?.cardGrayedText,
-          padding: '12px 16px',
+          padding: "12px 16px",
           marginTop: 2,
           backgroundColor: theme.global?.grayBackground,
-          borderRadius: '4px',
-        }}>
+          borderRadius: "4px",
+        }}
+      >
         Please note that wire transfers usually take 1-3 business days to
         complete and your NFT will not be transferred until payment has been
         settled.
