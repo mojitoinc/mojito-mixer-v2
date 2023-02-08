@@ -2,6 +2,7 @@ import React, { ErrorInfo, useEffect, useMemo } from "react";
 import { Theme, ThemeOptions, ThemeProvider } from "@mui/material/styles";
 import { AuthorizedApolloProvider, AuthorizedApolloProviderProps } from "./AuthorizedApolloProvider";
 import { EXCEPTIONS } from "../constants/exceptions";
+import { ErrorBoundary } from "../components";
 
 export interface CommonProviderProps {
   // eslint-disable-next-line react/no-unused-prop-types
@@ -62,14 +63,16 @@ export function withThemeProvider<P extends object>(Component: React.ComponentTy
     ...componentProps
   }) => {
     return (
-        <ProviderInjector
-          apolloClient={ null }
-          uri=""
-          getAuthenticationToken={ null }
-          theme={ theme }
-          themeOptions={ themeOptions }>
-          <Component { ...componentProps as P } />
-        </ProviderInjector>
+      <ErrorBoundary onCatch={ onCatch }>
+          <ProviderInjector
+            apolloClient={ null }
+            uri=""
+            getAuthenticationToken={ null }
+            theme={ theme }
+            themeOptions={ themeOptions }>
+            <Component { ...componentProps as P } />
+          </ProviderInjector>
+        </ErrorBoundary>
     );
   };
 

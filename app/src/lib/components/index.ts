@@ -6,6 +6,7 @@ import TextInput from './TextInput';
 import CreditCardDropdown from './shared/CreditCardDropdown';
 import LinedText from './shared/LinedText';
 import CopyButton from './shared/CopyButton';
+import { ErrorBoundary } from './shared/ErrorBoundary';
 
 export {
   Button,
@@ -17,4 +18,5 @@ export {
   CreditCardDropdown,
   LinedText,
   CopyButton,
+  ErrorBoundary
 };
