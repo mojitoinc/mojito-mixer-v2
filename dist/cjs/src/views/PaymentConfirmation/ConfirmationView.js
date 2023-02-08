@@ -299,7 +299,6 @@ require('../../../node_modules/@mui/material/Zoom/Zoom.js');
 require('../../../node_modules/@mui/material/GlobalStyles/GlobalStyles.js');
 require('../../../node_modules/@mui/base/FocusTrap/FocusTrap.js');
 var Button = require('../../components/Button.js');
-require('../../assets/index.js');
 require('../../components/Stepper.js');
 require('@mui/icons-material/ContentCopy');
 var index = require('../../constants/index.js');

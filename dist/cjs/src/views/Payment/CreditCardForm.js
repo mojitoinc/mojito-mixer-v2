@@ -299,7 +299,6 @@ require('../../../node_modules/@mui/material/Typography/typographyClasses.js');
 require('../../../node_modules/@mui/material/Zoom/Zoom.js');
 require('../../../node_modules/@mui/material/GlobalStyles/GlobalStyles.js');
 require('../../../node_modules/@mui/base/FocusTrap/FocusTrap.js');
-require('../../assets/index.js');
 require('../../components/Stepper.js');
 var TextInput = require('../../components/TextInput.js');
 var CreditCardDropdown = require('../../components/shared/CreditCardDropdown.js');

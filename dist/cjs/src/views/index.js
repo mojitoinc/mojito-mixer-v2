@@ -300,7 +300,6 @@ require('../../node_modules/@mui/material/GlobalStyles/GlobalStyles.js');
 require('../../node_modules/@mui/base/FocusTrap/FocusTrap.js');
 var Header = require('../components/Header.js');
 var Stepper = require('../components/Stepper.js');
-require('../assets/index.js');
 require('@mui/icons-material/ContentCopy');
 var index$6 = require('./CostBreakDown/index.js');
 var index$3 = require('./PaymentConfirmation/index.js');

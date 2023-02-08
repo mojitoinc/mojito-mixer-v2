@@ -302,7 +302,6 @@ import { useUIConfiguration } from '../../providers/ConfigurationProvider.js';
 import '../../providers/DeliveryProvider.js';
 import '../../providers/PaymentProvider.js';
 import Button from '../../components/Button.js';
-import '../../assets/index.js';
 import '../../components/Stepper.js';
 import TextInput from '../../components/TextInput.js';
 import '@mui/icons-material/ContentCopy';

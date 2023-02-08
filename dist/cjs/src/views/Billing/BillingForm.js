@@ -300,7 +300,6 @@ require('../../../node_modules/@mui/material/GlobalStyles/GlobalStyles.js');
 require('../../../node_modules/@mui/base/FocusTrap/FocusTrap.js');
 var ErrorIcon = require('@mui/icons-material/Error');
 var Dropdown = require('../../components/Dropdown.js');
-require('../../assets/index.js');
 require('../../components/Stepper.js');
 var TextInput = require('../../components/TextInput.js');
 require('@mui/icons-material/ContentCopy');

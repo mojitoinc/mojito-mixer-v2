@@ -295,7 +295,6 @@ import '../../../node_modules/@mui/material/Typography/typographyClasses.js';
 import '../../../node_modules/@mui/material/Zoom/Zoom.js';
 import '../../../node_modules/@mui/material/GlobalStyles/GlobalStyles.js';
 import '../../../node_modules/@mui/base/FocusTrap/FocusTrap.js';
-import '../../assets/index.js';
 import '../../components/Stepper.js';
 import TextInput from '../../components/TextInput.js';
 import CreditCardDropdown from '../../components/shared/CreditCardDropdown.js';

@@ -306,7 +306,6 @@ var ConfigurationProvider = require('../../providers/ConfigurationProvider.js');
 require('../../providers/DeliveryProvider.js');
 require('../../providers/PaymentProvider.js');
 var Button = require('../../components/Button.js');
-require('../../assets/index.js');
 require('../../components/Stepper.js');
 var TextInput = require('../../components/TextInput.js');
 require('@mui/icons-material/ContentCopy');

@@ -296,7 +296,6 @@ import '../../../node_modules/@mui/material/Zoom/Zoom.js';
 import '../../../node_modules/@mui/material/GlobalStyles/GlobalStyles.js';
 import '../../../node_modules/@mui/base/FocusTrap/FocusTrap.js';
 import Dropdown from '../../components/Dropdown.js';
-import '../../assets/index.js';
 import '../../components/Stepper.js';
 import TextInput from '../../components/TextInput.js';
 import '@mui/icons-material/ContentCopy';

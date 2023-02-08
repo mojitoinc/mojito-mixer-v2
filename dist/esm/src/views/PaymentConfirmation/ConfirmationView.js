@@ -295,7 +295,6 @@ import '../../../node_modules/@mui/material/Zoom/Zoom.js';
 import '../../../node_modules/@mui/material/GlobalStyles/GlobalStyles.js';
 import '../../../node_modules/@mui/base/FocusTrap/FocusTrap.js';
 import Button from '../../components/Button.js';
-import '../../assets/index.js';
 import '../../components/Stepper.js';
 import '@mui/icons-material/ContentCopy';
 import { PaymentStatus, PaymentTypes } from '../../constants/index.js';
