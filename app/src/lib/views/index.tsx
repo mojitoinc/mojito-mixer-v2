@@ -1,17 +1,17 @@
-import { Box, useTheme } from "@mui/material";
-import React, { useEffect } from "react";
-import { Header, Stepper } from "../components";
-import { MixTheme } from "../theme";
-import CostBreakDownContainer from "./CostBreakDown";
-import ConfirmationContainer from "./PaymentConfirmation";
-import { PaymentContainer } from "./Payment";
-import { Delivery } from "./Delivery";
-import { useContainer, ContainerTypes, useError } from "../providers";
-import LoadingContainer from "./Loading";
-import ErrorContainer from "./Error";
-import { useSardine } from "../hooks";
-import BillingContainer from "./Billing";
-import { SardineEnvironment } from "..";
+import { Box, useTheme } from '@mui/material';
+import React, { useEffect } from 'react';
+import { Header, Stepper } from '../components';
+import { MixTheme } from '../theme';
+import CostBreakDownContainer from './CostBreakDown';
+import ConfirmationContainer from './PaymentConfirmation';
+import { PaymentContainer } from './Payment';
+import { Delivery } from './Delivery';
+import { useContainer, ContainerTypes, useError } from '../providers';
+import LoadingContainer from './Loading';
+import ErrorContainer from './Error';
+import { useSardine } from '../hooks';
+import BillingContainer from './Billing';
+import { SardineEnvironment } from '..';
 
 interface MojitoCheckoutProps {
   sardineEnvironment: SardineEnvironment;
@@ -31,7 +31,7 @@ const MojitoCheckoutLayout = ({
   }, [setupSardine]);
 
   if (error) {
-    return <ErrorContainer error={error} />;
+    return <ErrorContainer error={ error } />;
   }
   if (containerState === ContainerTypes.LOADING) {
     return <LoadingContainer />;
@@ -40,24 +40,23 @@ const MojitoCheckoutLayout = ({
     <Box
       sx={{
         backgroundColor: theme.global?.background,
-        display: "flex",
-        width: "100%",
-        height: "100%",
-        flexDirection: "row",
-        justifyContent: "space-between",
-      }}
-    >
+        display: 'flex',
+        width: '100%',
+        height: '100%',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+      }}>
       <Box width="100%" padding="40px">
         <Header />
-        {containerState !== ContainerTypes.CONFIRMATION && (
-          <Stepper currentState={containerState} />
-        )}
-        {containerState === ContainerTypes.CHECKOUT && <BillingContainer />}
-        {containerState === ContainerTypes.CONFIRMATION && (
+        { containerState !== ContainerTypes.CONFIRMATION && (
+          <Stepper currentState={ containerState } />
+        ) }
+        { containerState === ContainerTypes.CHECKOUT && <BillingContainer /> }
+        { containerState === ContainerTypes.CONFIRMATION && (
           <ConfirmationContainer />
-        )}
-        {containerState === ContainerTypes.PAYMENT && <PaymentContainer />}
-        {containerState === ContainerTypes.DELIVERY && <Delivery />}
+        ) }
+        { containerState === ContainerTypes.PAYMENT && <PaymentContainer /> }
+        { containerState === ContainerTypes.DELIVERY && <Delivery /> }
       </Box>
       <CostBreakDownContainer />
     </Box>

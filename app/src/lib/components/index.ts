@@ -18,5 +18,5 @@ export {
   CreditCardDropdown,
   LinedText,
   CopyButton,
-  ErrorBoundary
+  ErrorBoundary,
 };

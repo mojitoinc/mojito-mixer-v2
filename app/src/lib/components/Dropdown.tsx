@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback } from 'react';
 import {
   Box,
   FormControl,
@@ -10,8 +10,8 @@ import {
   Theme,
   Typography,
   useTheme,
-} from "@mui/material";
-import { MixTheme } from "../theme";
+} from '@mui/material';
+import { MixTheme } from '../theme';
 
 export interface DropdownOptions {
   label: string | JSX.Element;
@@ -31,7 +31,7 @@ interface DropdownProps {
 }
 
 const Dropdown = ({
-  value = "",
+  value = '',
   title,
   onChange,
   options = [],
@@ -46,49 +46,45 @@ const Dropdown = ({
     (e: SelectChangeEvent<string>) => {
       onChange?.(e.target.value);
     },
-    [onChange]
+    [onChange],
   );
 
   return (
     <Box
       sx={{
-        width: "100%",
+        width: '100%',
         ...sx,
-      }}
-    >
-      {title && (
+      }}>
+      { title && (
         <Box display="flex" flexDirection="row">
           <Typography
             variant="body1"
-            color={theme.palette?.text?.primary}
-            fontSize="16px"
-          >
-            {title}
+            color={ theme.palette?.text?.primary }
+            fontSize="16px">
+            { title }
           </Typography>
 
-          {required && (
+          { required && (
             <Typography
-              color={theme.global?.required}
+              color={ theme.global?.required }
               fontSize="16px"
-              marginLeft="4px"
-            >
+              marginLeft="4px">
               *
             </Typography>
-          )}
+          ) }
         </Box>
-      )}
+      ) }
       <FormControl
         fullWidth
         sx={{
-          marginTop: "6px",
-        }}
-      >
+          marginTop: '6px',
+        }}>
         <Select
-          value={value}
-          disabled={options.length === 0}
+          value={ value }
+          disabled={ options.length === 0 }
           displayEmpty
           fullWidth
-          error={Boolean(error)}
+          error={ Boolean(error) }
           size="small"
           MenuProps={{
             PaperProps: {
@@ -97,23 +93,22 @@ const Dropdown = ({
               },
             },
           }}
-          inputProps={{ "aria-label": "Without label" }}
-          onChange={onChangeValue}
-        >
+          inputProps={{ 'aria-label': 'Without label' }}
+          onChange={ onChangeValue }>
           <MenuItem disabled value="">
-            <Typography color={theme.palette.text?.disabled}>
-              {placeholder}
+            <Typography color={ theme.palette.text?.disabled }>
+              { placeholder }
             </Typography>
           </MenuItem>
-          {options.map((item: DropdownOptions) => {
+          { options.map((item: DropdownOptions) => {
             return (
-              <MenuItem value={item?.value} key={item?.value}>
-                {item.label}
+              <MenuItem value={ item?.value } key={ item?.value }>
+                { item.label }
               </MenuItem>
             );
-          })}
+          }) }
         </Select>
-        {error && <FormHelperText>{error}</FormHelperText>}
+        { error && <FormHelperText>{ error }</FormHelperText> }
       </FormControl>
     </Box>
   );

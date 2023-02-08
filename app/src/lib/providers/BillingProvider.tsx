@@ -77,9 +77,9 @@ export const BillingProvider = ({ children }: { children?: React.ReactNode }) =>
       });
     }
   }, [orgId, taxablePrice, taxQuote]);
-  
+
   useEffect(() => {
-    if (!collectionItemId){return }
+    if (!collectionItemId) { return; }
     fetchCollection({
       variables: {
         id: collectionItemId,
