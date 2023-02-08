@@ -100,12 +100,12 @@ export default [{
     commonjs({
       ignoreGlobal: true,
     }),
+    typescriptPaths(),
 
     typescript({
       useTsconfigDeclarationDir: true,
       tsconfig: "rollup.tsconfig.json",
     }),
-    typescriptPaths(),
 
     // babel({
     //   configFile: "./rollup.babel.json",

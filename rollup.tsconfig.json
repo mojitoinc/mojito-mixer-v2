@@ -15,16 +15,11 @@
     "jsx": "react",
     "isolatedModules": true,
     "paths": {
-      "@components/*": ["components/*"],
-      "@services/*": ["services/*"],
       "@views/*": ["views/*"],
       "@lib/*": ["/*"],
-      "@lib/interfaces": ["/interfaces/index.ts"],
+      "@lib/interfaces": ["/interfaces"],
       "@lib/providers": ["/providers/index.ts"],
-      "@enums/*": ["domain/enums/*"],
-      "@lib/interfaces/*": ["interfaces/*"],
-      "@constants/*": ["domain/constants/*"],
-      "@hooks/*": ["utils/hooks/*"]
+      "@hooks/*": ["hooks/*"]
     },
     "declaration": true,
     "declarationDir": "dist/types"
