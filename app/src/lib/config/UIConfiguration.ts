@@ -22,7 +22,7 @@ export const DefaultUIConfiguration: UIConfiguration = {
   paymentConfirmation: {
     wireTransferInstructions,
     creditCardInstructions,
-    onGoToMarketPlace: () => undefined,
+    onGoTo: () => undefined,
   },
 };
 

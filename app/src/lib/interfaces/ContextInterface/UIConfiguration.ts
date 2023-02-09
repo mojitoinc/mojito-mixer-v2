@@ -19,6 +19,6 @@ export interface UIConfiguration {
     paymentConfirmation?: {
       wireTransferInstructions?: JSX.Element;
       creditCardInstructions?: JSX.Element;
-      onGoToMarketPlace?: () => void;
+      onGoTo?: () => void;
   };
 }
