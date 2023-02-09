@@ -1,24 +1,36 @@
 classDiagram
+
+MojitoUIConfiguration --> BillingUIConfiguration
+MojitoUIConfiguration --> PaymentUIConfiguration
+MojitoUIConfiguration --> CostBreakdownUIConfiguration
+MojitoUIConfiguration --> PaymentConfirmationUIConfiguration
+
 class MojitoUIConfiguration {
     -BillingUIConfiguration billing
     -PaymentUIConfiguration payment
-    -DeliveryUIConfiguration delivery
+    -CostBreakdownUIConfiguration costBreakdown
     -PaymentConfirmationUIConfiguration paymentConfirmation
 }
 class BillingUIConfiguration {
     -Boolean isEnableExpressCheckout
+    -Boolean gpay
+    -Boolean applepay
+    -Boolean walletConnect
+    -Boolean metaMask
 }
 class PaymentUIConfiguration {
-    
+    -Boolean applepay
+    -Boolean gpay
+    -Boolean walletConnect
+    -Boolean wire
+    -Boolean creditCard
 }
-class DeliveryUIConfiguration {
-    
+class CostBreakdownUIConfiguration {
+    -Boolean showDiscountCode
 }
 class PaymentConfirmationUIConfiguration {
-    
+    -Boolean showDiscountCode
+    -JSXElement wireTransferInstructions
+    -JSXElement creditCardInstructions
+    -Event onGoToMarketPlace
 }
-MojitoUIConfiguration --> BillingUIConfiguration
-MojitoUIConfiguration --> PaymentUIConfiguration
-MojitoUIConfiguration --> DeliveryUIConfiguration
-MojitoUIConfiguration --> PaymentConfirmationUIConfiguration
- 

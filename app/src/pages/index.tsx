@@ -71,7 +71,6 @@ const HomePage: React.FC = () => {
 
   const getAuthenticationToken = useCallback(async () => {
     const token = await getIdTokenClaims();
-    console.log('token', { token });
     // eslint-disable-next-line no-underscore-dangle
     return token?.__raw || '';
   }, [getIdTokenClaims]);
