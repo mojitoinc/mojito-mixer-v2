@@ -53,23 +53,21 @@ export const DefaultUIConfiguration: UIConfiguration = {
 
 export const makeUIConfiguration = (configurations: UIConfiguration) => {
   return {
-    uiConfiguration: {
-      costBreakdown:{
-        ...DefaultUIConfiguration?.costBreakdown,
-        ...configurations?.costBreakdown,
-        },
       billing: {
         ...DefaultUIConfiguration?.billing,
         ...configurations?.billing,
       },
+      costBreakdown:{
+        ...DefaultUIConfiguration?.costBreakdown,
+        ...configurations?.costBreakdown,
+        },
       payment: {
         ...DefaultUIConfiguration?.payment,
         ...configurations?.payment,
       },
-    },
-    paymentConfirmation: {
-      ...DefaultUIConfiguration.paymentConfirmation,
-      ...configurations.paymentConfirmation,
-    },
+      paymentConfirmation: {
+        ...DefaultUIConfiguration.paymentConfirmation,
+        ...configurations.paymentConfirmation,
+      },
   } as UIConfiguration;
 };

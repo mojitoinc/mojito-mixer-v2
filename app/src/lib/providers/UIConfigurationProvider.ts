@@ -4,6 +4,6 @@ import { UIConfiguration, DefaultUIConfiguration } from '../config/UIConfigurati
 export const UIConfigurationContext =
   createContext<UIConfiguration>(DefaultUIConfiguration);
 
-export const useUIConfiguration = () => {
-  return useContext(UIConfigurationContext);
+export const useUIConfiguration = (): UIConfiguration => {
+  return useContext<UIConfiguration>(UIConfigurationContext);
 };
