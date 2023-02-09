@@ -1,7 +1,7 @@
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react';
-import {MojitoCheckout, THREEDS_FLOW_SEARCH_PARAM_SUCCESS_KEY } from '../../lib';
+import { MojitoCheckout, THREEDS_FLOW_SEARCH_PARAM_SUCCESS_KEY } from 'lib';
 
 const SuccessPage: NextPage = () => {
   const router = useRouter();
@@ -27,13 +27,13 @@ const SuccessPage: NextPage = () => {
   return paymentId ? (
 
     <MojitoCheckout
-      deliveryConfiguration={{
+      checkoutOptions={{
         paymentId,
       }}
       show
       uiConfiguration={{
-        paymentConfiguration: {
-          onClickGoToMarketPlace,
+        paymentConfirmation: {
+          onGoToMarketPlace: onClickGoToMarketPlace,
         },
       }} />
   ) : null;

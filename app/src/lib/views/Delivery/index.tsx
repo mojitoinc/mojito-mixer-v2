@@ -5,7 +5,7 @@ import { meQuery } from '../../queries/me';
 import {
   addressScreeningQuery,
 } from '../../queries/Payment';
-import { useDelivery, useBilling, usePayment, useDebug } from '../../providers';
+import { useCheckout, useBilling, usePayment, useDebug } from '../../providers';
 import { PaymentTypes, RiskRating } from '../../constants';
 import { useWeb3ModalConnect } from '../../providers/Web3ModalConnect';
 import DeliveryLayout from './Delivery';
@@ -18,7 +18,7 @@ export const Delivery = () => {
     useState<string>('');
   const [walletOptions, setWalletOptions] = useState<DropdownOptions[]>([]);
   const { billingInfo } = useBilling();
-  const { orgId } = useDelivery();
+  const { orgId } = useCheckout();
   const { paymentInfo, onConfirmCreditCardPurchase, onConfirmWireTransferPurchase } = usePayment();
   const { data: meData } = useQuery(meQuery);
   const [addressScreening] = useMutation(addressScreeningQuery);

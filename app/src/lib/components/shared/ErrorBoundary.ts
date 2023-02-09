@@ -1,4 +1,4 @@
-import React, { ErrorInfo } from "react";
+import React, { ErrorInfo } from 'react';
 
 interface ErrorBoundaryProps {
   children: React.ReactNode;
@@ -25,7 +25,7 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
 
     if (useConfirmModal) {
       // eslint-disable-next-line no-alert
-      const retry = window.confirm("Sorry, there was an unexpected error. Do you want to re-open the payment modal?");
+      const retry = window.confirm('Sorry, there was an unexpected error. Do you want to re-open the payment modal?');
 
       if (retry) this.setState({ hasError: false });
     }

@@ -17,7 +17,10 @@ interface MojitoCheckoutProps {
   sardineEnvironment: SardineEnvironment;
   enableSardine: boolean;
 }
-const MojitoCheckoutLayout = ({ sardineEnvironment, enableSardine }:MojitoCheckoutProps) => {
+const MojitoCheckoutLayout = ({
+  sardineEnvironment,
+  enableSardine,
+}: MojitoCheckoutProps) => {
   const theme = useTheme<MixTheme>();
   const { containerState } = useContainer();
   const { error } = useError();
@@ -43,11 +46,15 @@ const MojitoCheckoutLayout = ({ sardineEnvironment, enableSardine }:MojitoChecko
         flexDirection: 'row',
         justifyContent: 'space-between',
       }}>
-      <Box width="100%" padding="30px">
+      <Box width="100%" padding="40px">
         <Header />
-        { containerState !== ContainerTypes.CONFIRMATION && <Stepper currentState={ containerState } /> }
+        { containerState !== ContainerTypes.CONFIRMATION && (
+          <Stepper currentState={ containerState } />
+        ) }
         { containerState === ContainerTypes.CHECKOUT && <BillingContainer /> }
-        { containerState === ContainerTypes.CONFIRMATION && <ConfirmationContainer /> }
+        { containerState === ContainerTypes.CONFIRMATION && (
+          <ConfirmationContainer />
+        ) }
         { containerState === ContainerTypes.PAYMENT && <PaymentContainer /> }
         { containerState === ContainerTypes.DELIVERY && <Delivery /> }
       </Box>

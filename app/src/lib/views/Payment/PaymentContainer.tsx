@@ -12,6 +12,7 @@ import { PaymentInfoCards } from './InfoCards';
 import { PaymentMethodView } from './PaymentMethodView';
 import { WireTransferForm, WireTransferFormData } from './WireTransferForm';
 import { CreditCardForm } from './CreditCardForm';
+import { DebugBox } from '../../components/shared/DebugBox';
 
 interface PaymentContainerProps {
   paymentType: string;
@@ -75,7 +76,9 @@ const PaymentContainer = ({
           boxShadow: `0px 4px 16px ${ theme.global?.cardShadow }`,
           padding: '24px',
         }}>
-        <Typography sx={{ fontSize: '20px' }}>Payment Method</Typography>
+        <Typography sx={{ fontSize: '20px', fontWeight: 500 }}>
+          Payment Method
+        </Typography>
         { config?.creditCard && (
           <PaymentMethodView
             logo={ Icons.creditCards }
@@ -151,8 +154,13 @@ const PaymentContainer = ({
           disabled={ buttonDisabled }
           sx={{
             margin: '24px 0',
+            '&: hover': {
+              backgroundColor: 'rgba(102, 99, 253, 0.8)',
+            },
           }} />
       </Box>
+      <DebugBox value={{creditCardFormValues, wireTransferFormValues, creditCardList}} />
+
     </>
   );
 };

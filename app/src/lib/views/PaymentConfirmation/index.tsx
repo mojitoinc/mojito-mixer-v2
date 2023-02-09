@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { paymentMethodsQuery } from '../../queries/billing';
-import { usePayment, useDelivery } from '../../providers';
+import { usePayment, useCheckout } from '../../providers';
 import { PaymentMethod } from '../../interfaces';
 import ConfirmationView from './ConfirmationView';
 
 const PaymentConfirmationContainer = () => {
-  const { orgId } = useDelivery();
+  const { orgId } = useCheckout();
   const { paymentInfo } = usePayment();
   const [paymentStatus, setPaymentStatus] = useState<string>('');
   const { data: paymentMethodsData } = useQuery(paymentMethodsQuery, {

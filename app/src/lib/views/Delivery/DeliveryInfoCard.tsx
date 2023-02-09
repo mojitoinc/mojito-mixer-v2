@@ -2,7 +2,12 @@ import { Card, useTheme, Box, Typography, Divider, Stack } from '@mui/material';
 import React, { useCallback } from 'react';
 import { MixTheme } from '../../theme';
 import { Icons } from '../../assets';
-import { BillingFormData, PaymentData, useContainer, ContainerTypes } from '../../providers';
+import {
+  BillingFormData,
+  PaymentData,
+  useContainer,
+  ContainerTypes,
+} from '../../providers';
 import { PaymentTypes } from '../../constants';
 import { CopyButton } from '../../components';
 
@@ -59,7 +64,7 @@ export const DeliveryInfoCard = ({
         <Box width="50%" display="flex">
           <Typography
             variant="body2"
-            sx={{ color: theme.global?.cardGrayedText, marginRight: 7 }}>
+            sx={{ color: theme.global?.cardGrayedText, width: '135px' }}>
             Contact info
           </Typography>
           <Typography variant="body2">{ billingInfo?.email }</Typography>
@@ -90,7 +95,7 @@ export const DeliveryInfoCard = ({
         <Box width="50%" display="flex">
           <Typography
             variant="body2"
-            sx={{ color: theme.global?.cardGrayedText, marginRight: 7 }}>
+            sx={{ color: theme.global?.cardGrayedText, width: '135px' }}>
             Billing info
           </Typography>
           <Box>
@@ -142,7 +147,8 @@ export const DeliveryInfoCard = ({
                     paymentInfo?.wireData?.accountNumber?.length ?? 0 - 4,
                   ) }
                 </Typography>
-                <CopyButton copyValue={ paymentInfo?.wireData?.accountNumber ?? '' } />
+                <CopyButton
+                  copyValue={ paymentInfo?.wireData?.accountNumber ?? '' } />
               </Stack>
             </Box>
           ) }

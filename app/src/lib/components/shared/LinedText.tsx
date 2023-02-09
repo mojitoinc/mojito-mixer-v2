@@ -29,7 +29,8 @@ const LinedText = ({ text, capitalize = true }: LinedTextProps) => {
         fontSize="12px"
         margin="0px 10px"
         minWidth={ `${ text.length * 8 }px` }
-        textAlign="center">
+        textAlign="center"
+        variant="subtitle2">
         { capitalize ? text.toUpperCase() : text }
       </Typography>
 

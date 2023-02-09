@@ -1,10 +1,12 @@
 classDiagram  
 MojitoTheme --> MojitoColor
 MojitoTheme --> MojitoFont
-MojitoColor --> BillingColor
-MojitoColor --> PaymentColor
+MojitoColor --> CostBreakDownColor
 MojitoColor --> DeliveryColor
 MojitoColor --> PaymentConfirmationColor
+MojitoColor --> CheckoutColor
+
+MojitoColor --> CheckoutColor
 
 class MojitoTheme {
     -MojitoColor color
@@ -12,30 +14,37 @@ class MojitoTheme {
 }
 class MojitoColor {
     -String primary
+    -String secondary
     -String background
+    -String errorBackground
+    -String cardBackground
     -String text
-    -PaymentColor payment
-    -DeliveryColor delivery
+    -String placeholder
+    -CheckoutColor checkout
+    -CostBreakDownColor delivery
     -PaymentConfirmationColor paymentConfirmation
 }
 class MojitoFont {
     -String primary
     -String secondary
 }
-class BillingColor {
+class CheckoutColor {
     -String continueButtonTextColor
     -String continueButtonBackgroundColor
 } 
-class PaymentColor {
-    -String deliveryButtonTextColor
-    -String deliveryButtonBackgroundColor
+class CostBreakDownColor {
+    -String applyButtonBackground
+    -String applyButtonTextColor
 }
 class DeliveryColor {
     -String deliveryButtonTextColor
     -String deliveryButtonBackgroundColor
 }
 class PaymentConfirmationColor {
-    -String deliveryButtonTextColor
-    -String deliveryButtonBackgroundColor
+    -String processedBackground
+    -String processedTextColor
+    -String awaitingPaymentBackground
+    -String awaitingPaymentTextColor
+    -String copyIconColor
 }
 

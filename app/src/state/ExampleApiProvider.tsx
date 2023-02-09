@@ -6,7 +6,7 @@ import {
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { useAuth0 } from '@auth0/auth0-react';
-import { RuntimeConfiguration } from '@lib/config';
+import { RuntimeConfiguration } from '../constant/RuntimeConfiguration';
 import React, { FC } from 'react';
 
 interface ExampleApiProviderProps {
@@ -22,8 +22,6 @@ export const ExampleApiProvider: FC<ExampleApiProviderProps> = ({ children }) =>
   const authLink = setContext(async (_, { headers }) => {
     // get the authentication token from local storage if it exists
     const token = await getIdTokenClaims();
-    console.log('token', token);
-
     // return the headers to the context so httpLink can read them
     /* eslint no-underscore-dangle: 0 */
     if (token) {

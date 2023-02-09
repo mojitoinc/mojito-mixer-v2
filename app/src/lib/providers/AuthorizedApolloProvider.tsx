@@ -1,8 +1,8 @@
-import React, { useCallback, useMemo } from "react";
-import { ApolloClient, ApolloProvider, InMemoryCache, createHttpLink, NormalizedCacheObject, Context } from "@apollo/client";
-import { useAuth0 } from "@auth0/auth0-react";
-import { setContext } from "@apollo/client/link/context";
-import { isLocalhost } from "../constants";
+import React, { useCallback, useMemo } from 'react';
+import { ApolloClient, ApolloProvider, InMemoryCache, createHttpLink, NormalizedCacheObject, Context } from '@apollo/client';
+import { useAuth0 } from '@auth0/auth0-react';
+import { setContext } from '@apollo/client/link/context';
+import { isLocalhost } from '../constants';
 
 const cache = new InMemoryCache();
 
@@ -43,11 +43,11 @@ export const AuthorizedApolloProvider: React.FC<AuthorizedApolloProviderProps> =
       const context: Context = {
         headers: {
           ...headers,
-          authorization: token ? `Bearer ${ token }` : "",
+          authorization: token ? `Bearer ${ token }` : '',
         },
       };
 
-      if (isLocalhost()) context.headers["origin-overwrite"] = "https://payments-staging.mojito.xyz/";
+      if (isLocalhost()) context.headers['origin-overwrite'] = 'https://payments-staging.mojito.xyz/';
 
       return context;
     });

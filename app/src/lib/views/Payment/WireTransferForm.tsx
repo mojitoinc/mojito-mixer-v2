@@ -41,7 +41,9 @@ export const WireTransferForm = ({
 
   const formatAccountNumber = useCallback(
     async (value: string) => {
-      const accountNumberLength = values?.accountNumber ? values?.accountNumber?.length : 0;
+      const accountNumberLength = values?.accountNumber
+        ? values?.accountNumber?.length
+        : 0;
       if (accountNumberLength > value.length) {
         await setFieldValue('accountNumber', value);
         return;
@@ -49,7 +51,10 @@ export const WireTransferForm = ({
       const isValid = value.match(/^[\d\s]+$/);
       if (isValid) {
         const accountNumber = value.split(' ').join('');
-        await setFieldValue('accountNumber', accountNumber.replace(/\d{4}(?=.)/g, '$& '));
+        await setFieldValue(
+          'accountNumber',
+          accountNumber.replace(/\d{4}(?=.)/g, '$& '),
+        );
       }
     },
     [setFieldValue, values],
@@ -69,7 +74,7 @@ export const WireTransferForm = ({
 
   return (
     <>
-      <Typography variant="body2">
+      <Typography variant="body2" sx={{ marginTop: 2 }}>
         Third-party wire transfers are not accepted.
       </Typography>
       <TextInput

@@ -1,20 +1,19 @@
 classDiagram
 MojitoCheckout --> UserInfo
-MojitoCheckout --> Billing
-MojitoCheckout --> Payment
-MojitoCheckout --> Delivery
-MojitoCheckout --> Confirmation
+MojitoCheckout --> CheckoutOptions
 MojitoCheckout --> MojitoTheme
-MojitoCheckout --> MojitoLocalization
 MojitoCheckout --> MojitoUIConfiguration 
 
 
 class MojitoCheckout{
-    -String discountCode
     -uiConfiguration MojitoUIConfiguration
-    -localization MojitoLocalization
+    -checkoutOptions CheckoutOptions
     -UserInfo userInfo
     -MojitoTheme theme
+    -Boolean show
+    -Boolean debug
+    -Boolean enableSardine
+    -String sardineEnvironment
 }
 class UserInfo {
     -String name
@@ -23,16 +22,19 @@ class UserInfo {
 class MojitoUIConfiguration {
     -BillingUIConfiguration billing
     -PaymentUIConfiguration payment
-    -DeliveryUIConfiguration delivery
+    -CostBreakdownUIConfiguration costBreakdown
     -PaymentConfirmationUIConfiguration paymentConfirmation
-}
-class MojitoLocalization {
-    -BillingLocalization billing
-    -PaymentLocalization payment
-    -DeliveryLocalization delivery
-    -PaymentConfirmationLocalization paymentConfirmation
 }
 class MojitoTheme {
     -MojitoColor color
     -MojitoFont font
+}
+class CheckoutOptions {
+  -String orgId
+  -String lotId
+  -Number quantity
+  -String paymentId
+  -String collectionItemId
+  -String invoiceId
+  -Boolean vertexEnabled
 }

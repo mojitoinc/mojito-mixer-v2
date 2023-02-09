@@ -5,12 +5,12 @@ import { useLazyQuery } from '@apollo/client';
 import { uuid } from 'uuidv4';
 import { paymentMethodsQuery } from '../../queries/billing';
 import { PaymentMethod } from '../../interfaces';
-import { useContainer, ContainerTypes, useDelivery, BillingFormData, useBilling, useDebug, usePayment } from '../../providers';
+import { useContainer, ContainerTypes, useCheckout, BillingFormData, useBilling, useDebug, usePayment } from '../../providers';
 import BillingView from './BillingView';
 
 const BillingContainer = () => {
   const debug = useDebug('Billing');
-  const { orgId } = useDelivery();
+  const { orgId } = useCheckout();
   const { setBillingInfo, billingInfo, refetchTaxes } = useBilling();
 
   const [isEditing, setIsEditing] = useState<boolean>(true);

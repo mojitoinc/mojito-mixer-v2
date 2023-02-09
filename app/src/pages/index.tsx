@@ -6,7 +6,7 @@ import { UserOrg } from 'interface/meQuery';
 import { DropdownOptions } from 'component/shared/DropDown';
 import { useFormik } from 'formik';
 // import * as Yup from 'yup';
-import { CheckoutLayout } from '../layout/Checkout.Layout';
+import { CheckoutLayout } from '../layout/CheckoutLayout';
 
 export interface ConfigurationValues {
   organization?: string;
@@ -67,14 +67,14 @@ export interface PaymentMethodTypes {
 const HomePage: React.FC = () => {
   const [show, setShow] = useState<boolean>(false);
 
-  const { loginWithPopup, isAuthenticated, isLoading: isAuthenticatedLoading, getIdTokenClaims } = useAuth0();
+  const { isAuthenticated, getIdTokenClaims } = useAuth0();
 
   const getAuthenticationToken = useCallback(async () => {
     const token = await getIdTokenClaims();
     // eslint-disable-next-line no-underscore-dangle
-    return token?.__raw || "";
+    return token?.__raw || '';
   }, [getIdTokenClaims]);
-  
+
   const { values, handleChange, setFieldValue } = useFormik({
     initialValues: {
       organization: '',
@@ -143,7 +143,7 @@ const HomePage: React.FC = () => {
       onOpen={ handleOpen }
       isAuthenticated={ isAuthenticated }
       organizationOptions={ organizations }
-      getAuthenticationToken= { getAuthenticationToken }
+      getAuthenticationToken={ getAuthenticationToken }
       handleChange={ handleChange }
       setFieldValue={ setFieldValue }
       values={ values } />

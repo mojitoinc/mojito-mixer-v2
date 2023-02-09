@@ -2,17 +2,14 @@ import { ThemeProvider, GlobalStyles } from '@mui/material';
 import React, { useMemo } from 'react';
 import Modal from 'react-modal';
 import {
-  ConfigurationContext,
-  ConfigurationType,
-  DefaultConfiguration,
-  makeUIConfiguration,
-} from '../providers/ConfigurationProvider';
+  UIConfigurationContext,
+} from '../providers/UIConfigurationProvider';
 import { makeTheme, styles } from '../theme';
 import MojitoCheckoutView from '../views/index';
 import { ThemeConfiguration } from '../interfaces';
 import {
-  DeliveryContext,
-  Delivery,
+  CheckoutContext,
+  CheckoutOptions,
   ContainerStateProvider,
   BillingProvider,
   PaymentProvider,
@@ -22,6 +19,7 @@ import {
 import { ConnectProvider } from '../providers/ConnectContext';
 import { SardineEnvironment } from '../config';
 import { ProvidersInjectorProps, withProviders } from '../providers/ProvidersInjector';
+import { UIConfiguration, DefaultUIConfiguration, makeUIConfiguration } from '../config/UIConfiguration';
 
 declare global {
   interface Window {
@@ -30,8 +28,8 @@ declare global {
 }
 
 interface MojitoCheckoutProps {
-  uiConfiguration?: ConfigurationType;
-  deliveryConfiguration: Delivery;
+  uiConfiguration?: UIConfiguration;
+  checkoutOptions: CheckoutOptions;
   theme?: ThemeConfiguration;
   show: boolean;
   debug?: boolean;
@@ -39,12 +37,11 @@ interface MojitoCheckoutProps {
   enableSardine?: boolean;
 }
 const MojitoCheckout: React.FC<MojitoCheckoutProps> = ({
-// const MojitoCheckout = ({
-  uiConfiguration = DefaultConfiguration,
+  uiConfiguration = DefaultUIConfiguration,
   theme,
   show,
   debug = false,
-  deliveryConfiguration,
+  checkoutOptions,
   enableSardine = false,
   sardineEnvironment = 'production',
 }: MojitoCheckoutProps) => {
@@ -80,30 +77,30 @@ const MojitoCheckout: React.FC<MojitoCheckoutProps> = ({
         },
       }}>
       <DebugProvider debug={ debug }>
-          <ThemeProvider theme={ themes }>
-            <DeliveryContext.Provider value={ deliveryConfiguration }>
-              <ConfigurationContext.Provider value={ uiConfigurations }>
-                <ContainerStateProvider
-                  paymentId={ deliveryConfiguration?.paymentId }>
-                  <ErrorProvider>
-                    <BillingProvider>
-                      <PaymentProvider>
-                        <ConnectProvider>
-                          <GlobalStyles styles={ styles } />
-                          <MojitoCheckoutView enableSardine={ enableSardine } sardineEnvironment={ sardineEnvironment } />
-                        </ConnectProvider>
-                      </PaymentProvider>
-                    </BillingProvider>
-                  </ErrorProvider>
-                </ContainerStateProvider>
-              </ConfigurationContext.Provider>
-            </DeliveryContext.Provider>
-          </ThemeProvider>
+        <ThemeProvider theme={ themes }>
+          <CheckoutContext.Provider value={ checkoutOptions }>
+            <UIConfigurationContext.Provider value={ uiConfigurations }>
+              <ContainerStateProvider
+                paymentId={ checkoutOptions?.paymentId }>
+                <ErrorProvider>
+                  <BillingProvider>
+                    <PaymentProvider>
+                      <ConnectProvider>
+                        <GlobalStyles styles={ styles } />
+                        <MojitoCheckoutView enableSardine={ enableSardine } sardineEnvironment={ sardineEnvironment } />
+                      </ConnectProvider>
+                    </PaymentProvider>
+                  </BillingProvider>
+                </ErrorProvider>
+              </ContainerStateProvider>
+            </UIConfigurationContext.Provider>
+          </CheckoutContext.Provider>
+        </ThemeProvider>
       </DebugProvider>
     </Modal>
   );
 };
 export type PUICheckoutProps = MojitoCheckoutProps & ProvidersInjectorProps;
- const PUIMojitoCheckout: React.FC<PUICheckoutProps> = withProviders(MojitoCheckout);
+const PUIMojitoCheckout: React.FC<PUICheckoutProps> = withProviders(MojitoCheckout);
 
 export default PUIMojitoCheckout;

@@ -31,7 +31,11 @@ export const PaymentInfoCards = ({ billingInfo }: PaymentInfoCardsProps) => {
         <Box width="50%" display="flex">
           <Typography
             variant="body2"
-            sx={{ color: theme.global?.cardGrayedText, marginRight: 3 }}>
+            sx={{
+              color: theme.global?.cardGrayedText,
+              marginRight: 3,
+              width: '80px',
+            }}>
             Contact info
           </Typography>
           <Typography variant="body2">{ billingInfo?.email }</Typography>
@@ -62,7 +66,11 @@ export const PaymentInfoCards = ({ billingInfo }: PaymentInfoCardsProps) => {
         <Box width="50%" display="flex">
           <Typography
             variant="body2"
-            sx={{ color: theme.global?.cardGrayedText, marginRight: 3 }}>
+            sx={{
+              color: theme.global?.cardGrayedText,
+              marginRight: 3,
+              width: '80px',
+            }}>
             Billing info
           </Typography>
           <Box>

@@ -4,18 +4,23 @@ import { Box, Divider, Typography, useTheme } from '@mui/material';
 import { Button, TextInput } from '../../components';
 import { Icons } from '../../assets';
 import { CollectionItem, Taxes } from '../../interfaces';
-import { useContainer, ContainerTypes, useUIConfiguration, useDelivery } from '../../providers';
+import {
+  useContainer,
+  ContainerTypes,
+  useUIConfiguration,
+  useCheckout,
+} from '../../providers';
 import { MixTheme } from '../../theme';
 
 interface CostBreakDownProps {
-  taxes:Taxes;
-  collectionData:CollectionItem;
+  taxes: Taxes;
+  collectionData: CollectionItem;
 }
 
-const CostBreakDown = ({ taxes, collectionData }:CostBreakDownProps) => {
+const CostBreakDown = ({ taxes, collectionData }: CostBreakDownProps) => {
   const theme = useTheme<MixTheme>();
-  const { billing } = useUIConfiguration();
-  const { quantity } = useDelivery();
+  const uiConfiguration = useUIConfiguration();
+  const { quantity } = useCheckout();
   const { containerState } = useContainer();
 
   const renderTextRow = (text: string, value: string) => {
@@ -25,8 +30,12 @@ const CostBreakDown = ({ taxes, collectionData }:CostBreakDownProps) => {
         flexDirection="row"
         justifyContent="space-between"
         margin="10px 0px">
-        <Typography>{ text }</Typography>
-        <Typography fontWeight="700">{ value }</Typography>
+        <Typography variant="body2" fontSize="14px">
+          { text }
+        </Typography>
+        <Typography variant="subtitle2" fontWeight="700">
+          { value }
+        </Typography>
       </Box>
     );
   };
@@ -66,26 +75,41 @@ const CostBreakDown = ({ taxes, collectionData }:CostBreakDownProps) => {
                 marginLeft: '16px',
               }}>
               <Typography
+                variant="h5"
                 sx={{
                   fontWeight: '700',
                   fontSize: '20px',
+                  marginBottom: '4px',
                 }}>
                 { collectionData?.name }
               </Typography>
-              <Typography>Qty : { quantity }</Typography>
-              <Typography>{ collectionData?.details?.totalUnits ?? '0' } remaining</Typography>
+              <Typography
+                variant="body1"
+                sx={{ marginBottom: '12px', fontSize: '14px' }}>
+                Qty : { quantity }
+              </Typography>
+              <Typography
+                variant="body1"
+                sx={{
+                  marginBottom: '12px',
+                  fontSize: '14px',
+                  fontStyle: 'italic',
+                }}>
+                { collectionData?.details?.totalUnits ?? '0' } remaining
+              </Typography>
             </Box>
           </Box>
-          <Box
-            display="flex"
-            flexDirection="column"
-            alignItems="flex-end">
-            <Typography fontWeight="700">{ taxes?.taxablePrice ?? '0' } USD</Typography>
-            <Typography>2.00 ETH</Typography>
+          <Box display="flex" flexDirection="column" alignItems="flex-end">
+            <Typography variant="subtitle2" fontWeight="700" fontSize="14px">
+              { taxes?.taxablePrice ?? '0' } USD
+            </Typography>
+            <Typography variant="body2" fontSize="14px">
+              2.00 ETH
+            </Typography>
           </Box>
         </Box>
-        {
-          (billing?.showDiscountCode && containerState !== ContainerTypes.CONFIRMATION) && (
+        { uiConfiguration?.costBreakdown?.showDiscountCode &&
+          containerState !== ContainerTypes.CONFIRMATION && (
             <>
               <Divider
                 sx={{
@@ -109,13 +133,12 @@ const CostBreakDown = ({ taxes, collectionData }:CostBreakDownProps) => {
                   textColor={ theme.global?.costBreakDownColors?.applyButtonTextColor } />
               </Box>
             </>
-          )
-}
+        ) }
 
         <Divider
           sx={{
             background: theme.global?.border,
-            margin: '20px 0px 10px 0px',
+            margin: '20px 0px 20px 0px',
           }} />
         <Box>
           { renderTextRow('Subtotal', `${ taxes?.taxablePrice ?? '0' } USD`) }
@@ -133,13 +156,16 @@ const CostBreakDown = ({ taxes, collectionData }:CostBreakDownProps) => {
           flexDirection="row"
           justifyContent="space-between"
           marginBottom="20px">
-          <Typography fontWeight="700" fontSize="16px">Total</Typography>
-          <Box
-            display="flex"
-            flexDirection="column"
-            alignItems="flex-end">
-            <Typography fontWeight="700" fontSize="20px"> { taxes?.totalTaxedPrice ?? '0' } USD</Typography>
-            <Typography fontSize="16px">2.00 ETH</Typography>
+          <Typography variant="subtitle1" fontWeight="700" fontSize="16px">
+            Total
+          </Typography>
+          <Box display="flex" flexDirection="column" alignItems="flex-end">
+            <Typography variant="h5" fontWeight="700" fontSize="20px">
+              { taxes?.totalTaxedPrice ?? '0' } USD
+            </Typography>
+            <Typography variant="body1" fontSize="16px">
+              2.00 ETH
+            </Typography>
           </Box>
         </Box>
       </Box>

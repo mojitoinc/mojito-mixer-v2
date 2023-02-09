@@ -19,11 +19,11 @@ export enum PaymentStatus {
   ACTIVE = 'active'
 }
 
-export const IS_BROWSER = typeof window !== "undefined";
+export const IS_BROWSER = typeof window !== 'undefined';
 export const IS_SERVER = !IS_BROWSER;
 
 export function isLocalhost() {
   if (IS_SERVER) return false;
 
-  return window.location.hostname === "localhost";
+  return window.location.hostname === 'localhost';
 }

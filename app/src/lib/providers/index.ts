@@ -3,8 +3,8 @@ import ErrorProvider, { useError } from './ErrorProvider';
 
 export * from './BillingProvider';
 export * from './ContainerStateProvider';
-export * from './ConfigurationProvider';
-export * from './DeliveryProvider';
+export * from './UIConfigurationProvider';
+export * from './CheckoutProvider';
 export * from './PaymentProvider';
 
 export { DebugProvider, useDebug, ErrorProvider, useError };

@@ -47,7 +47,7 @@ export const PaymentMethodView = ({
       <Box display="flex" alignItems="center" justifyContent="space-between">
         <Box display="flex" alignItems="center">
           <Radio
-            sx={{ padding: '0 9px' }}
+            sx={{ padding: '0 9px 0 0' }}
             checked={ isSelected === type }
             onChange={ handleChange } />
           { !isCreditCard && (
@@ -62,13 +62,15 @@ export const PaymentMethodView = ({
           ) }
           <Typography
             variant="subtitle1"
-            sx={{ marginLeft: 1, fontWeight: 700 }}>
+            sx={{ marginLeft: isCreditCard ? 0 : 1, fontWeight: 700 }}>
             { name }
           </Typography>
         </Box>
         { Boolean(isCreditCard) && <img src={ logo ?? Icons.item } alt="logo" /> }
       </Box>
-      { isSelected === type && <CardContent>{ bodyContent }</CardContent> }
+      { isSelected === type && (
+        <CardContent sx={{ padding: 0 }}>{ bodyContent }</CardContent>
+      ) }
     </Card>
   );
 };

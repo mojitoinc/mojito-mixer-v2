@@ -55,7 +55,10 @@ const TextInput = ({
           sx={{
             marginBottom: '6px',
           }}>
-          <Typography color={ theme.palette?.text?.primary } fontSize="16px">
+          <Typography
+            variant="body1"
+            color={ theme.palette?.text?.primary }
+            fontSize="16px">
             { title }
           </Typography>
 
