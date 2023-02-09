@@ -6,7 +6,9 @@ import CostBreakDownContainer from './CostBreakDown';
 import ConfirmationContainer from './PaymentConfirmation';
 import { PaymentContainer } from './Payment';
 import { Delivery } from './Delivery';
-import { useContainer, ContainerTypes, useError } from '../providers';
+import { useContainer, useError } from '../providers';
+import { ContainerTypes } from '../interfaces/ContextInterface'
+
 import LoadingContainer from './Loading';
 import ErrorContainer from './Error';
 import { useSardine } from '../hooks';

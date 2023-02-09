@@ -5,8 +5,9 @@ import { useLazyQuery } from '@apollo/client';
 import { uuid } from 'uuidv4';
 import { paymentMethodsQuery } from '../../queries/billing';
 import { PaymentMethod } from '../../interfaces';
-import { useContainer, ContainerTypes, useCheckout, BillingFormData, useBilling, useDebug, usePayment } from '../../providers';
+import { useContainer, useCheckout, BillingFormData, useBilling, useDebug, usePayment } from '../../providers';
 import BillingView from './BillingView';
+import { ContainerTypes } from '../../interfaces/ContextInterface'
 
 const BillingContainer = () => {
   const debug = useDebug('Billing');

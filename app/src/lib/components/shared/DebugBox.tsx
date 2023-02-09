@@ -62,7 +62,6 @@ export const DebugBox: React.FC<DebugBoxProps> = ({
   const {  debug } = useDebug('');
   
   const stringValue = useMemo(()=>{
-    console.log('values',value)
     if (typeof value === 'object') {
       try{
         return JSON.stringify(value)
