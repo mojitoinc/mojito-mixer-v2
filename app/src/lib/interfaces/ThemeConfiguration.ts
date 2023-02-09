@@ -20,7 +20,7 @@ export interface CostBreakDownColor {
     applyButtonTextColor?: string;
 }
 
-interface MojitoColor {
+export interface MojitoColor {
     primary?: string;
     secondary?: string;
     background?: string;

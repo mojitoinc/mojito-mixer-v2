@@ -6,7 +6,7 @@ import {
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { useAuth0 } from '@auth0/auth0-react';
-import { RuntimeConfiguration } from '@lib/config';
+import { RuntimeConfiguration } from '../constant/RuntimeConfiguration';
 import React, { FC } from 'react';
 
 interface ExampleApiProviderProps {

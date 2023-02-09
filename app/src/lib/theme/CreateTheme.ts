@@ -62,15 +62,15 @@ export const makeTheme = (themeConfiguration?: ThemeConfiguration) => {
       cardBorder: '#EAEAF3',
       required: '#CE2818',
       placeholder: themeConfiguration?.color?.placeholder ?? DefaultThemes.color?.placeholder,
-      checkOutColors: {
+      checkout: {
         ...DefaultThemes.color?.checkout,
         ...themeConfiguration?.color?.checkout,
       },
-      costBreakDownColors: {
+      costBreakdown: {
         ...DefaultThemes.color?.costBreakdown,
         ...themeConfiguration?.color?.costBreakdown,
       },
-      confirmationColors: {
+      paymentConfirmation: {
         awaitingPaymentBackground: '#FCFB99',
         awaitingPaymentTextColor: '#F98028',
         processedBackground: '#E7EFE8',

@@ -12,6 +12,7 @@ import { PaymentInfoCards } from './InfoCards';
 import { PaymentMethodView } from './PaymentMethodView';
 import { WireTransferForm, WireTransferFormData } from './WireTransferForm';
 import { CreditCardForm } from './CreditCardForm';
+import { DebugBox } from '../../components/shared/DebugBox';
 
 interface PaymentContainerProps {
   paymentType: string;
@@ -158,6 +159,8 @@ const PaymentContainer = ({
             },
           }} />
       </Box>
+      <DebugBox value={{creditCardFormValues, wireTransferFormValues, creditCardList}} />
+
     </>
   );
 };
