@@ -1,5 +1,5 @@
-import React from "react";
-import { ApolloClient, NormalizedCacheObject } from "@apollo/client";
+import React from 'react';
+import { ApolloClient, NormalizedCacheObject } from '@apollo/client';
 export interface AuthorizedApolloProviderProps {
     apolloClient?: ApolloClient<NormalizedCacheObject> | null | undefined;
     uri?: string | undefined;

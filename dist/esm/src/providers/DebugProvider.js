@@ -27,7 +27,7 @@ const useDebug = (tag) => {
     const handleError = useCallback((method, message) => {
         state.log('🔴', tag, method, message);
     }, [tag, state]);
-    return useMemo(() => ({ success: handleSuccess, info: handleInfo, error: handleError, warn: handleWarn }), [handleSuccess, handleInfo, handleError, handleWarn]);
+    return useMemo(() => ({ debug: state.debug, success: handleSuccess, info: handleInfo, error: handleError, warn: handleWarn }), [state, handleSuccess, handleInfo, handleError, handleWarn]);
 };
 
 export { DebugProvider as default, useDebug };

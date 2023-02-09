@@ -304,8 +304,8 @@ import '../../providers/DebugProvider.js';
 import '../../providers/ErrorProvider.js';
 import '../../providers/BillingProvider.js';
 import '../../providers/ContainerStateProvider.js';
-import { useUIConfiguration } from '../../providers/ConfigurationProvider.js';
-import '../../providers/DeliveryProvider.js';
+import { useUIConfiguration } from '../../providers/UIConfigurationProvider.js';
+import '../../providers/CheckoutProvider.js';
 import '../../providers/PaymentProvider.js';
 import 'openpgp';
 import 'atob';
@@ -326,7 +326,6 @@ import '../../../node_modules/country-state-city/lib/country.js';
 import '../../../node_modules/country-state-city/lib/state.js';
 import '../../../node_modules/country-state-city/lib/city.js';
 import 'uuidv4';
-import '../../config/RuntimeConfiguration.js';
 import '../../config/paymentConfiguration.js';
 import '../../queries/invoiceDetails.js';
 import '../../queries/Payment.js';
@@ -336,22 +335,22 @@ const ConfirmationView = ({ paymentStatus }) => {
     var _a, _b, _c, _d, _e, _f, _g, _h;
     const theme = useTheme();
     const { paymentInfo, billingInfo } = usePaymentInfo();
-    const { paymentConfiguration } = useUIConfiguration();
+    const { paymentConfirmation: paymentConfiguration } = useUIConfiguration();
     const backgroundColor = useMemo(() => {
         var _a, _b, _c, _d, _e, _f;
         return paymentStatus === PaymentStatus.PENDING
-            ? (_b = (_a = theme.global) === null || _a === void 0 ? void 0 : _a.confirmationColors) === null || _b === void 0 ? void 0 : _b.awaitingPaymentBackground
+            ? (_b = (_a = theme.global) === null || _a === void 0 ? void 0 : _a.paymentConfirmation) === null || _b === void 0 ? void 0 : _b.awaitingPaymentBackground
             : paymentStatus === PaymentStatus.COMPLETED
-                ? (_d = (_c = theme.global) === null || _c === void 0 ? void 0 : _c.confirmationColors) === null || _d === void 0 ? void 0 : _d.processedBackground
-                : (_f = (_e = theme.global) === null || _e === void 0 ? void 0 : _e.confirmationColors) === null || _f === void 0 ? void 0 : _f.awaitingPaymentBackground;
+                ? (_d = (_c = theme.global) === null || _c === void 0 ? void 0 : _c.paymentConfirmation) === null || _d === void 0 ? void 0 : _d.processedBackground
+                : (_f = (_e = theme.global) === null || _e === void 0 ? void 0 : _e.paymentConfirmation) === null || _f === void 0 ? void 0 : _f.awaitingPaymentBackground;
     }, [paymentStatus, theme]);
     const textColor = useMemo(() => {
         var _a, _b, _c, _d, _e, _f;
         return (paymentStatus === PaymentStatus.PENDING
-            ? (_b = (_a = theme.global) === null || _a === void 0 ? void 0 : _a.confirmationColors) === null || _b === void 0 ? void 0 : _b.awaitingPaymentTextColor
+            ? (_b = (_a = theme.global) === null || _a === void 0 ? void 0 : _a.paymentConfirmation) === null || _b === void 0 ? void 0 : _b.awaitingPaymentTextColor
             : paymentStatus === PaymentStatus.COMPLETED
-                ? (_d = (_c = theme.global) === null || _c === void 0 ? void 0 : _c.confirmationColors) === null || _d === void 0 ? void 0 : _d.processedTextColor
-                : (_f = (_e = theme.global) === null || _e === void 0 ? void 0 : _e.confirmationColors) === null || _f === void 0 ? void 0 : _f.awaitingPaymentTextColor);
+                ? (_d = (_c = theme.global) === null || _c === void 0 ? void 0 : _c.paymentConfirmation) === null || _d === void 0 ? void 0 : _d.processedTextColor
+                : (_f = (_e = theme.global) === null || _e === void 0 ? void 0 : _e.paymentConfirmation) === null || _f === void 0 ? void 0 : _f.awaitingPaymentTextColor);
     }, [paymentStatus, theme]);
     const status = useMemo(() => {
         return paymentStatus === PaymentStatus.PENDING
@@ -415,7 +414,7 @@ const ConfirmationView = ({ paymentStatus }) => {
         React__default.createElement(Box, { display: "flex", flexDirection: "row", justifyContent: "flex-end" },
             React__default.createElement(Button, { title: "Back To Marketplace", sx: {
                     background: (_h = theme.palette.primary) === null || _h === void 0 ? void 0 : _h.main,
-                }, onClick: paymentConfiguration === null || paymentConfiguration === void 0 ? void 0 : paymentConfiguration.onClickGoToMarketPlace }))));
+                }, onClick: paymentConfiguration === null || paymentConfiguration === void 0 ? void 0 : paymentConfiguration.onGoToMarketPlace }))));
 };
 
 export { ConfirmationView as default };

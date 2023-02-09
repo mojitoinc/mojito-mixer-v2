@@ -306,8 +306,8 @@ import '../providers/DebugProvider.js';
 import { useError } from '../providers/ErrorProvider.js';
 import '../providers/BillingProvider.js';
 import { useContainer, ContainerTypes } from '../providers/ContainerStateProvider.js';
-import '../providers/ConfigurationProvider.js';
-import '../providers/DeliveryProvider.js';
+import '../providers/UIConfigurationProvider.js';
+import '../providers/CheckoutProvider.js';
 import '../providers/PaymentProvider.js';
 import LoadingContainer from './Loading/index.js';
 import ErrorContainer from './Error/index.js';
@@ -335,7 +335,7 @@ import '../queries/invoiceDetails.js';
 import '../queries/Payment.js';
 import BillingContainer from './Billing/index.js';
 
-const MojitoCheckoutLayout = ({ sardineEnvironment, enableSardine }) => {
+const MojitoCheckoutLayout = ({ sardineEnvironment, enableSardine, }) => {
     var _a;
     const theme = useTheme();
     const { containerState } = useContainer();
@@ -358,11 +358,11 @@ const MojitoCheckoutLayout = ({ sardineEnvironment, enableSardine }) => {
             flexDirection: 'row',
             justifyContent: 'space-between',
         } },
-        React__default.createElement(Box, { width: "100%", padding: "30px" },
+        React__default.createElement(Box, { width: "100%", padding: "40px" },
             React__default.createElement(Header, null),
-            containerState !== ContainerTypes.CONFIRMATION && React__default.createElement(Stepper, { currentState: containerState }),
+            containerState !== ContainerTypes.CONFIRMATION && (React__default.createElement(Stepper, { currentState: containerState })),
             containerState === ContainerTypes.CHECKOUT && React__default.createElement(BillingContainer, null),
-            containerState === ContainerTypes.CONFIRMATION && React__default.createElement(PaymentConfirmationContainer, null),
+            containerState === ContainerTypes.CONFIRMATION && (React__default.createElement(PaymentConfirmationContainer, null)),
             containerState === ContainerTypes.PAYMENT && React__default.createElement(PaymentContainer, null),
             containerState === ContainerTypes.DELIVERY && React__default.createElement(Delivery, null)),
         React__default.createElement(CostBreakdownContainer, null)));

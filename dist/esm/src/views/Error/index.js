@@ -137,7 +137,7 @@ import '../../../node_modules/@mui/material/FormControlLabel/FormControlLabel.js
 import '../../../node_modules/@mui/material/FormControlLabel/formControlLabelClasses.js';
 import '../../../node_modules/@mui/material/FormGroup/FormGroup.js';
 import '../../../node_modules/@mui/material/FormGroup/formGroupClasses.js';
-import FormHelperText from '../../../node_modules/@mui/material/FormHelperText/FormHelperText.js';
+import '../../../node_modules/@mui/material/FormHelperText/FormHelperText.js';
 import '../../../node_modules/@mui/material/FormHelperText/formHelperTextClasses.js';
 import '../../../node_modules/@mui/material/FormLabel/FormLabel.js';
 import '../../../node_modules/@mui/material/FormLabel/formLabelClasses.js';
@@ -289,7 +289,7 @@ import '../../../node_modules/@mui/material/Toolbar/Toolbar.js';
 import '../../../node_modules/@mui/material/Toolbar/toolbarClasses.js';
 import '../../../node_modules/@mui/material/Tooltip/Tooltip.js';
 import '../../../node_modules/@mui/material/Tooltip/tooltipClasses.js';
-import '../../../node_modules/@mui/material/Typography/Typography.js';
+import Typography from '../../../node_modules/@mui/material/Typography/Typography.js';
 import '../../../node_modules/@mui/material/Typography/typographyClasses.js';
 import '../../../node_modules/@mui/material/Zoom/Zoom.js';
 import '../../../node_modules/@mui/material/GlobalStyles/GlobalStyles.js';
@@ -308,16 +308,17 @@ const ErrorContainer = ({ error }) => {
                 justifyContent: 'center',
                 flexDirection: 'column',
                 margin: '8px 0px',
-                border: `1px solid ${(_b = theme.global) === null || _b === void 0 ? void 0 : _b.cardBorder}`,
-                borderRadius: '4px',
             } },
             React__default.createElement("img", { alt: "loading", src: Icons.ErrorLoader, style: {
                     height: 200,
                 } }),
-            React__default.createElement(FormHelperText, { error: true, sx: {
+            React__default.createElement(Typography, { sx: {
                     width: '280px',
                     textAlign: 'center',
                     fontSize: '14px',
+                    border: `1px solid ${(_b = theme.global) === null || _b === void 0 ? void 0 : _b.cardBorder}`,
+                    borderRadius: '4px',
+                    padding: '30px',
                 } }, error))));
 };
 

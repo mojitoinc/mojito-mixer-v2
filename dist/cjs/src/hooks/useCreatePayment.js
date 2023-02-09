@@ -16,16 +16,16 @@ var useLazyQuery = require('../../node_modules/@apollo/client/react/hooks/useLaz
 var useMutation = require('../../node_modules/@apollo/client/react/hooks/useMutation.js');
 require('../../node_modules/@apollo/client/react/hooks/useQuery.js');
 require('../../node_modules/@apollo/client/react/parser/index.js');
+var Delivery_service = require('../views/Delivery/Delivery.service.js');
 var useEncryptCard = require('./useEncryptCard.js');
 var invoiceDetails = require('../queries/invoiceDetails.js');
 var Payment = require('../queries/Payment.js');
-var Delivery_service = require('../views/Delivery/Delivery.service.js');
 var DebugProvider = require('../providers/DebugProvider.js');
 require('../providers/ErrorProvider.js');
 require('../providers/BillingProvider.js');
 require('../providers/ContainerStateProvider.js');
-require('../providers/ConfigurationProvider.js');
-require('../providers/DeliveryProvider.js');
+require('../providers/UIConfigurationProvider.js');
+require('../providers/CheckoutProvider.js');
 require('../providers/PaymentProvider.js');
 var useAPIService = require('./useAPIService.js');
 

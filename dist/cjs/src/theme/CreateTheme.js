@@ -3,7 +3,6 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 var styles = require('@mui/material/styles');
-require('../config/RuntimeConfiguration.js');
 var themes = require('../config/themes.js');
 require('../config/paymentConfiguration.js');
 
@@ -67,9 +66,9 @@ const makeTheme = (themeConfiguration) => {
             cardBorder: '#EAEAF3',
             required: '#CE2818',
             placeholder: (_7 = (_6 = themeConfiguration === null || themeConfiguration === void 0 ? void 0 : themeConfiguration.color) === null || _6 === void 0 ? void 0 : _6.placeholder) !== null && _7 !== void 0 ? _7 : (_8 = themes["default"].color) === null || _8 === void 0 ? void 0 : _8.placeholder,
-            checkOutColors: Object.assign(Object.assign({}, (_9 = themes["default"].color) === null || _9 === void 0 ? void 0 : _9.checkOutColors), (_10 = themeConfiguration === null || themeConfiguration === void 0 ? void 0 : themeConfiguration.color) === null || _10 === void 0 ? void 0 : _10.checkOutColors),
-            costBreakDownColors: Object.assign(Object.assign({}, (_11 = themes["default"].color) === null || _11 === void 0 ? void 0 : _11.costBreakDownColors), (_12 = themeConfiguration === null || themeConfiguration === void 0 ? void 0 : themeConfiguration.color) === null || _12 === void 0 ? void 0 : _12.costBreakDownColors),
-            confirmationColors: {
+            checkout: Object.assign(Object.assign({}, (_9 = themes["default"].color) === null || _9 === void 0 ? void 0 : _9.checkout), (_10 = themeConfiguration === null || themeConfiguration === void 0 ? void 0 : themeConfiguration.color) === null || _10 === void 0 ? void 0 : _10.checkout),
+            costBreakdown: Object.assign(Object.assign({}, (_11 = themes["default"].color) === null || _11 === void 0 ? void 0 : _11.costBreakdown), (_12 = themeConfiguration === null || themeConfiguration === void 0 ? void 0 : themeConfiguration.color) === null || _12 === void 0 ? void 0 : _12.costBreakdown),
+            paymentConfirmation: {
                 awaitingPaymentBackground: '#FCFB99',
                 awaitingPaymentTextColor: '#F98028',
                 processedBackground: '#E7EFE8',

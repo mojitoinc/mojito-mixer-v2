@@ -313,12 +313,12 @@ const PaymentMethodView = ({ isSelected = '', name, logo, bodyContent, onChooseP
         } },
         React__default.createElement(Box, { display: "flex", alignItems: "center", justifyContent: "space-between" },
             React__default.createElement(Box, { display: "flex", alignItems: "center" },
-                React__default.createElement(Radio, { sx: { padding: '0 9px' }, checked: isSelected === type, onChange: handleChange }),
+                React__default.createElement(Radio, { sx: { padding: '0 9px 0 0' }, checked: isSelected === type, onChange: handleChange }),
                 !isCreditCard && (React__default.createElement(Box, { sx: { border: `1px solid ${(_c = theme.global) === null || _c === void 0 ? void 0 : _c.cardBorder}` }, width: "48px", height: "24px", display: "flex", justifyContent: "center" },
                     React__default.createElement("img", { src: logo !== null && logo !== void 0 ? logo : Icons.item, width: 32, alt: "logo" }))),
-                React__default.createElement(Typography, { variant: "subtitle1", sx: { marginLeft: 1, fontWeight: 700 } }, name)),
+                React__default.createElement(Typography, { variant: "subtitle1", sx: { marginLeft: isCreditCard ? 0 : 1, fontWeight: 700 } }, name)),
             Boolean(isCreditCard) && React__default.createElement("img", { src: logo !== null && logo !== void 0 ? logo : Icons.item, alt: "logo" })),
-        isSelected === type && React__default.createElement(CardContent, null, bodyContent)));
+        isSelected === type && (React__default.createElement(CardContent, { sx: { padding: 0 } }, bodyContent))));
 };
 
 export { PaymentMethodView };

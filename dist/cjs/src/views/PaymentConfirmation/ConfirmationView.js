@@ -308,8 +308,8 @@ require('../../providers/DebugProvider.js');
 require('../../providers/ErrorProvider.js');
 require('../../providers/BillingProvider.js');
 require('../../providers/ContainerStateProvider.js');
-var ConfigurationProvider = require('../../providers/ConfigurationProvider.js');
-require('../../providers/DeliveryProvider.js');
+var UIConfigurationProvider = require('../../providers/UIConfigurationProvider.js');
+require('../../providers/CheckoutProvider.js');
 require('../../providers/PaymentProvider.js');
 require('openpgp');
 require('atob');
@@ -330,7 +330,6 @@ require('../../../node_modules/country-state-city/lib/country.js');
 require('../../../node_modules/country-state-city/lib/state.js');
 require('../../../node_modules/country-state-city/lib/city.js');
 require('uuidv4');
-require('../../config/RuntimeConfiguration.js');
 require('../../config/paymentConfiguration.js');
 require('../../queries/invoiceDetails.js');
 require('../../queries/Payment.js');
@@ -344,22 +343,22 @@ const ConfirmationView = ({ paymentStatus }) => {
     var _a, _b, _c, _d, _e, _f, _g, _h;
     const theme = useTheme["default"]();
     const { paymentInfo, billingInfo } = usePaymentInfo["default"]();
-    const { paymentConfiguration } = ConfigurationProvider.useUIConfiguration();
+    const { paymentConfirmation: paymentConfiguration } = UIConfigurationProvider.useUIConfiguration();
     const backgroundColor = React.useMemo(() => {
         var _a, _b, _c, _d, _e, _f;
         return paymentStatus === index.PaymentStatus.PENDING
-            ? (_b = (_a = theme.global) === null || _a === void 0 ? void 0 : _a.confirmationColors) === null || _b === void 0 ? void 0 : _b.awaitingPaymentBackground
+            ? (_b = (_a = theme.global) === null || _a === void 0 ? void 0 : _a.paymentConfirmation) === null || _b === void 0 ? void 0 : _b.awaitingPaymentBackground
             : paymentStatus === index.PaymentStatus.COMPLETED
-                ? (_d = (_c = theme.global) === null || _c === void 0 ? void 0 : _c.confirmationColors) === null || _d === void 0 ? void 0 : _d.processedBackground
-                : (_f = (_e = theme.global) === null || _e === void 0 ? void 0 : _e.confirmationColors) === null || _f === void 0 ? void 0 : _f.awaitingPaymentBackground;
+                ? (_d = (_c = theme.global) === null || _c === void 0 ? void 0 : _c.paymentConfirmation) === null || _d === void 0 ? void 0 : _d.processedBackground
+                : (_f = (_e = theme.global) === null || _e === void 0 ? void 0 : _e.paymentConfirmation) === null || _f === void 0 ? void 0 : _f.awaitingPaymentBackground;
     }, [paymentStatus, theme]);
     const textColor = React.useMemo(() => {
         var _a, _b, _c, _d, _e, _f;
         return (paymentStatus === index.PaymentStatus.PENDING
-            ? (_b = (_a = theme.global) === null || _a === void 0 ? void 0 : _a.confirmationColors) === null || _b === void 0 ? void 0 : _b.awaitingPaymentTextColor
+            ? (_b = (_a = theme.global) === null || _a === void 0 ? void 0 : _a.paymentConfirmation) === null || _b === void 0 ? void 0 : _b.awaitingPaymentTextColor
             : paymentStatus === index.PaymentStatus.COMPLETED
-                ? (_d = (_c = theme.global) === null || _c === void 0 ? void 0 : _c.confirmationColors) === null || _d === void 0 ? void 0 : _d.processedTextColor
-                : (_f = (_e = theme.global) === null || _e === void 0 ? void 0 : _e.confirmationColors) === null || _f === void 0 ? void 0 : _f.awaitingPaymentTextColor);
+                ? (_d = (_c = theme.global) === null || _c === void 0 ? void 0 : _c.paymentConfirmation) === null || _d === void 0 ? void 0 : _d.processedTextColor
+                : (_f = (_e = theme.global) === null || _e === void 0 ? void 0 : _e.paymentConfirmation) === null || _f === void 0 ? void 0 : _f.awaitingPaymentTextColor);
     }, [paymentStatus, theme]);
     const status = React.useMemo(() => {
         return paymentStatus === index.PaymentStatus.PENDING
@@ -423,7 +422,7 @@ const ConfirmationView = ({ paymentStatus }) => {
         React__default["default"].createElement(Box["default"], { display: "flex", flexDirection: "row", justifyContent: "flex-end" },
             React__default["default"].createElement(Button["default"], { title: "Back To Marketplace", sx: {
                     background: (_h = theme.palette.primary) === null || _h === void 0 ? void 0 : _h.main,
-                }, onClick: paymentConfiguration === null || paymentConfiguration === void 0 ? void 0 : paymentConfiguration.onClickGoToMarketPlace }))));
+                }, onClick: paymentConfiguration === null || paymentConfiguration === void 0 ? void 0 : paymentConfiguration.onGoToMarketPlace }))));
 };
 
 exports["default"] = ConfirmationView;

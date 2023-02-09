@@ -321,12 +321,12 @@ const PaymentMethodView = ({ isSelected = '', name, logo, bodyContent, onChooseP
         } },
         React__default["default"].createElement(Box["default"], { display: "flex", alignItems: "center", justifyContent: "space-between" },
             React__default["default"].createElement(Box["default"], { display: "flex", alignItems: "center" },
-                React__default["default"].createElement(Radio["default"], { sx: { padding: '0 9px' }, checked: isSelected === type, onChange: handleChange }),
+                React__default["default"].createElement(Radio["default"], { sx: { padding: '0 9px 0 0' }, checked: isSelected === type, onChange: handleChange }),
                 !isCreditCard && (React__default["default"].createElement(Box["default"], { sx: { border: `1px solid ${(_c = theme.global) === null || _c === void 0 ? void 0 : _c.cardBorder}` }, width: "48px", height: "24px", display: "flex", justifyContent: "center" },
                     React__default["default"].createElement("img", { src: logo !== null && logo !== void 0 ? logo : index$1.Icons.item, width: 32, alt: "logo" }))),
-                React__default["default"].createElement(Typography["default"], { variant: "subtitle1", sx: { marginLeft: 1, fontWeight: 700 } }, name)),
+                React__default["default"].createElement(Typography["default"], { variant: "subtitle1", sx: { marginLeft: isCreditCard ? 0 : 1, fontWeight: 700 } }, name)),
             Boolean(isCreditCard) && React__default["default"].createElement("img", { src: logo !== null && logo !== void 0 ? logo : index$1.Icons.item, alt: "logo" })),
-        isSelected === type && React__default["default"].createElement(CardContent["default"], null, bodyContent)));
+        isSelected === type && (React__default["default"].createElement(CardContent["default"], { sx: { padding: 0 } }, bodyContent))));
 };
 
 exports.PaymentMethodView = PaymentMethodView;

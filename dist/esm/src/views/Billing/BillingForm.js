@@ -305,8 +305,8 @@ import '../../providers/DebugProvider.js';
 import '../../providers/ErrorProvider.js';
 import '../../providers/BillingProvider.js';
 import '../../providers/ContainerStateProvider.js';
-import '../../providers/ConfigurationProvider.js';
-import '../../providers/DeliveryProvider.js';
+import '../../providers/UIConfigurationProvider.js';
+import '../../providers/CheckoutProvider.js';
 import '../../providers/PaymentProvider.js';
 import 'openpgp';
 import 'atob';
@@ -325,7 +325,6 @@ import '../../../node_modules/@apollo/client/errors/index.js';
 import '../../queries/creditCard.js';
 import { useCountryOptions, useStateOptions, useCityOptions } from '../../hooks/useDropdowns.js';
 import 'uuidv4';
-import '../../config/RuntimeConfiguration.js';
 import '../../config/paymentConfiguration.js';
 import '../../queries/invoiceDetails.js';
 import '../../queries/Payment.js';
@@ -340,7 +339,6 @@ const BillingForm = ({ values, errors, onChange, isValid, }) => {
             border: `1px solid ${(_a = theme.global) === null || _a === void 0 ? void 0 : _a.cardBorder}`,
             backgroundColor: (_b = theme.global) === null || _b === void 0 ? void 0 : _b.cardBackground,
             boxShadow: `0px 4px 16px ${(_c = theme.global) === null || _c === void 0 ? void 0 : _c.cardShadow}`,
-            margin: '0px 0px 24px 0px',
         } },
         React__default.createElement(Box, { padding: "24px" },
             React__default.createElement(Typography, { color: (_e = (_d = theme.palette) === null || _d === void 0 ? void 0 : _d.text) === null || _e === void 0 ? void 0 : _e.primary, fontWeight: "500", fontSize: "20px" }, "Billing Info"),

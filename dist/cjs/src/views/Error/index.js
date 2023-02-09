@@ -141,7 +141,7 @@ require('../../../node_modules/@mui/material/FormControlLabel/FormControlLabel.j
 require('../../../node_modules/@mui/material/FormControlLabel/formControlLabelClasses.js');
 require('../../../node_modules/@mui/material/FormGroup/FormGroup.js');
 require('../../../node_modules/@mui/material/FormGroup/formGroupClasses.js');
-var FormHelperText = require('../../../node_modules/@mui/material/FormHelperText/FormHelperText.js');
+require('../../../node_modules/@mui/material/FormHelperText/FormHelperText.js');
 require('../../../node_modules/@mui/material/FormHelperText/formHelperTextClasses.js');
 require('../../../node_modules/@mui/material/FormLabel/FormLabel.js');
 require('../../../node_modules/@mui/material/FormLabel/formLabelClasses.js');
@@ -293,7 +293,7 @@ require('../../../node_modules/@mui/material/Toolbar/Toolbar.js');
 require('../../../node_modules/@mui/material/Toolbar/toolbarClasses.js');
 require('../../../node_modules/@mui/material/Tooltip/Tooltip.js');
 require('../../../node_modules/@mui/material/Tooltip/tooltipClasses.js');
-require('../../../node_modules/@mui/material/Typography/Typography.js');
+var Typography = require('../../../node_modules/@mui/material/Typography/Typography.js');
 require('../../../node_modules/@mui/material/Typography/typographyClasses.js');
 require('../../../node_modules/@mui/material/Zoom/Zoom.js');
 require('../../../node_modules/@mui/material/GlobalStyles/GlobalStyles.js');
@@ -316,16 +316,17 @@ const ErrorContainer = ({ error }) => {
                 justifyContent: 'center',
                 flexDirection: 'column',
                 margin: '8px 0px',
-                border: `1px solid ${(_b = theme.global) === null || _b === void 0 ? void 0 : _b.cardBorder}`,
-                borderRadius: '4px',
             } },
             React__default["default"].createElement("img", { alt: "loading", src: index.Icons.ErrorLoader, style: {
                     height: 200,
                 } }),
-            React__default["default"].createElement(FormHelperText["default"], { error: true, sx: {
+            React__default["default"].createElement(Typography["default"], { sx: {
                     width: '280px',
                     textAlign: 'center',
                     fontSize: '14px',
+                    border: `1px solid ${(_b = theme.global) === null || _b === void 0 ? void 0 : _b.cardBorder}`,
+                    borderRadius: '4px',
+                    padding: '30px',
                 } }, error))));
 };
 

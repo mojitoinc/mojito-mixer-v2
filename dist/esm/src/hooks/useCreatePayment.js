@@ -12,16 +12,16 @@ import { useLazyQuery } from '../../node_modules/@apollo/client/react/hooks/useL
 import { useMutation } from '../../node_modules/@apollo/client/react/hooks/useMutation.js';
 import '../../node_modules/@apollo/client/react/hooks/useQuery.js';
 import '../../node_modules/@apollo/client/react/parser/index.js';
+import { formCreatePaymentMethodObject } from '../views/Delivery/Delivery.service.js';
 import { useEncryptCardData } from './useEncryptCard.js';
 import { reserveNowBuyLotQuery } from '../queries/invoiceDetails.js';
 import { createPaymentMethodQuery, createPaymentQuery, getPaymentMethodStatus } from '../queries/Payment.js';
-import { formCreatePaymentMethodObject } from '../views/Delivery/Delivery.service.js';
 import { useDebug } from '../providers/DebugProvider.js';
 import '../providers/ErrorProvider.js';
 import '../providers/BillingProvider.js';
 import '../providers/ContainerStateProvider.js';
-import '../providers/ConfigurationProvider.js';
-import '../providers/DeliveryProvider.js';
+import '../providers/UIConfigurationProvider.js';
+import '../providers/CheckoutProvider.js';
 import '../providers/PaymentProvider.js';
 import { useAPIService } from './useAPIService.js';
 

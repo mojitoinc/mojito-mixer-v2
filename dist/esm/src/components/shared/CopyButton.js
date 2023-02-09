@@ -302,7 +302,7 @@ const CopyButton = ({ copyValue, sx }) => {
     const onClickCopy = useCallback(() => {
         navigator.clipboard.writeText(copyValue !== null && copyValue !== void 0 ? copyValue : '');
     }, [copyValue]);
-    return (React__default.createElement(CopyIcon, { width: "12px", height: "12px", onClick: onClickCopy, sx: Object.assign({ color: (_b = (_a = theme.global) === null || _a === void 0 ? void 0 : _a.confirmationColors) === null || _b === void 0 ? void 0 : _b.copyIconColor, marginLeft: '8px', alignSelf: 'flex-end', '&:active': {
+    return (React__default.createElement(CopyIcon, { width: "12px", height: "12px", onClick: onClickCopy, sx: Object.assign({ color: (_b = (_a = theme.global) === null || _a === void 0 ? void 0 : _a.paymentConfirmation) === null || _b === void 0 ? void 0 : _b.copyIconColor, marginLeft: '8px', alignSelf: 'flex-end', '&:active': {
                 transform: 'scale(0.85, 0.85)',
                 opacity: [0.9, 0.8, 0.7],
             } }, sx) }));

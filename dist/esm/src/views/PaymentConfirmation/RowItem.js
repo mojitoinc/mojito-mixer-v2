@@ -315,7 +315,7 @@ const RowItem = ({ showCopy, title, children, copyValue, value, }) => {
         React__default.createElement(Typography, { fontSize: "16px", width: "40%" }, title),
         React__default.createElement(Typography, { fontSize: "16px" }, value || children),
         showCopy && (React__default.createElement(CopyIcon, { width: "12px", height: "12px", onClick: onClickCopy, sx: {
-                color: (_d = (_c = theme.global) === null || _c === void 0 ? void 0 : _c.confirmationColors) === null || _d === void 0 ? void 0 : _d.copyIconColor,
+                color: (_d = (_c = theme.global) === null || _c === void 0 ? void 0 : _c.paymentConfirmation) === null || _d === void 0 ? void 0 : _d.copyIconColor,
                 marginLeft: '8px',
                 alignSelf: 'flex-end',
                 '&:active': {

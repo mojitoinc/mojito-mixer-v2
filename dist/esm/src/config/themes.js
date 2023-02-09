@@ -10,12 +10,12 @@ const DefaultThemes = {
         errorBackground: '#FEE3E5',
         text: '#000000',
         cardBackground: '#FFFFFF',
-        checkOutColors: {
+        checkout: {
             continueButtonBackground: '#6663FD',
             continueButtonTextColor: '#FFFFFF',
         },
         placeholder: '#BABEC5',
-        costBreakDownColors: {
+        costBreakdown: {
             applyButtonBackground: '#DADAE9',
             applyButtonTextColor: '#FFFFFF',
         },

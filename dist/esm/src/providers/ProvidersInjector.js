@@ -298,7 +298,7 @@ import '../../node_modules/@mui/material/GlobalStyles/GlobalStyles.js';
 import '../../node_modules/@mui/base/FocusTrap/FocusTrap.js';
 import '../components/Stepper.js';
 import '@mui/icons-material/ContentCopy';
-import '../components/shared/ErrorBoundary.js';
+import { ErrorBoundary } from '../components/shared/ErrorBoundary.js';
 
 const ProviderInjector = ({ 
 // AuthorizedApolloProviderProps:
@@ -320,13 +320,14 @@ theme: parentTheme, themeOptions, children, }) => {
     //     throw new Error(EXCEPTIONS.DEV.APOLLO_PROVIDER_MISSING);
     //   }
     // }, [apolloClient, uri]);
-    return (React__default.createElement(AuthorizedApolloProvider, { apolloClient: apolloClient, uri: uri, getAuthenticationToken: getAuthenticationToken }, children));
+    return uri ? (React__default.createElement(AuthorizedApolloProvider, { apolloClient: apolloClient, uri: uri, getAuthenticationToken: getAuthenticationToken }, children)) : React__default.createElement(React__default.Fragment, null, children);
 };
 function withProviders(Component) {
     const WithProviders = (_a) => {
         var { apolloClient, uri, getAuthenticationToken, theme, themeOptions, onCatch } = _a, componentProps = __rest(_a, ["apolloClient", "uri", "getAuthenticationToken", "theme", "themeOptions", "onCatch"]);
-        return (React__default.createElement(ProviderInjector, { apolloClient: apolloClient, uri: uri, getAuthenticationToken: getAuthenticationToken, theme: theme, themeOptions: themeOptions },
-            React__default.createElement(Component, Object.assign({}, componentProps))));
+        return (React__default.createElement(ErrorBoundary, { onCatch: onCatch },
+            React__default.createElement(ProviderInjector, { apolloClient: apolloClient, uri: uri, getAuthenticationToken: getAuthenticationToken, theme: theme, themeOptions: themeOptions },
+                React__default.createElement(Component, Object.assign({}, componentProps)))));
     };
     return WithProviders;
 }

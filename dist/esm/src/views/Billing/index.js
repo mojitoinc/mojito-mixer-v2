@@ -28,14 +28,14 @@ import { useDebug } from '../../providers/DebugProvider.js';
 import '../../providers/ErrorProvider.js';
 import { useBilling } from '../../providers/BillingProvider.js';
 import { useContainer, ContainerTypes } from '../../providers/ContainerStateProvider.js';
-import '../../providers/ConfigurationProvider.js';
-import { useDelivery } from '../../providers/DeliveryProvider.js';
+import '../../providers/UIConfigurationProvider.js';
+import { useCheckout } from '../../providers/CheckoutProvider.js';
 import { usePayment } from '../../providers/PaymentProvider.js';
 import BillingView from './BillingView.js';
 
 const BillingContainer = () => {
     const debug = useDebug('Billing');
-    const { orgId } = useDelivery();
+    const { orgId } = useCheckout();
     const { setBillingInfo, billingInfo, refetchTaxes } = useBilling();
     const [isEditing, setIsEditing] = useState(true);
     const { setContainerState } = useContainer();

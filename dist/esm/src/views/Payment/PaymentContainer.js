@@ -304,6 +304,7 @@ import { PaymentInfoCards } from './InfoCards.js';
 import { PaymentMethodView } from './PaymentMethodView.js';
 import { WireTransferForm } from './WireTransferForm.js';
 import { CreditCardForm } from './CreditCardForm.js';
+import { DebugBox } from '../../components/shared/DebugBox.js';
 
 const PaymentContainer = ({ paymentType, onChoosePaymentType, wireTransferFormValues, onChangeWireTransferField, onSetWireTransferField, wireTransferFormErrors, creditCardList, creditCardFormErrors, creditCardFormValues, onChangeCreditCardField, onSetCreditCardField, onClickDelivery, config, billingInfo, buttonDisabled, }) => {
     var _a, _b, _c, _d, _e, _f, _g;
@@ -316,7 +317,7 @@ const PaymentContainer = ({ paymentType, onChoosePaymentType, wireTransferFormVa
                 boxShadow: `0px 4px 16px ${(_c = theme.global) === null || _c === void 0 ? void 0 : _c.cardShadow}`,
                 padding: '24px',
             } },
-            React__default.createElement(Typography, { sx: { fontSize: '20px' } }, "Payment Method"),
+            React__default.createElement(Typography, { sx: { fontSize: '20px', fontWeight: 500 } }, "Payment Method"),
             (config === null || config === void 0 ? void 0 : config.creditCard) && (React__default.createElement(PaymentMethodView, { logo: Icons.creditCards, isSelected: paymentType, name: "Credit Card", type: PaymentTypes.CREDIT_CARD, bodyContent: (React__default.createElement(CreditCardForm, { creditCardList: creditCardList, values: creditCardFormValues, handleChange: onChangeCreditCardField, setFieldValue: onSetCreditCardField, errors: creditCardFormErrors })), onChoosePaymentType: onChoosePaymentType })),
             (config === null || config === void 0 ? void 0 : config.walletConnect) && (React__default.createElement(PaymentMethodView, { logo: Icons.walletConnect, isSelected: paymentType, name: "Walletconnect", type: PaymentTypes.WALLET_CONNECT, bodyContent: React__default.createElement(React__default.Fragment, null, "Test"), onChoosePaymentType: onChoosePaymentType })),
             (config === null || config === void 0 ? void 0 : config.applepay) && (React__default.createElement(PaymentMethodView, { logo: Icons.applepayDark, isSelected: paymentType, name: "Apple Pay", type: PaymentTypes.APPLE_PAY, bodyContent: React__default.createElement(React__default.Fragment, null, "Test"), onChoosePaymentType: onChoosePaymentType })),
@@ -326,9 +327,13 @@ const PaymentContainer = ({ paymentType, onChoosePaymentType, wireTransferFormVa
                 React__default.createElement("img", { src: Icons.lock, height: 28, width: 28, alt: "lock-icon" }),
                 React__default.createElement(Typography, { variant: "body2", sx: { marginLeft: 1 } }, "We protect your payment information using encryption to provide bank-level security"))),
         React__default.createElement(Box, { display: "flex", justifyContent: "flex-end" },
-            React__default.createElement(Button, { title: "Continue to Delivery", backgroundColor: (_e = (_d = theme.global) === null || _d === void 0 ? void 0 : _d.checkOutColors) === null || _e === void 0 ? void 0 : _e.continueButtonBackground, textColor: (_g = (_f = theme.global) === null || _f === void 0 ? void 0 : _f.checkOutColors) === null || _g === void 0 ? void 0 : _g.continueButtonTextColor, onClick: onClickDelivery, disabled: buttonDisabled, sx: {
+            React__default.createElement(Button, { title: "Continue to Delivery", backgroundColor: (_e = (_d = theme.global) === null || _d === void 0 ? void 0 : _d.checkout) === null || _e === void 0 ? void 0 : _e.continueButtonBackground, textColor: (_g = (_f = theme.global) === null || _f === void 0 ? void 0 : _f.checkout) === null || _g === void 0 ? void 0 : _g.continueButtonTextColor, onClick: onClickDelivery, disabled: buttonDisabled, sx: {
                     margin: '24px 0',
-                } }))));
+                    '&: hover': {
+                        backgroundColor: 'rgba(102, 99, 253, 0.8)',
+                    },
+                } })),
+        React__default.createElement(DebugBox, { value: { creditCardFormValues, wireTransferFormValues, creditCardList } })));
 };
 
 export { PaymentContainer as default };

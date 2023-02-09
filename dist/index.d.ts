@@ -3,31 +3,6 @@ import React, { ErrorInfo } from 'react';
 import { Theme, ThemeOptions } from '@mui/material/styles';
 import { ApolloClient, NormalizedCacheObject } from '@apollo/client';
 
-interface ConfigurationType {
-    billing?: {
-        hideExpressCheckout?: boolean;
-        expressCheckoutConfig?: {
-            gpay?: boolean;
-            applepay?: boolean;
-            walletConnect?: boolean;
-            metaMask?: boolean;
-        };
-        paymentMethods?: {
-            gpay?: boolean;
-            applepay?: boolean;
-            walletConnect?: boolean;
-            wire?: boolean;
-            creditCard?: boolean;
-        };
-        showDiscountCode?: boolean;
-    };
-    paymentConfiguration?: {
-        wireTransferInstructions?: JSX.Element;
-        creditCardInstructions?: JSX.Element;
-        onClickGoToMarketPlace?: () => void;
-    };
-}
-
 interface CollectionDetails {
     id?: string;
     startDate?: Date;
@@ -130,101 +105,45 @@ interface ReserveNow {
     __typename: string;
 }
 
-interface ThemeFont {
+interface MojitoFont {
     primary?: string;
     secondary?: string;
 }
-interface ConfirmationColors {
+interface PaymentConfirmationColor {
     processedBackground?: string;
     processedTextColor?: string;
     awaitingPaymentBackground?: string;
     awaitingPaymentTextColor?: string;
     copyIconColor?: string;
 }
-interface CheckOutColor {
+interface CheckoutColor {
     continueButtonBackground?: string;
     continueButtonTextColor?: string;
 }
-interface CostBreakDownColors {
+interface CostBreakDownColor {
     applyButtonBackground?: string;
     applyButtonTextColor?: string;
 }
-interface ThemeColor {
+interface MojitoColor {
     primary?: string;
     secondary?: string;
     background?: string;
     errorBackground?: string;
     text?: string;
     cardBackground?: string;
-    checkOutColors?: CheckOutColor;
-    costBreakDownColors?: CostBreakDownColors;
-    confirmationColors?: ConfirmationColors;
     placeholder?: string;
+    checkout?: CheckoutColor;
+    costBreakdown?: CostBreakDownColor;
+    paymentConfirmation?: PaymentConfirmationColor;
 }
 interface ThemeConfiguration {
-    color?: ThemeColor;
-    font?: ThemeFont;
+    color?: MojitoColor;
+    font?: MojitoFont;
 }
-
-interface BillingFormData {
-    email?: string;
-    country?: string;
-    state?: string;
-    city?: string;
-    postalCode?: string;
-    phoneNumber?: string;
-    street1?: string;
-    name?: string;
-}
-
-interface Delivery {
-    orgId?: string;
-    lotId?: string;
-    quantity?: number;
-    paymentId?: string;
-    collectionItemId?: string;
-    invoiceId?: string;
-}
-
-interface PaymentData {
-    creditCardData?: CreditCardFormType;
-    wireData?: {
-        accountNumber: string;
-        routingNumber: string;
-        bankAddress: {
-            bankName: string;
-            country: string;
-        };
-    };
-    paymentId?: string;
-    paymentType?: string;
-    destinationAddress?: string;
-    deliveryStatus?: string;
-    sessionKey?: string;
-}
-
-declare const RuntimeConfiguration: {
-    baseURL: string | undefined;
-    AUTH0_DOMAIN: string | undefined;
-    AUTH0_CLIENT_ID: string | undefined;
-    AUTH0_REDIRECT_URI: string | undefined;
-    API_HOST_URL: string | undefined;
-};
 
 declare const DefaultThemes: ThemeConfiguration;
 
 type SardineEnvironment = 'production' | 'sandbox';
-declare const SardineConfig: {
-    sandbox: {
-        host: string;
-    };
-    production: {
-        host: string;
-    };
-};
-
-declare const creditCardInstructions: JSX.Element;
-declare const wireTransferInstructions: JSX.Element;
 
 declare const THREEDS_FLOW_SEARCH_PARAM_SUCCESS_KEY = "paymentId";
 
@@ -244,14 +163,50 @@ interface ThemeProviderProps extends CommonProviderProps {
 }
 type ProvidersInjectorProps = ThemeProviderProps & AuthorizedApolloProviderProps;
 
+interface CheckoutOptions {
+    orgId?: string;
+    lotId?: string;
+    quantity?: number;
+    paymentId?: string;
+    collectionItemId?: string;
+    invoiceId?: string;
+    discountCode?: string;
+    vertexEnabled?: boolean;
+}
+
+interface UIConfiguration {
+    billing?: {
+        isEnableExpressCheckout?: boolean;
+        gpay?: boolean;
+        applepay?: boolean;
+        walletConnect?: boolean;
+        metaMask?: boolean;
+    };
+    payment?: {
+        gpay?: boolean;
+        applepay?: boolean;
+        walletConnect?: boolean;
+        wire?: boolean;
+        creditCard?: boolean;
+    };
+    costBreakdown?: {
+        showDiscountCode?: boolean;
+    };
+    paymentConfirmation?: {
+        wireTransferInstructions?: JSX.Element;
+        creditCardInstructions?: JSX.Element;
+        onGoToMarketPlace?: () => void;
+    };
+}
+
 declare global {
     interface Window {
         _Sardine: any;
     }
 }
 interface MojitoCheckoutProps {
-    uiConfiguration?: ConfigurationType;
-    deliveryConfiguration: Delivery;
+    uiConfiguration?: UIConfiguration;
+    checkoutOptions: CheckoutOptions;
     theme?: ThemeConfiguration;
     show: boolean;
     debug?: boolean;
@@ -260,6 +215,34 @@ interface MojitoCheckoutProps {
 }
 type PUICheckoutProps = MojitoCheckoutProps & ProvidersInjectorProps;
 declare const PUIMojitoCheckout: React.FC<PUICheckoutProps>;
+
+interface BillingFormData {
+    email?: string;
+    country?: string;
+    state?: string;
+    city?: string;
+    postalCode?: string;
+    phoneNumber?: string;
+    street1?: string;
+    name?: string;
+}
+
+interface PaymentData {
+    creditCardData?: CreditCardFormType;
+    wireData?: {
+        accountNumber: string;
+        routingNumber: string;
+        bankAddress: {
+            bankName: string;
+            country: string;
+        };
+    };
+    paymentId?: string;
+    paymentType?: string;
+    destinationAddress?: string;
+    deliveryStatus?: string;
+    sessionKey?: string;
+}
 
 interface PaymentInfo {
     billingInfo?: BillingFormData;
@@ -270,4 +253,4 @@ interface PaymentInfo {
 }
 declare const usePaymentInfo: () => PaymentInfo;
 
-export { DefaultThemes, PUIMojitoCheckout as MojitoCheckout, RuntimeConfiguration, SardineConfig, SardineEnvironment, THREEDS_FLOW_SEARCH_PARAM_SUCCESS_KEY, creditCardInstructions, usePaymentInfo, wireTransferInstructions };
+export { CheckoutColor, CheckoutOptions, CostBreakDownColor, DefaultThemes, PUIMojitoCheckout as MojitoCheckout, MojitoColor, MojitoFont, PUICheckoutProps, PaymentConfirmationColor, THREEDS_FLOW_SEARCH_PARAM_SUCCESS_KEY, ThemeConfiguration, UIConfiguration, usePaymentInfo };

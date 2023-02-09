@@ -4,7 +4,7 @@ import '../../../node_modules/@mui/utils/esm/elementTypeAcceptingRef.js';
 import 'react-is';
 import '../../../node_modules/@mui/utils/esm/ponyfillGlobal.js';
 import '../../../node_modules/@mui/utils/esm/refType.js';
-import React__default, { useCallback } from 'react';
+import React__default, { useMemo, useCallback } from 'react';
 import '../../../node_modules/@mui/utils/esm/integerPropType.js';
 import '@emotion/styled';
 import '@emotion/react';
@@ -304,21 +304,26 @@ import '../../providers/DebugProvider.js';
 import '../../providers/ErrorProvider.js';
 import { useBilling } from '../../providers/BillingProvider.js';
 import '../../providers/ContainerStateProvider.js';
-import '../../providers/ConfigurationProvider.js';
-import '../../providers/DeliveryProvider.js';
+import '../../providers/UIConfigurationProvider.js';
+import '../../providers/CheckoutProvider.js';
 import '../../providers/PaymentProvider.js';
 
 const CreditCardForm = ({ creditCardList, values, setFieldValue, errors, handleChange, }) => {
     var _a, _b;
     const theme = useTheme();
     const { billingInfo } = useBilling();
+    const isNewCreditCard = useMemo(() => {
+        return ((values === null || values === void 0 ? void 0 : values.isNew) || (creditCardList && creditCardList.length === 0));
+    }, [values, creditCardList]);
     const handleCardChange = useCallback((val) => {
         setFieldValue('isNew', val === 'null');
         setFieldValue('cardId', val);
     }, [setFieldValue]);
     const formatCardNumber = useCallback((value) => __awaiter(void 0, void 0, void 0, function* () {
         var _c;
-        const cardNumberLength = (values === null || values === void 0 ? void 0 : values.cardNumber) ? (_c = values === null || values === void 0 ? void 0 : values.cardNumber) === null || _c === void 0 ? void 0 : _c.length : 0;
+        const cardNumberLength = (values === null || values === void 0 ? void 0 : values.cardNumber)
+            ? (_c = values === null || values === void 0 ? void 0 : values.cardNumber) === null || _c === void 0 ? void 0 : _c.length
+            : 0;
         if (cardNumberLength > value.length) {
             yield setFieldValue('cardNumber', value);
             return;
@@ -340,9 +345,9 @@ const CreditCardForm = ({ creditCardList, values, setFieldValue, errors, handleC
         yield setFieldValue('expiry', expiry.replace(/\d{2}(?=.)/g, '$&/'));
     }), [setFieldValue, values]);
     return (React__default.createElement(React__default.Fragment, null,
-        React__default.createElement(CreditCardDropdown, { value: values === null || values === void 0 ? void 0 : values.cardId, onChange: handleCardChange, error: errors === null || errors === void 0 ? void 0 : errors.cardId, title: "Card info", sx: { marginRight: '8px' }, options: creditCardList }),
+        React__default.createElement(CreditCardDropdown, { value: isNewCreditCard ? 'true' : values === null || values === void 0 ? void 0 : values.cardId, onChange: handleCardChange, error: errors === null || errors === void 0 ? void 0 : errors.cardId, title: "Card info", sx: { marginRight: '8px' }, options: creditCardList }),
         !(billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.phoneNumber) && (React__default.createElement(FormHelperText, { error: true }, "Phone number is mandatory for credit card payment")),
-        (values === null || values === void 0 ? void 0 : values.isNew) && (React__default.createElement(Box, { display: "flex", justifyContent: "space-between" },
+        isNewCreditCard && (React__default.createElement(Box, { display: "flex", justifyContent: "space-between" },
             React__default.createElement(TextInput, { value: values === null || values === void 0 ? void 0 : values.firstName, onChange: handleChange('firstName'), error: errors === null || errors === void 0 ? void 0 : errors.firstName, title: "First name", sx: {
                     marginTop: '16px',
                     width: '48%',
@@ -351,7 +356,7 @@ const CreditCardForm = ({ creditCardList, values, setFieldValue, errors, handleC
                     marginTop: '16px',
                     width: '48%',
                 }, required: true, placeholder: "Last name", type: "text" }))),
-        (values === null || values === void 0 ? void 0 : values.isNew) && (React__default.createElement(TextInput, { value: values === null || values === void 0 ? void 0 : values.cardNumber, onChange: formatCardNumber, error: errors === null || errors === void 0 ? void 0 : errors.cardNumber, inputProps: {
+        isNewCreditCard && (React__default.createElement(TextInput, { value: values === null || values === void 0 ? void 0 : values.cardNumber, onChange: formatCardNumber, error: errors === null || errors === void 0 ? void 0 : errors.cardNumber, inputProps: {
                 maxLength: 19,
             }, type: "text", title: "Card info", sx: {
                 marginTop: '16px',
@@ -376,7 +381,7 @@ const CreditCardForm = ({ creditCardList, values, setFieldValue, errors, handleC
                 backgroundColor: (_b = theme.global) === null || _b === void 0 ? void 0 : _b.grayBackground,
                 borderRadius: '4px',
             } }, "NFTs purchased by credit card can only be transferred to your multi-sig wallet and cannot be transferred out for 14 days."),
-        (values === null || values === void 0 ? void 0 : values.isNew) && (React__default.createElement(Box, { display: "flex", alignItems: "center", marginTop: 2 },
+        isNewCreditCard && (React__default.createElement(Box, { display: "flex", alignItems: "center", marginTop: 2 },
             React__default.createElement(Checkbox, { sx: { padding: 0 }, checked: values === null || values === void 0 ? void 0 : values.save, onChange: handleChange('save') }),
             React__default.createElement(Typography, { variant: "body1", sx: { marginLeft: 1 } }, "Save my credit card info for faster checkout")))));
 };

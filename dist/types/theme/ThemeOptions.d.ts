@@ -1,5 +1,5 @@
 import { ThemeOptions, Theme } from '@mui/material/styles';
-import { CheckOutColor, ConfirmationColors, CostBreakDownColors } from '../interfaces';
+import { CheckoutColor, PaymentConfirmationColor, CostBreakDownColor } from '../interfaces';
 export interface ExtendsThemeOptions {
     font?: {
         primary?: string;
@@ -22,9 +22,9 @@ export interface ExtendsThemeOptions {
         white: string;
         required: string;
         placeholder: string;
-        checkOutColors: CheckOutColor;
-        costBreakDownColors: CostBreakDownColors;
-        confirmationColors: ConfirmationColors;
+        checkout: CheckoutColor;
+        costBreakdown: CostBreakDownColor;
+        paymentConfirmation: PaymentConfirmationColor;
         cardGrayedText: string;
         grayBackground: string;
     };

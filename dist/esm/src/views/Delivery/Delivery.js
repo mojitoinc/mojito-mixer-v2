@@ -345,7 +345,7 @@ const Delivery = ({ onWalletChange, walletOptions, selectedDeliveryAddress, onCl
                         }, onClick: onDisconnect })))),
         React__default.createElement(Box, { display: "flex", flexDirection: "row", justifyContent: "space-between" },
             React__default.createElement(FormHelperText, { error: true }, error),
-            React__default.createElement(Button, { title: "Confirm purchase", backgroundColor: (_m = (_l = theme.global) === null || _l === void 0 ? void 0 : _l.checkOutColors) === null || _m === void 0 ? void 0 : _m.continueButtonBackground, textColor: (_p = (_o = theme.global) === null || _o === void 0 ? void 0 : _o.checkOutColors) === null || _p === void 0 ? void 0 : _p.continueButtonTextColor, disabled: !((connect === null || connect === void 0 ? void 0 : connect.connected) || selectedDeliveryAddress), onClick: onClickConfirmPurchase }))));
+            React__default.createElement(Button, { title: "Confirm purchase", backgroundColor: (_m = (_l = theme.global) === null || _l === void 0 ? void 0 : _l.checkout) === null || _m === void 0 ? void 0 : _m.continueButtonBackground, textColor: (_p = (_o = theme.global) === null || _o === void 0 ? void 0 : _o.checkout) === null || _p === void 0 ? void 0 : _p.continueButtonTextColor, disabled: !((connect === null || connect === void 0 ? void 0 : connect.connected) || selectedDeliveryAddress), onClick: onClickConfirmPurchase }))));
 };
 
 export { Delivery as default };

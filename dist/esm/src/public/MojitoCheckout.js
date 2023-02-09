@@ -294,7 +294,7 @@ import '../../node_modules/@mui/material/Zoom/Zoom.js';
 import GlobalStyles from '../../node_modules/@mui/material/GlobalStyles/GlobalStyles.js';
 import '../../node_modules/@mui/base/FocusTrap/FocusTrap.js';
 import Modal from 'react-modal';
-import { makeUIConfiguration, ConfigurationContext, DefaultConfiguration } from '../providers/ConfigurationProvider.js';
+import { UIConfigurationContext } from '../providers/UIConfigurationProvider.js';
 import { makeTheme } from '../theme/CreateTheme.js';
 import { styles } from '../theme/GlobalStyles.js';
 import MojitoCheckoutLayout from '../views/index.js';
@@ -302,14 +302,13 @@ import DebugProvider from '../providers/DebugProvider.js';
 import ErrorProvider from '../providers/ErrorProvider.js';
 import { BillingProvider } from '../providers/BillingProvider.js';
 import { ContainerStateProvider } from '../providers/ContainerStateProvider.js';
-import { DeliveryContext } from '../providers/DeliveryProvider.js';
+import { CheckoutContext } from '../providers/CheckoutProvider.js';
 import { PaymentProvider } from '../providers/PaymentProvider.js';
 import { ConnectProvider } from '../providers/ConnectContext.js';
 import { withProviders } from '../providers/ProvidersInjector.js';
+import { makeUIConfiguration, DefaultUIConfiguration } from '../config/UIConfiguration.js';
 
-const MojitoCheckout = ({ 
-// const MojitoCheckout = ({
-uiConfiguration = DefaultConfiguration, theme, show, debug = false, deliveryConfiguration, enableSardine = false, sardineEnvironment = 'production', }) => {
+const MojitoCheckout = ({ uiConfiguration = DefaultUIConfiguration, theme, show, debug = false, checkoutOptions, enableSardine = false, sardineEnvironment = 'production', }) => {
     const themes = useMemo(() => makeTheme(theme), [theme]);
     const uiConfigurations = useMemo(() => makeUIConfiguration(uiConfiguration), [uiConfiguration]);
     // useEffect(() => {
@@ -332,9 +331,9 @@ uiConfiguration = DefaultConfiguration, theme, show, debug = false, deliveryConf
         } },
         React__default.createElement(DebugProvider, { debug: debug },
             React__default.createElement(ThemeProvider, { theme: themes },
-                React__default.createElement(DeliveryContext.Provider, { value: deliveryConfiguration },
-                    React__default.createElement(ConfigurationContext.Provider, { value: uiConfigurations },
-                        React__default.createElement(ContainerStateProvider, { paymentId: deliveryConfiguration === null || deliveryConfiguration === void 0 ? void 0 : deliveryConfiguration.paymentId },
+                React__default.createElement(CheckoutContext.Provider, { value: checkoutOptions },
+                    React__default.createElement(UIConfigurationContext.Provider, { value: uiConfigurations },
+                        React__default.createElement(ContainerStateProvider, { paymentId: checkoutOptions === null || checkoutOptions === void 0 ? void 0 : checkoutOptions.paymentId },
                             React__default.createElement(ErrorProvider, null,
                                 React__default.createElement(BillingProvider, null,
                                     React__default.createElement(PaymentProvider, null,

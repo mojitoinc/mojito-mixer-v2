@@ -302,8 +302,8 @@ require('../../providers/DebugProvider.js');
 require('../../providers/ErrorProvider.js');
 require('../../providers/BillingProvider.js');
 var ContainerStateProvider = require('../../providers/ContainerStateProvider.js');
-require('../../providers/ConfigurationProvider.js');
-require('../../providers/DeliveryProvider.js');
+require('../../providers/UIConfigurationProvider.js');
+require('../../providers/CheckoutProvider.js');
 require('../../providers/PaymentProvider.js');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
@@ -325,7 +325,11 @@ const PaymentInfoCards = ({ billingInfo }) => {
         } },
         React__default["default"].createElement(Box["default"], { sx: { padding: '16px 24px' }, display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
             React__default["default"].createElement(Box["default"], { width: "50%", display: "flex" },
-                React__default["default"].createElement(Typography["default"], { variant: "body2", sx: { color: (_d = theme.global) === null || _d === void 0 ? void 0 : _d.cardGrayedText, marginRight: 3 } }, "Contact info"),
+                React__default["default"].createElement(Typography["default"], { variant: "body2", sx: {
+                        color: (_d = theme.global) === null || _d === void 0 ? void 0 : _d.cardGrayedText,
+                        marginRight: 3,
+                        width: '80px',
+                    } }, "Contact info"),
                 React__default["default"].createElement(Typography["default"], { variant: "body2" }, billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.email)),
             React__default["default"].createElement(Box["default"], null,
                 React__default["default"].createElement(Typography["default"], { variant: "button", sx: {
@@ -339,7 +343,11 @@ const PaymentInfoCards = ({ billingInfo }) => {
         React__default["default"].createElement(Divider["default"], null),
         React__default["default"].createElement(Box["default"], { sx: { padding: '16px 24px' }, display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
             React__default["default"].createElement(Box["default"], { width: "50%", display: "flex" },
-                React__default["default"].createElement(Typography["default"], { variant: "body2", sx: { color: (_f = theme.global) === null || _f === void 0 ? void 0 : _f.cardGrayedText, marginRight: 3 } }, "Billing info"),
+                React__default["default"].createElement(Typography["default"], { variant: "body2", sx: {
+                        color: (_f = theme.global) === null || _f === void 0 ? void 0 : _f.cardGrayedText,
+                        marginRight: 3,
+                        width: '80px',
+                    } }, "Billing info"),
                 React__default["default"].createElement(Box["default"], null,
                     React__default["default"].createElement(Typography["default"], { variant: "body2" }, billingInfo === null || billingInfo === void 0 ? void 0 :
                         billingInfo.country,

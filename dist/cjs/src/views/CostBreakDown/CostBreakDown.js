@@ -308,8 +308,8 @@ require('../../providers/DebugProvider.js');
 require('../../providers/ErrorProvider.js');
 require('../../providers/BillingProvider.js');
 var ContainerStateProvider = require('../../providers/ContainerStateProvider.js');
-var ConfigurationProvider = require('../../providers/ConfigurationProvider.js');
-var DeliveryProvider = require('../../providers/DeliveryProvider.js');
+var UIConfigurationProvider = require('../../providers/UIConfigurationProvider.js');
+var CheckoutProvider = require('../../providers/CheckoutProvider.js');
 require('../../providers/PaymentProvider.js');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
@@ -317,15 +317,15 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 
 const CostBreakDown = ({ taxes, collectionData }) => {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q;
     const theme = useTheme["default"]();
-    const { billing } = ConfigurationProvider.useUIConfiguration();
-    const { quantity } = DeliveryProvider.useDelivery();
+    const uiConfiguration = UIConfigurationProvider.useUIConfiguration();
+    const { quantity } = CheckoutProvider.useCheckout();
     const { containerState } = ContainerStateProvider.useContainer();
     const renderTextRow = (text, value) => {
         return (React__default["default"].createElement(Box["default"], { display: "flex", flexDirection: "row", justifyContent: "space-between", margin: "10px 0px" },
-            React__default["default"].createElement(Typography["default"], null, text),
-            React__default["default"].createElement(Typography["default"], { fontWeight: "700" }, value)));
+            React__default["default"].createElement(Typography["default"], { variant: "body2", fontSize: "14px" }, text),
+            React__default["default"].createElement(Typography["default"], { variant: "subtitle2", fontWeight: "700" }, value)));
     };
     return (React__default["default"].createElement(Box["default"], { width: "100%", height: "100%", sx: {
             backgroundImage: `url(${index.Icons.background})`,
@@ -348,52 +348,57 @@ const CostBreakDown = ({ taxes, collectionData }) => {
                     React__default["default"].createElement(Box["default"], { sx: {
                             marginLeft: '16px',
                         } },
-                        React__default["default"].createElement(Typography["default"], { sx: {
+                        React__default["default"].createElement(Typography["default"], { variant: "h5", sx: {
                                 fontWeight: '700',
                                 fontSize: '20px',
+                                marginBottom: '4px',
                             } }, collectionData === null || collectionData === void 0 ? void 0 : collectionData.name),
-                        React__default["default"].createElement(Typography["default"], null,
+                        React__default["default"].createElement(Typography["default"], { variant: "body1", sx: { marginBottom: '12px', fontSize: '14px' } },
                             "Qty : ",
                             quantity),
-                        React__default["default"].createElement(Typography["default"], null, (_b = (_a = collectionData === null || collectionData === void 0 ? void 0 : collectionData.details) === null || _a === void 0 ? void 0 : _a.totalUnits) !== null && _b !== void 0 ? _b : '0',
+                        React__default["default"].createElement(Typography["default"], { variant: "body1", sx: {
+                                marginBottom: '12px',
+                                fontSize: '14px',
+                                fontStyle: 'italic',
+                            } }, (_b = (_a = collectionData === null || collectionData === void 0 ? void 0 : collectionData.details) === null || _a === void 0 ? void 0 : _a.totalUnits) !== null && _b !== void 0 ? _b : '0',
                             " remaining"))),
                 React__default["default"].createElement(Box["default"], { display: "flex", flexDirection: "column", alignItems: "flex-end" },
-                    React__default["default"].createElement(Typography["default"], { fontWeight: "700" }, (_c = taxes === null || taxes === void 0 ? void 0 : taxes.taxablePrice) !== null && _c !== void 0 ? _c : '0',
+                    React__default["default"].createElement(Typography["default"], { variant: "subtitle2", fontWeight: "700", fontSize: "14px" }, (_c = taxes === null || taxes === void 0 ? void 0 : taxes.taxablePrice) !== null && _c !== void 0 ? _c : '0',
                         " USD"),
-                    React__default["default"].createElement(Typography["default"], null, "2.00 ETH"))),
-            ((billing === null || billing === void 0 ? void 0 : billing.showDiscountCode) && containerState !== ContainerStateProvider.ContainerTypes.CONFIRMATION) && (React__default["default"].createElement(React__default["default"].Fragment, null,
+                    React__default["default"].createElement(Typography["default"], { variant: "body2", fontSize: "14px" }, "2.00 ETH"))),
+            ((_d = uiConfiguration === null || uiConfiguration === void 0 ? void 0 : uiConfiguration.costBreakdown) === null || _d === void 0 ? void 0 : _d.showDiscountCode) &&
+                containerState !== ContainerStateProvider.ContainerTypes.CONFIRMATION && (React__default["default"].createElement(React__default["default"].Fragment, null,
                 React__default["default"].createElement(Divider["default"], { sx: {
-                        background: (_d = theme.global) === null || _d === void 0 ? void 0 : _d.border,
+                        background: (_e = theme.global) === null || _e === void 0 ? void 0 : _e.border,
                         margin: '20px 0px',
                     } }),
                 React__default["default"].createElement(Box["default"], { display: "flex", flexDirection: "row" },
                     React__default["default"].createElement(TextInput["default"], { placeholder: "Discount code", inputProps: {
                             style: {
-                                backgroundColor: (_e = theme.global) === null || _e === void 0 ? void 0 : _e.background,
+                                backgroundColor: (_f = theme.global) === null || _f === void 0 ? void 0 : _f.background,
                             },
                         } }),
-                    React__default["default"].createElement(Button["default"], { title: "Apply", backgroundColor: (_g = (_f = theme.global) === null || _f === void 0 ? void 0 : _f.costBreakDownColors) === null || _g === void 0 ? void 0 : _g.applyButtonBackground, sx: {
+                    React__default["default"].createElement(Button["default"], { title: "Apply", backgroundColor: (_h = (_g = theme.global) === null || _g === void 0 ? void 0 : _g.costBreakdown) === null || _h === void 0 ? void 0 : _h.applyButtonBackground, sx: {
                             marginLeft: '8px',
-                        }, textColor: (_j = (_h = theme.global) === null || _h === void 0 ? void 0 : _h.costBreakDownColors) === null || _j === void 0 ? void 0 : _j.applyButtonTextColor })))),
+                        }, textColor: (_k = (_j = theme.global) === null || _j === void 0 ? void 0 : _j.costBreakdown) === null || _k === void 0 ? void 0 : _k.applyButtonTextColor })))),
             React__default["default"].createElement(Divider["default"], { sx: {
-                    background: (_k = theme.global) === null || _k === void 0 ? void 0 : _k.border,
-                    margin: '20px 0px 10px 0px',
+                    background: (_l = theme.global) === null || _l === void 0 ? void 0 : _l.border,
+                    margin: '20px 0px 20px 0px',
                 } }),
             React__default["default"].createElement(Box["default"], null,
-                renderTextRow('Subtotal', `${(_l = taxes === null || taxes === void 0 ? void 0 : taxes.taxablePrice) !== null && _l !== void 0 ? _l : '0'} USD`),
-                renderTextRow('Taxes', `${(_m = taxes === null || taxes === void 0 ? void 0 : taxes.totalTaxAmount) !== null && _m !== void 0 ? _m : '0'} USD`),
+                renderTextRow('Subtotal', `${(_m = taxes === null || taxes === void 0 ? void 0 : taxes.taxablePrice) !== null && _m !== void 0 ? _m : '0'} USD`),
+                renderTextRow('Taxes', `${(_o = taxes === null || taxes === void 0 ? void 0 : taxes.totalTaxAmount) !== null && _o !== void 0 ? _o : '0'} USD`),
                 renderTextRow('Fee', '0 USD')),
             React__default["default"].createElement(Divider["default"], { sx: {
-                    background: (_o = theme.global) === null || _o === void 0 ? void 0 : _o.border,
+                    background: (_p = theme.global) === null || _p === void 0 ? void 0 : _p.border,
                     margin: '20px 0px',
                 } }),
             React__default["default"].createElement(Box["default"], { display: "flex", flexDirection: "row", justifyContent: "space-between", marginBottom: "20px" },
-                React__default["default"].createElement(Typography["default"], { fontWeight: "700", fontSize: "16px" }, "Total"),
+                React__default["default"].createElement(Typography["default"], { variant: "subtitle1", fontWeight: "700", fontSize: "16px" }, "Total"),
                 React__default["default"].createElement(Box["default"], { display: "flex", flexDirection: "column", alignItems: "flex-end" },
-                    React__default["default"].createElement(Typography["default"], { fontWeight: "700", fontSize: "20px" },
-                        " ", (_p = taxes === null || taxes === void 0 ? void 0 : taxes.totalTaxedPrice) !== null && _p !== void 0 ? _p : '0',
+                    React__default["default"].createElement(Typography["default"], { variant: "h5", fontWeight: "700", fontSize: "20px" }, (_q = taxes === null || taxes === void 0 ? void 0 : taxes.totalTaxedPrice) !== null && _q !== void 0 ? _q : '0',
                         " USD"),
-                    React__default["default"].createElement(Typography["default"], { fontSize: "16px" }, "2.00 ETH"))))));
+                    React__default["default"].createElement(Typography["default"], { variant: "body1", fontSize: "16px" }, "2.00 ETH"))))));
 };
 
 exports["default"] = CostBreakDown;

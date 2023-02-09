@@ -11,6 +11,7 @@ export interface DebugProps {
 declare const DebugProvider: ({ debug, children, }: DebugProps) => JSX.Element;
 export default DebugProvider;
 export declare const useDebug: (tag: string) => {
+    debug: boolean;
     success: (method?: string, message?: ErrorMessage) => void;
     info: (method?: ErrorMessage, message?: ErrorMessage) => void;
     error: (method?: string, message?: ErrorMessage) => void;

@@ -1,17 +1,16 @@
 import React from 'react';
-import { ConfigurationType } from '../providers/ConfigurationProvider';
 import { ThemeConfiguration } from '../interfaces';
-import { Delivery } from '../providers';
 import { SardineEnvironment } from '../config';
 import { ProvidersInjectorProps } from '../providers/ProvidersInjector';
+import { UIConfiguration, CheckoutOptions } from '../interfaces/ContextInterface';
 declare global {
     interface Window {
         _Sardine: any;
     }
 }
 interface MojitoCheckoutProps {
-    uiConfiguration?: ConfigurationType;
-    deliveryConfiguration: Delivery;
+    uiConfiguration?: UIConfiguration;
+    checkoutOptions: CheckoutOptions;
     theme?: ThemeConfiguration;
     show: boolean;
     debug?: boolean;

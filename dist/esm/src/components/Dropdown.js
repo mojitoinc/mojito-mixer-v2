@@ -303,7 +303,7 @@ const Dropdown = ({ value = '', title, onChange, options = [], sx, error, requir
     }, [onChange]);
     return (React__default.createElement(Box, { sx: Object.assign({ width: '100%' }, sx) },
         title && (React__default.createElement(Box, { display: "flex", flexDirection: "row" },
-            React__default.createElement(Typography, { color: (_b = (_a = theme.palette) === null || _a === void 0 ? void 0 : _a.text) === null || _b === void 0 ? void 0 : _b.primary, fontSize: "16px" }, title),
+            React__default.createElement(Typography, { variant: "body1", color: (_b = (_a = theme.palette) === null || _a === void 0 ? void 0 : _a.text) === null || _b === void 0 ? void 0 : _b.primary, fontSize: "16px" }, title),
             required && (React__default.createElement(Typography, { color: (_c = theme.global) === null || _c === void 0 ? void 0 : _c.required, fontSize: "16px", marginLeft: "4px" }, "*")))),
         React__default.createElement(FormControl, { fullWidth: true, sx: {
                 marginTop: '6px',
@@ -318,7 +318,7 @@ const Dropdown = ({ value = '', title, onChange, options = [], sx, error, requir
                 React__default.createElement(MenuItem, { disabled: true, value: "" },
                     React__default.createElement(Typography, { color: (_d = theme.palette.text) === null || _d === void 0 ? void 0 : _d.disabled }, placeholder)),
                 options.map((item) => {
-                    return React__default.createElement(MenuItem, { value: item === null || item === void 0 ? void 0 : item.value, key: item === null || item === void 0 ? void 0 : item.value }, item.label);
+                    return (React__default.createElement(MenuItem, { value: item === null || item === void 0 ? void 0 : item.value, key: item === null || item === void 0 ? void 0 : item.value }, item.label));
                 })),
             error && React__default.createElement(FormHelperText, null, error))));
 };

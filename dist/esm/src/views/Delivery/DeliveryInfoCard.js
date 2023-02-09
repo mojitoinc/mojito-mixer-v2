@@ -299,8 +299,8 @@ import '../../providers/DebugProvider.js';
 import '../../providers/ErrorProvider.js';
 import '../../providers/BillingProvider.js';
 import { useContainer, ContainerTypes } from '../../providers/ContainerStateProvider.js';
-import '../../providers/ConfigurationProvider.js';
-import '../../providers/DeliveryProvider.js';
+import '../../providers/UIConfigurationProvider.js';
+import '../../providers/CheckoutProvider.js';
 import '../../providers/PaymentProvider.js';
 import { PaymentTypes } from '../../constants/index.js';
 import '../../components/Stepper.js';
@@ -339,7 +339,7 @@ const DeliveryInfoCard = ({ billingInfo, paymentInfo, }) => {
         } },
         React__default.createElement(Box, { sx: { padding: '16px 24px' }, display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "flex-start" },
             React__default.createElement(Box, { width: "50%", display: "flex" },
-                React__default.createElement(Typography, { variant: "body2", sx: { color: (_d = theme.global) === null || _d === void 0 ? void 0 : _d.cardGrayedText, marginRight: 7 } }, "Contact info"),
+                React__default.createElement(Typography, { variant: "body2", sx: { color: (_d = theme.global) === null || _d === void 0 ? void 0 : _d.cardGrayedText, width: '135px' } }, "Contact info"),
                 React__default.createElement(Typography, { variant: "body2" }, billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.email)),
             React__default.createElement(Box, null,
                 React__default.createElement(Typography, { variant: "button", sx: {
@@ -353,7 +353,7 @@ const DeliveryInfoCard = ({ billingInfo, paymentInfo, }) => {
         React__default.createElement(Divider, null),
         React__default.createElement(Box, { sx: { padding: '16px 24px' }, display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "flex-start" },
             React__default.createElement(Box, { width: "50%", display: "flex" },
-                React__default.createElement(Typography, { variant: "body2", sx: { color: (_f = theme.global) === null || _f === void 0 ? void 0 : _f.cardGrayedText, marginRight: 7 } }, "Billing info"),
+                React__default.createElement(Typography, { variant: "body2", sx: { color: (_f = theme.global) === null || _f === void 0 ? void 0 : _f.cardGrayedText, width: '135px' } }, "Billing info"),
                 React__default.createElement(Box, null,
                     React__default.createElement(Typography, { variant: "body2" }, billingInfo === null || billingInfo === void 0 ? void 0 :
                         billingInfo.country,

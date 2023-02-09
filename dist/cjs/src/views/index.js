@@ -310,8 +310,8 @@ require('../providers/DebugProvider.js');
 var ErrorProvider = require('../providers/ErrorProvider.js');
 require('../providers/BillingProvider.js');
 var ContainerStateProvider = require('../providers/ContainerStateProvider.js');
-require('../providers/ConfigurationProvider.js');
-require('../providers/DeliveryProvider.js');
+require('../providers/UIConfigurationProvider.js');
+require('../providers/CheckoutProvider.js');
 require('../providers/PaymentProvider.js');
 var index$1 = require('./Loading/index.js');
 var index = require('./Error/index.js');
@@ -343,7 +343,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 
-const MojitoCheckoutLayout = ({ sardineEnvironment, enableSardine }) => {
+const MojitoCheckoutLayout = ({ sardineEnvironment, enableSardine, }) => {
     var _a;
     const theme = useTheme["default"]();
     const { containerState } = ContainerStateProvider.useContainer();
@@ -366,11 +366,11 @@ const MojitoCheckoutLayout = ({ sardineEnvironment, enableSardine }) => {
             flexDirection: 'row',
             justifyContent: 'space-between',
         } },
-        React__default["default"].createElement(Box["default"], { width: "100%", padding: "30px" },
+        React__default["default"].createElement(Box["default"], { width: "100%", padding: "40px" },
             React__default["default"].createElement(Header["default"], null),
-            containerState !== ContainerStateProvider.ContainerTypes.CONFIRMATION && React__default["default"].createElement(Stepper["default"], { currentState: containerState }),
+            containerState !== ContainerStateProvider.ContainerTypes.CONFIRMATION && (React__default["default"].createElement(Stepper["default"], { currentState: containerState })),
             containerState === ContainerStateProvider.ContainerTypes.CHECKOUT && React__default["default"].createElement(index$2["default"], null),
-            containerState === ContainerStateProvider.ContainerTypes.CONFIRMATION && React__default["default"].createElement(index$3["default"], null),
+            containerState === ContainerStateProvider.ContainerTypes.CONFIRMATION && (React__default["default"].createElement(index$3["default"], null)),
             containerState === ContainerStateProvider.ContainerTypes.PAYMENT && React__default["default"].createElement(index$4.PaymentContainer, null),
             containerState === ContainerStateProvider.ContainerTypes.DELIVERY && React__default["default"].createElement(index$5.Delivery, null)),
         React__default["default"].createElement(index$6["default"], null)));

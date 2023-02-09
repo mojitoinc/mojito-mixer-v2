@@ -341,7 +341,7 @@ const CreditCardDropdown = ({ value = '', title, onChange, options = [], sx, err
                 options.map((item) => {
                     return (React__default.createElement(MenuItem, { value: item === null || item === void 0 ? void 0 : item.id, key: item === null || item === void 0 ? void 0 : item.id }, renderOption(item)));
                 }),
-                React__default.createElement(MenuItem, { value: "null" }, "Add new card info")),
+                React__default.createElement(MenuItem, { value: "true" }, "Add new card info")),
             error && React__default.createElement(FormHelperText, { error: true }, error))));
 };
 

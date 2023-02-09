@@ -32,8 +32,8 @@ var DebugProvider = require('../../providers/DebugProvider.js');
 require('../../providers/ErrorProvider.js');
 var BillingProvider = require('../../providers/BillingProvider.js');
 var ContainerStateProvider = require('../../providers/ContainerStateProvider.js');
-require('../../providers/ConfigurationProvider.js');
-var DeliveryProvider = require('../../providers/DeliveryProvider.js');
+require('../../providers/UIConfigurationProvider.js');
+var CheckoutProvider = require('../../providers/CheckoutProvider.js');
 var PaymentProvider = require('../../providers/PaymentProvider.js');
 var BillingView = require('./BillingView.js');
 
@@ -43,7 +43,7 @@ var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 
 const BillingContainer = () => {
     const debug = DebugProvider.useDebug('Billing');
-    const { orgId } = DeliveryProvider.useDelivery();
+    const { orgId } = CheckoutProvider.useCheckout();
     const { setBillingInfo, billingInfo, refetchTaxes } = BillingProvider.useBilling();
     const [isEditing, setIsEditing] = React.useState(true);
     const { setContainerState } = ContainerStateProvider.useContainer();

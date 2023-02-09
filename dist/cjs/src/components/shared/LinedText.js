@@ -317,7 +317,7 @@ const LinedText = ({ text, capitalize = true }) => {
                 backgroundColor: (_a = theme.global) === null || _a === void 0 ? void 0 : _a.lines,
                 height: '1px',
             } }),
-        React__default["default"].createElement(Typography["default"], { color: (_b = theme === null || theme === void 0 ? void 0 : theme.global) === null || _b === void 0 ? void 0 : _b.unHighlightedText, fontWeight: "700", fontSize: "12px", margin: "0px 10px", minWidth: `${text.length * 8}px`, textAlign: "center" }, capitalize ? text.toUpperCase() : text),
+        React__default["default"].createElement(Typography["default"], { color: (_b = theme === null || theme === void 0 ? void 0 : theme.global) === null || _b === void 0 ? void 0 : _b.unHighlightedText, fontWeight: "700", fontSize: "12px", margin: "0px 10px", minWidth: `${text.length * 8}px`, textAlign: "center", variant: "subtitle2" }, capitalize ? text.toUpperCase() : text),
         React__default["default"].createElement(Box["default"], { sx: {
                 width: '100%',
                 backgroundColor: (_c = theme.global) === null || _c === void 0 ? void 0 : _c.lines,

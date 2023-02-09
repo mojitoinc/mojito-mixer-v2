@@ -37,10 +37,10 @@ const AuthorizedApolloProvider = ({ apolloClient: parentApolloClient, uri, getAu
         const authLink = setContext((_, { headers }) => __awaiter(void 0, void 0, void 0, function* () {
             const token = yield getAuthenticationToken();
             const context = {
-                headers: Object.assign(Object.assign({}, headers), { authorization: token ? `Bearer ${token}` : "" }),
+                headers: Object.assign(Object.assign({}, headers), { authorization: token ? `Bearer ${token}` : '' }),
             };
             if (isLocalhost())
-                context.headers["origin-overwrite"] = "https://payments-staging.mojito.xyz/";
+                context.headers['origin-overwrite'] = 'https://payments-staging.mojito.xyz/';
             return context;
         }));
         const link = authLink.concat(httpLink);

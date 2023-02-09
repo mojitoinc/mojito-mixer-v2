@@ -5,8 +5,8 @@ import { useDebug } from './DebugProvider.js';
 import { useError } from './ErrorProvider.js';
 import { useBilling } from './BillingProvider.js';
 import { useContainer, ContainerTypes } from './ContainerStateProvider.js';
-import './ConfigurationProvider.js';
-import { useDelivery } from './DeliveryProvider.js';
+import './UIConfigurationProvider.js';
+import { useCheckout } from './CheckoutProvider.js';
 import 'openpgp';
 import 'atob';
 import 'btoa';
@@ -26,7 +26,6 @@ import '../../node_modules/country-state-city/lib/country.js';
 import '../../node_modules/country-state-city/lib/state.js';
 import '../../node_modules/country-state-city/lib/city.js';
 import 'uuidv4';
-import '../config/RuntimeConfiguration.js';
 import '../config/paymentConfiguration.js';
 import { useCreatePayment } from '../hooks/useCreatePayment.js';
 
@@ -36,7 +35,7 @@ const PaymentProvider = ({ children }) => {
     const { setError } = useError();
     const [paymentInfo, setPaymentInfo] = useState();
     const { billingInfo, collectionData, taxes } = useBilling();
-    const { orgId, lotId, quantity, invoiceId } = useDelivery();
+    const { orgId, lotId, quantity, invoiceId } = useCheckout();
     const { setContainerState } = useContainer();
     const { makeCreditCardPurchase, makeWireTransferPurchase } = useCreatePayment(paymentInfo, orgId);
     const saveToCookies = useCallback((paymentData, reserveLotData) => {

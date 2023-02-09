@@ -28,8 +28,8 @@ import '../../providers/DebugProvider.js';
 import '../../providers/ErrorProvider.js';
 import { useBilling } from '../../providers/BillingProvider.js';
 import { useContainer, ContainerTypes } from '../../providers/ContainerStateProvider.js';
-import { useUIConfiguration } from '../../providers/ConfigurationProvider.js';
-import { useDelivery } from '../../providers/DeliveryProvider.js';
+import { useUIConfiguration } from '../../providers/UIConfigurationProvider.js';
+import { useCheckout } from '../../providers/CheckoutProvider.js';
 import { usePayment } from '../../providers/PaymentProvider.js';
 import { formCardScreeningVariable } from '../Delivery/Delivery.service.js';
 import { cardScreeningQuery } from '../../queries/creditCard.js';
@@ -38,11 +38,11 @@ import PaymentContainer$1 from './PaymentContainer.js';
 
 const PaymentContainer = () => {
     var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3;
-    const { orgId } = useDelivery();
+    const { orgId } = useCheckout();
     const { setPaymentInfo, paymentInfo } = usePayment();
     const { setContainerState } = useContainer();
     const { billingInfo, taxes } = useBilling();
-    const { billing } = useUIConfiguration();
+    const uiConfiguration = useUIConfiguration();
     const [paymentType, setPaymentType] = useState(PaymentTypes.CREDIT_CARD);
     const onChoosePaymentType = useCallback((name, value) => {
         setPaymentType(value ? name : paymentType);
@@ -54,10 +54,12 @@ const PaymentContainer = () => {
     const validationSchema = create().shape({
         accountNumber: create$1()
             .matches(/^[\d\s]+$/, 'Invalid account number')
-            .min(9, 'Invalid account number').required('Please enter account number'),
+            .min(9, 'Invalid account number')
+            .required('Please enter account number'),
         aba: create$1()
             .matches(/^[\d\s]+$/, 'Invalid aba')
-            .min(10, 'Invalid aba').required('Please enter aba'),
+            .min(10, 'Invalid aba')
+            .required('Please enter aba'),
         bankCountry: create$1().required('Please select bank country'),
         bankName: create$1().required('Please select bank name'),
     });
@@ -101,16 +103,6 @@ const PaymentContainer = () => {
     const [cardScreening] = useLazyQuery(cardScreeningQuery);
     const { data: meData } = useQuery(meQuery);
     const [creditCardList, setCreditCardList] = useState([]);
-    useEffect(() => {
-        var _a;
-        if (paymentData) {
-            const creditCards = (_a = paymentData === null || paymentData === void 0 ? void 0 : paymentData.getPaymentMethodList) === null || _a === void 0 ? void 0 : _a.filter((item) => item.type === 'CreditCard');
-            const filteredCreditCards = creditCards.filter((item, index, array) => index ===
-                array.findIndex(foundItem => foundItem.last4Digit === item.last4Digit &&
-                    foundItem.network === item.network));
-            setCreditCardList(filteredCreditCards);
-        }
-    }, [paymentData]);
     const { values: wireTransferFormValues, handleChange: onChangeWireTransferField, setFieldValue: onSetWireTransferField, errors: wireTransferFormErrors, isValid: isValidWireTransfer, } = useFormik({
         initialValues: {
             accountNumber: (_b = (_a = paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.wireData) === null || _a === void 0 ? void 0 : _a.accountNumber) !== null && _b !== void 0 ? _b : '',
@@ -140,6 +132,25 @@ const PaymentContainer = () => {
         validateOnChange: true,
         validateOnMount: true,
     });
+    useEffect(() => {
+        var _a;
+        if (paymentData) {
+            const creditCards = (_a = paymentData === null || paymentData === void 0 ? void 0 : paymentData.getPaymentMethodList) === null || _a === void 0 ? void 0 : _a.filter((item) => item.type === 'CreditCard');
+            const filteredCreditCards = creditCards.filter((item, index, array) => index ===
+                array.findIndex(foundItem => foundItem.last4Digit === item.last4Digit &&
+                    foundItem.network === item.network));
+            if (filteredCreditCards.length > 0) {
+                onSetCreditCardField('cardId', filteredCreditCards[0].id);
+            }
+            else {
+                onSetCreditCardField('isNew', filteredCreditCards.length === 0);
+            }
+            setCreditCardList(filteredCreditCards);
+        }
+        else {
+            onSetCreditCardField('isNew', true);
+        }
+    }, [paymentData, onSetCreditCardField]);
     const onSubmitCreditCard = useCallback(() => __awaiter(void 0, void 0, void 0, function* () {
         var _4, _5;
         if (isValidCreditCardValues) {
@@ -209,7 +220,13 @@ const PaymentContainer = () => {
         if (paymentType === PaymentTypes.CREDIT_CARD) {
             onSubmitCreditCard();
         }
-    }, [paymentType, onSubmitCreditCard, onSubmitWireTransfer, billingInfo, isValidWireTransfer]);
+    }, [
+        paymentType,
+        onSubmitCreditCard,
+        onSubmitWireTransfer,
+        billingInfo,
+        isValidWireTransfer,
+    ]);
     const buttonDisabled = useMemo(() => {
         if (paymentType === PaymentTypes.CREDIT_CARD) {
             return !isValidCreditCardValues;
@@ -219,7 +236,7 @@ const PaymentContainer = () => {
         }
         return true;
     }, [isValidCreditCardValues, isValidWireTransfer, paymentType]);
-    return (React__default.createElement(PaymentContainer$1, { paymentType: paymentType, onChoosePaymentType: onChoosePaymentType, wireTransferFormValues: wireTransferFormValues, onChangeWireTransferField: onChangeWireTransferField, onSetWireTransferField: onSetWireTransferField, wireTransferFormErrors: wireTransferFormErrors, creditCardFormValues: creditCardFormValues, onChangeCreditCardField: onChangeCreditCardField, onSetCreditCardField: onSetCreditCardField, creditCardFormErrors: creditCardFormErrors, creditCardList: creditCardList, onClickDelivery: onClickDelivery, config: billing === null || billing === void 0 ? void 0 : billing.paymentMethods, billingInfo: billingInfo, buttonDisabled: buttonDisabled }));
+    return (React__default.createElement(PaymentContainer$1, { paymentType: paymentType, onChoosePaymentType: onChoosePaymentType, wireTransferFormValues: wireTransferFormValues, onChangeWireTransferField: onChangeWireTransferField, onSetWireTransferField: onSetWireTransferField, wireTransferFormErrors: wireTransferFormErrors, creditCardFormValues: creditCardFormValues, onChangeCreditCardField: onChangeCreditCardField, onSetCreditCardField: onSetCreditCardField, creditCardFormErrors: creditCardFormErrors, creditCardList: creditCardList, onClickDelivery: onClickDelivery, config: uiConfiguration === null || uiConfiguration === void 0 ? void 0 : uiConfiguration.payment, billingInfo: billingInfo, buttonDisabled: buttonDisabled }));
 };
 
 export { PaymentContainer };

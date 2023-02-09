@@ -303,8 +303,8 @@ require('../providers/DebugProvider.js');
 require('../providers/ErrorProvider.js');
 require('../providers/BillingProvider.js');
 var ContainerStateProvider = require('../providers/ContainerStateProvider.js');
-require('../providers/ConfigurationProvider.js');
-require('../providers/DeliveryProvider.js');
+require('../providers/UIConfigurationProvider.js');
+require('../providers/CheckoutProvider.js');
 require('../providers/PaymentProvider.js');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
@@ -325,7 +325,7 @@ const steps = [
         value: ContainerStateProvider.ContainerTypes.DELIVERY,
     },
 ];
-const Stepper = ({ currentState, }) => {
+const Stepper = ({ currentState }) => {
     var _a;
     const theme = useTheme["default"]();
     return (React__default["default"].createElement(Box["default"], { sx: {
@@ -333,7 +333,7 @@ const Stepper = ({ currentState, }) => {
             backgroundColor: (_a = theme.global) === null || _a === void 0 ? void 0 : _a.background,
             display: 'flex',
             flexDirection: 'row',
-            margin: '8px 0px',
+            margin: '24px 0px',
         } }, steps.map((item, index$1) => {
         var _a, _b, _c, _d;
         return (React__default["default"].createElement(Box["default"], { display: "flex", flexDirection: "row", alignItems: "center", key: item.value },

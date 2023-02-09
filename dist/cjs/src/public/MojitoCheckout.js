@@ -298,7 +298,7 @@ require('../../node_modules/@mui/material/Zoom/Zoom.js');
 var GlobalStyles = require('../../node_modules/@mui/material/GlobalStyles/GlobalStyles.js');
 require('../../node_modules/@mui/base/FocusTrap/FocusTrap.js');
 var Modal = require('react-modal');
-var ConfigurationProvider = require('../providers/ConfigurationProvider.js');
+var UIConfigurationProvider = require('../providers/UIConfigurationProvider.js');
 var CreateTheme = require('../theme/CreateTheme.js');
 var GlobalStyles$1 = require('../theme/GlobalStyles.js');
 var index = require('../views/index.js');
@@ -306,21 +306,20 @@ var DebugProvider = require('../providers/DebugProvider.js');
 var ErrorProvider = require('../providers/ErrorProvider.js');
 var BillingProvider = require('../providers/BillingProvider.js');
 var ContainerStateProvider = require('../providers/ContainerStateProvider.js');
-var DeliveryProvider = require('../providers/DeliveryProvider.js');
+var CheckoutProvider = require('../providers/CheckoutProvider.js');
 var PaymentProvider = require('../providers/PaymentProvider.js');
 var ConnectContext = require('../providers/ConnectContext.js');
 var ProvidersInjector = require('../providers/ProvidersInjector.js');
+var UIConfiguration = require('../config/UIConfiguration.js');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
 var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 var Modal__default = /*#__PURE__*/_interopDefaultLegacy(Modal);
 
-const MojitoCheckout = ({ 
-// const MojitoCheckout = ({
-uiConfiguration = ConfigurationProvider.DefaultConfiguration, theme, show, debug = false, deliveryConfiguration, enableSardine = false, sardineEnvironment = 'production', }) => {
+const MojitoCheckout = ({ uiConfiguration = UIConfiguration.DefaultUIConfiguration, theme, show, debug = false, checkoutOptions, enableSardine = false, sardineEnvironment = 'production', }) => {
     const themes = React.useMemo(() => CreateTheme.makeTheme(theme), [theme]);
-    const uiConfigurations = React.useMemo(() => ConfigurationProvider.makeUIConfiguration(uiConfiguration), [uiConfiguration]);
+    const uiConfigurations = React.useMemo(() => UIConfiguration.makeUIConfiguration(uiConfiguration), [uiConfiguration]);
     // useEffect(() => {
     //   const params = new URLSearchParams(window.location.search);
     //   params.delete(THREEDS_FLOW_SEARCH_PARAM_SUCCESS_KEY);
@@ -341,9 +340,9 @@ uiConfiguration = ConfigurationProvider.DefaultConfiguration, theme, show, debug
         } },
         React__default["default"].createElement(DebugProvider["default"], { debug: debug },
             React__default["default"].createElement(ThemeProvider["default"], { theme: themes },
-                React__default["default"].createElement(DeliveryProvider.DeliveryContext.Provider, { value: deliveryConfiguration },
-                    React__default["default"].createElement(ConfigurationProvider.ConfigurationContext.Provider, { value: uiConfigurations },
-                        React__default["default"].createElement(ContainerStateProvider.ContainerStateProvider, { paymentId: deliveryConfiguration === null || deliveryConfiguration === void 0 ? void 0 : deliveryConfiguration.paymentId },
+                React__default["default"].createElement(CheckoutProvider.CheckoutContext.Provider, { value: checkoutOptions },
+                    React__default["default"].createElement(UIConfigurationProvider.UIConfigurationContext.Provider, { value: uiConfigurations },
+                        React__default["default"].createElement(ContainerStateProvider.ContainerStateProvider, { paymentId: checkoutOptions === null || checkoutOptions === void 0 ? void 0 : checkoutOptions.paymentId },
                             React__default["default"].createElement(ErrorProvider["default"], null,
                                 React__default["default"].createElement(BillingProvider.BillingProvider, null,
                                     React__default["default"].createElement(PaymentProvider.PaymentProvider, null,

@@ -312,10 +312,10 @@ var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 const ExpressCheckoutView = ({ config }) => {
     var _a, _b, _c, _d, _e, _f, _g, _h;
     const theme = useTheme["default"]();
-    return (React__default["default"].createElement(Box["default"], { margin: "8px 0px" },
+    return (React__default["default"].createElement(Box["default"], { marginBottom: "24px" },
         React__default["default"].createElement(LinedText["default"], { text: "Express Checkout" }),
         React__default["default"].createElement(Box["default"], { display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center", sx: {
-                margin: '30px 0px',
+                margin: '24px 0px',
             } },
             (config === null || config === void 0 ? void 0 : config.gpay) && (React__default["default"].createElement(Button["default"], { backgroundColor: (_a = theme.global) === null || _a === void 0 ? void 0 : _a.black, sx: {
                     width: '90px',

@@ -299,8 +299,8 @@ import '../providers/DebugProvider.js';
 import '../providers/ErrorProvider.js';
 import '../providers/BillingProvider.js';
 import { ContainerTypes } from '../providers/ContainerStateProvider.js';
-import '../providers/ConfigurationProvider.js';
-import '../providers/DeliveryProvider.js';
+import '../providers/UIConfigurationProvider.js';
+import '../providers/CheckoutProvider.js';
 import '../providers/PaymentProvider.js';
 
 const steps = [
@@ -317,7 +317,7 @@ const steps = [
         value: ContainerTypes.DELIVERY,
     },
 ];
-const Stepper = ({ currentState, }) => {
+const Stepper = ({ currentState }) => {
     var _a;
     const theme = useTheme();
     return (React__default.createElement(Box, { sx: {
@@ -325,7 +325,7 @@ const Stepper = ({ currentState, }) => {
             backgroundColor: (_a = theme.global) === null || _a === void 0 ? void 0 : _a.background,
             display: 'flex',
             flexDirection: 'row',
-            margin: '8px 0px',
+            margin: '24px 0px',
         } }, steps.map((item, index) => {
         var _a, _b, _c, _d;
         return (React__default.createElement(Box, { display: "flex", flexDirection: "row", alignItems: "center", key: item.value },

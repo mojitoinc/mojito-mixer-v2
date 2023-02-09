@@ -15,13 +15,13 @@ import '../../providers/DebugProvider.js';
 import '../../providers/ErrorProvider.js';
 import '../../providers/BillingProvider.js';
 import '../../providers/ContainerStateProvider.js';
-import '../../providers/ConfigurationProvider.js';
-import { useDelivery } from '../../providers/DeliveryProvider.js';
+import '../../providers/UIConfigurationProvider.js';
+import { useCheckout } from '../../providers/CheckoutProvider.js';
 import { usePayment } from '../../providers/PaymentProvider.js';
 import ConfirmationView from './ConfirmationView.js';
 
 const PaymentConfirmationContainer = () => {
-    const { orgId } = useDelivery();
+    const { orgId } = useCheckout();
     const { paymentInfo } = usePayment();
     const [paymentStatus, setPaymentStatus] = useState('');
     const { data: paymentMethodsData } = useQuery(paymentMethodsQuery, {

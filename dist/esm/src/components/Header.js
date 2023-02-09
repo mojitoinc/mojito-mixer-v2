@@ -309,7 +309,7 @@ const Header = () => {
                 justifyContent: 'center',
                 display: 'flex',
             } },
-            React__default.createElement("img", { src: Icons.logo, width: "163px", height: "37px", alt: "logo" }))));
+            React__default.createElement("img", { src: Icons.logo, width: "162px", height: "37px", alt: "logo" }))));
 };
 
 export { Header as default };

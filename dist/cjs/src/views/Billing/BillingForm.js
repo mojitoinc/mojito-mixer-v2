@@ -309,8 +309,8 @@ require('../../providers/DebugProvider.js');
 require('../../providers/ErrorProvider.js');
 require('../../providers/BillingProvider.js');
 require('../../providers/ContainerStateProvider.js');
-require('../../providers/ConfigurationProvider.js');
-require('../../providers/DeliveryProvider.js');
+require('../../providers/UIConfigurationProvider.js');
+require('../../providers/CheckoutProvider.js');
 require('../../providers/PaymentProvider.js');
 require('openpgp');
 require('atob');
@@ -329,7 +329,6 @@ require('../../../node_modules/@apollo/client/errors/index.js');
 require('../../queries/creditCard.js');
 var useDropdowns = require('../../hooks/useDropdowns.js');
 require('uuidv4');
-require('../../config/RuntimeConfiguration.js');
 require('../../config/paymentConfiguration.js');
 require('../../queries/invoiceDetails.js');
 require('../../queries/Payment.js');
@@ -349,7 +348,6 @@ const BillingForm = ({ values, errors, onChange, isValid, }) => {
             border: `1px solid ${(_a = theme.global) === null || _a === void 0 ? void 0 : _a.cardBorder}`,
             backgroundColor: (_b = theme.global) === null || _b === void 0 ? void 0 : _b.cardBackground,
             boxShadow: `0px 4px 16px ${(_c = theme.global) === null || _c === void 0 ? void 0 : _c.cardShadow}`,
-            margin: '0px 0px 24px 0px',
         } },
         React__default["default"].createElement(Box["default"], { padding: "24px" },
             React__default["default"].createElement(Typography["default"], { color: (_e = (_d = theme.palette) === null || _d === void 0 ? void 0 : _d.text) === null || _e === void 0 ? void 0 : _e.primary, fontWeight: "500", fontSize: "20px" }, "Billing Info"),

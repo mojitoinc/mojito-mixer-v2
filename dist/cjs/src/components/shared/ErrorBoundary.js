@@ -23,7 +23,7 @@ class ErrorBoundary extends React__default["default"].Component {
         const useConfirmModal = !onCatch || onCatch(error, errorInfo) === true;
         if (useConfirmModal) {
             // eslint-disable-next-line no-alert
-            const retry = window.confirm("Sorry, there was an unexpected error. Do you want to re-open the payment modal?");
+            const retry = window.confirm('Sorry, there was an unexpected error. Do you want to re-open the payment modal?');
             if (retry)
                 this.setState({ hasError: false });
         }

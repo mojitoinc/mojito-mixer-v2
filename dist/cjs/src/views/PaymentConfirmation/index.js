@@ -19,8 +19,8 @@ require('../../providers/DebugProvider.js');
 require('../../providers/ErrorProvider.js');
 require('../../providers/BillingProvider.js');
 require('../../providers/ContainerStateProvider.js');
-require('../../providers/ConfigurationProvider.js');
-var DeliveryProvider = require('../../providers/DeliveryProvider.js');
+require('../../providers/UIConfigurationProvider.js');
+var CheckoutProvider = require('../../providers/CheckoutProvider.js');
 var PaymentProvider = require('../../providers/PaymentProvider.js');
 var ConfirmationView = require('./ConfirmationView.js');
 
@@ -29,7 +29,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 
 const PaymentConfirmationContainer = () => {
-    const { orgId } = DeliveryProvider.useDelivery();
+    const { orgId } = CheckoutProvider.useCheckout();
     const { paymentInfo } = PaymentProvider.usePayment();
     const [paymentStatus, setPaymentStatus] = React.useState('');
     const { data: paymentMethodsData } = useQuery.useQuery(billing.paymentMethodsQuery, {

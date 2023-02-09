@@ -302,7 +302,7 @@ require('../../node_modules/@mui/material/GlobalStyles/GlobalStyles.js');
 require('../../node_modules/@mui/base/FocusTrap/FocusTrap.js');
 require('../components/Stepper.js');
 require('@mui/icons-material/ContentCopy');
-require('../components/shared/ErrorBoundary.js');
+var ErrorBoundary = require('../components/shared/ErrorBoundary.js');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -328,13 +328,14 @@ theme: parentTheme, themeOptions, children, }) => {
     //     throw new Error(EXCEPTIONS.DEV.APOLLO_PROVIDER_MISSING);
     //   }
     // }, [apolloClient, uri]);
-    return (React__default["default"].createElement(AuthorizedApolloProvider.AuthorizedApolloProvider, { apolloClient: apolloClient, uri: uri, getAuthenticationToken: getAuthenticationToken }, children));
+    return uri ? (React__default["default"].createElement(AuthorizedApolloProvider.AuthorizedApolloProvider, { apolloClient: apolloClient, uri: uri, getAuthenticationToken: getAuthenticationToken }, children)) : React__default["default"].createElement(React__default["default"].Fragment, null, children);
 };
 function withProviders(Component) {
     const WithProviders = (_a) => {
         var { apolloClient, uri, getAuthenticationToken, theme, themeOptions, onCatch } = _a, componentProps = tslib_es6.__rest(_a, ["apolloClient", "uri", "getAuthenticationToken", "theme", "themeOptions", "onCatch"]);
-        return (React__default["default"].createElement(ProviderInjector, { apolloClient: apolloClient, uri: uri, getAuthenticationToken: getAuthenticationToken, theme: theme, themeOptions: themeOptions },
-            React__default["default"].createElement(Component, Object.assign({}, componentProps))));
+        return (React__default["default"].createElement(ErrorBoundary.ErrorBoundary, { onCatch: onCatch },
+            React__default["default"].createElement(ProviderInjector, { apolloClient: apolloClient, uri: uri, getAuthenticationToken: getAuthenticationToken, theme: theme, themeOptions: themeOptions },
+                React__default["default"].createElement(Component, Object.assign({}, componentProps)))));
     };
     return WithProviders;
 }

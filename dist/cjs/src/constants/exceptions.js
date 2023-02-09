@@ -2,7 +2,7 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-const DEV_EXCEPTION_PREFIX = "(DEV)";
+const DEV_EXCEPTION_PREFIX = '(DEV)';
 const EXCEPTIONS = {
     DEV: {
         // PUI Setup:
@@ -13,10 +13,10 @@ const EXCEPTIONS = {
         ENCRYPTION_KEYS_MISSING: `${DEV_EXCEPTION_PREFIX} Missing \`publicKey\` or \`keyID\`.`,
     },
     PAYMENT_METHOD: {
-        UNSUPPORTED: "Unsupported payment method.",
-        CREATION_FAILED: "Payment method could not be created.",
-        VALIDATION_FAILED: "Payment method could not be validated.",
-        VALIDATION_TIMEOUT: "Payment method validation took too long.",
+        UNSUPPORTED: 'Unsupported payment method.',
+        CREATION_FAILED: 'Payment method could not be created.',
+        VALIDATION_FAILED: 'Payment method could not be validated.',
+        VALIDATION_TIMEOUT: 'Payment method validation took too long.',
     },
 };
 

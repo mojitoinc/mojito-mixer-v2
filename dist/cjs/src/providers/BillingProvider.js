@@ -17,7 +17,7 @@ require('../../node_modules/@apollo/client/errors/index.js');
 require('../../node_modules/@apollo/client/react/hooks/useQuery.js');
 var invoiceDetails = require('../queries/invoiceDetails.js');
 var collection = require('../queries/collection.js');
-var DeliveryProvider = require('./DeliveryProvider.js');
+var CheckoutProvider = require('./CheckoutProvider.js');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -26,7 +26,7 @@ var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 const BillingContext = React.createContext({});
 const BillingProvider = ({ children }) => {
     const [billingInfo, setBillingInfo] = React.useState();
-    const { quantity, orgId, collectionItemId } = DeliveryProvider.useDelivery();
+    const { quantity, orgId, collectionItemId } = CheckoutProvider.useCheckout();
     const [fetchCollection, { data: collection$1 }] = useLazyQuery.useLazyQuery(collection.collectionByIdQuery);
     const collectionData = React.useMemo(() => {
         return collection$1 === null || collection$1 === void 0 ? void 0 : collection$1.collectionItemById;
@@ -60,6 +60,9 @@ const BillingProvider = ({ children }) => {
         }
     }, [orgId, taxablePrice, taxQuote]);
     React.useEffect(() => {
+        if (!collectionItemId) {
+            return;
+        }
         fetchCollection({
             variables: {
                 id: collectionItemId,

@@ -311,7 +311,7 @@ const Dropdown = ({ value = '', title, onChange, options = [], sx, error, requir
     }, [onChange]);
     return (React__default["default"].createElement(Box["default"], { sx: Object.assign({ width: '100%' }, sx) },
         title && (React__default["default"].createElement(Box["default"], { display: "flex", flexDirection: "row" },
-            React__default["default"].createElement(Typography["default"], { color: (_b = (_a = theme.palette) === null || _a === void 0 ? void 0 : _a.text) === null || _b === void 0 ? void 0 : _b.primary, fontSize: "16px" }, title),
+            React__default["default"].createElement(Typography["default"], { variant: "body1", color: (_b = (_a = theme.palette) === null || _a === void 0 ? void 0 : _a.text) === null || _b === void 0 ? void 0 : _b.primary, fontSize: "16px" }, title),
             required && (React__default["default"].createElement(Typography["default"], { color: (_c = theme.global) === null || _c === void 0 ? void 0 : _c.required, fontSize: "16px", marginLeft: "4px" }, "*")))),
         React__default["default"].createElement(FormControl["default"], { fullWidth: true, sx: {
                 marginTop: '6px',
@@ -326,7 +326,7 @@ const Dropdown = ({ value = '', title, onChange, options = [], sx, error, requir
                 React__default["default"].createElement(MenuItem["default"], { disabled: true, value: "" },
                     React__default["default"].createElement(Typography["default"], { color: (_d = theme.palette.text) === null || _d === void 0 ? void 0 : _d.disabled }, placeholder)),
                 options.map((item) => {
-                    return React__default["default"].createElement(MenuItem["default"], { value: item === null || item === void 0 ? void 0 : item.value, key: item === null || item === void 0 ? void 0 : item.value }, item.label);
+                    return (React__default["default"].createElement(MenuItem["default"], { value: item === null || item === void 0 ? void 0 : item.value, key: item === null || item === void 0 ? void 0 : item.value }, item.label));
                 })),
             error && React__default["default"].createElement(FormHelperText["default"], null, error))));
 };

@@ -306,8 +306,8 @@ import '../../providers/DebugProvider.js';
 import '../../providers/ErrorProvider.js';
 import '../../providers/BillingProvider.js';
 import '../../providers/ContainerStateProvider.js';
-import '../../providers/ConfigurationProvider.js';
-import '../../providers/DeliveryProvider.js';
+import '../../providers/UIConfigurationProvider.js';
+import '../../providers/CheckoutProvider.js';
 import '../../providers/PaymentProvider.js';
 import 'openpgp';
 import 'atob';
@@ -326,7 +326,6 @@ import '../../../node_modules/@apollo/client/errors/index.js';
 import '../../queries/creditCard.js';
 import { useCountryOptions } from '../../hooks/useDropdowns.js';
 import 'uuidv4';
-import '../../config/RuntimeConfiguration.js';
 import '../../config/paymentConfiguration.js';
 import '../../queries/invoiceDetails.js';
 import '../../queries/Payment.js';
@@ -343,7 +342,9 @@ const WireTransferForm = ({ values, handleChange, setFieldValue, errors, }) => {
     }, []);
     const formatAccountNumber = useCallback((value) => __awaiter(void 0, void 0, void 0, function* () {
         var _c;
-        const accountNumberLength = (values === null || values === void 0 ? void 0 : values.accountNumber) ? (_c = values === null || values === void 0 ? void 0 : values.accountNumber) === null || _c === void 0 ? void 0 : _c.length : 0;
+        const accountNumberLength = (values === null || values === void 0 ? void 0 : values.accountNumber)
+            ? (_c = values === null || values === void 0 ? void 0 : values.accountNumber) === null || _c === void 0 ? void 0 : _c.length
+            : 0;
         if (accountNumberLength > value.length) {
             yield setFieldValue('accountNumber', value);
             return;
@@ -365,7 +366,7 @@ const WireTransferForm = ({ values, handleChange, setFieldValue, errors, }) => {
         yield setFieldValue('aba', aba.replace(/^(.{4})(.*)$/, '$1 $2'));
     }), [setFieldValue, values]);
     return (React__default.createElement(React__default.Fragment, null,
-        React__default.createElement(Typography, { variant: "body2" }, "Third-party wire transfers are not accepted."),
+        React__default.createElement(Typography, { variant: "body2", sx: { marginTop: 2 } }, "Third-party wire transfers are not accepted."),
         React__default.createElement(TextInput, { value: values.accountNumber, title: "Account Number", onChange: formatAccountNumber, sx: {
                 marginTop: '16px',
             }, placeholder: "Enter account number", type: "text", error: errors.accountNumber }),

@@ -21,8 +21,8 @@ var DebugProvider = require('../providers/DebugProvider.js');
 require('../providers/ErrorProvider.js');
 require('../providers/BillingProvider.js');
 require('../providers/ContainerStateProvider.js');
-require('../providers/ConfigurationProvider.js');
-require('../providers/DeliveryProvider.js');
+require('../providers/UIConfigurationProvider.js');
+require('../providers/CheckoutProvider.js');
 require('../providers/PaymentProvider.js');
 
 const useAPIService = () => {

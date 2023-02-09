@@ -13,12 +13,12 @@ import '../../node_modules/@apollo/client/errors/index.js';
 import '../../node_modules/@apollo/client/react/hooks/useQuery.js';
 import { getTaxQuoteQuery } from '../queries/invoiceDetails.js';
 import { collectionByIdQuery } from '../queries/collection.js';
-import { useDelivery } from './DeliveryProvider.js';
+import { useCheckout } from './CheckoutProvider.js';
 
 const BillingContext = createContext({});
 const BillingProvider = ({ children }) => {
     const [billingInfo, setBillingInfo] = useState();
-    const { quantity, orgId, collectionItemId } = useDelivery();
+    const { quantity, orgId, collectionItemId } = useCheckout();
     const [fetchCollection, { data: collection }] = useLazyQuery(collectionByIdQuery);
     const collectionData = useMemo(() => {
         return collection === null || collection === void 0 ? void 0 : collection.collectionItemById;
@@ -52,6 +52,9 @@ const BillingProvider = ({ children }) => {
         }
     }, [orgId, taxablePrice, taxQuote]);
     useEffect(() => {
+        if (!collectionItemId) {
+            return;
+        }
         fetchCollection({
             variables: {
                 id: collectionItemId,

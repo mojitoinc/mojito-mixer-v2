@@ -17,8 +17,8 @@ import { useDebug } from '../providers/DebugProvider.js';
 import '../providers/ErrorProvider.js';
 import '../providers/BillingProvider.js';
 import '../providers/ContainerStateProvider.js';
-import '../providers/ConfigurationProvider.js';
-import '../providers/DeliveryProvider.js';
+import '../providers/UIConfigurationProvider.js';
+import '../providers/CheckoutProvider.js';
 import '../providers/PaymentProvider.js';
 
 const useAPIService = () => {

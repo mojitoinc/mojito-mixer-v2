@@ -22,12 +22,12 @@ exports.PaymentStatus = void 0;
     PaymentStatus["COMPLETED"] = "completed";
     PaymentStatus["ACTIVE"] = "active";
 })(exports.PaymentStatus || (exports.PaymentStatus = {}));
-const IS_BROWSER = typeof window !== "undefined";
+const IS_BROWSER = typeof window !== 'undefined';
 const IS_SERVER = !IS_BROWSER;
 function isLocalhost() {
     if (IS_SERVER)
         return false;
-    return window.location.hostname === "localhost";
+    return window.location.hostname === 'localhost';
 }
 
 exports.BanksList = BanksList;

@@ -305,7 +305,7 @@ const TextInput = ({ value, title, onChange, placeholder, sx, error, required, t
         title && (React__default.createElement(Box, { display: "flex", flexDirection: "row", sx: {
                 marginBottom: '6px',
             } },
-            React__default.createElement(Typography, { color: (_b = (_a = theme.palette) === null || _a === void 0 ? void 0 : _a.text) === null || _b === void 0 ? void 0 : _b.primary, fontSize: "16px" }, title),
+            React__default.createElement(Typography, { variant: "body1", color: (_b = (_a = theme.palette) === null || _a === void 0 ? void 0 : _a.text) === null || _b === void 0 ? void 0 : _b.primary, fontSize: "16px" }, title),
             required && (React__default.createElement(Typography, { color: (_c = theme.global) === null || _c === void 0 ? void 0 : _c.required, fontSize: "16px", marginLeft: "4px" }, "*")))),
         React__default.createElement(TextField, { value: value, error: Boolean(error), placeholder: placeholder, onChange: onChangeText, fullWidth: true, inputProps: inputProps, size: "small", helperText: error, type: type })));
 };

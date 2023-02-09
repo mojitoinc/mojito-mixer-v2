@@ -298,8 +298,8 @@ import '../../providers/DebugProvider.js';
 import '../../providers/ErrorProvider.js';
 import '../../providers/BillingProvider.js';
 import '../../providers/ContainerStateProvider.js';
-import { useUIConfiguration } from '../../providers/ConfigurationProvider.js';
-import '../../providers/DeliveryProvider.js';
+import { useUIConfiguration } from '../../providers/UIConfigurationProvider.js';
+import '../../providers/CheckoutProvider.js';
 import '../../providers/PaymentProvider.js';
 import Button from '../../components/Button.js';
 import '../../components/Stepper.js';
@@ -309,29 +309,34 @@ import '../../components/shared/ErrorBoundary.js';
 import BillingForm from './BillingForm.js';
 import ExpressCheckoutView from './ExpressCheckout.js';
 import BillingDetails from './BillingDetails.js';
+import { DebugBox } from '../../components/shared/DebugBox.js';
 
 const BillingView = ({ isEditing, values, errors, onChange, onClickEdit, onClickContinue, isValid, isValidBillingForm, }) => {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
     const theme = useTheme();
-    const { billing } = useUIConfiguration();
+    const uiConfiguration = useUIConfiguration();
     return (React__default.createElement(Box, { width: "100%" },
-        !(billing === null || billing === void 0 ? void 0 : billing.hideExpressCheckout) && (React__default.createElement(ExpressCheckoutView, { config: billing === null || billing === void 0 ? void 0 : billing.expressCheckoutConfig })),
+        !((_a = uiConfiguration === null || uiConfiguration === void 0 ? void 0 : uiConfiguration.billing) === null || _a === void 0 ? void 0 : _a.isEnableExpressCheckout) && (React__default.createElement(ExpressCheckoutView, { config: uiConfiguration === null || uiConfiguration === void 0 ? void 0 : uiConfiguration.billing })),
         React__default.createElement(Card, { sx: {
-                border: `1px solid ${(_a = theme.global) === null || _a === void 0 ? void 0 : _a.cardBorder}`,
-                backgroundColor: (_b = theme.global) === null || _b === void 0 ? void 0 : _b.cardBackground,
-                boxShadow: `0px 4px 16px ${(_c = theme.global) === null || _c === void 0 ? void 0 : _c.cardShadow}`,
-                margin: '24px 0px',
+                border: `1px solid ${(_b = theme.global) === null || _b === void 0 ? void 0 : _b.cardBorder}`,
+                backgroundColor: (_c = theme.global) === null || _c === void 0 ? void 0 : _c.cardBackground,
+                boxShadow: `0px 4px 16px ${(_d = theme.global) === null || _d === void 0 ? void 0 : _d.cardShadow}`,
+                marginBottom: '24px',
+                padding: '24px',
             } },
-            React__default.createElement(Box, { padding: "24px" },
-                React__default.createElement(Typography, { color: (_e = (_d = theme.palette) === null || _d === void 0 ? void 0 : _d.text) === null || _e === void 0 ? void 0 : _e.primary, fontWeight: "500", fontSize: "20px" }, "Contact Info"),
-                React__default.createElement(TextInput, { value: values === null || values === void 0 ? void 0 : values.email, onChange: onChange('email'), error: errors === null || errors === void 0 ? void 0 : errors.email, placeholder: "Email", sx: {
-                        marginTop: '16px',
-                    } }))),
+            React__default.createElement(Typography, { color: (_f = (_e = theme.palette) === null || _e === void 0 ? void 0 : _e.text) === null || _f === void 0 ? void 0 : _f.primary, fontWeight: "500", fontSize: "20px" }, "Contact info"),
+            React__default.createElement(TextInput, { value: values === null || values === void 0 ? void 0 : values.email, onChange: onChange('email'), error: errors === null || errors === void 0 ? void 0 : errors.email, placeholder: "Email", sx: {
+                    marginTop: '16px',
+                } })),
         isEditing ? (React__default.createElement(BillingForm, { values: values, errors: errors, onChange: onChange, isValid: isValidBillingForm })) : (React__default.createElement(BillingDetails, { values: values, onClickEdit: onClickEdit })),
         React__default.createElement(Box, { display: "flex", justifyContent: "flex-end" },
-            React__default.createElement(Button, { title: "Continue to Payment", backgroundColor: (_g = (_f = theme.global) === null || _f === void 0 ? void 0 : _f.checkOutColors) === null || _g === void 0 ? void 0 : _g.continueButtonBackground, textColor: (_j = (_h = theme.global) === null || _h === void 0 ? void 0 : _h.checkOutColors) === null || _j === void 0 ? void 0 : _j.continueButtonTextColor, onClick: onClickContinue, sx: {
+            React__default.createElement(Button, { title: "Continue to Payment", backgroundColor: (_h = (_g = theme.global) === null || _g === void 0 ? void 0 : _g.checkout) === null || _h === void 0 ? void 0 : _h.continueButtonBackground, textColor: (_k = (_j = theme.global) === null || _j === void 0 ? void 0 : _j.checkout) === null || _k === void 0 ? void 0 : _k.continueButtonTextColor, onClick: onClickContinue, sx: {
                     margin: '24px 0px',
-                }, disabled: !isValid }))));
+                    '&: hover': {
+                        backgroundColor: 'rgba(102, 99, 253, 0.8)',
+                    },
+                }, disabled: !isValid })),
+        React__default.createElement(DebugBox, { value: values })));
 };
 
 export { BillingView as default };

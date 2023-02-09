@@ -310,8 +310,8 @@ require('../../providers/DebugProvider.js');
 require('../../providers/ErrorProvider.js');
 require('../../providers/BillingProvider.js');
 require('../../providers/ContainerStateProvider.js');
-require('../../providers/ConfigurationProvider.js');
-require('../../providers/DeliveryProvider.js');
+require('../../providers/UIConfigurationProvider.js');
+require('../../providers/CheckoutProvider.js');
 require('../../providers/PaymentProvider.js');
 require('openpgp');
 require('atob');
@@ -330,7 +330,6 @@ require('../../../node_modules/@apollo/client/errors/index.js');
 require('../../queries/creditCard.js');
 var useDropdowns = require('../../hooks/useDropdowns.js');
 require('uuidv4');
-require('../../config/RuntimeConfiguration.js');
 require('../../config/paymentConfiguration.js');
 require('../../queries/invoiceDetails.js');
 require('../../queries/Payment.js');
@@ -351,7 +350,9 @@ const WireTransferForm = ({ values, handleChange, setFieldValue, errors, }) => {
     }, []);
     const formatAccountNumber = React.useCallback((value) => tslib_es6.__awaiter(void 0, void 0, void 0, function* () {
         var _c;
-        const accountNumberLength = (values === null || values === void 0 ? void 0 : values.accountNumber) ? (_c = values === null || values === void 0 ? void 0 : values.accountNumber) === null || _c === void 0 ? void 0 : _c.length : 0;
+        const accountNumberLength = (values === null || values === void 0 ? void 0 : values.accountNumber)
+            ? (_c = values === null || values === void 0 ? void 0 : values.accountNumber) === null || _c === void 0 ? void 0 : _c.length
+            : 0;
         if (accountNumberLength > value.length) {
             yield setFieldValue('accountNumber', value);
             return;
@@ -373,7 +374,7 @@ const WireTransferForm = ({ values, handleChange, setFieldValue, errors, }) => {
         yield setFieldValue('aba', aba.replace(/^(.{4})(.*)$/, '$1 $2'));
     }), [setFieldValue, values]);
     return (React__default["default"].createElement(React__default["default"].Fragment, null,
-        React__default["default"].createElement(Typography["default"], { variant: "body2" }, "Third-party wire transfers are not accepted."),
+        React__default["default"].createElement(Typography["default"], { variant: "body2", sx: { marginTop: 2 } }, "Third-party wire transfers are not accepted."),
         React__default["default"].createElement(TextInput["default"], { value: values.accountNumber, title: "Account Number", onChange: formatAccountNumber, sx: {
                 marginTop: '16px',
             }, placeholder: "Enter account number", type: "text", error: errors.accountNumber }),

@@ -1,36 +1,35 @@
-export interface ThemeFont {
+export interface MojitoFont {
     primary?: string;
     secondary?: string;
 }
-export interface ConfirmationColors {
+export interface PaymentConfirmationColor {
     processedBackground?: string;
     processedTextColor?: string;
     awaitingPaymentBackground?: string;
     awaitingPaymentTextColor?: string;
     copyIconColor?: string;
 }
-export interface CheckOutColor {
+export interface CheckoutColor {
     continueButtonBackground?: string;
     continueButtonTextColor?: string;
 }
-export interface CostBreakDownColors {
+export interface CostBreakDownColor {
     applyButtonBackground?: string;
     applyButtonTextColor?: string;
 }
-interface ThemeColor {
+export interface MojitoColor {
     primary?: string;
     secondary?: string;
     background?: string;
     errorBackground?: string;
     text?: string;
     cardBackground?: string;
-    checkOutColors?: CheckOutColor;
-    costBreakDownColors?: CostBreakDownColors;
-    confirmationColors?: ConfirmationColors;
     placeholder?: string;
+    checkout?: CheckoutColor;
+    costBreakdown?: CostBreakDownColor;
+    paymentConfirmation?: PaymentConfirmationColor;
 }
 export interface ThemeConfiguration {
-    color?: ThemeColor;
-    font?: ThemeFont;
+    color?: MojitoColor;
+    font?: MojitoFont;
 }
-export {};

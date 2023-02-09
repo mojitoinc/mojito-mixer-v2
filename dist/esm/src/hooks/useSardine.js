@@ -1,6 +1,5 @@
 import { useRef, useEffect, useCallback } from 'react';
 import { uuid } from 'uuidv4';
-import '../config/RuntimeConfiguration.js';
 import { SardineConfig } from '../config/SardineConfig.js';
 import '../config/paymentConfiguration.js';
 

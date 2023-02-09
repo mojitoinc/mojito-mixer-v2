@@ -9,8 +9,8 @@ var DebugProvider = require('./DebugProvider.js');
 var ErrorProvider = require('./ErrorProvider.js');
 var BillingProvider = require('./BillingProvider.js');
 var ContainerStateProvider = require('./ContainerStateProvider.js');
-require('./ConfigurationProvider.js');
-var DeliveryProvider = require('./DeliveryProvider.js');
+require('./UIConfigurationProvider.js');
+var CheckoutProvider = require('./CheckoutProvider.js');
 require('openpgp');
 require('atob');
 require('btoa');
@@ -30,7 +30,6 @@ require('../../node_modules/country-state-city/lib/country.js');
 require('../../node_modules/country-state-city/lib/state.js');
 require('../../node_modules/country-state-city/lib/city.js');
 require('uuidv4');
-require('../config/RuntimeConfiguration.js');
 require('../config/paymentConfiguration.js');
 var useCreatePayment = require('../hooks/useCreatePayment.js');
 
@@ -44,7 +43,7 @@ const PaymentProvider = ({ children }) => {
     const { setError } = ErrorProvider.useError();
     const [paymentInfo, setPaymentInfo] = React.useState();
     const { billingInfo, collectionData, taxes } = BillingProvider.useBilling();
-    const { orgId, lotId, quantity, invoiceId } = DeliveryProvider.useDelivery();
+    const { orgId, lotId, quantity, invoiceId } = CheckoutProvider.useCheckout();
     const { setContainerState } = ContainerStateProvider.useContainer();
     const { makeCreditCardPurchase, makeWireTransferPurchase } = useCreatePayment.useCreatePayment(paymentInfo, orgId);
     const saveToCookies = React.useCallback((paymentData, reserveLotData) => {

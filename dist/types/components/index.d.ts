@@ -7,4 +7,4 @@ import CreditCardDropdown from './shared/CreditCardDropdown';
 import LinedText from './shared/LinedText';
 import CopyButton from './shared/CopyButton';
 import { ErrorBoundary } from './shared/ErrorBoundary';
-export { Button, Dropdown, type DropdownOptions, Header, Stepper, TextInput, CreditCardDropdown, LinedText, CopyButton, ErrorBoundary };
+export { Button, Dropdown, type DropdownOptions, Header, Stepper, TextInput, CreditCardDropdown, LinedText, CopyButton, ErrorBoundary, };
