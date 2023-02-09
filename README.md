@@ -161,6 +161,14 @@ import { MojitoCheckout } from '@mojitonft/mojito-mixers';
 
 ### Checkout Options
 
+ Address Validation & Tax Calculation with Vertex or TaxJar
+
+If you'd like address to be validated and taxes to be calculated during the checkout process, particularly in the Billing
+Information step, you need a Vertex or TaxJar account. Once you have it, you need to configure it in Mojito Mint.
+
+Alternatively, set the following prop to disable those calls to the backend: `vertexEnabled = false`.
+  
+<br />
  
 ```
   <MojitoCheckout
@@ -173,16 +181,7 @@ import { MojitoCheckout } from '@mojitonft/mojito-mixers';
         discountCode: 'ZZTO',
         vertexEnabled: false,
       }} />
-```
-### Address Validation & Tax Calculation with Vertex or TaxJar
-
-If you'd like address to be validated and taxes to be calculated during the checkout process, particularly in the Billing
-Information step, you need a Vertex or TaxJar account. Once you have it, you need to configure it in Mojito Mint.
-
-Alternatively, set the following prop to disable those calls to the backend: `vertexEnabled = false`.
-  
-<br />
-  
+  ```
 
 ### Supported Countries
 
@@ -222,31 +221,31 @@ themeOptions (preferred) will merge Mojito's default theme with your custom one
 If none is provided, the default Mojito theme will be used.
 
 ```
-const DefaultThemes: ThemeConfiguration = {
-  font: {
-    primary: 'Sneak',
-    secondary: 'Sneak',
-  },
-  color: {
-    primary: '#6663FD',
-    secondary: '#FFFFFF',
-    background: '#FAFAFC',
-    errorBackground: '#FEE3E5',
-    text: '#000000',
-    cardBackground: '#FFFFFF',
-    checkout: {
-      continueButtonBackground: '#6663FD',
-      continueButtonTextColor: '#FFFFFF',
-    },
-    placeholder: '#BABEC5',
-    costBreakdown: {
-      applyButtonBackground: '#DADAE9',
-      applyButtonTextColor: '#FFFFFF',
-    },
-  },
-};
+  const DefaultThemes: ThemeConfiguration = {
+      font: {
+        primary: 'Sneak',
+        secondary: 'Sneak',
+      },
+      color: {
+        primary: '#6663FD',
+        secondary: '#FFFFFF',
+        background: '#FAFAFC',
+        errorBackground: '#FEE3E5',
+        text: '#000000',
+        cardBackground: '#FFFFFF',
+        checkout: {
+          continueButtonBackground: '#6663FD',
+          continueButtonTextColor: '#FFFFFF',
+        },
+        placeholder: '#BABEC5',
+        costBreakdown: {
+          applyButtonBackground: '#DADAE9',
+          applyButtonTextColor: '#FFFFFF',
+        },
+      },
+    };
+  ```
 
-```
 
 Note that using MUI's ThemeProvider from your project won't work as expected and you will end up seeing Mojito's default theme:
 
