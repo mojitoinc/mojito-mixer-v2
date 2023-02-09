@@ -24,13 +24,12 @@ export interface ExtendsThemeOptions {
         white: string;
         required: string;
         placeholder: string;
-        checkOutColors: CheckoutColor;
-        costBreakDownColors: CostBreakDownColor;
-        confirmationColors: PaymentConfirmationColor;
+        checkout: CheckoutColor;
+        costBreakdown: CostBreakDownColor;
+        paymentConfirmation: PaymentConfirmationColor;
         cardGrayedText: string;
         grayBackground: string;
     };
-
 }
 export type MixThemeOptions = ExtendsThemeOptions & ThemeOptions;
 
