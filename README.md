@@ -77,7 +77,8 @@ and passes it all required props. Simply copy the following file and adapt it to
 You can find an example here: [app/src/layout/CheckoutLayout.tsx](./app/src/layout/CheckoutLayout.tsx).
 
 You'll use this `CheckoutComponent` component in your code instead of `MojitoCheckout` just so that you don't have to
-repeat properties that rarely change, like the theme.
+repeat properties that rarely change, like the theme  [DefaultThemes](#theme)
+
 
 
 ```
@@ -86,6 +87,29 @@ import { MojitoCheckout } from '@mojitonft/mojito-mixers';
 
 
   const { isAuthenticated, getIdTokenClaims } = useAuth0();
+  const theme = {
+            font: {
+              primary: 'Sneak',
+              secondary: 'Sneak',
+            },
+            color: {
+              primary: '#6663FD',
+              secondary: '#FFFFFF',
+              background: '#FAFAFC',
+              errorBackground: '#FEE3E5',
+              text: '#000000',
+              cardBackground: '#FFFFFF',
+              checkout: {
+                continueButtonBackground: '#6663FD',
+                continueButtonTextColor: '#FFFFFF',
+              },
+              placeholder: '#BABEC5',
+              costBreakdown: {
+                applyButtonBackground: '#DADAE9',
+                applyButtonTextColor: '#FFFFFF',
+              },
+            },
+          };
 
   const getAuthenticationToken = useCallback(async () => {
     const token = await getIdTokenClaims();
@@ -95,44 +119,61 @@ import { MojitoCheckout } from '@mojitonft/mojito-mixers';
   const handleClickGoToMarketPlace = useCallback(async () => {
   }, []);
 
-    <MojitoCheckout
+  
+  <MojitoCheckout
+    uri={ undefined }
+    apolloClient={ undefined }
+    checkoutOptions={{
+      orgId: 'd086ea16-d40d-454c-84a4-64b5e940670a',
+      lotId: '17cd1000-323d-4a20-8e5f-7a8598ffae2a',
+      quantity: 1,
+      paymentId,
+      collectionItemId: '64e99437-ac2e-45bc-b4a6-4750985b4e81',
+      discountCode: 'ZZTO',
+    }}
+    theme={ theme }
+    uiConfiguration={
+      billing: {
+        isEnableExpressCheckout: true,
+        gpay: true,
+        applepay: true,
+        walletConnect: true,
+        metaMask: true,
+      },
+      payment: {
+        creditCard: true,
+        gpay: true,
+        applepay: true,
+        walletConnect: true,
+        wire: true,
+      },
+      costBreakdown: {
+        showDiscountCode: true
+      },
+      paymentConfirmation: {
+        onGoToMarketPlace: handleClickGoToMarketPlace,
+      },
+    }
+    show={ show }
+    getAuthenticationToken={ getAuthenticationToken } />
+```
+<br />
+
+### Checkout Options
+
+ 
+```
+  <MojitoCheckout
       checkoutOptions={{
         orgId: 'd086ea16-d40d-454c-84a4-64b5e940670a',
         lotId: '17cd1000-323d-4a20-8e5f-7a8598ffae2a',
         quantity: 1,
-        paymentId,
+        paymentId: '<payment id>',
         collectionItemId: '64e99437-ac2e-45bc-b4a6-4750985b4e81',
         discountCode: 'ZZTO',
-      }}
-      uiConfiguration={
-        billing: {
-          isEnableExpressCheckout: true,
-          gpay: true,
-          applepay: true,
-          walletConnect: true,
-          metaMask: true,
-        },
-        payment: {
-          creditCard: true,
-          gpay: true,
-          applepay: true,
-          walletConnect: true,
-          wire: true,
-        },
-        costBreakdown: {
-          showDiscountCode: true
-        },
-        paymentConfirmation: {
-          onGoToMarketPlace: handleClickGoToMarketPlace,
-        },
-      }
-      show={ show }
-      getAuthenticationToken={ getAuthenticationToken } />
-  );
+        vertexEnabled: false,
+      }} />
 ```
-<br />
-
- 
 ### Address Validation & Tax Calculation with Vertex or TaxJar
 
 If you'd like address to be validated and taxes to be calculated during the checkout process, particularly in the Billing
@@ -166,19 +207,49 @@ The debug mode will, among logging/displaying some other less relevant pieces of
 - Show form values and errors as JSON below the form:
 
   ![Debug form console](./screenshots/debug-console.png)
-
-  ![Debug form values and errors](./screenshots/debug-form-values.png)
-
-<br />
-
-
-- Show additional logging information for the most relevant queries/mutation being made:
-
-  ![Debug GraphQL queries/mutations log](./screenshots/graphql-logs.png)
+  <br />
+  ![Debug form values and errors](./screenshots/debug-ui.png)
 
 <br />
 
-
-You can see an example here: [`app/src/lib/domain/mui/mui.d.ts`](https://github.com/mojitoinc/mojito-mixers/blob/main/app/src/lib/domain/mui/mui.d.ts)
-
 <br />
+
+### Theme
+You can use the themeOptions or theme props to pass a custom theme or theme options object:
+
+themeOptions (preferred) will merge Mojito's default theme with your custom one
+
+If none is provided, the default Mojito theme will be used.
+
+```
+const DefaultThemes: ThemeConfiguration = {
+  font: {
+    primary: 'Sneak',
+    secondary: 'Sneak',
+  },
+  color: {
+    primary: '#6663FD',
+    secondary: '#FFFFFF',
+    background: '#FAFAFC',
+    errorBackground: '#FEE3E5',
+    text: '#000000',
+    cardBackground: '#FFFFFF',
+    checkout: {
+      continueButtonBackground: '#6663FD',
+      continueButtonTextColor: '#FFFFFF',
+    },
+    placeholder: '#BABEC5',
+    costBreakdown: {
+      applyButtonBackground: '#DADAE9',
+      applyButtonTextColor: '#FFFFFF',
+    },
+  },
+};
+
+```
+
+Note that using MUI's ThemeProvider from your project won't work as expected and you will end up seeing Mojito's default theme:
+
+```
+<MojitoCheckout theme={ theme }
+```

@@ -60,3 +60,19 @@ yarn dist:build
 - Troubleshooet
     Incase of build is failed due to lint issue, you have to delete folder from src (DON'T DELETE app/src)
   <br />
+
+### API parameter invalid error:
+
+`createPayment` mutation returns:
+
+    "message": "Circle API return non 200 response with body: {\"code\":2,\"message\":\"API parameter invalid\"}",
+
+Make sure:
+
+- You have a 3DS account configured on the backend for the environment you are using (contact support).
+
+- If you are using a GraphQL playground to play around with the API, make sure you use `https://api-dev.mojito.xyz/`.
+
+- If you are triggering the mutation from your app in localhost, make sure you add the header `"origin-overwrite": "https://yourdomain.com"`.
+
+<br/>
