@@ -1,4 +1,3 @@
-
 export interface CheckoutOptions {
     orgId?: string;
     lotId?: string;

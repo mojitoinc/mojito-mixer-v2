@@ -19,8 +19,8 @@ import {
 } from 'pages';
 import { FormikErrors } from 'formik';
 import { useRouter } from 'next/router';
-import { RuntimeConfiguration } from '../constant/RuntimeConfiguration';
 import { MojitoCheckout } from 'lib';
+import { RuntimeConfiguration } from '../constant/RuntimeConfiguration';
 
 export interface CheckboxOptions {
   field: string;
@@ -264,8 +264,8 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
               walletConnect: Boolean(values.walletconnect ?? true),
               wire: Boolean(values.wire ?? true),
             },
-            
-            costBreakdown: {showDiscountCode: Boolean(values.discountCode ?? true)},
+
+            costBreakdown: { showDiscountCode: Boolean(values.discountCode ?? true) },
 
             paymentConfirmation: {
               onGoToMarketPlace: onClickGoToMarketPlace,

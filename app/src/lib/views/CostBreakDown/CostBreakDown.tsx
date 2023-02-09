@@ -42,7 +42,7 @@ const CostBreakDown = ({ taxes, collectionData }: CostBreakDownProps) => {
 
   return (
     <Box
-      width="100%"
+      width="calc(50% - 80px)"
       height="100%"
       sx={{
         backgroundImage: `url(${ Icons.background })`,

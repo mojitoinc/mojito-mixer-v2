@@ -159,8 +159,8 @@ const PaymentContainer = ({
             },
           }} />
       </Box>
-      <DebugBox value={{creditCardFormValues, wireTransferFormValues, creditCardList}} />
-
+      <DebugBox
+        value={{ creditCardFormValues, wireTransferFormValues, creditCardList }} />
     </>
   );
 };

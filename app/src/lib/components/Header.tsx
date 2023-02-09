@@ -1,16 +1,47 @@
-import { Box, useTheme } from '@mui/material';
+import { Box, Stack, Typography, useTheme } from '@mui/material';
 import React from 'react';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useUIConfiguration } from '@lib/providers';
 import { Icons } from '../assets';
 import { MixTheme } from '../theme';
 
-const Header = () => {
+interface HeaderProps {
+  isPaymentConfirmation: boolean;
+}
+const Header = ({ isPaymentConfirmation }: HeaderProps) => {
   const theme = useTheme<MixTheme>();
+  const { paymentConfirmation } = useUIConfiguration();
   return (
     <Box
       sx={{
         width: '100%',
         backgroundColor: theme.global?.background,
       }}>
+      { isPaymentConfirmation && (
+        <Stack
+          flexDirection="row"
+          alignItems="center"
+          sx={{ cursor: 'pointer' }}
+          marginBottom="24px"
+          onClick={ paymentConfirmation?.onGoToMarketPlace }>
+          <ArrowBackIcon
+            sx={{
+              color: theme?.global?.unHighlightedText,
+              width: '17px',
+              height: '17px',
+            }} />
+          <Typography
+            variant="button"
+            sx={{
+              color: theme?.global?.unHighlightedText,
+              textTransform: 'capitalize',
+              fontWeight: 700,
+              fontSize: '12px',
+            }}>
+            Back To Marketplace
+          </Typography>
+        </Stack>
+      ) }
       <Box
         sx={{
           width: '100%',

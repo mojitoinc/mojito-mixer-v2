@@ -2,7 +2,7 @@ import React from 'react';
 import { Header } from '@lib/components';
 
 export const HeaderStories = () => {
-  return <Header />;
+  return <Header isPaymentConfirmation />;
 };
 const stories = {
   title: 'components/Header',

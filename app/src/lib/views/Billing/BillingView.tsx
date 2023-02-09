@@ -70,7 +70,6 @@ const BillingView = ({
       ) : (
         <BillingDetails values={ values } onClickEdit={ onClickEdit } />
       ) }
-
       <Box display="flex" justifyContent="flex-end">
         <Button
           title="Continue to Payment"
@@ -85,7 +84,7 @@ const BillingView = ({
           }}
           disabled={ !isValid } />
       </Box>
-      <DebugBox value={values} />
+      <DebugBox value={ values } />
     </Box>
   );
 };
