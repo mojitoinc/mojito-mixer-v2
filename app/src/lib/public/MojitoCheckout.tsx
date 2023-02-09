@@ -90,7 +90,8 @@ const MojitoCheckout: React.FC<MojitoCheckoutProps> = ({
           <CheckoutContext.Provider value={ checkoutOptions }>
             <UIConfigurationContext.Provider value={ uiConfigurations }>
               <ContainerStateProvider
-                paymentId={ checkoutOptions?.paymentId } success={success} > 
+                paymentId={ checkoutOptions?.paymentId }
+                success={ success }>
                 <ErrorProvider>
                   <BillingProvider>
                     <PaymentProvider>

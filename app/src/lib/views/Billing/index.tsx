@@ -1,13 +1,13 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import { useLazyQuery, useQuery } from "@apollo/client";
-import { uuid } from "uuidv4";
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import { useLazyQuery, useQuery } from '@apollo/client';
+import { uuid } from 'uuidv4';
 import {
   paymentMethodsQuery,
   validatePaymentLimitQuery,
-} from "../../queries/billing";
-import { PaymentMethod } from "../../interfaces";
+} from '../../queries/billing';
+import { PaymentMethod } from '../../interfaces';
 import {
   useContainer,
   useCheckout,
@@ -15,13 +15,12 @@ import {
   useBilling,
   useDebug,
   usePayment,
-  useUIConfiguration,
-} from "../../providers";
-import BillingView from "./BillingView";
-import { ContainerTypes } from "../../interfaces/ContextInterface";
+} from '../../providers';
+import BillingView from './BillingView';
+import { ContainerTypes } from '../../interfaces/ContextInterface';
 
 const BillingContainer = () => {
-  const debug = useDebug("Billing");
+  const debug = useDebug('Billing');
   const { orgId, collectionItemId, quantity } = useCheckout();
   const { setBillingInfo, billingInfo, refetchTaxes, pincodeError } =
     useBilling();
@@ -57,7 +56,7 @@ const BillingContainer = () => {
   }, [validPaymnetMethods, setPaymentMethods, validpaymentMethodLoading]);
 
   useEffect(() => {
-    debug.info("load", { orgId });
+    debug.info('load', { orgId });
     if (orgId) {
       fetchBilling({
         variables: {
@@ -68,27 +67,27 @@ const BillingContainer = () => {
   }, [fetchBilling, orgId, debug]);
 
   const schema = Yup.object().shape({
-    country: Yup.string().required("Please select a country"),
-    state: Yup.string().required("Please select a state"),
-    city: Yup.string().required("Please select a city"),
-    postalCode: Yup.string().required("Please enter zipcode"),
+    country: Yup.string().required('Please select a country'),
+    state: Yup.string().required('Please select a state'),
+    city: Yup.string().required('Please select a city'),
+    postalCode: Yup.string().required('Please enter zipcode'),
     email: Yup.string()
-      .email("Please enter valid email")
-      .required("Please enter email"),
-    phoneNumber: Yup.string().required("Please enter a mobile number"),
-    street1: Yup.string().required("Please enter your address"),
+      .email('Please enter valid email')
+      .required('Please enter email'),
+    phoneNumber: Yup.string().required('Please enter a mobile number'),
+    street1: Yup.string().required('Please enter your address'),
   });
 
   const { values, errors, handleChange, setValues, isValid } = useFormik({
     initialValues: {
-      email: "",
-      country: "",
-      state: "",
-      city: "",
-      postalCode: "",
-      phoneNumber: "",
-      street1: "",
-      name: "",
+      email: '',
+      country: '',
+      state: '',
+      city: '',
+      postalCode: '',
+      phoneNumber: '',
+      street1: '',
+      name: '',
     } as BillingFormData,
     onSubmit: () => undefined,
     validationSchema: schema,
@@ -107,7 +106,7 @@ const BillingContainer = () => {
 
   const setBillingValues = useCallback(async () => {
     const paymentItem: PaymentMethod = paymentData?.getPaymentMethodList?.find(
-      (item: PaymentMethod) => item.type === "CreditCard" && item.billingDetails
+      (item: PaymentMethod) => item.type === 'CreditCard' && item.billingDetails,
     );
     if (paymentItem) {
       setIsEditing(false);
@@ -130,7 +129,7 @@ const BillingContainer = () => {
   }, [billingInfo, paymentData, setValues]);
 
   useEffect(() => {
-    debug.info("paymentData", paymentData);
+    debug.info('paymentData', paymentData);
     if (paymentData) {
       setBillingValues();
     }
@@ -152,7 +151,7 @@ const BillingContainer = () => {
     if (isEditing && !isValid) return;
     if (!isEditing) {
       const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
-      const isValidEmail = emailRegex.test(values?.email ?? "");
+      const isValidEmail = emailRegex.test(values?.email ?? '');
       if (!isValidEmail) return;
     }
     setBillingInfo({ ...values });
@@ -174,16 +173,15 @@ const BillingContainer = () => {
 
   return (
     <BillingView
-      isEditing={isEditing}
-      values={values}
-      errors={errors}
-      onChange={handleChange}
-      onClickEdit={onClickEdit}
-      onClickContinue={onClickContinue}
-      isValidBillingForm={isValidBillingForm}
-      pincodeError={pincodeError}
-      isValid={isValid}
-    />
+      isEditing={ isEditing }
+      values={ values }
+      errors={ errors }
+      onChange={ handleChange }
+      onClickEdit={ onClickEdit }
+      onClickContinue={ onClickContinue }
+      isValidBillingForm={ isValidBillingForm }
+      pincodeError={ pincodeError }
+      isValid={ isValid } />
   );
 };
 

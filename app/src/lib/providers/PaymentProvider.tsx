@@ -4,16 +4,16 @@ import React, {
   useState,
   useMemo,
   useCallback,
-} from "react";
-import { useCreatePayment } from "../hooks";
-import { CreditCardFormType, ReserveNow } from "../interfaces";
-import { CookieService } from "../service/CookieService";
-import { useDebug, useError } from ".";
-import { useContainer } from "./ContainerStateProvider";
-import { ContainerTypes } from "../interfaces/ContextInterface";
+} from 'react';
+import { useCreatePayment } from '../hooks';
+import { CreditCardFormType, ReserveNow } from '../interfaces';
+import { CookieService } from '../service/CookieService';
+import { useDebug, useError } from '.';
+import { useContainer } from './ContainerStateProvider';
+import { ContainerTypes } from '../interfaces/ContextInterface';
 
-import { useBilling } from "./BillingProvider";
-import { useCheckout } from "./CheckoutProvider";
+import { useBilling } from './BillingProvider';
+import { useCheckout } from './CheckoutProvider';
 
 export interface PaymentData {
   creditCardData?: CreditCardFormType;
@@ -54,7 +54,7 @@ export const PaymentProvider = ({
 }: {
   children?: React.ReactNode;
 }) => {
-  const debug = useDebug("PaymentProvider");
+  const debug = useDebug('PaymentProvider');
   const { setError } = useError();
   const [paymentInfo, setPaymentInfo] = useState<PaymentData>();
   const [paymentMethods, setPaymentMethods] = useState<ShowPaymentMethods>();
@@ -63,7 +63,7 @@ export const PaymentProvider = ({
   const { setContainerState } = useContainer();
   const { makeCreditCardPurchase, makeWireTransferPurchase } = useCreatePayment(
     paymentInfo,
-    orgId
+    orgId,
   );
 
   const saveToCookies = useCallback(
@@ -74,11 +74,11 @@ export const PaymentProvider = ({
       CookieService.collectionData.setValue(JSON.stringify(collectionData));
       CookieService.reserveLotData.setValue(JSON.stringify(reserveLotData));
     },
-    [billingInfo, collectionData, taxes]
+    [billingInfo, collectionData, taxes],
   );
 
   const onConfirmCreditCardPurchase = useCallback(
-    async (deliveryAddress = "") => {
+    async (deliveryAddress = '') => {
       setContainerState(ContainerTypes.LOADING);
       try {
         const paymentReceipt = await makeCreditCardPurchase({
@@ -89,18 +89,18 @@ export const PaymentProvider = ({
           billingInfo,
         });
 
-        debug.success("paymentData", { paymentReceipt });
+        debug.success('paymentData', { paymentReceipt });
 
         saveToCookies(
           paymentReceipt.paymentData,
-          paymentReceipt.reserveLotData
+          paymentReceipt.reserveLotData,
         );
 
         window.location.href =
           paymentReceipt.notificationData?.getPaymentNotification?.message?.redirectURL;
       } catch (e: any) {
-        const message = e.message ?? "";
-        debug.error("confirm", { message });
+        const message = e.message ?? '';
+        debug.error('confirm', { message });
         setError(message);
       }
     },
@@ -114,11 +114,11 @@ export const PaymentProvider = ({
       saveToCookies,
       setContainerState,
       makeCreditCardPurchase,
-    ]
+    ],
   );
 
   const onConfirmWireTransferPurchase = useCallback(
-    async (deliveryAddress = "") => {
+    async (deliveryAddress = '') => {
       setContainerState(ContainerTypes.LOADING);
       try {
         const paymentReceipt = await makeWireTransferPurchase({
@@ -129,17 +129,17 @@ export const PaymentProvider = ({
           billingInfo,
         });
 
-        debug.success("paymentData-wire", { paymentReceipt });
+        debug.success('paymentData-wire', { paymentReceipt });
 
         saveToCookies(
           paymentReceipt.paymentData,
-          paymentReceipt.reserveLotData
+          paymentReceipt.reserveLotData,
         );
         setPaymentInfo(paymentReceipt.paymentData);
         setContainerState(ContainerTypes.CONFIRMATION);
       } catch (e: any) {
-        const message = e.message ?? "";
-        debug.error("confirm", { message });
+        const message = e.message ?? '';
+        debug.error('confirm', { message });
         setError(message);
       }
     },
@@ -154,7 +154,7 @@ export const PaymentProvider = ({
       setPaymentInfo,
       saveToCookies,
       makeWireTransferPurchase,
-    ]
+    ],
   );
 
   const values = useMemo<Payment>(() => {
@@ -176,7 +176,7 @@ export const PaymentProvider = ({
   ]);
 
   return (
-    <PaymentContext.Provider value={values}>{children}</PaymentContext.Provider>
+    <PaymentContext.Provider value={ values }>{ children }</PaymentContext.Provider>
   );
 };
 

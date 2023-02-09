@@ -1,4 +1,3 @@
-
 export enum ContainerTypes {
     CHECKOUT = 'CHECKOUT',
     PAYMENT = 'PAYMENT',
@@ -6,4 +5,3 @@ export enum ContainerTypes {
     CONFIRMATION = 'CONFIRMATION',
     LOADING = 'LOADING'
   }
-  

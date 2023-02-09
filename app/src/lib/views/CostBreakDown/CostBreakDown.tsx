@@ -9,7 +9,7 @@ import {
   useUIConfiguration,
   useCheckout,
 } from '../../providers';
-import { ContainerTypes } from '../../interfaces/ContextInterface'
+import { ContainerTypes } from '../../interfaces/ContextInterface';
 
 import { MixTheme } from '../../theme';
 

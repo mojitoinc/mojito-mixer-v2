@@ -110,4 +110,4 @@ query ValidatePaymentLimit($collectionId: UUID1!, $itemsCount: Int!) {
     }
   }
 }
-`
+`;

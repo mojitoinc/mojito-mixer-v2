@@ -6,7 +6,7 @@ import React, {
   useState,
 } from 'react';
 import { useDebug } from './DebugProvider';
-import { ContainerTypes } from '../interfaces/ContextInterface'
+import { ContainerTypes } from '../interfaces/ContextInterface';
 
 export interface Container {
   containerState: ContainerTypes;
