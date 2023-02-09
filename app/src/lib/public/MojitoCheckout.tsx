@@ -9,7 +9,6 @@ import MojitoCheckoutView from '../views/index';
 import { ThemeConfiguration } from '../interfaces';
 import {
   CheckoutContext,
-  CheckoutOptions,
   ContainerStateProvider,
   BillingProvider,
   PaymentProvider,
@@ -19,7 +18,8 @@ import {
 import { ConnectProvider } from '../providers/ConnectContext';
 import { SardineEnvironment } from '../config';
 import { ProvidersInjectorProps, withProviders } from '../providers/ProvidersInjector';
-import { UIConfiguration, DefaultUIConfiguration, makeUIConfiguration } from '../config/UIConfiguration';
+import {  DefaultUIConfiguration, makeUIConfiguration } from '../config/UIConfiguration';
+import { UIConfiguration, CheckoutOptions } from '../interfaces/ContextInterface';
 
 declare global {
   interface Window {
