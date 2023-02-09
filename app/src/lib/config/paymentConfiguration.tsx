@@ -2,7 +2,7 @@ import { Typography } from '@mui/material';
 import React from 'react';
 
 export const creditCardInstructions: JSX.Element = (
-  <Typography marginTop="16px">
+  <Typography marginTop="16px" variant="body2">
     We received your payment and it should be fully processed within the next 24
     hours. As soon as everything is confirmed, we&apos;ll send you an email to
     account@email.com with your order confirmation and receipt.

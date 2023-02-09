@@ -42,30 +42,31 @@ const ConfirmationView = ({ paymentStatus }: ConfirmationViewProps) => {
   }, [paymentStatus]);
 
   return (
-    <Box>
+    <Box sx={{ marginTop: '24px' }}>
       <Card
         sx={{
           padding: '24px',
           borderRadius: '4px',
         }}>
-        <Typography fontWeight="500" fontSize="20px">
+        <Typography fontWeight="500" fontSize="20px" marginBottom="8px">
           You&apos;re all set! We&apos;ve received your order.
         </Typography>
-        <Typography fontSize="16px" color={ theme.global?.unHighlightedText }>
+        <Typography
+          fontSize="16px"
+          variant="body1"
+          color={ theme.global?.unHighlightedText }>
           Order #: 1241359891385198375983798
         </Typography>
-        {
-          paymentInfo?.paymentType === PaymentTypes.WIRE_TRANSFER && paymentConfiguration?.wireTransferInstructions
-        }
-        {
-          paymentInfo?.paymentType === PaymentTypes.CREDIT_CARD && paymentConfiguration?.creditCardInstructions
-        }
+        { paymentInfo?.paymentType === PaymentTypes.WIRE_TRANSFER &&
+          paymentConfiguration?.wireTransferInstructions }
+        { paymentInfo?.paymentType === PaymentTypes.CREDIT_CARD &&
+          paymentConfiguration?.creditCardInstructions }
       </Card>
       <Card
         sx={{
-          padding: '24px',
+          padding: '24px 24px 0',
           borderRadius: '4px',
-          margin: '24px 0px',
+          margin: '24px 0px ',
         }}>
         <Box
           display="flex"
@@ -91,9 +92,19 @@ const ConfirmationView = ({ paymentStatus }: ConfirmationViewProps) => {
           title="Delivery Address"
           value={ paymentInfo?.destinationAddress }
           copyValue={ paymentInfo?.destinationAddress }
-          showCopy />
+          showCopy
+          isWire={ paymentInfo?.paymentType === PaymentTypes.WIRE_TRANSFER } />
         { paymentInfo?.paymentType === PaymentTypes.WIRE_TRANSFER && (
-          <Typography variant="body2">
+          <Typography
+            variant="body2"
+            sx={{
+              color: theme?.global?.cardGrayedText,
+              padding: '0 16px 16px',
+              backgroundColor: theme?.global?.background,
+              border: `1px solid ${ theme.global?.cardBorder }`,
+              borderTop: 0,
+              borderRadius: '0 0 4px 4px',
+            }}>
             If you selected to have your NFT(s) transferred directly to your
             non-custodial wallet (such as MetaMask), we will do so as soon as
             payment confirmation is received; otherwise, your NFT(s) will be
@@ -110,7 +121,10 @@ const ConfirmationView = ({ paymentStatus }: ConfirmationViewProps) => {
             showCopy />
         ) }
         { paymentInfo?.paymentType === PaymentTypes.WALLET_CONNECT && (
-          <RowItem title="Payment Method" copyValue={ paymentInfo?.paymentId } showCopy>
+          <RowItem
+            title="Payment Method"
+            copyValue={ paymentInfo?.paymentId }
+            showCopy>
             <Typography fontSize="16px">
               Wallet Connect
               <br />
@@ -121,7 +135,7 @@ const ConfirmationView = ({ paymentStatus }: ConfirmationViewProps) => {
         { paymentInfo?.paymentType === PaymentTypes.WIRE_TRANSFER && (
           <RowItem title="Payment Method">
             <Typography variant="body1" fontSize="16px">
-              { paymentInfo.paymentType }
+              { paymentInfo?.paymentType }
               <br />
               { paymentInfo?.wireData?.accountNumber }
               <br />
@@ -133,16 +147,18 @@ const ConfirmationView = ({ paymentStatus }: ConfirmationViewProps) => {
             </Typography>
           </RowItem>
         ) }
-        <RowItem title="Billing Information">
-          <Typography fontSize="16px">
-            { billingInfo?.name }
-            <br />
-            { billingInfo?.state }, { billingInfo?.postalCode }{ ' ' }
-            { billingInfo?.country }
-            <br />
-            { billingInfo?.phoneNumber }
-          </Typography>
-        </RowItem>
+        <Box sx={{ marginBottom: '24px' }}>
+          <RowItem title="Billing Information">
+            <Typography fontSize="16px">
+              { billingInfo?.name }
+              <br />
+              { billingInfo?.state }, { billingInfo?.postalCode }{ ' ' }
+              { billingInfo?.country }
+              <br />
+              { billingInfo?.phoneNumber }
+            </Typography>
+          </RowItem>
+        </Box>
       </Card>
       <Box display="flex" flexDirection="row" justifyContent="flex-end">
         <Button

@@ -1,4 +1,3 @@
-
 export interface UIConfiguration {
     billing?: {
       isEnableExpressCheckout?: boolean;

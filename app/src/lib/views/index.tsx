@@ -6,7 +6,9 @@ import CostBreakDownContainer from './CostBreakDown';
 import ConfirmationContainer from './PaymentConfirmation';
 import { PaymentContainer } from './Payment';
 import { Delivery } from './Delivery';
-import { useContainer, ContainerTypes, useError } from '../providers';
+import { useContainer, useError } from '../providers';
+import { ContainerTypes } from '../interfaces/ContextInterface'
+
 import LoadingContainer from './Loading';
 import ErrorContainer from './Error';
 import { useSardine } from '../hooks';
@@ -42,12 +44,13 @@ const MojitoCheckoutLayout = ({
         backgroundColor: theme.global?.background,
         display: 'flex',
         width: '100%',
-        height: '100%',
+        height: '100vh',
         flexDirection: 'row',
         justifyContent: 'space-between',
       }}>
-      <Box width="100%" padding="40px">
-        <Header />
+      <Box width="calc(50% - 80px)" padding="40px">
+        <Header
+          isPaymentConfirmation={ containerState === ContainerTypes.CONFIRMATION } />
         { containerState !== ContainerTypes.CONFIRMATION && (
           <Stepper currentState={ containerState } />
         ) }

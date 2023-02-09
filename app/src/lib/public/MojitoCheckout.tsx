@@ -1,9 +1,7 @@
 import { ThemeProvider, GlobalStyles } from '@mui/material';
 import React, { useMemo } from 'react';
 import Modal from 'react-modal';
-import {
-  UIConfigurationContext,
-} from '../providers/UIConfigurationProvider';
+import { UIConfigurationContext } from '../providers/UIConfigurationProvider';
 import { makeTheme, styles } from '../theme';
 import MojitoCheckoutView from '../views/index';
 import { ThemeConfiguration } from '../interfaces';
@@ -17,9 +15,18 @@ import {
 } from '../providers';
 import { ConnectProvider } from '../providers/ConnectContext';
 import { SardineEnvironment } from '../config';
-import { ProvidersInjectorProps, withProviders } from '../providers/ProvidersInjector';
-import {  DefaultUIConfiguration, makeUIConfiguration } from '../config/UIConfiguration';
-import { UIConfiguration, CheckoutOptions } from '../interfaces/ContextInterface';
+import {
+  ProvidersInjectorProps,
+  withProviders,
+} from '../providers/ProvidersInjector';
+import {
+  DefaultUIConfiguration,
+  makeUIConfiguration,
+} from '../config/UIConfiguration';
+import {
+  UIConfiguration,
+  CheckoutOptions,
+} from '../interfaces/ContextInterface';
 
 declare global {
   interface Window {
@@ -31,6 +38,7 @@ interface MojitoCheckoutProps {
   uiConfiguration?: UIConfiguration;
   checkoutOptions: CheckoutOptions;
   theme?: ThemeConfiguration;
+  success?: boolean;
   show: boolean;
   debug?: boolean;
   sardineEnvironment?: SardineEnvironment;
@@ -43,6 +51,7 @@ const MojitoCheckout: React.FC<MojitoCheckoutProps> = ({
   debug = false,
   checkoutOptions,
   enableSardine = false,
+  success,
   sardineEnvironment = 'production',
 }: MojitoCheckoutProps) => {
   const themes = useMemo(() => makeTheme(theme), [theme]);
@@ -67,7 +76,7 @@ const MojitoCheckout: React.FC<MojitoCheckoutProps> = ({
       isOpen={ show }
       style={{
         content: {
-          width: '100%',
+          width: '100vw',
           height: '100vh',
           top: 0,
           left: 0,
@@ -81,13 +90,15 @@ const MojitoCheckout: React.FC<MojitoCheckoutProps> = ({
           <CheckoutContext.Provider value={ checkoutOptions }>
             <UIConfigurationContext.Provider value={ uiConfigurations }>
               <ContainerStateProvider
-                paymentId={ checkoutOptions?.paymentId }>
+                paymentId={ checkoutOptions?.paymentId } success={success} > 
                 <ErrorProvider>
                   <BillingProvider>
                     <PaymentProvider>
                       <ConnectProvider>
                         <GlobalStyles styles={ styles } />
-                        <MojitoCheckoutView enableSardine={ enableSardine } sardineEnvironment={ sardineEnvironment } />
+                        <MojitoCheckoutView
+                          enableSardine={ enableSardine }
+                          sardineEnvironment={ sardineEnvironment } />
                       </ConnectProvider>
                     </PaymentProvider>
                   </BillingProvider>
@@ -101,6 +112,7 @@ const MojitoCheckout: React.FC<MojitoCheckoutProps> = ({
   );
 };
 export type PUICheckoutProps = MojitoCheckoutProps & ProvidersInjectorProps;
-const PUIMojitoCheckout: React.FC<PUICheckoutProps> = withProviders(MojitoCheckout);
+const PUIMojitoCheckout: React.FC<PUICheckoutProps> =
+  withProviders(MojitoCheckout);
 
 export default PUIMojitoCheckout;

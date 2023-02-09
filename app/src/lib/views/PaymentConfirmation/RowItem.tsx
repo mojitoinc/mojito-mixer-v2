@@ -1,5 +1,5 @@
 import { Box, Typography, useTheme } from '@mui/material';
-import CopyIcon from '@mui/icons-material/ContentCopy';
+import FileCopyOutlinedIcon from '@mui/icons-material/FileCopyOutlined';
 import React, { useCallback } from 'react';
 import { MixTheme } from '../../theme';
 
@@ -9,6 +9,7 @@ interface RowItemProps {
   value?: string;
   copyValue?: string;
   showCopy?: boolean;
+  isWire?: boolean;
 }
 
 const RowItem = ({
@@ -17,6 +18,7 @@ const RowItem = ({
   children,
   copyValue,
   value,
+  isWire,
 }: RowItemProps) => {
   const theme = useTheme<MixTheme>();
 
@@ -32,16 +34,20 @@ const RowItem = ({
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        margin: '8px 0px',
+        margin: '16px 0px',
         border: `1px solid ${ theme.global?.cardBorder }`,
-        borderRadius: '4px',
+        marginBottom: isWire ? '0' : undefined,
+        borderBottom: isWire ? 'none' : undefined,
+        borderRadius: isWire ? '4px 4px 0 0' : '4px',
       }}>
-      <Typography fontSize="16px" width="40%">
+      <Typography fontSize="16px" width="40%" variant="body1">
         { title }
       </Typography>
-      <Typography fontSize="16px">{ value || children }</Typography>
+      <Typography fontSize="16px" variant="body1">
+        { value || children }
+      </Typography>
       { showCopy && (
-        <CopyIcon
+        <FileCopyOutlinedIcon
           width="12px"
           height="12px"
           onClick={ onClickCopy }

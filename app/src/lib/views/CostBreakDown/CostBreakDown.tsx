@@ -6,10 +6,11 @@ import { Icons } from '../../assets';
 import { CollectionItem, Taxes } from '../../interfaces';
 import {
   useContainer,
-  ContainerTypes,
   useUIConfiguration,
   useCheckout,
 } from '../../providers';
+import { ContainerTypes } from '../../interfaces/ContextInterface'
+
 import { MixTheme } from '../../theme';
 
 interface CostBreakDownProps {
@@ -42,7 +43,7 @@ const CostBreakDown = ({ taxes, collectionData }: CostBreakDownProps) => {
 
   return (
     <Box
-      width="100%"
+      width="calc(50% - 80px)"
       height="100%"
       sx={{
         backgroundImage: `url(${ Icons.background })`,

@@ -2,7 +2,7 @@ import { Box, Typography, useTheme } from '@mui/material';
 import React from 'react';
 import { Icons } from '../assets';
 import { MixTheme } from '../theme';
-import { ContainerTypes } from '../providers';
+import { ContainerTypes } from '../interfaces/ContextInterface';
 
 interface StepsType {
   title: string;
