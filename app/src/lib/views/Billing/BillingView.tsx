@@ -18,6 +18,7 @@ interface BillingProps {
   onClickContinue: () => void;
   isValid: boolean;
   isValidBillingForm: boolean;
+  pincodeError?: boolean;
 }
 
 const BillingView = ({
@@ -29,10 +30,11 @@ const BillingView = ({
   onClickContinue,
   isValid,
   isValidBillingForm,
+  pincodeError,
 }: BillingProps) => {
   const theme = useTheme<MixTheme>();
   const uiConfiguration = useUIConfiguration();
-
+console.log('pincodeError',pincodeError)
   return (
     <Box width="100%">
       { !uiConfiguration?.billing?.isEnableExpressCheckout && (
@@ -82,7 +84,7 @@ const BillingView = ({
               backgroundColor: 'rgba(102, 99, 253, 0.8)',
             },
           }}
-          disabled={ !isValid } />
+          disabled={ !isValid || pincodeError} />
       </Box>
       <DebugBox value={ values } />
     </Box>

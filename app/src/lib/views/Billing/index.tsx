@@ -12,7 +12,7 @@ import { ContainerTypes } from '../../interfaces/ContextInterface'
 const BillingContainer = () => {
   const debug = useDebug('Billing');
   const { orgId } = useCheckout();
-  const { setBillingInfo, billingInfo, refetchTaxes } = useBilling();
+  const { setBillingInfo, billingInfo, refetchTaxes, pincodeError } = useBilling();
 
   const [isEditing, setIsEditing] = useState<boolean>(true);
   const { setContainerState } = useContainer();
@@ -43,7 +43,7 @@ const BillingContainer = () => {
     street1: Yup.string().required('Please enter your address'),
   });
 
-  const { values, errors, handleChange, setValues, isValid } = useFormik({
+  const { values, errors, handleChange, setValues, isValid, } = useFormik({
     initialValues: {
       email: '',
       country: '',
@@ -128,6 +128,7 @@ const BillingContainer = () => {
       onClickEdit={ onClickEdit }
       onClickContinue={ onClickContinue }
       isValidBillingForm={ isValidBillingForm }
+      pincodeError={ pincodeError }
       isValid={ isValid } />
   );
 };
