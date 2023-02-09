@@ -240,7 +240,7 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
           debug
           uri={ RuntimeConfiguration.API_HOST_URL ?? '' }
           getAuthenticationToken={ getAuthenticationToken }
-          deliveryConfiguration={{
+          checkoutOptions={{
             orgId,
             lotId: values.lotId ?? '',
             quantity: parseInt(values.lotUnits ?? '1', 10),
@@ -249,8 +249,8 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
           }}
           uiConfiguration={{
 
-            hideExpressCheckout: Boolean(!values.express ?? true),
             billing: {
+              isEnableExpressCheckout: Boolean(!values.express ?? true),
               gpay: Boolean(values.expressGpay ?? true),
               applepay: Boolean(values.expressApplepay ?? true),
               walletConnect: Boolean(values.expressWalletconnect ?? true),
@@ -263,10 +263,11 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
               walletConnect: Boolean(values.walletconnect ?? true),
               wire: Boolean(values.wire ?? true),
             },
-            showDiscountCode: Boolean(values.discountCode ?? true),
+            
+            costBreakdown: {showDiscountCode: Boolean(values.discountCode ?? true)},
 
-            paymentConfiguration: {
-              onClickGoToMarketPlace,
+            paymentConfirmation: {
+              onGoToMarketPlace: onClickGoToMarketPlace,
             },
           }}
           show={ show } />

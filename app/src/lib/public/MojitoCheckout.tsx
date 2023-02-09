@@ -29,7 +29,7 @@ declare global {
 
 interface MojitoCheckoutProps {
   uiConfiguration?: UIConfiguration;
-  deliveryConfiguration: CheckoutOptions;
+  checkoutOptions: CheckoutOptions;
   theme?: ThemeConfiguration;
   show: boolean;
   debug?: boolean;
@@ -41,7 +41,7 @@ const MojitoCheckout: React.FC<MojitoCheckoutProps> = ({
   theme,
   show,
   debug = false,
-  deliveryConfiguration,
+  checkoutOptions,
   enableSardine = false,
   sardineEnvironment = 'production',
 }: MojitoCheckoutProps) => {
@@ -78,10 +78,10 @@ const MojitoCheckout: React.FC<MojitoCheckoutProps> = ({
       }}>
       <DebugProvider debug={ debug }>
         <ThemeProvider theme={ themes }>
-          <CheckoutContext.Provider value={ deliveryConfiguration }>
+          <CheckoutContext.Provider value={ checkoutOptions }>
             <UIConfigurationContext.Provider value={ uiConfigurations }>
               <ContainerStateProvider
-                paymentId={ deliveryConfiguration?.paymentId }>
+                paymentId={ checkoutOptions?.paymentId }>
                 <ErrorProvider>
                   <BillingProvider>
                     <PaymentProvider>

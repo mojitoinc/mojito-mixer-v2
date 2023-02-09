@@ -1,6 +1,6 @@
 // https://mui.com/material-ui/customization/theming/
 import { ThemeOptions, Theme } from '@mui/material/styles';
-import { CheckOutColor, ConfirmationColors, CostBreakDownColors } from '../interfaces';
+import { CheckoutColor, PaymentConfirmationColor, CostBreakDownColor } from '../interfaces';
 
 export interface ExtendsThemeOptions {
     font?: {
@@ -24,9 +24,9 @@ export interface ExtendsThemeOptions {
         white: string;
         required: string;
         placeholder: string;
-        checkOutColors: CheckOutColor;
-        costBreakDownColors: CostBreakDownColors;
-        confirmationColors: ConfirmationColors;
+        checkOutColors: CheckoutColor;
+        costBreakDownColors: CostBreakDownColor;
+        confirmationColors: PaymentConfirmationColor;
         cardGrayedText: string;
         grayBackground: string;
     };

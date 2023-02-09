@@ -14,7 +14,7 @@ interface ConfirmationViewProps {
 const ConfirmationView = ({ paymentStatus }: ConfirmationViewProps) => {
   const theme = useTheme<MixTheme>();
   const { paymentInfo, billingInfo } = usePaymentInfo();
-  const { paymentConfiguration } = useUIConfiguration();
+  const { paymentConfirmation: paymentConfiguration } = useUIConfiguration();
 
   const backgroundColor = useMemo(() => {
     return paymentStatus === PaymentStatus.PENDING
@@ -150,7 +150,7 @@ const ConfirmationView = ({ paymentStatus }: ConfirmationViewProps) => {
           sx={{
             background: theme.palette.primary?.main,
           }}
-          onClick={ paymentConfiguration?.onClickGoToMarketPlace } />
+          onClick={ paymentConfiguration?.onGoToMarketPlace } />
       </Box>
     </Box>
   );

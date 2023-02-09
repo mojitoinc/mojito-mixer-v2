@@ -34,7 +34,7 @@ const BillingView = ({
 
   return (
     <Box width="100%">
-      { !uiConfiguration?.hideExpressCheckout && (
+      { !uiConfiguration?.billing?.isEnableExpressCheckout && (
         <ExpressCheckoutView config={ uiConfiguration?.billing } />
       ) }
       <Card

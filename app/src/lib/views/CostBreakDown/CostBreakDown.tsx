@@ -108,7 +108,7 @@ const CostBreakDown = ({ taxes, collectionData }: CostBreakDownProps) => {
             </Typography>
           </Box>
         </Box>
-        { uiConfiguration?.showDiscountCode &&
+        { uiConfiguration?.costBreakdown?.showDiscountCode &&
           containerState !== ContainerTypes.CONFIRMATION && (
             <>
               <Divider

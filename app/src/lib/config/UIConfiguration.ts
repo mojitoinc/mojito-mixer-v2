@@ -1,8 +1,8 @@
 import { wireTransferInstructions, creditCardInstructions } from '.';
 
 export interface UIConfiguration {
-    hideExpressCheckout?: boolean;
     billing?: {
+      isEnableExpressCheckout?: boolean;
       gpay?: boolean;
       applepay?: boolean;
       walletConnect?: boolean;
@@ -15,17 +15,19 @@ export interface UIConfiguration {
       wire?: boolean;
       creditCard?: boolean;
     };
-    showDiscountCode?: boolean;
-    paymentConfiguration?: {
-    wireTransferInstructions?: JSX.Element;
-    creditCardInstructions?: JSX.Element;
-    onClickGoToMarketPlace?: () => void;
+    costBreakdown?: {
+      showDiscountCode?: boolean;
+    },
+    paymentConfirmation?: {
+      wireTransferInstructions?: JSX.Element;
+      creditCardInstructions?: JSX.Element;
+      onGoToMarketPlace?: () => void;
   };
 }
 
 export const DefaultUIConfiguration: UIConfiguration = {
-  hideExpressCheckout: false,
   billing: {
+    isEnableExpressCheckout: true,
     gpay: true,
     applepay: true,
     walletConnect: true,
@@ -38,11 +40,13 @@ export const DefaultUIConfiguration: UIConfiguration = {
     wire: true,
     creditCard: true,
   },
-  showDiscountCode: true,
-  paymentConfiguration: {
+  costBreakdown: {
+    showDiscountCode: true,
+  },
+  paymentConfirmation: {
     wireTransferInstructions,
     creditCardInstructions,
-    onClickGoToMarketPlace: () => undefined,
+    onGoToMarketPlace: () => undefined,
   },
 };
 
@@ -50,24 +54,22 @@ export const DefaultUIConfiguration: UIConfiguration = {
 export const makeUIConfiguration = (configurations: UIConfiguration) => {
   return {
     uiConfiguration: {
-      showDiscountCode:
-          configurations?.showDiscountCode ??
-          DefaultUIConfiguration?.showDiscountCode,
+      costBreakdown:{
+        ...DefaultUIConfiguration?.costBreakdown,
+        ...configurations?.costBreakdown,
+        },
       billing: {
         ...DefaultUIConfiguration?.billing,
         ...configurations?.billing,
       },
-      hideExpressCheckout:
-          configurations?.hideExpressCheckout ??
-          DefaultUIConfiguration?.hideExpressCheckout,
       payment: {
         ...DefaultUIConfiguration?.payment,
         ...configurations?.payment,
       },
     },
-    paymentConfiguration: {
-      ...DefaultUIConfiguration.paymentConfiguration,
-      ...configurations.paymentConfiguration,
+    paymentConfirmation: {
+      ...DefaultUIConfiguration.paymentConfirmation,
+      ...configurations.paymentConfirmation,
     },
   } as UIConfiguration;
 };
