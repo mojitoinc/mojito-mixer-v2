@@ -12,6 +12,7 @@ import { PaymentInfoCards } from './InfoCards';
 import { PaymentMethodView } from './PaymentMethodView';
 import { WireTransferForm, WireTransferFormData } from './WireTransferForm';
 import { CreditCardForm } from './CreditCardForm';
+import { DebugBox } from '../../components/shared/DebugBox';
 
 interface PaymentContainerProps {
   paymentType: string;
@@ -147,8 +148,8 @@ const PaymentContainer = ({
       <Box display="flex" justifyContent="flex-end">
         <Button
           title="Continue to Delivery"
-          backgroundColor={ theme.global?.checkOutColors?.continueButtonBackground }
-          textColor={ theme.global?.checkOutColors?.continueButtonTextColor }
+          backgroundColor={ theme.global?.checkout?.continueButtonBackground }
+          textColor={ theme.global?.checkout?.continueButtonTextColor }
           onClick={ onClickDelivery }
           disabled={ buttonDisabled }
           sx={{
@@ -158,6 +159,8 @@ const PaymentContainer = ({
             },
           }} />
       </Box>
+      <DebugBox value={{creditCardFormValues, wireTransferFormValues, creditCardList}} />
+
     </>
   );
 };

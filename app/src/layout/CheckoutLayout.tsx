@@ -1,4 +1,4 @@
-// import { MojitoCheckout, RuntimeConfiguration } from '@mojitonft/mojito-mixers';
+// import { MojitoCheckout } from '@mojitonft/mojito-mixers';
 import React, { useCallback, useMemo } from 'react';
 import {
   Box,
@@ -19,7 +19,8 @@ import {
 } from 'pages';
 import { FormikErrors } from 'formik';
 import { useRouter } from 'next/router';
-import { MojitoCheckout, RuntimeConfiguration } from 'lib';
+import { RuntimeConfiguration } from '../constant/RuntimeConfiguration';
+import { MojitoCheckout } from 'lib';
 
 export interface CheckboxOptions {
   field: string;

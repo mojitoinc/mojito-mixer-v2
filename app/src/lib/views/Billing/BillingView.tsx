@@ -7,6 +7,7 @@ import { MixTheme } from '../../theme';
 import BillingForm from './BillingForm';
 import ExpressCheckoutView from './ExpressCheckout';
 import BillingDetails from './BillingDetails';
+import { DebugBox } from '../../components/shared/DebugBox';
 
 interface BillingProps {
   isEditing: boolean;
@@ -73,8 +74,8 @@ const BillingView = ({
       <Box display="flex" justifyContent="flex-end">
         <Button
           title="Continue to Payment"
-          backgroundColor={ theme.global?.checkOutColors?.continueButtonBackground }
-          textColor={ theme.global?.checkOutColors?.continueButtonTextColor }
+          backgroundColor={ theme.global?.checkout?.continueButtonBackground }
+          textColor={ theme.global?.checkout?.continueButtonTextColor }
           onClick={ onClickContinue }
           sx={{
             margin: '24px 0px',
@@ -84,6 +85,7 @@ const BillingView = ({
           }}
           disabled={ !isValid } />
       </Box>
+      <DebugBox value={values} />
     </Box>
   );
 };

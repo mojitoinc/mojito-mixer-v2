@@ -1,14 +1,6 @@
 import { createContext, useContext } from 'react';
 
-
-export interface CheckoutOptions {
-  orgId?: string;
-  lotId?: string;
-  quantity?: number;
-  paymentId?: string;
-  collectionItemId?: string;
-  invoiceId?: string;
-}
+import { CheckoutOptions } from '../interfaces/ContextInterface'
 
 export const CheckoutContext = createContext<CheckoutOptions>({} as CheckoutOptions);
 
