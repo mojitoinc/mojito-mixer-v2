@@ -20,7 +20,7 @@ const CopyButton = ({ copyValue, sx }: CopyProps) => {
       height="12px"
       onClick={ onClickCopy }
       sx={{
-        color: theme.global?.confirmationColors?.copyIconColor,
+        color: theme.global?.paymentConfirmation?.copyIconColor,
         marginLeft: '8px',
         alignSelf: 'flex-end',
         '&:active': {

@@ -74,8 +74,8 @@ const BillingView = ({
       <Box display="flex" justifyContent="flex-end">
         <Button
           title="Continue to Payment"
-          backgroundColor={ theme.global?.checkOutColors?.continueButtonBackground }
-          textColor={ theme.global?.checkOutColors?.continueButtonTextColor }
+          backgroundColor={ theme.global?.checkout?.continueButtonBackground }
+          textColor={ theme.global?.checkout?.continueButtonTextColor }
           onClick={ onClickContinue }
           sx={{
             margin: '24px 0px',
