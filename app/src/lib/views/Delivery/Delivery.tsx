@@ -1,7 +1,19 @@
 import React, { useMemo } from 'react';
-import { Box, Card, Typography, useTheme, Stack, FormHelperText } from '@mui/material';
+import {
+  Box,
+  Card,
+  Typography,
+  useTheme,
+  Stack,
+  FormHelperText,
+} from '@mui/material';
 import { MixTheme } from '../../theme';
-import { Button, Dropdown, DropdownOptions, CopyButton } from '../../components';
+import {
+  Button,
+  Dropdown,
+  DropdownOptions,
+  CopyButton,
+} from '../../components';
 import { BillingFormData, PaymentData } from '../../providers';
 import { PaymentTypes } from '../../constants';
 import { ConnectType } from '../../providers/ConnectContext';
@@ -17,9 +29,9 @@ interface DeliveryProps {
   organizationName: string;
   billingInfo: BillingFormData | undefined;
   paymentInfo: PaymentData | undefined;
-  onClickConnectWallet: ()=>void;
+  onClickConnectWallet: () => void;
   connect: ConnectType;
-  onDisconnect:()=>void;
+  onDisconnect: () => void;
   error?: string;
 }
 
@@ -63,82 +75,75 @@ const Delivery = ({
                   out for 14 days.`
             : `All related NFT purchase and delivery fees will be covered by ${ organizationName }.` }
         </Typography>
-        {
-          !connect?.connected
-            ? (
-              <>
-                <Dropdown
-                  value={ selectedDeliveryAddress }
-                  onChange={ onWalletChange }
-                  placeholder="Select or Enter Wallet Address"
-                  sx={{ marginRight: '8px' }}
-                  options={ walletOptions } />
-                { selectedDeliveryAddress === NEW_MULTI_SIG && (
-                <Typography
-                  variant="body2"
-                  sx={{ marginTop: '6px', color: theme.global?.cardGrayedText }}>
-                  A new multi-sig wallet will be created for you when purchase is
-                  complete
-                </Typography>
-                ) }
-                <Stack
-                  flexDirection="row"
-                  alignItems="flex-end"
-                  justifyContent="flex-end">
-                  <Button
-                    title="Connect Wallet"
-                    textColor={ theme.global?.highlightedText }
-                    backgroundColor={ theme.global?.white }
-                    variant="outlined"
-                    sx={{ marginTop: 2 }}
-                    onClick={ onClickConnectWallet } />
-                </Stack>
-              </>
-            )
-            : (
-              <Box
-                display="flex"
-                flexDirection="row"
-                alignItems="center"
-                justifyContent="space-between"
-                border={ `1px solid ${ theme.global?.cardBorder }` }
-                padding="16px"
+        { !connect?.connected ? (
+          <>
+            <Dropdown
+              value={ selectedDeliveryAddress }
+              onChange={ onWalletChange }
+              placeholder="Select or Enter Wallet Address"
+              sx={{ marginRight: '8px' }}
+              options={ walletOptions } />
+            { selectedDeliveryAddress === NEW_MULTI_SIG && (
+              <Typography
+                variant="body2"
+                sx={{ marginTop: '6px', color: theme.global?.cardGrayedText }}>
+                A new multi-sig wallet will be created for you when purchase is
+                complete
+              </Typography>
+            ) }
+            <Stack
+              flexDirection="row"
+              alignItems="flex-end"
+              justifyContent="flex-end">
+              <Button
+                title="Connect Wallet"
+                textColor={ theme.global?.highlightedText }
+                backgroundColor={ theme.global?.white }
+                variant="outlined"
+                sx={{ marginTop: 2 }}
+                onClick={ onClickConnectWallet } />
+            </Stack>
+          </>
+        ) : (
+          <Box
+            display="flex"
+            flexDirection="row"
+            alignItems="center"
+            justifyContent="space-between"
+            border={ `1px solid ${ theme.global?.cardBorder }` }
+            padding="16px"
+            sx={{
+              background: theme.global?.background,
+            }}>
+            <Box display="flex" flexDirection="row" alignItems="center">
+              <img src={ Icons.walletAddress } alt="wallet address" />
+              <Typography
+                fontSize="16px"
+                marginLeft="12px"
+                width="150px"
                 sx={{
-                  background: theme.global?.background,
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
                 }}>
-                <Box
-                  display="flex"
-                  flexDirection="row"
-                  alignItems="center">
-                  <img src={ Icons.walletAddress } alt="wallet address" />
-                  <Typography
-                    fontSize="16px"
-                    marginLeft="12px"
-                    width="150px"
-                    sx={{
-                      overflow: 'hidden', textOverflow: 'ellipsis',
-                    }}>
-                    { connect?.account }
-                  </Typography>
-                  <CopyButton
-                    copyValue={ connect?.account }
-                    sx={{
-                      alignSelf: 'center',
-                    }} />
-                </Box>
-                <Button
-                  title="Disconnect"
-                  textColor={ theme.global?.highlightedText }
-                  backgroundColor={ theme.global?.white }
-                  variant="outlined"
-                  sx={{
-                    justifySelf: 'flex-end',
-                  }}
-                  onClick={ onDisconnect } />
-              </Box>
-            )
-        }
-
+                { connect?.account }
+              </Typography>
+              <CopyButton
+                copyValue={ connect?.account }
+                sx={{
+                  alignSelf: 'center',
+                }} />
+            </Box>
+            <Button
+              title="Disconnect"
+              textColor={ theme.global?.highlightedText }
+              backgroundColor={ theme.global?.white }
+              variant="outlined"
+              sx={{
+                justifySelf: 'flex-end',
+              }}
+              onClick={ onDisconnect } />
+          </Box>
+        ) }
       </Card>
       <Box display="flex" flexDirection="row" justifyContent="space-between">
         <FormHelperText error>{ error }</FormHelperText>
@@ -147,7 +152,12 @@ const Delivery = ({
           backgroundColor={ theme.global?.checkOutColors?.continueButtonBackground }
           textColor={ theme.global?.checkOutColors?.continueButtonTextColor }
           disabled={ !(connect?.connected || selectedDeliveryAddress) }
-          onClick={ onClickConfirmPurchase } />
+          onClick={ onClickConfirmPurchase }
+          sx={{
+            '&: hover': {
+              backgroundColor: 'rgba(102, 99, 253, 0.8)',
+            },
+          }} />
       </Box>
     </>
   );

@@ -25,7 +25,7 @@ stories.add('Hide Express checkout', () => {
       show
       debug
       uiConfiguration={{
-        billing:{isEnableExpressCheckout: false,}
+        billing: { isEnableExpressCheckout: false },
       }}
       checkoutOptions={{
         orgId: 'd086ea16-d40d-454c-84a4-64b5e940670a',

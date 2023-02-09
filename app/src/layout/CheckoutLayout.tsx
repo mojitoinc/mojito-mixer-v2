@@ -263,8 +263,8 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
               walletConnect: Boolean(values.walletconnect ?? true),
               wire: Boolean(values.wire ?? true),
             },
-            
-            costBreakdown: {showDiscountCode: Boolean(values.discountCode ?? true)},
+
+            costBreakdown: { showDiscountCode: Boolean(values.discountCode ?? true) },
 
             paymentConfirmation: {
               onGoToMarketPlace: onClickGoToMarketPlace,

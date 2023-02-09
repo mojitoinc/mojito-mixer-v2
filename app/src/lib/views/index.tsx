@@ -47,7 +47,8 @@ const MojitoCheckoutLayout = ({
         justifyContent: 'space-between',
       }}>
       <Box width="100%" padding="40px">
-        <Header />
+        <Header
+          isPaymentConfirmation={ containerState === ContainerTypes.CONFIRMATION } />
         { containerState !== ContainerTypes.CONFIRMATION && (
           <Stepper currentState={ containerState } />
         ) }
