@@ -238,7 +238,7 @@ require('../../node_modules/@mui/material/SpeedDialAction/SpeedDialAction.js');
 require('../../node_modules/@mui/material/SpeedDialAction/speedDialActionClasses.js');
 require('../../node_modules/@mui/material/SpeedDialIcon/SpeedDialIcon.js');
 require('../../node_modules/@mui/material/SpeedDialIcon/speedDialIconClasses.js');
-require('../../node_modules/@mui/material/Stack/Stack.js');
+var Stack = require('../../node_modules/@mui/material/Stack/Stack.js');
 require('../../node_modules/@mui/material/Step/Step.js');
 require('../../node_modules/@mui/material/Step/stepClasses.js');
 require('../../node_modules/@mui/material/Step/StepContext.js');
@@ -293,24 +293,46 @@ require('../../node_modules/@mui/material/Toolbar/Toolbar.js');
 require('../../node_modules/@mui/material/Toolbar/toolbarClasses.js');
 require('../../node_modules/@mui/material/Tooltip/Tooltip.js');
 require('../../node_modules/@mui/material/Tooltip/tooltipClasses.js');
-require('../../node_modules/@mui/material/Typography/Typography.js');
+var Typography = require('../../node_modules/@mui/material/Typography/Typography.js');
 require('../../node_modules/@mui/material/Typography/typographyClasses.js');
 require('../../node_modules/@mui/material/Zoom/Zoom.js');
 require('../../node_modules/@mui/material/GlobalStyles/GlobalStyles.js');
 require('../../node_modules/@mui/base/FocusTrap/FocusTrap.js');
+var ArrowBackIcon = require('@mui/icons-material/ArrowBack');
+require('../providers/DebugProvider.js');
+require('../providers/ErrorProvider.js');
+require('../providers/BillingProvider.js');
+require('../providers/ContainerStateProvider.js');
+var UIConfigurationProvider = require('../providers/UIConfigurationProvider.js');
+require('../providers/CheckoutProvider.js');
+require('../providers/PaymentProvider.js');
 var index = require('../assets/index.js');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
 var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
+var ArrowBackIcon__default = /*#__PURE__*/_interopDefaultLegacy(ArrowBackIcon);
 
-const Header = () => {
-    var _a;
+const Header = ({ isPaymentConfirmation }) => {
+    var _a, _b, _c;
     const theme = useTheme["default"]();
+    const { paymentConfirmation } = UIConfigurationProvider.useUIConfiguration();
     return (React__default["default"].createElement(Box["default"], { sx: {
             width: '100%',
             backgroundColor: (_a = theme.global) === null || _a === void 0 ? void 0 : _a.background,
         } },
+        isPaymentConfirmation && (React__default["default"].createElement(Stack["default"], { flexDirection: "row", alignItems: "center", sx: { cursor: 'pointer' }, marginBottom: "24px", onClick: paymentConfirmation === null || paymentConfirmation === void 0 ? void 0 : paymentConfirmation.onGoToMarketPlace },
+            React__default["default"].createElement(ArrowBackIcon__default["default"], { sx: {
+                    color: (_b = theme === null || theme === void 0 ? void 0 : theme.global) === null || _b === void 0 ? void 0 : _b.unHighlightedText,
+                    width: '17px',
+                    height: '17px',
+                } }),
+            React__default["default"].createElement(Typography["default"], { variant: "button", sx: {
+                    color: (_c = theme === null || theme === void 0 ? void 0 : theme.global) === null || _c === void 0 ? void 0 : _c.unHighlightedText,
+                    textTransform: 'capitalize',
+                    fontWeight: 700,
+                    fontSize: '12px',
+                } }, "Back To Marketplace"))),
         React__default["default"].createElement(Box["default"], { sx: {
                 width: '100%',
                 alignItems: 'center',

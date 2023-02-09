@@ -302,7 +302,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 
-const creditCardInstructions = (React__default["default"].createElement(Typography["default"], { marginTop: "16px" },
+const creditCardInstructions = (React__default["default"].createElement(Typography["default"], { marginTop: "16px", variant: "body2" },
     "We received your payment and it should be fully processed within the next 24 hours. As soon as everything is confirmed, we'll send you an email to account@email.com with your order confirmation and receipt.",
     React__default["default"].createElement("br", null),
     React__default["default"].createElement("br", null),

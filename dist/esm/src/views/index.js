@@ -305,10 +305,11 @@ import { Delivery } from './Delivery/index.js';
 import '../providers/DebugProvider.js';
 import { useError } from '../providers/ErrorProvider.js';
 import '../providers/BillingProvider.js';
-import { useContainer, ContainerTypes } from '../providers/ContainerStateProvider.js';
+import { useContainer } from '../providers/ContainerStateProvider.js';
 import '../providers/UIConfigurationProvider.js';
 import '../providers/CheckoutProvider.js';
 import '../providers/PaymentProvider.js';
+import { ContainerTypes } from '../interfaces/ContextInterface/RootContainer.js';
 import LoadingContainer from './Loading/index.js';
 import ErrorContainer from './Error/index.js';
 import '../service/CookieService.js';
@@ -354,12 +355,12 @@ const MojitoCheckoutLayout = ({ sardineEnvironment, enableSardine, }) => {
             backgroundColor: (_a = theme.global) === null || _a === void 0 ? void 0 : _a.background,
             display: 'flex',
             width: '100%',
-            height: '100%',
+            height: '100vh',
             flexDirection: 'row',
             justifyContent: 'space-between',
         } },
-        React__default.createElement(Box, { width: "100%", padding: "40px" },
-            React__default.createElement(Header, null),
+        React__default.createElement(Box, { width: "calc(50% - 80px)", padding: "40px" },
+            React__default.createElement(Header, { isPaymentConfirmation: containerState === ContainerTypes.CONFIRMATION }),
             containerState !== ContainerTypes.CONFIRMATION && (React__default.createElement(Stepper, { currentState: containerState })),
             containerState === ContainerTypes.CHECKOUT && React__default.createElement(BillingContainer, null),
             containerState === ContainerTypes.CONFIRMATION && (React__default.createElement(PaymentConfirmationContainer, null)),

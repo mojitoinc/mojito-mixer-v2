@@ -1,3 +1,6 @@
 /// <reference types="react" />
-declare const Header: () => JSX.Element;
+interface HeaderProps {
+    isPaymentConfirmation: boolean;
+}
+declare const Header: ({ isPaymentConfirmation }: HeaderProps) => JSX.Element;
 export default Header;

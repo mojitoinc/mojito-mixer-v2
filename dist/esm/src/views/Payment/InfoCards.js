@@ -297,10 +297,11 @@ import '../../../node_modules/@mui/base/FocusTrap/FocusTrap.js';
 import '../../providers/DebugProvider.js';
 import '../../providers/ErrorProvider.js';
 import '../../providers/BillingProvider.js';
-import { useContainer, ContainerTypes } from '../../providers/ContainerStateProvider.js';
+import { useContainer } from '../../providers/ContainerStateProvider.js';
 import '../../providers/UIConfigurationProvider.js';
 import '../../providers/CheckoutProvider.js';
 import '../../providers/PaymentProvider.js';
+import { ContainerTypes } from '../../interfaces/ContextInterface/RootContainer.js';
 
 const PaymentInfoCards = ({ billingInfo }) => {
     var _a, _b, _c, _d, _e, _f, _g;

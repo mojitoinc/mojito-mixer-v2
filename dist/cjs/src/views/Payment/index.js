@@ -28,6 +28,7 @@ require('../../../node_modules/@apollo/client/errors/index.js');
 var useQuery = require('../../../node_modules/@apollo/client/react/hooks/useQuery.js');
 var billing = require('../../queries/billing.js');
 var index = require('../../constants/index.js');
+var RootContainer = require('../../interfaces/ContextInterface/RootContainer.js');
 require('../../providers/DebugProvider.js');
 require('../../providers/ErrorProvider.js');
 var BillingProvider = require('../../providers/BillingProvider.js');
@@ -172,7 +173,7 @@ const PaymentContainer = () => {
                     });
                     if (((_5 = (_4 = cardScreeningData.data) === null || _4 === void 0 ? void 0 : _4.cardScreening) === null || _5 === void 0 ? void 0 : _5.level) !== 'high') {
                         setPaymentInfo(paymentInfoData);
-                        setContainerState(ContainerStateProvider.ContainerTypes.DELIVERY);
+                        setContainerState(RootContainer.ContainerTypes.DELIVERY);
                     }
                     else {
                         setFieldError('cardNumber', 'Please enter a valid card number.');
@@ -180,7 +181,7 @@ const PaymentContainer = () => {
                 }
                 else {
                     setPaymentInfo(paymentInfoData);
-                    setContainerState(ContainerStateProvider.ContainerTypes.DELIVERY);
+                    setContainerState(RootContainer.ContainerTypes.DELIVERY);
                 }
             }
             catch (e) {
@@ -211,7 +212,7 @@ const PaymentContainer = () => {
                     country: wireTransferFormValues.bankCountry,
                 },
             } }));
-        setContainerState(ContainerStateProvider.ContainerTypes.DELIVERY);
+        setContainerState(RootContainer.ContainerTypes.DELIVERY);
     }, [
         wireTransferFormValues,
         paymentInfo,

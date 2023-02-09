@@ -298,14 +298,14 @@ require('../../../node_modules/@mui/material/Typography/typographyClasses.js');
 require('../../../node_modules/@mui/material/Zoom/Zoom.js');
 require('../../../node_modules/@mui/material/GlobalStyles/GlobalStyles.js');
 require('../../../node_modules/@mui/base/FocusTrap/FocusTrap.js');
-var CopyIcon = require('@mui/icons-material/ContentCopy');
+var FileCopyOutlinedIcon = require('@mui/icons-material/FileCopyOutlined');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
 var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
-var CopyIcon__default = /*#__PURE__*/_interopDefaultLegacy(CopyIcon);
+var FileCopyOutlinedIcon__default = /*#__PURE__*/_interopDefaultLegacy(FileCopyOutlinedIcon);
 
-const RowItem = ({ showCopy, title, children, copyValue, value, }) => {
+const RowItem = ({ showCopy, title, children, copyValue, value, isWire, }) => {
     var _a, _b, _c, _d;
     const theme = useTheme["default"]();
     const onClickCopy = React.useCallback(() => {
@@ -317,13 +317,15 @@ const RowItem = ({ showCopy, title, children, copyValue, value, }) => {
             display: 'flex',
             flexDirection: 'row',
             alignItems: 'center',
-            margin: '8px 0px',
+            margin: '16px 0px',
             border: `1px solid ${(_b = theme.global) === null || _b === void 0 ? void 0 : _b.cardBorder}`,
-            borderRadius: '4px',
+            marginBottom: isWire ? '0' : undefined,
+            borderBottom: isWire ? 'none' : undefined,
+            borderRadius: isWire ? '4px 4px 0 0' : '4px',
         } },
-        React__default["default"].createElement(Typography["default"], { fontSize: "16px", width: "40%" }, title),
-        React__default["default"].createElement(Typography["default"], { fontSize: "16px" }, value || children),
-        showCopy && (React__default["default"].createElement(CopyIcon__default["default"], { width: "12px", height: "12px", onClick: onClickCopy, sx: {
+        React__default["default"].createElement(Typography["default"], { fontSize: "16px", width: "40%", variant: "body1" }, title),
+        React__default["default"].createElement(Typography["default"], { fontSize: "16px", variant: "body1" }, value || children),
+        showCopy && (React__default["default"].createElement(FileCopyOutlinedIcon__default["default"], { width: "12px", height: "12px", onClick: onClickCopy, sx: {
                 color: (_d = (_c = theme.global) === null || _c === void 0 ? void 0 : _c.paymentConfirmation) === null || _d === void 0 ? void 0 : _d.copyIconColor,
                 marginLeft: '8px',
                 alignSelf: 'flex-end',

@@ -32,6 +32,7 @@ require('../../node_modules/country-state-city/lib/city.js');
 require('uuidv4');
 require('../config/paymentConfiguration.js');
 var useCreatePayment = require('../hooks/useCreatePayment.js');
+var RootContainer = require('../interfaces/ContextInterface/RootContainer.js');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -55,7 +56,7 @@ const PaymentProvider = ({ children }) => {
     }, [billingInfo, collectionData, taxes]);
     const onConfirmCreditCardPurchase = React.useCallback((deliveryAddress = '') => tslib_es6.__awaiter(void 0, void 0, void 0, function* () {
         var _a, _b, _c, _d;
-        setContainerState(ContainerStateProvider.ContainerTypes.LOADING);
+        setContainerState(RootContainer.ContainerTypes.LOADING);
         try {
             const paymentReceipt = yield makeCreditCardPurchase({ deliveryAddress, lotId, quantity: quantity !== null && quantity !== void 0 ? quantity : 1, invoiceId, billingInfo });
             debug.success('paymentData', { paymentReceipt });
@@ -81,13 +82,13 @@ const PaymentProvider = ({ children }) => {
     ]);
     const onConfirmWireTransferPurchase = React.useCallback((deliveryAddress = '') => tslib_es6.__awaiter(void 0, void 0, void 0, function* () {
         var _e;
-        setContainerState(ContainerStateProvider.ContainerTypes.LOADING);
+        setContainerState(RootContainer.ContainerTypes.LOADING);
         try {
             const paymentReceipt = yield makeWireTransferPurchase({ deliveryAddress, lotId, quantity: quantity !== null && quantity !== void 0 ? quantity : 1, invoiceId, billingInfo });
             debug.success('paymentData-wire', { paymentReceipt });
             saveToCookies(paymentReceipt.paymentData, paymentReceipt.reserveLotData);
             setPaymentInfo(paymentReceipt.paymentData);
-            setContainerState(ContainerStateProvider.ContainerTypes.CONFIRMATION);
+            setContainerState(RootContainer.ContainerTypes.CONFIRMATION);
         }
         catch (e) {
             const message = (_e = e.message) !== null && _e !== void 0 ? _e : '';

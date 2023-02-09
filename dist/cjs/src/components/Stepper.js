@@ -299,13 +299,7 @@ require('../../node_modules/@mui/material/Zoom/Zoom.js');
 require('../../node_modules/@mui/material/GlobalStyles/GlobalStyles.js');
 require('../../node_modules/@mui/base/FocusTrap/FocusTrap.js');
 var index = require('../assets/index.js');
-require('../providers/DebugProvider.js');
-require('../providers/ErrorProvider.js');
-require('../providers/BillingProvider.js');
-var ContainerStateProvider = require('../providers/ContainerStateProvider.js');
-require('../providers/UIConfigurationProvider.js');
-require('../providers/CheckoutProvider.js');
-require('../providers/PaymentProvider.js');
+var RootContainer = require('../interfaces/ContextInterface/RootContainer.js');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -314,15 +308,15 @@ var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 const steps = [
     {
         title: 'Info',
-        value: ContainerStateProvider.ContainerTypes.CHECKOUT,
+        value: RootContainer.ContainerTypes.CHECKOUT,
     },
     {
         title: 'Payment',
-        value: ContainerStateProvider.ContainerTypes.PAYMENT,
+        value: RootContainer.ContainerTypes.PAYMENT,
     },
     {
         title: 'Delivery',
-        value: ContainerStateProvider.ContainerTypes.DELIVERY,
+        value: RootContainer.ContainerTypes.DELIVERY,
     },
 ];
 const Stepper = ({ currentState }) => {

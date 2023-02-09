@@ -305,6 +305,7 @@ var ContainerStateProvider = require('../../providers/ContainerStateProvider.js'
 require('../../providers/UIConfigurationProvider.js');
 require('../../providers/CheckoutProvider.js');
 require('../../providers/PaymentProvider.js');
+var RootContainer = require('../../interfaces/ContextInterface/RootContainer.js');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -315,7 +316,7 @@ const PaymentInfoCards = ({ billingInfo }) => {
     const theme = useTheme["default"]();
     const { setContainerState } = ContainerStateProvider.useContainer();
     const handleEdit = React.useCallback(() => {
-        setContainerState(ContainerStateProvider.ContainerTypes.CHECKOUT);
+        setContainerState(RootContainer.ContainerTypes.CHECKOUT);
     }, [setContainerState]);
     return (React__default["default"].createElement(Card["default"], { sx: {
             border: `1px solid ${(_a = theme.global) === null || _a === void 0 ? void 0 : _a.cardBorder}`,

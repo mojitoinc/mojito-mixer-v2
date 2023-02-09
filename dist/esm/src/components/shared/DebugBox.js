@@ -304,12 +304,12 @@ import '../../providers/PaymentProvider.js';
 
 const SM_BORDER_RADIUS = 6;
 const DEBUG_BOX_OUTER_SX = {
-    position: "relative",
+    position: 'relative',
     borderRadius: `${SM_BORDER_RADIUS}px`,
-    backgroundColor: theme => theme.palette.grey["50"],
-    border: theme => `1px solid ${theme.palette.grey["300"]}`,
-    color: theme => theme.palette.grey["800"],
-    overflow: "hidden",
+    backgroundColor: theme => theme.palette.grey['50'],
+    border: theme => `1px solid ${theme.palette.grey['300']}`,
+    color: theme => theme.palette.grey['800'],
+    overflow: 'hidden',
 };
 const DEBUG_BOX_INNER_COMPACT_SX = {
     p: 1,
@@ -320,26 +320,25 @@ const DEBUG_BOX_INNER_SCROLL_SX = {
     p: 2,
     pt: 3,
     m: 0,
-    overflow: "scroll",
-    whiteSpace: "pre-wrap",
-    maxHeight: "256px",
+    overflow: 'scroll',
+    whiteSpace: 'pre-wrap',
+    maxHeight: '256px',
 };
 const DEBUG_LABEL_COMPACT_SX = {
-    position: "absolute",
+    position: 'absolute',
     top: 0,
     right: 0,
     borderBottomLeftRadius: `${SM_BORDER_RADIUS}px`,
     px: 0.5,
-    borderLeft: theme => `1px solid ${theme.palette.grey["100"]}`,
-    borderBottom: theme => `1px solid ${theme.palette.grey["100"]}`,
-    pointerEvents: "none",
+    borderLeft: theme => `1px solid ${theme.palette.grey['100']}`,
+    borderBottom: theme => `1px solid ${theme.palette.grey['100']}`,
+    pointerEvents: 'none',
 };
 const DEBUG_LABEL_SCROLL_SX = Object.assign(Object.assign({}, DEBUG_LABEL_COMPACT_SX), { pr: 2.5, color: '#fff', backgroundColor: '#000' });
 const DebugBox = (_a) => {
     var { compact, value, sx, children } = _a, props = __rest(_a, ["compact", "value", "sx", "children"]);
     const { debug } = useDebug('');
     const stringValue = useMemo(() => {
-        console.log('values', value);
         if (typeof value === 'object') {
             try {
                 return JSON.stringify(value);
@@ -355,7 +354,7 @@ const DebugBox = (_a) => {
             React__default.createElement(Typography, { component: "span", variant: "caption", sx: compact ? DEBUG_LABEL_COMPACT_SX : DEBUG_LABEL_SCROLL_SX }, "DEBUG"),
             React__default.createElement(Box, { component: "pre", sx: compact ? DEBUG_BOX_INNER_COMPACT_SX : DEBUG_BOX_INNER_SCROLL_SX },
                 children,
-                stringValue)))) : React__default.createElement(React__default.Fragment, null);
+                stringValue)))) : null;
 };
 
 export { DebugBox };

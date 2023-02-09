@@ -299,11 +299,7 @@ require('../../../node_modules/@mui/material/Zoom/Zoom.js');
 require('../../../node_modules/@mui/material/GlobalStyles/GlobalStyles.js');
 require('../../../node_modules/@mui/base/FocusTrap/FocusTrap.js');
 var Button = require('../../components/Button.js');
-require('../../components/Stepper.js');
-require('@mui/icons-material/ContentCopy');
-require('../../components/shared/ErrorBoundary.js');
-var index = require('../../constants/index.js');
-var usePaymentInfo = require('../../hooks/usePaymentInfo.js');
+require('@mui/icons-material/ArrowBack');
 require('../../providers/DebugProvider.js');
 require('../../providers/ErrorProvider.js');
 require('../../providers/BillingProvider.js');
@@ -311,6 +307,11 @@ require('../../providers/ContainerStateProvider.js');
 var UIConfigurationProvider = require('../../providers/UIConfigurationProvider.js');
 require('../../providers/CheckoutProvider.js');
 require('../../providers/PaymentProvider.js');
+require('../../components/Stepper.js');
+require('@mui/icons-material/ContentCopy');
+require('../../components/shared/ErrorBoundary.js');
+var index = require('../../constants/index.js');
+var usePaymentInfo = require('../../hooks/usePaymentInfo.js');
 require('openpgp');
 require('atob');
 require('btoa');
@@ -340,7 +341,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 
 const ConfirmationView = ({ paymentStatus }) => {
-    var _a, _b, _c, _d, _e, _f, _g, _h;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
     const theme = useTheme["default"]();
     const { paymentInfo, billingInfo } = usePaymentInfo["default"]();
     const { paymentConfirmation: paymentConfiguration } = UIConfigurationProvider.useUIConfiguration();
@@ -367,19 +368,21 @@ const ConfirmationView = ({ paymentStatus }) => {
                 ? 'Processed'
                 : 'Inprogress';
     }, [paymentStatus]);
-    return (React__default["default"].createElement(Box["default"], null,
+    return (React__default["default"].createElement(Box["default"], { sx: { marginTop: '24px' } },
         React__default["default"].createElement(Card["default"], { sx: {
                 padding: '24px',
                 borderRadius: '4px',
             } },
-            React__default["default"].createElement(Typography["default"], { fontWeight: "500", fontSize: "20px" }, "You're all set! We've received your order."),
-            React__default["default"].createElement(Typography["default"], { fontSize: "16px", color: (_a = theme.global) === null || _a === void 0 ? void 0 : _a.unHighlightedText }, "Order #: 1241359891385198375983798"),
-            (paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.paymentType) === index.PaymentTypes.WIRE_TRANSFER && (paymentConfiguration === null || paymentConfiguration === void 0 ? void 0 : paymentConfiguration.wireTransferInstructions),
-            (paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.paymentType) === index.PaymentTypes.CREDIT_CARD && (paymentConfiguration === null || paymentConfiguration === void 0 ? void 0 : paymentConfiguration.creditCardInstructions)),
+            React__default["default"].createElement(Typography["default"], { fontWeight: "500", fontSize: "20px", marginBottom: "8px" }, "You're all set! We've received your order."),
+            React__default["default"].createElement(Typography["default"], { fontSize: "16px", variant: "body1", color: (_a = theme.global) === null || _a === void 0 ? void 0 : _a.unHighlightedText }, "Order #: 1241359891385198375983798"),
+            (paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.paymentType) === index.PaymentTypes.WIRE_TRANSFER &&
+                (paymentConfiguration === null || paymentConfiguration === void 0 ? void 0 : paymentConfiguration.wireTransferInstructions),
+            (paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.paymentType) === index.PaymentTypes.CREDIT_CARD &&
+                (paymentConfiguration === null || paymentConfiguration === void 0 ? void 0 : paymentConfiguration.creditCardInstructions)),
         React__default["default"].createElement(Card["default"], { sx: {
-                padding: '24px',
+                padding: '24px 24px 0',
                 borderRadius: '4px',
-                margin: '24px 0px',
+                margin: '24px 0px ',
             } },
             React__default["default"].createElement(Box["default"], { display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between" },
                 React__default["default"].createElement(Typography["default"], { fontWeight: "500", fontSize: "20px" }, "Order Details"),
@@ -389,8 +392,15 @@ const ConfirmationView = ({ paymentStatus }) => {
                         borderRadius: '4px',
                     } },
                     React__default["default"].createElement(Typography["default"], { fontWeight: "700", fontSize: "12px", color: textColor }, status))),
-            React__default["default"].createElement(RowItem["default"], { title: "Delivery Address", value: paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.destinationAddress, copyValue: paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.destinationAddress, showCopy: true }),
-            (paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.paymentType) === index.PaymentTypes.WIRE_TRANSFER && (React__default["default"].createElement(Typography["default"], { variant: "body2" }, "If you selected to have your NFT(s) transferred directly to your non-custodial wallet (such as MetaMask), we will do so as soon as payment confirmation is received; otherwise, your NFT(s) will be transferred to a MultiSig wallet (also known as a custodial wallet) for safekeeping. You can view your NFT(s) on your Account page at any time.")),
+            React__default["default"].createElement(RowItem["default"], { title: "Delivery Address", value: paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.destinationAddress, copyValue: paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.destinationAddress, showCopy: true, isWire: (paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.paymentType) === index.PaymentTypes.WIRE_TRANSFER }),
+            (paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.paymentType) === index.PaymentTypes.WIRE_TRANSFER && (React__default["default"].createElement(Typography["default"], { variant: "body2", sx: {
+                    color: (_b = theme === null || theme === void 0 ? void 0 : theme.global) === null || _b === void 0 ? void 0 : _b.cardGrayedText,
+                    padding: '0 16px 16px',
+                    backgroundColor: (_c = theme === null || theme === void 0 ? void 0 : theme.global) === null || _c === void 0 ? void 0 : _c.background,
+                    border: `1px solid ${(_d = theme.global) === null || _d === void 0 ? void 0 : _d.cardBorder}`,
+                    borderTop: 0,
+                    borderRadius: '0 0 4px 4px',
+                } }, "If you selected to have your NFT(s) transferred directly to your non-custodial wallet (such as MetaMask), we will do so as soon as payment confirmation is received; otherwise, your NFT(s) will be transferred to a MultiSig wallet (also known as a custodial wallet) for safekeeping. You can view your NFT(s) on your Account page at any time.")),
             (paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.paymentType) === index.PaymentTypes.WALLET_CONNECT && (React__default["default"].createElement(RowItem["default"], { title: "Transaction Hash", value: "0x09750ad...360fdb7", copyValue: "0x09750", showCopy: true })),
             (paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.paymentType) === index.PaymentTypes.WALLET_CONNECT && (React__default["default"].createElement(RowItem["default"], { title: "Payment Method", copyValue: paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.paymentId, showCopy: true },
                 React__default["default"].createElement(Typography["default"], { fontSize: "16px" },
@@ -398,30 +408,31 @@ const ConfirmationView = ({ paymentStatus }) => {
                     React__default["default"].createElement("br", null), paymentInfo === null || paymentInfo === void 0 ? void 0 :
                     paymentInfo.paymentId))),
             (paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.paymentType) === index.PaymentTypes.WIRE_TRANSFER && (React__default["default"].createElement(RowItem["default"], { title: "Payment Method" },
-                React__default["default"].createElement(Typography["default"], { variant: "body1", fontSize: "16px" },
+                React__default["default"].createElement(Typography["default"], { variant: "body1", fontSize: "16px" }, paymentInfo === null || paymentInfo === void 0 ? void 0 :
                     paymentInfo.paymentType,
-                    React__default["default"].createElement("br", null), (_b = paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.wireData) === null || _b === void 0 ? void 0 :
-                    _b.accountNumber,
-                    React__default["default"].createElement("br", null), (_c = paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.wireData) === null || _c === void 0 ? void 0 :
-                    _c.routingNumber,
-                    React__default["default"].createElement("br", null), (_e = (_d = paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.wireData) === null || _d === void 0 ? void 0 : _d.bankAddress) === null || _e === void 0 ? void 0 :
-                    _e.country,
-                    React__default["default"].createElement("br", null), (_g = (_f = paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.wireData) === null || _f === void 0 ? void 0 : _f.bankAddress) === null || _g === void 0 ? void 0 :
-                    _g.bankName))),
-            React__default["default"].createElement(RowItem["default"], { title: "Billing Information" },
-                React__default["default"].createElement(Typography["default"], { fontSize: "16px" }, billingInfo === null || billingInfo === void 0 ? void 0 :
-                    billingInfo.name,
-                    React__default["default"].createElement("br", null), billingInfo === null || billingInfo === void 0 ? void 0 :
-                    billingInfo.state,
-                    ", ", billingInfo === null || billingInfo === void 0 ? void 0 :
-                    billingInfo.postalCode,
-                    ' ', billingInfo === null || billingInfo === void 0 ? void 0 :
-                    billingInfo.country,
-                    React__default["default"].createElement("br", null), billingInfo === null || billingInfo === void 0 ? void 0 :
-                    billingInfo.phoneNumber))),
+                    React__default["default"].createElement("br", null), (_e = paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.wireData) === null || _e === void 0 ? void 0 :
+                    _e.accountNumber,
+                    React__default["default"].createElement("br", null), (_f = paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.wireData) === null || _f === void 0 ? void 0 :
+                    _f.routingNumber,
+                    React__default["default"].createElement("br", null), (_h = (_g = paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.wireData) === null || _g === void 0 ? void 0 : _g.bankAddress) === null || _h === void 0 ? void 0 :
+                    _h.country,
+                    React__default["default"].createElement("br", null), (_k = (_j = paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.wireData) === null || _j === void 0 ? void 0 : _j.bankAddress) === null || _k === void 0 ? void 0 :
+                    _k.bankName))),
+            React__default["default"].createElement(Box["default"], { sx: { marginBottom: '24px' } },
+                React__default["default"].createElement(RowItem["default"], { title: "Billing Information" },
+                    React__default["default"].createElement(Typography["default"], { fontSize: "16px" }, billingInfo === null || billingInfo === void 0 ? void 0 :
+                        billingInfo.name,
+                        React__default["default"].createElement("br", null), billingInfo === null || billingInfo === void 0 ? void 0 :
+                        billingInfo.state,
+                        ", ", billingInfo === null || billingInfo === void 0 ? void 0 :
+                        billingInfo.postalCode,
+                        ' ', billingInfo === null || billingInfo === void 0 ? void 0 :
+                        billingInfo.country,
+                        React__default["default"].createElement("br", null), billingInfo === null || billingInfo === void 0 ? void 0 :
+                        billingInfo.phoneNumber)))),
         React__default["default"].createElement(Box["default"], { display: "flex", flexDirection: "row", justifyContent: "flex-end" },
             React__default["default"].createElement(Button["default"], { title: "Back To Marketplace", sx: {
-                    background: (_h = theme.palette.primary) === null || _h === void 0 ? void 0 : _h.main,
+                    background: (_l = theme.palette.primary) === null || _l === void 0 ? void 0 : _l.main,
                 }, onClick: paymentConfiguration === null || paymentConfiguration === void 0 ? void 0 : paymentConfiguration.onGoToMarketPlace }))));
 };
 

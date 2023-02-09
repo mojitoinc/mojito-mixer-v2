@@ -306,6 +306,7 @@ var UIConfigurationProvider = require('../../providers/UIConfigurationProvider.j
 require('../../providers/CheckoutProvider.js');
 require('../../providers/PaymentProvider.js');
 var Button = require('../../components/Button.js');
+require('@mui/icons-material/ArrowBack');
 require('../../components/Stepper.js');
 var TextInput = require('../../components/TextInput.js');
 require('@mui/icons-material/ContentCopy');

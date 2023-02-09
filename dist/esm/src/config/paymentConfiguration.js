@@ -294,7 +294,7 @@ import '../../node_modules/@mui/material/Zoom/Zoom.js';
 import '../../node_modules/@mui/material/GlobalStyles/GlobalStyles.js';
 import '../../node_modules/@mui/base/FocusTrap/FocusTrap.js';
 
-const creditCardInstructions = (React__default.createElement(Typography, { marginTop: "16px" },
+const creditCardInstructions = (React__default.createElement(Typography, { marginTop: "16px", variant: "body2" },
     "We received your payment and it should be fully processed within the next 24 hours. As soon as everything is confirmed, we'll send you an email to account@email.com with your order confirmation and receipt.",
     React__default.createElement("br", null),
     React__default.createElement("br", null),

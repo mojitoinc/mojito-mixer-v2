@@ -295,13 +295,7 @@ import '../../node_modules/@mui/material/Zoom/Zoom.js';
 import '../../node_modules/@mui/material/GlobalStyles/GlobalStyles.js';
 import '../../node_modules/@mui/base/FocusTrap/FocusTrap.js';
 import { Icons } from '../assets/index.js';
-import '../providers/DebugProvider.js';
-import '../providers/ErrorProvider.js';
-import '../providers/BillingProvider.js';
-import { ContainerTypes } from '../providers/ContainerStateProvider.js';
-import '../providers/UIConfigurationProvider.js';
-import '../providers/CheckoutProvider.js';
-import '../providers/PaymentProvider.js';
+import { ContainerTypes } from '../interfaces/ContextInterface/RootContainer.js';
 
 const steps = [
     {

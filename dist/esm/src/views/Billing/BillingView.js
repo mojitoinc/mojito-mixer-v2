@@ -302,6 +302,7 @@ import { useUIConfiguration } from '../../providers/UIConfigurationProvider.js';
 import '../../providers/CheckoutProvider.js';
 import '../../providers/PaymentProvider.js';
 import Button from '../../components/Button.js';
+import '@mui/icons-material/ArrowBack';
 import '../../components/Stepper.js';
 import TextInput from '../../components/TextInput.js';
 import '@mui/icons-material/ContentCopy';

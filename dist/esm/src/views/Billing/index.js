@@ -27,11 +27,12 @@ import { paymentMethodsQuery } from '../../queries/billing.js';
 import { useDebug } from '../../providers/DebugProvider.js';
 import '../../providers/ErrorProvider.js';
 import { useBilling } from '../../providers/BillingProvider.js';
-import { useContainer, ContainerTypes } from '../../providers/ContainerStateProvider.js';
+import { useContainer } from '../../providers/ContainerStateProvider.js';
 import '../../providers/UIConfigurationProvider.js';
 import { useCheckout } from '../../providers/CheckoutProvider.js';
 import { usePayment } from '../../providers/PaymentProvider.js';
 import BillingView from './BillingView.js';
+import { ContainerTypes } from '../../interfaces/ContextInterface/RootContainer.js';
 
 const BillingContainer = () => {
     const debug = useDebug('Billing');

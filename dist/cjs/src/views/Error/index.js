@@ -309,7 +309,6 @@ const ErrorContainer = ({ error }) => {
     const theme = useTheme["default"]();
     return (React__default["default"].createElement(Box["default"], { display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", height: "100%" },
         React__default["default"].createElement(Box["default"], { sx: {
-                backgroundColor: (_a = theme.global) === null || _a === void 0 ? void 0 : _a.background,
                 padding: '16px',
                 display: 'flex',
                 alignItems: 'center',
@@ -320,13 +319,15 @@ const ErrorContainer = ({ error }) => {
             React__default["default"].createElement("img", { alt: "loading", src: index.Icons.ErrorLoader, style: {
                     height: 200,
                 } }),
-            React__default["default"].createElement(Typography["default"], { sx: {
-                    width: '280px',
+            React__default["default"].createElement(Typography["default"], { variant: "body1", sx: {
+                    backgroundColor: (_a = theme.global) === null || _a === void 0 ? void 0 : _a.background,
+                    width: '500px',
                     textAlign: 'center',
                     fontSize: '14px',
                     border: `1px solid ${(_b = theme.global) === null || _b === void 0 ? void 0 : _b.cardBorder}`,
                     borderRadius: '4px',
-                    padding: '30px',
+                    padding: '16px',
+                    wordBreak: 'break-word',
                 } }, error))));
 };
 

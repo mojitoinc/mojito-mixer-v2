@@ -295,18 +295,20 @@ import '../../../node_modules/@mui/material/Zoom/Zoom.js';
 import '../../../node_modules/@mui/material/GlobalStyles/GlobalStyles.js';
 import '../../../node_modules/@mui/base/FocusTrap/FocusTrap.js';
 import Button from '../../components/Button.js';
+import '@mui/icons-material/ArrowBack';
+import '../../providers/DebugProvider.js';
+import '../../providers/ErrorProvider.js';
+import '../../providers/BillingProvider.js';
+import { useContainer } from '../../providers/ContainerStateProvider.js';
+import { useUIConfiguration } from '../../providers/UIConfigurationProvider.js';
+import { useCheckout } from '../../providers/CheckoutProvider.js';
+import '../../providers/PaymentProvider.js';
 import { Icons } from '../../assets/index.js';
 import '../../components/Stepper.js';
 import TextInput from '../../components/TextInput.js';
 import '@mui/icons-material/ContentCopy';
 import '../../components/shared/ErrorBoundary.js';
-import '../../providers/DebugProvider.js';
-import '../../providers/ErrorProvider.js';
-import '../../providers/BillingProvider.js';
-import { useContainer, ContainerTypes } from '../../providers/ContainerStateProvider.js';
-import { useUIConfiguration } from '../../providers/UIConfigurationProvider.js';
-import { useCheckout } from '../../providers/CheckoutProvider.js';
-import '../../providers/PaymentProvider.js';
+import { ContainerTypes } from '../../interfaces/ContextInterface/RootContainer.js';
 
 const CostBreakDown = ({ taxes, collectionData }) => {
     var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q;
@@ -319,7 +321,7 @@ const CostBreakDown = ({ taxes, collectionData }) => {
             React__default.createElement(Typography, { variant: "body2", fontSize: "14px" }, text),
             React__default.createElement(Typography, { variant: "subtitle2", fontWeight: "700" }, value)));
     };
-    return (React__default.createElement(Box, { width: "100%", height: "100%", sx: {
+    return (React__default.createElement(Box, { width: "calc(50% - 80px)", height: "100%", sx: {
             backgroundImage: `url(${Icons.background})`,
             backgroundSize: '100%',
             alignSelf: 'stretch',

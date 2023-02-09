@@ -208,6 +208,7 @@ interface MojitoCheckoutProps {
     uiConfiguration?: UIConfiguration;
     checkoutOptions: CheckoutOptions;
     theme?: ThemeConfiguration;
+    success?: boolean;
     show: boolean;
     debug?: boolean;
     sardineEnvironment?: SardineEnvironment;

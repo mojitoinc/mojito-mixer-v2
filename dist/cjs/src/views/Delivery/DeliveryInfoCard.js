@@ -306,7 +306,9 @@ var ContainerStateProvider = require('../../providers/ContainerStateProvider.js'
 require('../../providers/UIConfigurationProvider.js');
 require('../../providers/CheckoutProvider.js');
 require('../../providers/PaymentProvider.js');
+var RootContainer = require('../../interfaces/ContextInterface/RootContainer.js');
 var index$1 = require('../../constants/index.js');
+require('@mui/icons-material/ArrowBack');
 require('../../components/Stepper.js');
 var CopyButton = require('../../components/shared/CopyButton.js');
 require('../../components/shared/ErrorBoundary.js');
@@ -333,10 +335,10 @@ const DeliveryInfoCard = ({ billingInfo, paymentInfo, }) => {
     }, []);
     const handleEdit = React.useCallback((type) => {
         if (type === 'billing') {
-            setContainerState(ContainerStateProvider.ContainerTypes.CHECKOUT);
+            setContainerState(RootContainer.ContainerTypes.CHECKOUT);
         }
         else if (type === 'payment') {
-            setContainerState(ContainerStateProvider.ContainerTypes.PAYMENT);
+            setContainerState(RootContainer.ContainerTypes.PAYMENT);
         }
     }, [setContainerState]);
     return (React__default["default"].createElement(Card["default"], { sx: {

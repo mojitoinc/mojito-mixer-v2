@@ -4,7 +4,7 @@ import { CookieService } from '../service/CookieService.js';
 import { useDebug } from './DebugProvider.js';
 import { useError } from './ErrorProvider.js';
 import { useBilling } from './BillingProvider.js';
-import { useContainer, ContainerTypes } from './ContainerStateProvider.js';
+import { useContainer } from './ContainerStateProvider.js';
 import './UIConfigurationProvider.js';
 import { useCheckout } from './CheckoutProvider.js';
 import 'openpgp';
@@ -28,6 +28,7 @@ import '../../node_modules/country-state-city/lib/city.js';
 import 'uuidv4';
 import '../config/paymentConfiguration.js';
 import { useCreatePayment } from '../hooks/useCreatePayment.js';
+import { ContainerTypes } from '../interfaces/ContextInterface/RootContainer.js';
 
 const PaymentContext = createContext({});
 const PaymentProvider = ({ children }) => {

@@ -299,11 +299,7 @@ require('../../../node_modules/@mui/material/Zoom/Zoom.js');
 require('../../../node_modules/@mui/material/GlobalStyles/GlobalStyles.js');
 require('../../../node_modules/@mui/base/FocusTrap/FocusTrap.js');
 var Button = require('../../components/Button.js');
-var index = require('../../assets/index.js');
-require('../../components/Stepper.js');
-var TextInput = require('../../components/TextInput.js');
-require('@mui/icons-material/ContentCopy');
-require('../../components/shared/ErrorBoundary.js');
+require('@mui/icons-material/ArrowBack');
 require('../../providers/DebugProvider.js');
 require('../../providers/ErrorProvider.js');
 require('../../providers/BillingProvider.js');
@@ -311,6 +307,12 @@ var ContainerStateProvider = require('../../providers/ContainerStateProvider.js'
 var UIConfigurationProvider = require('../../providers/UIConfigurationProvider.js');
 var CheckoutProvider = require('../../providers/CheckoutProvider.js');
 require('../../providers/PaymentProvider.js');
+var index = require('../../assets/index.js');
+require('../../components/Stepper.js');
+var TextInput = require('../../components/TextInput.js');
+require('@mui/icons-material/ContentCopy');
+require('../../components/shared/ErrorBoundary.js');
+var RootContainer = require('../../interfaces/ContextInterface/RootContainer.js');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -327,7 +329,7 @@ const CostBreakDown = ({ taxes, collectionData }) => {
             React__default["default"].createElement(Typography["default"], { variant: "body2", fontSize: "14px" }, text),
             React__default["default"].createElement(Typography["default"], { variant: "subtitle2", fontWeight: "700" }, value)));
     };
-    return (React__default["default"].createElement(Box["default"], { width: "100%", height: "100%", sx: {
+    return (React__default["default"].createElement(Box["default"], { width: "calc(50% - 80px)", height: "100%", sx: {
             backgroundImage: `url(${index.Icons.background})`,
             backgroundSize: '100%',
             alignSelf: 'stretch',
@@ -367,7 +369,7 @@ const CostBreakDown = ({ taxes, collectionData }) => {
                         " USD"),
                     React__default["default"].createElement(Typography["default"], { variant: "body2", fontSize: "14px" }, "2.00 ETH"))),
             ((_d = uiConfiguration === null || uiConfiguration === void 0 ? void 0 : uiConfiguration.costBreakdown) === null || _d === void 0 ? void 0 : _d.showDiscountCode) &&
-                containerState !== ContainerStateProvider.ContainerTypes.CONFIRMATION && (React__default["default"].createElement(React__default["default"].Fragment, null,
+                containerState !== RootContainer.ContainerTypes.CONFIRMATION && (React__default["default"].createElement(React__default["default"].Fragment, null,
                 React__default["default"].createElement(Divider["default"], { sx: {
                         background: (_e = theme.global) === null || _e === void 0 ? void 0 : _e.border,
                         margin: '20px 0px',

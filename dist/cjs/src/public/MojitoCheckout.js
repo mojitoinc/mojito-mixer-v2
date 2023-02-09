@@ -317,7 +317,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 var Modal__default = /*#__PURE__*/_interopDefaultLegacy(Modal);
 
-const MojitoCheckout = ({ uiConfiguration = UIConfiguration.DefaultUIConfiguration, theme, show, debug = false, checkoutOptions, enableSardine = false, sardineEnvironment = 'production', }) => {
+const MojitoCheckout = ({ uiConfiguration = UIConfiguration.DefaultUIConfiguration, theme, show, debug = false, checkoutOptions, enableSardine = false, success, sardineEnvironment = 'production', }) => {
     const themes = React.useMemo(() => CreateTheme.makeTheme(theme), [theme]);
     const uiConfigurations = React.useMemo(() => UIConfiguration.makeUIConfiguration(uiConfiguration), [uiConfiguration]);
     // useEffect(() => {
@@ -329,7 +329,7 @@ const MojitoCheckout = ({ uiConfiguration = UIConfiguration.DefaultUIConfigurati
     // }, []);
     return (React__default["default"].createElement(Modal__default["default"], { ariaHideApp: false, isOpen: show, style: {
             content: {
-                width: '100%',
+                width: '100vw',
                 height: '100vh',
                 top: 0,
                 left: 0,
@@ -342,7 +342,7 @@ const MojitoCheckout = ({ uiConfiguration = UIConfiguration.DefaultUIConfigurati
             React__default["default"].createElement(ThemeProvider["default"], { theme: themes },
                 React__default["default"].createElement(CheckoutProvider.CheckoutContext.Provider, { value: checkoutOptions },
                     React__default["default"].createElement(UIConfigurationProvider.UIConfigurationContext.Provider, { value: uiConfigurations },
-                        React__default["default"].createElement(ContainerStateProvider.ContainerStateProvider, { paymentId: checkoutOptions === null || checkoutOptions === void 0 ? void 0 : checkoutOptions.paymentId },
+                        React__default["default"].createElement(ContainerStateProvider.ContainerStateProvider, { paymentId: checkoutOptions === null || checkoutOptions === void 0 ? void 0 : checkoutOptions.paymentId, success: success },
                             React__default["default"].createElement(ErrorProvider["default"], null,
                                 React__default["default"].createElement(BillingProvider.BillingProvider, null,
                                     React__default["default"].createElement(PaymentProvider.PaymentProvider, null,

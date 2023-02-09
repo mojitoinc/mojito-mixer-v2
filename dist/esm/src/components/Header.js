@@ -234,7 +234,7 @@ import '../../node_modules/@mui/material/SpeedDialAction/SpeedDialAction.js';
 import '../../node_modules/@mui/material/SpeedDialAction/speedDialActionClasses.js';
 import '../../node_modules/@mui/material/SpeedDialIcon/SpeedDialIcon.js';
 import '../../node_modules/@mui/material/SpeedDialIcon/speedDialIconClasses.js';
-import '../../node_modules/@mui/material/Stack/Stack.js';
+import Stack from '../../node_modules/@mui/material/Stack/Stack.js';
 import '../../node_modules/@mui/material/Step/Step.js';
 import '../../node_modules/@mui/material/Step/stepClasses.js';
 import '../../node_modules/@mui/material/Step/StepContext.js';
@@ -289,20 +289,41 @@ import '../../node_modules/@mui/material/Toolbar/Toolbar.js';
 import '../../node_modules/@mui/material/Toolbar/toolbarClasses.js';
 import '../../node_modules/@mui/material/Tooltip/Tooltip.js';
 import '../../node_modules/@mui/material/Tooltip/tooltipClasses.js';
-import '../../node_modules/@mui/material/Typography/Typography.js';
+import Typography from '../../node_modules/@mui/material/Typography/Typography.js';
 import '../../node_modules/@mui/material/Typography/typographyClasses.js';
 import '../../node_modules/@mui/material/Zoom/Zoom.js';
 import '../../node_modules/@mui/material/GlobalStyles/GlobalStyles.js';
 import '../../node_modules/@mui/base/FocusTrap/FocusTrap.js';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import '../providers/DebugProvider.js';
+import '../providers/ErrorProvider.js';
+import '../providers/BillingProvider.js';
+import '../providers/ContainerStateProvider.js';
+import { useUIConfiguration } from '../providers/UIConfigurationProvider.js';
+import '../providers/CheckoutProvider.js';
+import '../providers/PaymentProvider.js';
 import { Icons } from '../assets/index.js';
 
-const Header = () => {
-    var _a;
+const Header = ({ isPaymentConfirmation }) => {
+    var _a, _b, _c;
     const theme = useTheme();
+    const { paymentConfirmation } = useUIConfiguration();
     return (React__default.createElement(Box, { sx: {
             width: '100%',
             backgroundColor: (_a = theme.global) === null || _a === void 0 ? void 0 : _a.background,
         } },
+        isPaymentConfirmation && (React__default.createElement(Stack, { flexDirection: "row", alignItems: "center", sx: { cursor: 'pointer' }, marginBottom: "24px", onClick: paymentConfirmation === null || paymentConfirmation === void 0 ? void 0 : paymentConfirmation.onGoToMarketPlace },
+            React__default.createElement(ArrowBackIcon, { sx: {
+                    color: (_b = theme === null || theme === void 0 ? void 0 : theme.global) === null || _b === void 0 ? void 0 : _b.unHighlightedText,
+                    width: '17px',
+                    height: '17px',
+                } }),
+            React__default.createElement(Typography, { variant: "button", sx: {
+                    color: (_c = theme === null || theme === void 0 ? void 0 : theme.global) === null || _c === void 0 ? void 0 : _c.unHighlightedText,
+                    textTransform: 'capitalize',
+                    fontWeight: 700,
+                    fontSize: '12px',
+                } }, "Back To Marketplace"))),
         React__default.createElement(Box, { sx: {
                 width: '100%',
                 alignItems: 'center',

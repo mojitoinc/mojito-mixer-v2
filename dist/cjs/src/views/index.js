@@ -313,6 +313,7 @@ var ContainerStateProvider = require('../providers/ContainerStateProvider.js');
 require('../providers/UIConfigurationProvider.js');
 require('../providers/CheckoutProvider.js');
 require('../providers/PaymentProvider.js');
+var RootContainer = require('../interfaces/ContextInterface/RootContainer.js');
 var index$1 = require('./Loading/index.js');
 var index = require('./Error/index.js');
 require('../service/CookieService.js');
@@ -355,24 +356,24 @@ const MojitoCheckoutLayout = ({ sardineEnvironment, enableSardine, }) => {
     if (error) {
         return React__default["default"].createElement(index["default"], { error: error });
     }
-    if (containerState === ContainerStateProvider.ContainerTypes.LOADING) {
+    if (containerState === RootContainer.ContainerTypes.LOADING) {
         return React__default["default"].createElement(index$1["default"], null);
     }
     return (React__default["default"].createElement(Box["default"], { sx: {
             backgroundColor: (_a = theme.global) === null || _a === void 0 ? void 0 : _a.background,
             display: 'flex',
             width: '100%',
-            height: '100%',
+            height: '100vh',
             flexDirection: 'row',
             justifyContent: 'space-between',
         } },
-        React__default["default"].createElement(Box["default"], { width: "100%", padding: "40px" },
-            React__default["default"].createElement(Header["default"], null),
-            containerState !== ContainerStateProvider.ContainerTypes.CONFIRMATION && (React__default["default"].createElement(Stepper["default"], { currentState: containerState })),
-            containerState === ContainerStateProvider.ContainerTypes.CHECKOUT && React__default["default"].createElement(index$2["default"], null),
-            containerState === ContainerStateProvider.ContainerTypes.CONFIRMATION && (React__default["default"].createElement(index$3["default"], null)),
-            containerState === ContainerStateProvider.ContainerTypes.PAYMENT && React__default["default"].createElement(index$4.PaymentContainer, null),
-            containerState === ContainerStateProvider.ContainerTypes.DELIVERY && React__default["default"].createElement(index$5.Delivery, null)),
+        React__default["default"].createElement(Box["default"], { width: "calc(50% - 80px)", padding: "40px" },
+            React__default["default"].createElement(Header["default"], { isPaymentConfirmation: containerState === RootContainer.ContainerTypes.CONFIRMATION }),
+            containerState !== RootContainer.ContainerTypes.CONFIRMATION && (React__default["default"].createElement(Stepper["default"], { currentState: containerState })),
+            containerState === RootContainer.ContainerTypes.CHECKOUT && React__default["default"].createElement(index$2["default"], null),
+            containerState === RootContainer.ContainerTypes.CONFIRMATION && (React__default["default"].createElement(index$3["default"], null)),
+            containerState === RootContainer.ContainerTypes.PAYMENT && React__default["default"].createElement(index$4.PaymentContainer, null),
+            containerState === RootContainer.ContainerTypes.DELIVERY && React__default["default"].createElement(index$5.Delivery, null)),
         React__default["default"].createElement(index$6["default"], null)));
 };
 

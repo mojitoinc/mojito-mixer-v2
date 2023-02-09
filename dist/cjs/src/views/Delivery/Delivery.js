@@ -300,6 +300,14 @@ require('../../../node_modules/@mui/material/GlobalStyles/GlobalStyles.js');
 require('../../../node_modules/@mui/base/FocusTrap/FocusTrap.js');
 var Button = require('../../components/Button.js');
 var Dropdown = require('../../components/Dropdown.js');
+require('@mui/icons-material/ArrowBack');
+require('../../providers/DebugProvider.js');
+require('../../providers/ErrorProvider.js');
+require('../../providers/BillingProvider.js');
+require('../../providers/ContainerStateProvider.js');
+require('../../providers/UIConfigurationProvider.js');
+require('../../providers/CheckoutProvider.js');
+require('../../providers/PaymentProvider.js');
 var index$2 = require('../../assets/index.js');
 require('../../components/Stepper.js');
 var CopyButton = require('../../components/shared/CopyButton.js');
@@ -331,29 +339,32 @@ const Delivery = ({ onWalletChange, walletOptions, selectedDeliveryAddress, onCl
                   NFTs purchased by credit card can only be transferred to your multi-sig wallet and cannot be transferred 
                   out for 14 days.`
                 : `All related NFT purchase and delivery fees will be covered by ${organizationName}.`),
-            !(connect === null || connect === void 0 ? void 0 : connect.connected)
-                ? (React__default["default"].createElement(React__default["default"].Fragment, null,
-                    React__default["default"].createElement(Dropdown["default"], { value: selectedDeliveryAddress, onChange: onWalletChange, placeholder: "Select or Enter Wallet Address", sx: { marginRight: '8px' }, options: walletOptions }),
-                    selectedDeliveryAddress === index$1.NEW_MULTI_SIG && (React__default["default"].createElement(Typography["default"], { variant: "body2", sx: { marginTop: '6px', color: (_d = theme.global) === null || _d === void 0 ? void 0 : _d.cardGrayedText } }, "A new multi-sig wallet will be created for you when purchase is complete")),
-                    React__default["default"].createElement(Stack["default"], { flexDirection: "row", alignItems: "flex-end", justifyContent: "flex-end" },
-                        React__default["default"].createElement(Button["default"], { title: "Connect Wallet", textColor: (_e = theme.global) === null || _e === void 0 ? void 0 : _e.highlightedText, backgroundColor: (_f = theme.global) === null || _f === void 0 ? void 0 : _f.white, variant: "outlined", sx: { marginTop: 2 }, onClick: onClickConnectWallet }))))
-                : (React__default["default"].createElement(Box["default"], { display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between", border: `1px solid ${(_g = theme.global) === null || _g === void 0 ? void 0 : _g.cardBorder}`, padding: "16px", sx: {
-                        background: (_h = theme.global) === null || _h === void 0 ? void 0 : _h.background,
-                    } },
-                    React__default["default"].createElement(Box["default"], { display: "flex", flexDirection: "row", alignItems: "center" },
-                        React__default["default"].createElement("img", { src: index$2.Icons.walletAddress, alt: "wallet address" }),
-                        React__default["default"].createElement(Typography["default"], { fontSize: "16px", marginLeft: "12px", width: "150px", sx: {
-                                overflow: 'hidden', textOverflow: 'ellipsis',
-                            } }, connect === null || connect === void 0 ? void 0 : connect.account),
-                        React__default["default"].createElement(CopyButton["default"], { copyValue: connect === null || connect === void 0 ? void 0 : connect.account, sx: {
-                                alignSelf: 'center',
-                            } })),
-                    React__default["default"].createElement(Button["default"], { title: "Disconnect", textColor: (_j = theme.global) === null || _j === void 0 ? void 0 : _j.highlightedText, backgroundColor: (_k = theme.global) === null || _k === void 0 ? void 0 : _k.white, variant: "outlined", sx: {
-                            justifySelf: 'flex-end',
-                        }, onClick: onDisconnect })))),
+            !(connect === null || connect === void 0 ? void 0 : connect.connected) ? (React__default["default"].createElement(React__default["default"].Fragment, null,
+                React__default["default"].createElement(Dropdown["default"], { value: selectedDeliveryAddress, onChange: onWalletChange, placeholder: "Select or Enter Wallet Address", sx: { marginRight: '8px' }, options: walletOptions }),
+                selectedDeliveryAddress === index$1.NEW_MULTI_SIG && (React__default["default"].createElement(Typography["default"], { variant: "body2", sx: { marginTop: '6px', color: (_d = theme.global) === null || _d === void 0 ? void 0 : _d.cardGrayedText } }, "A new multi-sig wallet will be created for you when purchase is complete")),
+                React__default["default"].createElement(Stack["default"], { flexDirection: "row", alignItems: "flex-end", justifyContent: "flex-end" },
+                    React__default["default"].createElement(Button["default"], { title: "Connect Wallet", textColor: (_e = theme.global) === null || _e === void 0 ? void 0 : _e.highlightedText, backgroundColor: (_f = theme.global) === null || _f === void 0 ? void 0 : _f.white, variant: "outlined", sx: { marginTop: 2 }, onClick: onClickConnectWallet })))) : (React__default["default"].createElement(Box["default"], { display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between", border: `1px solid ${(_g = theme.global) === null || _g === void 0 ? void 0 : _g.cardBorder}`, padding: "16px", sx: {
+                    background: (_h = theme.global) === null || _h === void 0 ? void 0 : _h.background,
+                } },
+                React__default["default"].createElement(Box["default"], { display: "flex", flexDirection: "row", alignItems: "center" },
+                    React__default["default"].createElement("img", { src: index$2.Icons.walletAddress, alt: "wallet address" }),
+                    React__default["default"].createElement(Typography["default"], { fontSize: "16px", marginLeft: "12px", width: "150px", sx: {
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                        } }, connect === null || connect === void 0 ? void 0 : connect.account),
+                    React__default["default"].createElement(CopyButton["default"], { copyValue: connect === null || connect === void 0 ? void 0 : connect.account, sx: {
+                            alignSelf: 'center',
+                        } })),
+                React__default["default"].createElement(Button["default"], { title: "Disconnect", textColor: (_j = theme.global) === null || _j === void 0 ? void 0 : _j.highlightedText, backgroundColor: (_k = theme.global) === null || _k === void 0 ? void 0 : _k.white, variant: "outlined", sx: {
+                        justifySelf: 'flex-end',
+                    }, onClick: onDisconnect })))),
         React__default["default"].createElement(Box["default"], { display: "flex", flexDirection: "row", justifyContent: "space-between" },
             React__default["default"].createElement(FormHelperText["default"], { error: true }, error),
-            React__default["default"].createElement(Button["default"], { title: "Confirm purchase", backgroundColor: (_m = (_l = theme.global) === null || _l === void 0 ? void 0 : _l.checkout) === null || _m === void 0 ? void 0 : _m.continueButtonBackground, textColor: (_p = (_o = theme.global) === null || _o === void 0 ? void 0 : _o.checkout) === null || _p === void 0 ? void 0 : _p.continueButtonTextColor, disabled: !((connect === null || connect === void 0 ? void 0 : connect.connected) || selectedDeliveryAddress), onClick: onClickConfirmPurchase }))));
+            React__default["default"].createElement(Button["default"], { title: "Confirm purchase", backgroundColor: (_m = (_l = theme.global) === null || _l === void 0 ? void 0 : _l.checkout) === null || _m === void 0 ? void 0 : _m.continueButtonBackground, textColor: (_p = (_o = theme.global) === null || _o === void 0 ? void 0 : _o.checkout) === null || _p === void 0 ? void 0 : _p.continueButtonTextColor, disabled: !((connect === null || connect === void 0 ? void 0 : connect.connected) || selectedDeliveryAddress), onClick: onClickConfirmPurchase, sx: {
+                    '&: hover': {
+                        backgroundColor: 'rgba(102, 99, 253, 0.8)',
+                    },
+                } }))));
 };
 
 exports["default"] = Delivery;

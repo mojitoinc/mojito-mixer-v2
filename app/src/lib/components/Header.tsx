@@ -1,7 +1,7 @@
 import { Box, Stack, Typography, useTheme } from '@mui/material';
 import React from 'react';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { useUIConfiguration } from '@lib/providers';
+import { useUIConfiguration } from '../providers';
 import { Icons } from '../assets';
 import { MixTheme } from '../theme';
 

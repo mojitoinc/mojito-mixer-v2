@@ -36,6 +36,7 @@ require('../../providers/UIConfigurationProvider.js');
 var CheckoutProvider = require('../../providers/CheckoutProvider.js');
 var PaymentProvider = require('../../providers/PaymentProvider.js');
 var BillingView = require('./BillingView.js');
+var RootContainer = require('../../interfaces/ContextInterface/RootContainer.js');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -137,7 +138,7 @@ const BillingContainer = () => {
         }
         setBillingInfo(Object.assign({}, values));
         setPaymentInfo(Object.assign({ sessionKey: uuidv4.uuid() }, paymentInfo));
-        setContainerState(ContainerStateProvider.ContainerTypes.PAYMENT);
+        setContainerState(RootContainer.ContainerTypes.PAYMENT);
     }), [values, setBillingInfo, isEditing, isValid, setContainerState, paymentInfo, setPaymentInfo]);
     return (React__default["default"].createElement(BillingView["default"], { isEditing: isEditing, values: values, errors: errors, onChange: handleChange, onClickEdit: onClickEdit, onClickContinue: onClickContinue, isValidBillingForm: isValidBillingForm, isValid: isValid }));
 };
