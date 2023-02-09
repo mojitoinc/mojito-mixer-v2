@@ -29,7 +29,7 @@ export const CheckoutComponent: React.FC<CheckoutProps> = ({
       }}
       uiConfiguration={{
         paymentConfirmation: {
-          onGoToMarketPlace: onClickGoToMarketPlace,
+          onGoTo: onClickGoToMarketPlace,
         },
       }}
       show={ show }

@@ -33,7 +33,7 @@ const SuccessPage: NextPage = () => {
       show
       uiConfiguration={{
         paymentConfirmation: {
-          onGoToMarketPlace: onClickGoToMarketPlace,
+          onGoTo: onClickGoToMarketPlace,
         },
       }} />
   ) : null;

@@ -268,7 +268,7 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
             costBreakdown: { showDiscountCode: Boolean(values.discountCode ?? true) },
 
             paymentConfirmation: {
-              onGoToMarketPlace: onClickGoToMarketPlace,
+              onGoTo: onClickGoToMarketPlace,
             },
           }}
           show={ show } />
