@@ -2,17 +2,14 @@ import { ThemeProvider, GlobalStyles } from '@mui/material';
 import React, { useMemo } from 'react';
 import Modal from 'react-modal';
 import {
-  ConfigurationContext,
-  ConfigurationType,
-  DefaultConfiguration,
-  makeUIConfiguration,
-} from '../providers/ConfigurationProvider';
+  UIConfigurationContext,
+} from '../providers/UIConfigurationProvider';
 import { makeTheme, styles } from '../theme';
 import MojitoCheckoutView from '../views/index';
 import { ThemeConfiguration } from '../interfaces';
 import {
-  DeliveryContext,
-  Delivery,
+  CheckoutContext,
+  CheckoutOptions,
   ContainerStateProvider,
   BillingProvider,
   PaymentProvider,
@@ -22,6 +19,7 @@ import {
 import { ConnectProvider } from '../providers/ConnectContext';
 import { SardineEnvironment } from '../config';
 import { ProvidersInjectorProps, withProviders } from '../providers/ProvidersInjector';
+import { UIConfiguration, DefaultUIConfiguration, makeUIConfiguration } from '../config/UIConfiguration';
 
 declare global {
   interface Window {
@@ -30,8 +28,8 @@ declare global {
 }
 
 interface MojitoCheckoutProps {
-  uiConfiguration?: ConfigurationType;
-  deliveryConfiguration: Delivery;
+  uiConfiguration?: UIConfiguration;
+  checkoutOptions: CheckoutOptions;
   theme?: ThemeConfiguration;
   show: boolean;
   debug?: boolean;
@@ -39,12 +37,11 @@ interface MojitoCheckoutProps {
   enableSardine?: boolean;
 }
 const MojitoCheckout: React.FC<MojitoCheckoutProps> = ({
-// const MojitoCheckout = ({
-  uiConfiguration = DefaultConfiguration,
+  uiConfiguration = DefaultUIConfiguration,
   theme,
   show,
   debug = false,
-  deliveryConfiguration,
+  checkoutOptions,
   enableSardine = false,
   sardineEnvironment = 'production',
 }: MojitoCheckoutProps) => {
@@ -79,14 +76,12 @@ const MojitoCheckout: React.FC<MojitoCheckoutProps> = ({
           padding: 0,
         },
       }}>
-      <input style={{ width: 320, height: 50, backgroundColor: 'red' }} placeholder="enter" />
-
       <DebugProvider debug={ debug }>
         <ThemeProvider theme={ themes }>
-          <DeliveryContext.Provider value={ deliveryConfiguration }>
-            <ConfigurationContext.Provider value={ uiConfigurations }>
+          <CheckoutContext.Provider value={ checkoutOptions }>
+            <UIConfigurationContext.Provider value={ uiConfigurations }>
               <ContainerStateProvider
-                paymentId={ deliveryConfiguration?.paymentId }>
+                paymentId={ checkoutOptions?.paymentId }>
                 <ErrorProvider>
                   <BillingProvider>
                     <PaymentProvider>
@@ -98,8 +93,8 @@ const MojitoCheckout: React.FC<MojitoCheckoutProps> = ({
                   </BillingProvider>
                 </ErrorProvider>
               </ContainerStateProvider>
-            </ConfigurationContext.Provider>
-          </DeliveryContext.Provider>
+            </UIConfigurationContext.Provider>
+          </CheckoutContext.Provider>
         </ThemeProvider>
       </DebugProvider>
     </Modal>

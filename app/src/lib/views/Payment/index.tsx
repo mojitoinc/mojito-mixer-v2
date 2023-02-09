@@ -8,7 +8,7 @@ import { PaymentTypes } from '../../constants';
 import {
   ContainerTypes,
   useContainer,
-  useDelivery,
+  useCheckout,
   useBilling,
   useUIConfiguration,
   PaymentData,
@@ -20,13 +20,13 @@ import { meQuery } from '../../queries/me';
 import PaymentContainerView from './PaymentContainer';
 
 export const PaymentContainer = () => {
-  const { orgId } = useDelivery();
+  const { orgId } = useCheckout();
 
   const { setPaymentInfo, paymentInfo } = usePayment();
   const { setContainerState } = useContainer();
 
   const { billingInfo, taxes } = useBilling();
-  const { billing } = useUIConfiguration();
+  const uiConfiguration = useUIConfiguration();
 
   const [paymentType, setPaymentType] = useState<string>(
     PaymentTypes.CREDIT_CARD,
@@ -98,24 +98,6 @@ export const PaymentContainer = () => {
 
   const [creditCardList, setCreditCardList] = useState<PaymentMethod[]>([]);
 
-  useEffect(() => {
-    if (paymentData) {
-      const creditCards: PaymentMethod[] =
-        paymentData?.getPaymentMethodList?.filter(
-          (item: PaymentMethod) => item.type === 'CreditCard',
-        );
-
-      const filteredCreditCards = creditCards.filter(
-        (item, index, array) => index ===
-          array.findIndex(
-            foundItem => foundItem.last4Digit === item.last4Digit &&
-              foundItem.network === item.network,
-          ),
-      );
-      setCreditCardList(filteredCreditCards);
-    }
-  }, [paymentData]);
-
   const {
     values: wireTransferFormValues,
     handleChange: onChangeWireTransferField,
@@ -159,6 +141,32 @@ export const PaymentContainer = () => {
     validateOnChange: true,
     validateOnMount: true,
   });
+
+
+  useEffect(() => {
+    if (paymentData) {
+      const creditCards: PaymentMethod[] =
+        paymentData?.getPaymentMethodList?.filter(
+          (item: PaymentMethod) => item.type === 'CreditCard',
+        );
+
+      const filteredCreditCards = creditCards.filter(
+        (item, index, array) => index ===
+          array.findIndex(
+            foundItem => foundItem.last4Digit === item.last4Digit &&
+              foundItem.network === item.network,
+          ),
+      );
+      if (filteredCreditCards.length > 0) {
+        onSetCreditCardField('cardId', filteredCreditCards[0].id);
+      } else {
+        onSetCreditCardField('isNew', filteredCreditCards.length === 0);
+      }
+      setCreditCardList(filteredCreditCards);
+    } else {
+      onSetCreditCardField('isNew', true);
+    }
+  }, [paymentData, onSetCreditCardField]);
 
   const onSubmitCreditCard = useCallback(async () => {
     if (isValidCreditCardValues) {
@@ -278,7 +286,7 @@ export const PaymentContainer = () => {
       creditCardFormErrors={ creditCardFormErrors }
       creditCardList={ creditCardList }
       onClickDelivery={ onClickDelivery }
-      config={ billing?.paymentMethods }
+      config={ uiConfiguration?.payment }
       billingInfo={ billingInfo }
       buttonDisabled={ buttonDisabled } />
   );

@@ -63,12 +63,12 @@ export const makeTheme = (themeConfiguration?: ThemeConfiguration) => {
       required: '#CE2818',
       placeholder: themeConfiguration?.color?.placeholder ?? DefaultThemes.color?.placeholder,
       checkOutColors: {
-        ...DefaultThemes.color?.checkOutColors,
-        ...themeConfiguration?.color?.checkOutColors,
+        ...DefaultThemes.color?.checkout,
+        ...themeConfiguration?.color?.checkout,
       },
       costBreakDownColors: {
-        ...DefaultThemes.color?.costBreakDownColors,
-        ...themeConfiguration?.color?.costBreakDownColors,
+        ...DefaultThemes.color?.costBreakdown,
+        ...themeConfiguration?.color?.costBreakdown,
       },
       confirmationColors: {
         awaitingPaymentBackground: '#FCFB99',

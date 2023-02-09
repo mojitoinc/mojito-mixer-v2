@@ -27,13 +27,13 @@ const SuccessPage: NextPage = () => {
   return paymentId ? (
 
     <MojitoCheckout
-      deliveryConfiguration={{
+      checkoutOptions={{
         paymentId,
       }}
       show
       uiConfiguration={{
-        paymentConfiguration: {
-          onClickGoToMarketPlace,
+        paymentConfirmation: {
+          onGoToMarketPlace: onClickGoToMarketPlace,
         },
       }} />
   ) : null;

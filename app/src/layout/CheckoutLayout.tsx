@@ -240,7 +240,7 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
           debug
           uri={ RuntimeConfiguration.API_HOST_URL ?? '' }
           getAuthenticationToken={ getAuthenticationToken }
-          deliveryConfiguration={{
+          checkoutOptions={{
             orgId,
             lotId: values.lotId ?? '',
             quantity: parseInt(values.lotUnits ?? '1', 10),
@@ -248,25 +248,26 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
             invoiceId: values?.invoiceId,
           }}
           uiConfiguration={{
+
             billing: {
-              hideExpressCheckout: Boolean(!values.express ?? true),
-              expressCheckoutConfig: {
-                gpay: Boolean(values.expressGpay ?? true),
-                applepay: Boolean(values.expressApplepay ?? true),
-                walletConnect: Boolean(values.expressWalletconnect ?? true),
-                metaMask: Boolean(values.expressMetamask ?? true),
-              },
-              paymentMethods: {
-                creditCard: Boolean(values.creditcard ?? true),
-                gpay: Boolean(values.gpay ?? true),
-                applepay: Boolean(values.applepay ?? true),
-                walletConnect: Boolean(values.walletconnect ?? true),
-                wire: Boolean(values.wire ?? true),
-              },
-              showDiscountCode: Boolean(values.discountCode ?? true),
+              isEnableExpressCheckout: Boolean(!values.express ?? true),
+              gpay: Boolean(values.expressGpay ?? true),
+              applepay: Boolean(values.expressApplepay ?? true),
+              walletConnect: Boolean(values.expressWalletconnect ?? true),
+              metaMask: Boolean(values.expressMetamask ?? true),
             },
-            paymentConfiguration: {
-              onClickGoToMarketPlace,
+            payment: {
+              creditCard: Boolean(values.creditcard ?? true),
+              gpay: Boolean(values.gpay ?? true),
+              applepay: Boolean(values.applepay ?? true),
+              walletConnect: Boolean(values.walletconnect ?? true),
+              wire: Boolean(values.wire ?? true),
+            },
+            
+            costBreakdown: {showDiscountCode: Boolean(values.discountCode ?? true)},
+
+            paymentConfirmation: {
+              onGoToMarketPlace: onClickGoToMarketPlace,
             },
           }}
           show={ show } />

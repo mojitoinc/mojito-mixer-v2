@@ -8,7 +8,7 @@ import {
   useContainer,
   ContainerTypes,
   useUIConfiguration,
-  useDelivery,
+  useCheckout,
 } from '../../providers';
 import { MixTheme } from '../../theme';
 
@@ -19,8 +19,8 @@ interface CostBreakDownProps {
 
 const CostBreakDown = ({ taxes, collectionData }: CostBreakDownProps) => {
   const theme = useTheme<MixTheme>();
-  const { billing } = useUIConfiguration();
-  const { quantity } = useDelivery();
+  const uiConfiguration = useUIConfiguration();
+  const { quantity } = useCheckout();
   const { containerState } = useContainer();
 
   const renderTextRow = (text: string, value: string) => {
@@ -108,7 +108,7 @@ const CostBreakDown = ({ taxes, collectionData }: CostBreakDownProps) => {
             </Typography>
           </Box>
         </Box>
-        { billing?.showDiscountCode &&
+        { uiConfiguration?.costBreakdown?.showDiscountCode &&
           containerState !== ContainerTypes.CONFIRMATION && (
             <>
               <Divider

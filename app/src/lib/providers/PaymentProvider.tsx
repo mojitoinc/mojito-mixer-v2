@@ -5,7 +5,7 @@ import { CookieService } from '../service/CookieService';
 import { useDebug, useError } from '.';
 import { ContainerTypes, useContainer } from './ContainerStateProvider';
 import { useBilling } from './BillingProvider';
-import { useDelivery } from './DeliveryProvider';
+import { useCheckout } from './CheckoutProvider';
 
 
 export interface PaymentData {
@@ -39,7 +39,7 @@ export const PaymentProvider = ({ children }: { children?: React.ReactNode }) =>
   const [paymentInfo, setPaymentInfo] = useState<PaymentData>();
 
   const { billingInfo, collectionData, taxes } = useBilling();
-  const { orgId, lotId, quantity, invoiceId } = useDelivery();
+  const { orgId, lotId, quantity, invoiceId } = useCheckout();
   const { setContainerState } = useContainer();
   const { makeCreditCardPurchase, makeWireTransferPurchase } = useCreatePayment(paymentInfo, orgId);
 

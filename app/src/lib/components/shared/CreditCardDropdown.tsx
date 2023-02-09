@@ -140,7 +140,7 @@ const CreditCardDropdown = ({
               </MenuItem>
             );
           }) }
-          <MenuItem value="null">Add new card info</MenuItem>
+          <MenuItem value="true">Add new card info</MenuItem>
         </Select>
         { error && <FormHelperText error>{ error }</FormHelperText> }
       </FormControl>

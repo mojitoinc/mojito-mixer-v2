@@ -30,12 +30,12 @@ const BillingView = ({
   isValidBillingForm,
 }: BillingProps) => {
   const theme = useTheme<MixTheme>();
-  const { billing } = useUIConfiguration();
+  const uiConfiguration = useUIConfiguration();
 
   return (
     <Box width="100%">
-      { !billing?.hideExpressCheckout && (
-        <ExpressCheckoutView config={ billing?.expressCheckoutConfig } />
+      { !uiConfiguration?.billing?.isEnableExpressCheckout && (
+        <ExpressCheckoutView config={ uiConfiguration?.billing } />
       ) }
       <Card
         sx={{
