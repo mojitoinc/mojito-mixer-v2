@@ -11,7 +11,7 @@ import LoadingContainer from './Loading';
 import ErrorContainer from './Error';
 import { useSardine } from '../hooks';
 import BillingContainer from './Billing';
-import { SardineEnvironment } from '..';
+import { SardineEnvironment } from '../config';
 
 interface MojitoCheckoutProps {
   sardineEnvironment: SardineEnvironment;

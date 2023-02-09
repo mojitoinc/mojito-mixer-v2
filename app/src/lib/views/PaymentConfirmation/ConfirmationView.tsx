@@ -18,18 +18,18 @@ const ConfirmationView = ({ paymentStatus }: ConfirmationViewProps) => {
 
   const backgroundColor = useMemo(() => {
     return paymentStatus === PaymentStatus.PENDING
-      ? theme.global?.confirmationColors?.awaitingPaymentBackground
+      ? theme.global?.paymentConfirmation?.awaitingPaymentBackground
       : paymentStatus === PaymentStatus.COMPLETED
-        ? theme.global?.confirmationColors?.processedBackground
-        : theme.global?.confirmationColors?.awaitingPaymentBackground;
+        ? theme.global?.paymentConfirmation?.processedBackground
+        : theme.global?.paymentConfirmation?.awaitingPaymentBackground;
   }, [paymentStatus, theme]);
 
   const textColor = useMemo(
     () => (paymentStatus === PaymentStatus.PENDING
-      ? theme.global?.confirmationColors?.awaitingPaymentTextColor
+      ? theme.global?.paymentConfirmation?.awaitingPaymentTextColor
       : paymentStatus === PaymentStatus.COMPLETED
-        ? theme.global?.confirmationColors?.processedTextColor
-        : theme.global?.confirmationColors?.awaitingPaymentTextColor),
+        ? theme.global?.paymentConfirmation?.processedTextColor
+        : theme.global?.paymentConfirmation?.awaitingPaymentTextColor),
     [paymentStatus, theme],
   );
 

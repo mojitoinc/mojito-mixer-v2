@@ -126,11 +126,11 @@ const CostBreakDown = ({ taxes, collectionData }: CostBreakDownProps) => {
                   }} />
                 <Button
                   title="Apply"
-                  backgroundColor={ theme.global?.costBreakDownColors?.applyButtonBackground }
+                  backgroundColor={ theme.global?.costBreakdown?.applyButtonBackground }
                   sx={{
                     marginLeft: '8px',
                   }}
-                  textColor={ theme.global?.costBreakDownColors?.applyButtonTextColor } />
+                  textColor={ theme.global?.costBreakdown?.applyButtonTextColor } />
               </Box>
             </>
         ) }

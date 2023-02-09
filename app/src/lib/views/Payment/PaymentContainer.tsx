@@ -148,8 +148,8 @@ const PaymentContainer = ({
       <Box display="flex" justifyContent="flex-end">
         <Button
           title="Continue to Delivery"
-          backgroundColor={ theme.global?.checkOutColors?.continueButtonBackground }
-          textColor={ theme.global?.checkOutColors?.continueButtonTextColor }
+          backgroundColor={ theme.global?.checkout?.continueButtonBackground }
+          textColor={ theme.global?.checkout?.continueButtonTextColor }
           onClick={ onClickDelivery }
           disabled={ buttonDisabled }
           sx={{
