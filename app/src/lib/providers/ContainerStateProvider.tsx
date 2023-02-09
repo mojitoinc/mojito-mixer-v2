@@ -5,36 +5,36 @@ import React, {
   useMemo,
   useState,
 } from 'react';
+import { useDebug } from './DebugProvider';
+import { ContainerTypes } from '../interfaces/ContextInterface'
 
-export enum ContainerTypes {
-  CHECKOUT = 'CHECKOUT',
-  PAYMENT = 'PAYMENT',
-  DELIVERY = 'DELIVERY',
-  CONFIRMATION = 'CONFIRMATION',
-  LOADING = 'LOADING'
-}
 export interface Container {
   containerState: ContainerTypes;
   setContainerState: (value: ContainerTypes) => void;
 }
 const ContainerStateContext = createContext<Container>({} as Container);
 
+
 interface ContainerStateProps {
   paymentId?: string;
+  success?: boolean
   children?: React.ReactNode;
 }
 
 export const ContainerStateProvider = ({
   paymentId,
+  success,
   children,
 }: ContainerStateProps) => {
+  const debug = useDebug('ContainerStateProvider');
   const [containerState, setContainerState] = useState<ContainerTypes>(
-    ContainerTypes.CHECKOUT,
+    success ? ContainerTypes.CONFIRMATION : ContainerTypes.CHECKOUT,
   );
 
   useEffect(() => {
-    if (paymentId) setContainerState(ContainerTypes.CONFIRMATION);
-  }, [paymentId]);
+    debug.info('paymentId', { paymentId, success });
+    if (paymentId || success) setContainerState(ContainerTypes.CONFIRMATION);
+  }, [debug, paymentId, success]);
 
   const value = useMemo<Container>(() => {
     return { containerState, setContainerState };

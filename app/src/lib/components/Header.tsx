@@ -23,7 +23,7 @@ const Header = ({ isPaymentConfirmation }: HeaderProps) => {
           alignItems="center"
           sx={{ cursor: 'pointer' }}
           marginBottom="24px"
-          onClick={ paymentConfirmation?.onGoToMarketPlace }>
+          onClick={ paymentConfirmation?.onGoTo }>
           <ArrowBackIcon
             sx={{
               color: theme?.global?.unHighlightedText,

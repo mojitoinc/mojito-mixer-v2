@@ -6,10 +6,11 @@ import { Icons } from '../../assets';
 import { CollectionItem, Taxes } from '../../interfaces';
 import {
   useContainer,
-  ContainerTypes,
   useUIConfiguration,
   useCheckout,
 } from '../../providers';
+import { ContainerTypes } from '../../interfaces/ContextInterface'
+
 import { MixTheme } from '../../theme';
 
 interface CostBreakDownProps {

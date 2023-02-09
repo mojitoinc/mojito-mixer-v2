@@ -9,7 +9,9 @@ import { useCreatePayment } from "../hooks";
 import { CreditCardFormType, ReserveNow } from "../interfaces";
 import { CookieService } from "../service/CookieService";
 import { useDebug, useError } from ".";
-import { ContainerTypes, useContainer } from "./ContainerStateProvider";
+import { useContainer } from "./ContainerStateProvider";
+import { ContainerTypes } from "../interfaces/ContextInterface";
+
 import { useBilling } from "./BillingProvider";
 import { useCheckout } from "./CheckoutProvider";
 

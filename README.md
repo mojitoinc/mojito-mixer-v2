@@ -32,8 +32,10 @@
 
 <br />
 
+[Mixer v1 to Mixer v2 Migration](./MixerV2Migration.md)
 
-## Using this library in your project
+
+## Using this library in your project Mixer v2
 
 You can install this project with one of these commands:
 
@@ -151,7 +153,7 @@ import { MojitoCheckout } from '@mojitonft/mojito-mixers';
         showDiscountCode: true
       },
       paymentConfirmation: {
-        onGoToMarketPlace: handleClickGoToMarketPlace,
+        onGoTo: handleClickGoToMarketPlace,
       },
     }
     show={ show }
@@ -252,3 +254,5 @@ Note that using MUI's ThemeProvider from your project won't work as expected and
 ```
 <MojitoCheckout theme={ theme }
 ```
+## Mixer development
+[Development setup](./Development.md)

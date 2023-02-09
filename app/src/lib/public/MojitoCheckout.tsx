@@ -38,6 +38,7 @@ interface MojitoCheckoutProps {
   uiConfiguration?: UIConfiguration;
   checkoutOptions: CheckoutOptions;
   theme?: ThemeConfiguration;
+  success?: boolean;
   show: boolean;
   debug?: boolean;
   sardineEnvironment?: SardineEnvironment;
@@ -50,6 +51,7 @@ const MojitoCheckout: React.FC<MojitoCheckoutProps> = ({
   debug = false,
   checkoutOptions,
   enableSardine = false,
+  success,
   sardineEnvironment = 'production',
 }: MojitoCheckoutProps) => {
   const themes = useMemo(() => makeTheme(theme), [theme]);
@@ -87,7 +89,8 @@ const MojitoCheckout: React.FC<MojitoCheckoutProps> = ({
         <ThemeProvider theme={ themes }>
           <CheckoutContext.Provider value={ checkoutOptions }>
             <UIConfigurationContext.Provider value={ uiConfigurations }>
-              <ContainerStateProvider paymentId={ checkoutOptions?.paymentId }>
+              <ContainerStateProvider
+                paymentId={ checkoutOptions?.paymentId } success={success} > 
                 <ErrorProvider>
                   <BillingProvider>
                     <PaymentProvider>

@@ -10,7 +10,6 @@ import {
 import { PaymentMethod } from "../../interfaces";
 import {
   useContainer,
-  ContainerTypes,
   useCheckout,
   BillingFormData,
   useBilling,
@@ -19,11 +18,13 @@ import {
   useUIConfiguration,
 } from "../../providers";
 import BillingView from "./BillingView";
+import { ContainerTypes } from "../../interfaces/ContextInterface";
 
 const BillingContainer = () => {
   const debug = useDebug("Billing");
   const { orgId, collectionItemId, quantity } = useCheckout();
-  const { setBillingInfo, billingInfo, refetchTaxes } = useBilling();
+  const { setBillingInfo, billingInfo, refetchTaxes, pincodeError } =
+    useBilling();
 
   const [isEditing, setIsEditing] = useState<boolean>(true);
   const { setContainerState } = useContainer();
@@ -180,6 +181,7 @@ const BillingContainer = () => {
       onClickEdit={onClickEdit}
       onClickContinue={onClickContinue}
       isValidBillingForm={isValidBillingForm}
+      pincodeError={pincodeError}
       isValid={isValid}
     />
   );

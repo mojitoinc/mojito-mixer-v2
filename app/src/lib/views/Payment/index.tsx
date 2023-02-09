@@ -5,8 +5,8 @@ import { useLazyQuery, useQuery } from "@apollo/client";
 import { paymentMethodsQuery } from "../../queries/billing";
 import { CreditCardFormType, PaymentMethod } from "../../interfaces";
 import { PaymentTypes } from "../../constants";
+import { ContainerTypes } from "../../interfaces/ContextInterface";
 import {
-  ContainerTypes,
   useContainer,
   useCheckout,
   useBilling,

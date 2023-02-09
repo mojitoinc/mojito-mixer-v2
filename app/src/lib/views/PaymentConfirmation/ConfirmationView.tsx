@@ -166,7 +166,7 @@ const ConfirmationView = ({ paymentStatus }: ConfirmationViewProps) => {
           sx={{
             background: theme.palette.primary?.main,
           }}
-          onClick={ paymentConfiguration?.onGoToMarketPlace } />
+          onClick={ paymentConfiguration?.onGoTo } />
       </Box>
     </Box>
   );

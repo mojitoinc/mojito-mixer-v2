@@ -6,8 +6,8 @@ import {
   BillingFormData,
   PaymentData,
   useContainer,
-  ContainerTypes,
 } from '../../providers';
+import { ContainerTypes } from '../../interfaces/ContextInterface'
 import { PaymentTypes } from '../../constants';
 import { CopyButton } from '../../components';
 
