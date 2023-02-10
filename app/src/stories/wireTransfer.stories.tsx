@@ -5,26 +5,12 @@ import PaymentContainer from '@views/Payment/PaymentContainer';
 export const WireTransferStories = () => {
   return (
     <PaymentContainer
-      creditCardFormErrors={{}}
-      creditCardFormValues={{
-        isNew: false,
-      }}
       billingInfo={{}}
       creditCardList={ [] }
-      onChangeCreditCardField={ () => undefined }
-      onSetCreditCardField={ async () => undefined }
-      onChangeWireTransferField={ () => undefined }
       onChoosePaymentType={ () => undefined }
-      onSetWireTransferField={ async () => undefined }
-      onClickDelivery={ () => undefined }
+      onSubmitCreditCard={ () => undefined }
+      onSubmitWireTransfer={ () => undefined }
       paymentType={ PaymentTypes.WIRE_TRANSFER }
-      wireTransferFormErrors={{}}
-      wireTransferFormValues={{
-        aba: '',
-        accountNumber: '',
-        bankCountry: 'US',
-        bankName: 'Bank of America',
-      }}
       config={{
         gpay: true,
         applepay: true,
@@ -32,11 +18,11 @@ export const WireTransferStories = () => {
         wire: true,
         creditCard: true,
       }}
-      buttonDisabled={ false }
       paymentMethodLimit={{
         exceedCreditCard: true,
         exceedWire: true,
-      }} />
+      }}
+      paymentInfo={{}} />
   );
 };
 const stories = {

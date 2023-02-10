@@ -19,7 +19,8 @@ export const BillingViewStories = () => {
         },
       ] }
       connect={{} as ConnectType}
-      onDisconnect={ () => undefined } />
+      onDisconnect={ () => undefined }
+      isLoading={ false } />
   );
 };
 const stories = {
