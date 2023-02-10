@@ -33,7 +33,7 @@ export const WireTransferStories = () => {
         creditCard: true,
       }}
       buttonDisabled={ false }
-      PaymentMethodLimit={{
+      paymentMethodLimit={{
         exceedCreditCard: true,
         exceedWire: true,
       }} />
