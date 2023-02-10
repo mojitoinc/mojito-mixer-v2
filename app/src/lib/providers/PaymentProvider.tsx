@@ -32,9 +32,9 @@ export interface PaymentData {
   sessionKey?: string;
 }
 
-export interface ShowPaymentMethods {
-  showCreditCard?: boolean;
-  showWire?: boolean;
+export interface PaymentMethodLimit {
+  exceedCreditCard?: boolean;
+  exceedWire?: boolean;
 }
 
 export interface Payment {
@@ -42,9 +42,9 @@ export interface Payment {
   setPaymentInfo: React.Dispatch<React.SetStateAction<PaymentData | undefined>>;
   onConfirmCreditCardPurchase: (deliveryAddress: string) => void;
   onConfirmWireTransferPurchase: (deliveryAddress: string) => void;
-  paymentMethods?: ShowPaymentMethods;
+  paymentMethods?: PaymentMethodLimit;
   setPaymentMethods: React.Dispatch<
-    React.SetStateAction<ShowPaymentMethods | undefined>
+    React.SetStateAction<PaymentMethodLimit | undefined>
   >;
 }
 const PaymentContext = createContext<Payment>({} as Payment);
@@ -57,7 +57,7 @@ export const PaymentProvider = ({
   const debug = useDebug('PaymentProvider');
   const { setError } = useError();
   const [paymentInfo, setPaymentInfo] = useState<PaymentData>();
-  const [paymentMethods, setPaymentMethods] = useState<ShowPaymentMethods>();
+  const [paymentMethods, setPaymentMethods] = useState<PaymentMethodLimit>();
   const { billingInfo, collectionData, taxes } = useBilling();
   const { orgId, lotId, quantity, invoiceId } = useCheckout();
   const { setContainerState } = useContainer();

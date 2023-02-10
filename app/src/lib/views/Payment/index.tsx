@@ -288,6 +288,6 @@ export const PaymentContainer = () => {
       config={ uiConfiguration?.payment }
       billingInfo={ billingInfo }
       buttonDisabled={ buttonDisabled }
-      showPaymentMethods={ paymentMethods } />
+      paymentMethodLimit={ paymentMethods } />
   );
 };

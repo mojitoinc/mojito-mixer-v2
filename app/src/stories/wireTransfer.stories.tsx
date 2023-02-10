@@ -33,9 +33,9 @@ export const WireTransferStories = () => {
         creditCard: true,
       }}
       buttonDisabled={ false }
-      showPaymentMethods={{
-        showCreditCard: true,
-        showWire: true,
+      PaymentMethodLimit={{
+        exceedCreditCard: true,
+        exceedWire: true,
       }} />
   );
 };

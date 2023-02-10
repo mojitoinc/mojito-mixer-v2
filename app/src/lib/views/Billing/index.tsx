@@ -46,10 +46,10 @@ const BillingContainer = () => {
       !validpaymentMethodLoading
     ) {
       setPaymentMethods({
-        showCreditCard:
+        exceedCreditCard:
           !validPaymnetMethods?.validatePaymentLimit?.creditCard
             ?.isLimitExceeded,
-        showWire:
+        exceedWire:
           !validPaymnetMethods?.validatePaymentLimit?.wire?.isLimitExceeded,
       });
     }
