@@ -65,6 +65,32 @@ const BillingForm = ({
             </Typography>
           </Box>
         ) }
+        <Box display="flex" justifyContent="space-between">
+          <TextInput
+            value={ values?.firstName }
+            onChange={ onChange('firstName') }
+            error={ errors?.firstName }
+            title="First name"
+            sx={{
+              marginTop: '16px',
+              width: '48%',
+            }}
+            required
+            placeholder="First name"
+            type="text" />
+          <TextInput
+            value={ values?.lastName }
+            onChange={ onChange('lastName') }
+            error={ errors?.lastName }
+            title="Last name"
+            sx={{
+              marginTop: '16px',
+              width: '48%',
+            }}
+            required
+            placeholder="Last name"
+            type="text" />
+        </Box>
         <Box display="flex" flexDirection="row" marginTop="16px">
           <Dropdown
             value={ values?.country }

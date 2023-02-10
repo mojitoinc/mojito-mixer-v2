@@ -14,7 +14,7 @@ import {
   DropdownOptions,
   CopyButton,
 } from '../../components';
-import { BillingFormData, PaymentData } from '../../providers';
+import { BillingFormData, PaymentData, useUIConfiguration } from '../../providers';
 import { PaymentTypes } from '../../constants';
 import { ConnectType } from '../../providers/ConnectContext';
 import { Icons } from '../../assets';
@@ -49,6 +49,7 @@ const Delivery = ({
   error,
 }: DeliveryProps) => {
   const theme = useTheme<MixTheme>();
+  const { delivery } = useUIConfiguration();
 
   const isCreditCard = useMemo(
     () => paymentInfo?.paymentType === PaymentTypes.CREDIT_CARD,
@@ -91,18 +92,22 @@ const Delivery = ({
                 complete
               </Typography>
             ) }
-            <Stack
-              flexDirection="row"
-              alignItems="flex-end"
-              justifyContent="flex-end">
-              <Button
-                title="Connect Wallet"
-                textColor={ theme.global?.highlightedText }
-                backgroundColor={ theme.global?.white }
-                variant="outlined"
-                sx={{ marginTop: 2 }}
-                onClick={ onClickConnectWallet } />
-            </Stack>
+            {
+              delivery?.showConnectWallet && (
+              <Stack
+                flexDirection="row"
+                alignItems="flex-end"
+                justifyContent="flex-end">
+                <Button
+                  title="Connect Wallet"
+                  textColor={ theme.global?.highlightedText }
+                  backgroundColor={ theme.global?.white }
+                  variant="outlined"
+                  sx={{ marginTop: 2 }}
+                  onClick={ onClickConnectWallet } />
+              </Stack>
+              )
+}
           </>
         ) : (
           <Box

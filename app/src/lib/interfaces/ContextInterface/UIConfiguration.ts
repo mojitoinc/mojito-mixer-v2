@@ -1,4 +1,9 @@
 export interface UIConfiguration {
+    global?: {
+      logoSrc?: string;
+      loaderImageSrc?: string;
+      errorImageSrc?: string;
+    };
     billing?: {
       isEnableExpressCheckout?: boolean;
       gpay?: boolean;
@@ -20,5 +25,8 @@ export interface UIConfiguration {
       wireTransferInstructions?: JSX.Element;
       creditCardInstructions?: JSX.Element;
       onGoTo?: () => void;
-  };
+    };
+    delivery?: {
+      showConnectWallet?: boolean;
+    }
 }

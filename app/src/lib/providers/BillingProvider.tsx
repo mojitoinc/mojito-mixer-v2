@@ -24,6 +24,8 @@ export interface BillingFormData {
   phoneNumber?: string;
   street1?: string;
   name?: string;
+  firstName?: string;
+  lastName?: string;
 }
 
 export interface Billing {
@@ -33,6 +35,7 @@ export interface Billing {
   taxes: Taxes;
   pincodeError?: boolean;
   refetchTaxes:(val:BillingFormData)=>void;
+  taxablePrice?: number;
 }
 const BillingContext = createContext<Billing>({} as Billing);
 
@@ -102,10 +105,10 @@ export const BillingProvider = ({ children }: { children?: React.ReactNode }) =>
   }, [collectionItemId, fetchCollection]);
 
   useEffect(() => {
-    if (billingInfo && orgId && taxablePrice) {
+    if (billingInfo && orgId && taxablePrice && vertexEnabled) {
       refetchTaxes(billingInfo);
     }
-  }, [billingInfo, taxablePrice, orgId, taxQuote, refetchTaxes]);
+  }, [billingInfo, taxablePrice, orgId, taxQuote, refetchTaxes, vertexEnabled]);
 
   const taxes: Taxes = useMemo<Taxes>(() => {
     return taxQuoteData?.getTaxQuote;
@@ -120,8 +123,9 @@ export const BillingProvider = ({ children }: { children?: React.ReactNode }) =>
       taxes,
       refetchTaxes,
       pincodeError,
+      taxablePrice,
     };
-  }, [billingInfo, setBillingInfo, collectionData, taxes, refetchTaxes, pincodeError]);
+  }, [billingInfo, setBillingInfo, collectionData, taxes, refetchTaxes, pincodeError, taxablePrice]);
 
   return (
     <BillingContext.Provider value={ value }>{ children }</BillingContext.Provider>

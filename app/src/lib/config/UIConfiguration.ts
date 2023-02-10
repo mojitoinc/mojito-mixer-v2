@@ -1,7 +1,13 @@
+import { Icons } from '../assets';
 import { wireTransferInstructions, creditCardInstructions } from '.';
 import { UIConfiguration } from '../interfaces/ContextInterface';
 
 export const DefaultUIConfiguration: UIConfiguration = {
+  global: {
+    logoSrc: Icons.logo,
+    loaderImageSrc: Icons.loading,
+    errorImageSrc: Icons.ErrorLoader,
+  },
   billing: {
     isEnableExpressCheckout: true,
     gpay: true,
@@ -24,11 +30,18 @@ export const DefaultUIConfiguration: UIConfiguration = {
     creditCardInstructions,
     onGoTo: () => undefined,
   },
+  delivery: {
+    showConnectWallet: true,
+  },
 };
 
 
 export const makeUIConfiguration = (configurations: UIConfiguration) => {
   return {
+    global: {
+      ...DefaultUIConfiguration.global,
+      ...configurations.global,
+    },
     billing: {
       ...DefaultUIConfiguration?.billing,
       ...configurations?.billing,
@@ -44,6 +57,10 @@ export const makeUIConfiguration = (configurations: UIConfiguration) => {
     paymentConfirmation: {
       ...DefaultUIConfiguration.paymentConfirmation,
       ...configurations.paymentConfirmation,
+    },
+    delivery: {
+      ...DefaultUIConfiguration.delivery,
+      ...configurations.delivery,
     },
   } as UIConfiguration;
 };
