@@ -88,41 +88,13 @@ export const CreditCardForm = ({
         onChange={ handleCardChange }
         error={ errors?.cardId }
         title="Card info"
-        sx={{ marginRight: '8px' }}
+        sx={{ marginRight: '8px',marginTop:2 }}
         options={ creditCardList } />
 
       { !billingInfo?.phoneNumber && (
         <FormHelperText error>
           Phone number is mandatory for credit card payment
         </FormHelperText>
-      ) }
-      { isNewCreditCard && (
-        <Box display="flex" justifyContent="space-between">
-          <TextInput
-            value={ values?.firstName }
-            onChange={ handleChange('firstName') }
-            error={ errors?.firstName }
-            title="First name"
-            sx={{
-              marginTop: '16px',
-              width: '48%',
-            }}
-            required
-            placeholder="First name"
-            type="text" />
-          <TextInput
-            value={ values?.lastName }
-            onChange={ handleChange('lastName') }
-            error={ errors?.lastName }
-            title="Last name"
-            sx={{
-              marginTop: '16px',
-              width: '48%',
-            }}
-            required
-            placeholder="Last name"
-            type="text" />
-        </Box>
       ) }
       { isNewCreditCard && (
         <TextInput

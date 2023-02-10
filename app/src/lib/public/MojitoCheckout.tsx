@@ -12,6 +12,8 @@ import {
   PaymentProvider,
   DebugProvider,
   ErrorProvider,
+  EventContext,
+  EventConfig
 } from '../providers';
 import { ConnectProvider } from '../providers/ConnectContext';
 import { SardineEnvironment } from '../config';
@@ -43,6 +45,7 @@ interface MojitoCheckoutProps {
   debug?: boolean;
   sardineEnvironment?: SardineEnvironment;
   enableSardine?: boolean;
+  events?: EventConfig
 }
 const MojitoCheckout: React.FC<MojitoCheckoutProps> = ({
   uiConfiguration = DefaultUIConfiguration,
@@ -53,6 +56,7 @@ const MojitoCheckout: React.FC<MojitoCheckoutProps> = ({
   enableSardine = false,
   success,
   sardineEnvironment = 'production',
+  events = {}
 }: MojitoCheckoutProps) => {
   const themes = useMemo(() => makeTheme(theme), [theme]);
 
@@ -89,22 +93,24 @@ const MojitoCheckout: React.FC<MojitoCheckoutProps> = ({
         <ThemeProvider theme={ themes }>
           <CheckoutContext.Provider value={ checkoutOptions }>
             <UIConfigurationContext.Provider value={ uiConfigurations }>
+            <EventContext.Provider value={ events }>
               <ContainerStateProvider
                 paymentId={ checkoutOptions?.paymentId }
                 success={ success }>
                 <ErrorProvider>
-                  <BillingProvider>
-                    <PaymentProvider>
-                      <ConnectProvider>
-                        <GlobalStyles styles={ styles } />
-                        <MojitoCheckoutView
-                          enableSardine={ enableSardine }
-                          sardineEnvironment={ sardineEnvironment } />
-                      </ConnectProvider>
-                    </PaymentProvider>
-                  </BillingProvider>
+                    <BillingProvider>
+                      <PaymentProvider>
+                        <ConnectProvider>
+                          <GlobalStyles styles={ styles } />
+                          <MojitoCheckoutView
+                            enableSardine={ enableSardine }
+                            sardineEnvironment={ sardineEnvironment } />
+                        </ConnectProvider>
+                      </PaymentProvider>
+                    </BillingProvider>
                 </ErrorProvider>
               </ContainerStateProvider>
+              </EventContext.Provider>
             </UIConfigurationContext.Provider>
           </CheckoutContext.Provider>
         </ThemeProvider>

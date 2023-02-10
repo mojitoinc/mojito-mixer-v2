@@ -192,6 +192,8 @@ export const useCreatePayment = (paymentInfo: PaymentData | undefined, orgId: st
     delete copiedBillingDetails.street1;
     delete copiedBillingDetails.email;
     delete copiedBillingDetails.phoneNumber;
+    delete copiedBillingDetails.firstName;
+    delete copiedBillingDetails.lastName;
     inputData.paymentType = 'Wire';
     inputData.wireData = {
       ...paymentInfo?.wireData,

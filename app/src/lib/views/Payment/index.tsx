@@ -70,16 +70,6 @@ export const PaymentContainer = () => {
         .min(12, 'Please enter valid card number'),
       otherwise: Yup.string(),
     }),
-    firstName: Yup.string().when('isNew', {
-      is: true,
-      then: Yup.string().required('Please enter first name'),
-      otherwise: Yup.string(),
-    }),
-    lastName: Yup.string().when('isNew', {
-      is: true,
-      then: Yup.string().required('Please enter last name'),
-      otherwise: Yup.string(),
-    }),
     cardId: Yup.string().when('isNew', {
       is: (isNew?: boolean) => !isNew,
       then: Yup.string().required('Please select a card'),
@@ -114,7 +104,6 @@ export const PaymentContainer = () => {
     validationSchema,
     onSubmit: () => undefined,
     validateOnChange: true,
-    validateOnMount: true,
   });
 
   const {
@@ -133,13 +122,10 @@ export const PaymentContainer = () => {
       cvv: paymentInfo?.creditCardData?.cvv ?? '',
       expiry: paymentInfo?.creditCardData?.expiry ?? '',
       save: paymentInfo?.creditCardData?.save ?? false,
-      firstName: paymentInfo?.creditCardData?.firstName ?? '',
-      lastName: paymentInfo?.creditCardData?.lastName ?? '',
     } as CreditCardFormType,
     validationSchema: creditCardSchema,
     onSubmit: () => undefined,
     validateOnChange: true,
-    validateOnMount: true,
   });
 
   useEffect(() => {

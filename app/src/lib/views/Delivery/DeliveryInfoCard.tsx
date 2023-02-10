@@ -159,7 +159,7 @@ export const DeliveryInfoCard = ({
               </Typography>
               <Typography variant="body2" sx={{ marginBottom: '4px' }}>
                 { paymentInfo?.creditCardData?.cardData?.billingDetails?.name ??
-                  `${ paymentInfo?.creditCardData?.firstName } ${ paymentInfo?.creditCardData?.lastName }` }
+                  `${ billingInfo?.firstName } ${ billingInfo?.lastName }` }
               </Typography>
               <Stack flexDirection="row">
                 <img

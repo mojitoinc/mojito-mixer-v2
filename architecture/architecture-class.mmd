@@ -3,6 +3,7 @@ MojitoCheckout --> UserInfo
 MojitoCheckout --> CheckoutOptions
 MojitoCheckout --> MojitoTheme
 MojitoCheckout --> MojitoUIConfiguration 
+MojitoCheckout --> Events 
 
 
 class MojitoCheckout{
@@ -14,6 +15,7 @@ class MojitoCheckout{
     -Boolean debug
     -Boolean enableSardine
     -String sardineEnvironment
+    -Events events
 }
 class UserInfo {
     -String name
@@ -37,4 +39,9 @@ class CheckoutOptions {
   -String collectionItemId
   -String invoiceId
   -Boolean vertexEnabled
+}
+class Events {
+    -Event onError
+    -Event onEvent
+    -Event onCatch
 }

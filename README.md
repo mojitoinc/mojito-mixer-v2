@@ -121,6 +121,10 @@ import { MojitoCheckout } from '@mojitonft/mojito-mixers';
   const handleClickGoToMarketPlace = useCallback(async () => {
   }, []);
 
+  const onEvent = (e:string)=>{
+    console.log("EVENT",e)
+  }
+
   
   <MojitoCheckout
     uri={ undefined }
@@ -134,7 +138,17 @@ import { MojitoCheckout } from '@mojitonft/mojito-mixers';
       discountCode: 'ZZTO',
     }}
     theme={ theme }
+    events={
+      onEvent:onEvent,
+      onCatch:onCatch,
+      onError:onError,
+    }
     uiConfiguration={
+      global:{
+        logoSrc: require('./logo.svg),
+        loaderImageSrc: require('./loading.svg),
+        errorImageSrc: require('./error.svg),
+      }
       billing: {
         isEnableExpressCheckout: true,
         gpay: true,
@@ -154,6 +168,9 @@ import { MojitoCheckout } from '@mojitonft/mojito-mixers';
       },
       paymentConfirmation: {
         onGoTo: handleClickGoToMarketPlace,
+      },
+      delivery: {
+        showConnectWallet:true,
       },
     }
     show={ show }

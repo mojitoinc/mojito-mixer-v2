@@ -1,8 +1,11 @@
 import { Box, Typography } from '@mui/material';
 import React from 'react';
 import { Icons } from '../../assets';
+import { useUIConfiguration } from '../../providers';
 
 const LoadingContainer = () => {
+  const { global } = useUIConfiguration()
+
   return (
     <Box
       display="flex"
@@ -10,7 +13,7 @@ const LoadingContainer = () => {
       justifyContent="center"
       flexDirection="column"
       height="100%">
-      <img alt="loading" src={ Icons.loading } style={{}} />
+      <img alt="loading" src={ global?.loaderImageSrc } style={{}} />
       <Typography
         sx={{
           width: '280px',

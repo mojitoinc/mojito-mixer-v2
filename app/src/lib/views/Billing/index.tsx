@@ -21,7 +21,7 @@ import { ContainerTypes } from '../../interfaces/ContextInterface';
 
 const BillingContainer = () => {
   const debug = useDebug('Billing');
-  const { orgId, collectionItemId, quantity } = useCheckout();
+  const { orgId, collectionItemId, quantity,vertexEnabled } = useCheckout();
   const { setBillingInfo, billingInfo, refetchTaxes, pincodeError } =
     useBilling();
 
@@ -76,6 +76,8 @@ const BillingContainer = () => {
       .required('Please enter email'),
     phoneNumber: Yup.string().required('Please enter a mobile number'),
     street1: Yup.string().required('Please enter your address'),
+    firstName: Yup.string().required('Please enter first name'),
+    lastName: Yup.string().required('Please enter last name'),
   });
 
   const { values, errors, handleChange, setValues, isValid } = useFormik({
@@ -88,6 +90,8 @@ const BillingContainer = () => {
       phoneNumber: '',
       street1: '',
       name: '',
+      firstName:'',
+      lastName:'',
     } as BillingFormData,
     onSubmit: () => undefined,
     validationSchema: schema,
@@ -107,9 +111,10 @@ const BillingContainer = () => {
   const setBillingValues = useCallback(async () => {
     const paymentItem: PaymentMethod = paymentData?.getPaymentMethodList?.find(
       (item: PaymentMethod) => item.type === 'CreditCard' && item.billingDetails,
-    );
+    ) ?? paymentData?.getPaymentMethodList[0];
     if (paymentItem) {
       setIsEditing(false);
+      const name = paymentItem?.billingDetails?.name?.split(" ");
       const billingValues: BillingFormData = {
         city: billingInfo?.city ?? paymentItem?.billingDetails?.city,
         country: billingInfo?.country ?? paymentItem?.billingDetails?.country,
@@ -121,6 +126,8 @@ const BillingContainer = () => {
           billingInfo?.phoneNumber ?? paymentItem?.metadata?.phoneNumber,
         street1: billingInfo?.street1 ?? paymentItem?.billingDetails?.address1,
         name: billingInfo?.name ?? paymentItem?.billingDetails?.name,
+        firstName: billingInfo?.firstName ?? name?.[0],
+        lastName: billingInfo?.lastName ?? name?.[1],
       };
       setValues(billingValues);
     } else {
@@ -140,12 +147,14 @@ const BillingContainer = () => {
   }, []);
 
   useEffect(() => {
-    if (isValidBillingForm) {
+    if (isValidBillingForm ) {
+      console.log("isValidBillingForm",isValidBillingForm,values)
+      if(vertexEnabled)
       refetchTaxes(values);
     } else {
       setIsEditing(true);
     }
-  }, [values, refetchTaxes, isValidBillingForm]);
+  }, [values, refetchTaxes, isValidBillingForm,vertexEnabled]);
 
   const onClickContinue = useCallback(async () => {
     if (isEditing && !isValid) return;
@@ -154,7 +163,9 @@ const BillingContainer = () => {
       const isValidEmail = emailRegex.test(values?.email ?? '');
       if (!isValidEmail) return;
     }
-    setBillingInfo({ ...values });
+    setBillingInfo({ ...values,
+    name:values?.firstName+' '+values?.lastName
+    });
 
     setPaymentInfo({
       sessionKey: uuid(),
