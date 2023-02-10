@@ -7,6 +7,7 @@ import {
   Stack,
   FormHelperText,
 } from '@mui/material';
+import Modal from 'react-modal';
 import { MixTheme } from '../../theme';
 import {
   Button,
@@ -20,6 +21,7 @@ import { ConnectType } from '../../providers/ConnectContext';
 import { Icons } from '../../assets';
 import { DeliveryInfoCard } from './DeliveryInfoCard';
 import { NEW_MULTI_SIG } from './index';
+import LoadingContainer from '../Loading';
 
 interface DeliveryProps {
   onWalletChange: (val: string) => void;
@@ -33,6 +35,7 @@ interface DeliveryProps {
   connect: ConnectType;
   onDisconnect: () => void;
   error?: string;
+  isLoading: boolean;
 }
 
 const Delivery = ({
@@ -47,6 +50,7 @@ const Delivery = ({
   connect,
   onDisconnect,
   error,
+  isLoading,
 }: DeliveryProps) => {
   const theme = useTheme<MixTheme>();
   const { delivery } = useUIConfiguration();
@@ -164,6 +168,23 @@ const Delivery = ({
             },
           }} />
       </Box>
+
+      <Modal
+        ariaHideApp={ false }
+        isOpen={ isLoading }
+        style={{
+          content: {
+            width: '100vw',
+            height: '100vh',
+            top: 0,
+            left: 0,
+            bottom: 0,
+            right: 0,
+            padding: 0,
+          },
+        }}>
+        <LoadingContainer />
+      </Modal>
     </>
   );
 };

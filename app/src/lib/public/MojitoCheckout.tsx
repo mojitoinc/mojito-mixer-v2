@@ -4,7 +4,7 @@ import Modal from 'react-modal';
 import { UIConfigurationContext } from '../providers/UIConfigurationProvider';
 import { makeTheme, styles } from '../theme';
 import MojitoCheckoutView from '../views/index';
-import { ThemeConfiguration } from '../interfaces';
+import { MojitoThemeConfiguration } from '../interfaces';
 import {
   CheckoutContext,
   ContainerStateProvider,
@@ -26,8 +26,8 @@ import {
   makeUIConfiguration,
 } from '../config/UIConfiguration';
 import {
-  UIConfiguration,
   CheckoutOptions,
+  MojitoUIConfiguration,
 } from '../interfaces/ContextInterface';
 
 declare global {
@@ -37,9 +37,9 @@ declare global {
 }
 
 interface MojitoCheckoutProps {
-  uiConfiguration?: UIConfiguration;
+  uiConfiguration?: MojitoUIConfiguration;
   checkoutOptions: CheckoutOptions;
-  theme?: ThemeConfiguration;
+  theme?: MojitoThemeConfiguration;
   success?: boolean;
   show: boolean;
   debug?: boolean;
