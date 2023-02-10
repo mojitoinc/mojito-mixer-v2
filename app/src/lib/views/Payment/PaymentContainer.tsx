@@ -34,6 +34,43 @@ interface PaymentContainerProps {
   onSubmitCreditCard: (values : CreditCardFormType)=>void
 }
 
+const validationSchema = Yup.object().shape({
+  accountNumber: Yup.string()
+    .matches(/^[\d\s]+$/, 'Invalid account number')
+    .min(9, 'Invalid account number')
+    .required('Please enter account number'),
+  aba: Yup.string()
+    .matches(/^[\d\s]+$/, 'Invalid aba')
+    .min(10, 'Invalid aba')
+    .required('Please enter aba'),
+  bankCountry: Yup.string().required('Please select bank country'),
+  bankName: Yup.string().required('Please select bank name'),
+});
+
+const creditCardSchema = Yup.object().shape({
+  isNew: Yup.boolean(),
+  expiry: Yup.string()
+    .matches(/^(0[1-9]|1[0-2])\/?([0-9]{2})$/, 'Invalid expiry')
+    .required('Please enter expiry')
+    .test('is-expiry', 'Invalid expiry', value => moment(value, 'MM/YY').isValid() && moment().isBefore(moment(value, 'MM/YY'))),
+  cvv: Yup.string()
+    .matches(/^[\d\s]+$/, 'Invalid account number')
+    .min(3, 'Invalid CVV')
+    .required('Please enter CVV'),
+  cardNumber: Yup.string().when('isNew', {
+    is: true,
+    then: Yup.string()
+      .required('Please enter card number')
+      .min(12, 'Please enter valid card number'),
+    otherwise: Yup.string(),
+  }),
+  cardId: Yup.string().when('isNew', {
+    is: (isNew?: boolean) => !isNew,
+    then: Yup.string().required('Please select a card'),
+    otherwise: Yup.string().nullable(),
+  }),
+});
+
 const PaymentContainer = ({
   paymentType,
   onChoosePaymentType,
@@ -47,43 +84,6 @@ const PaymentContainer = ({
   onSubmitWireTransfer,
 }: PaymentContainerProps) => {
   const theme = useTheme<MixTheme>();
-
-  const validationSchema = Yup.object().shape({
-    accountNumber: Yup.string()
-      .matches(/^[\d\s]+$/, 'Invalid account number')
-      .min(9, 'Invalid account number')
-      .required('Please enter account number'),
-    aba: Yup.string()
-      .matches(/^[\d\s]+$/, 'Invalid aba')
-      .min(10, 'Invalid aba')
-      .required('Please enter aba'),
-    bankCountry: Yup.string().required('Please select bank country'),
-    bankName: Yup.string().required('Please select bank name'),
-  });
-
-  const creditCardSchema = Yup.object().shape({
-    isNew: Yup.boolean(),
-    expiry: Yup.string()
-      .matches(/^(0[1-9]|1[0-2])\/?([0-9]{2})$/, 'Invalid expiry')
-      .required('Please enter expiry')
-      .test('is-expiry', 'Invalid expiry', value => moment(value, 'MM/YY').isValid() && moment().isBefore(moment(value, 'MM/YY'))),
-    cvv: Yup.string()
-      .matches(/^[\d\s]+$/, 'Invalid account number')
-      .min(3, 'Invalid CVV')
-      .required('Please enter CVV'),
-    cardNumber: Yup.string().when('isNew', {
-      is: true,
-      then: Yup.string()
-        .required('Please enter card number')
-        .min(12, 'Please enter valid card number'),
-      otherwise: Yup.string(),
-    }),
-    cardId: Yup.string().when('isNew', {
-      is: (isNew?: boolean) => !isNew,
-      then: Yup.string().required('Please select a card'),
-      otherwise: Yup.string().nullable(),
-    }),
-  });
 
   const {
     values: wireTransferFormValues,
