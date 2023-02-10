@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useLazyQuery, useQuery } from '@apollo/client';
 import { paymentMethodsQuery } from '../../queries/billing';
 import { CreditCardFormType, PaymentMethod } from '../../interfaces';
@@ -49,9 +49,9 @@ export const PaymentContainer = () => {
   const [cardScreening] = useLazyQuery(cardScreeningQuery);
   const { data: meData } = useQuery(meQuery);
   const [creditCardList, setCreditCardList] = useState<PaymentMethod[]>([]);
-  const [screeningError,setScreeningError] = useState<string>()
+  const [screeningError, setScreeningError] = useState<string>();
 
-  
+
   useEffect(() => {
     if (paymentData) {
       const creditCards: PaymentMethod[] =
@@ -71,43 +71,43 @@ export const PaymentContainer = () => {
   }, [paymentData]);
 
   const onSubmitCreditCard = useCallback(async (creditCardFormValues : CreditCardFormType) => {
-      const selectedCard = creditCardList.find(
-        (item: PaymentMethod) => item.id === creditCardFormValues?.cardId,
-      );
-      const paymentInfoData: PaymentData = {
-        ...paymentInfo,
-        paymentType,
-        creditCardData: {
-          ...creditCardFormValues,
-          cardData: selectedCard,
-        },
-      };
-      try {
-        if (creditCardFormValues?.isNew) {
-          const variables = formCardScreeningVariable(
-            orgId ?? '',
-            paymentInfoData,
-            billingInfo,
-            taxes,
-            meData,
-          );
-          const cardScreeningData = await cardScreening({
-            variables,
-          });
+    const selectedCard = creditCardList.find(
+      (item: PaymentMethod) => item.id === creditCardFormValues?.cardId,
+    );
+    const paymentInfoData: PaymentData = {
+      ...paymentInfo,
+      paymentType,
+      creditCardData: {
+        ...creditCardFormValues,
+        cardData: selectedCard,
+      },
+    };
+    try {
+      if (creditCardFormValues?.isNew) {
+        const variables = formCardScreeningVariable(
+          orgId ?? '',
+          paymentInfoData,
+          billingInfo,
+          taxes,
+          meData,
+        );
+        const cardScreeningData = await cardScreening({
+          variables,
+        });
 
-          if (cardScreeningData.data?.cardScreening?.level !== 'high') {
-            setPaymentInfo(paymentInfoData);
-            setContainerState(ContainerTypes.DELIVERY);
-          } else {
-            setScreeningError('Please enter a valid card number.');
-          }
-        } else {
+        if (cardScreeningData.data?.cardScreening?.level !== 'high') {
           setPaymentInfo(paymentInfoData);
           setContainerState(ContainerTypes.DELIVERY);
+        } else {
+          setScreeningError('Please enter a valid card number.');
         }
-      } catch (e) {
-        console.error('ERROR', e);
+      } else {
+        setPaymentInfo(paymentInfoData);
+        setContainerState(ContainerTypes.DELIVERY);
       }
+    } catch (e) {
+      console.error('ERROR', e);
+    }
   }, [
     creditCardList,
     paymentInfo,
@@ -152,9 +152,8 @@ export const PaymentContainer = () => {
       billingInfo={ billingInfo }
       paymentMethodLimit={ paymentMethods }
       screeningError={ screeningError }
-      paymentInfo={paymentInfo}
-      onSubmitWireTransfer={onSubmitWireTransfer}
-      onSubmitCreditCard={onSubmitCreditCard}
-      />
+      paymentInfo={ paymentInfo }
+      onSubmitWireTransfer={ onSubmitWireTransfer }
+      onSubmitCreditCard={ onSubmitCreditCard } />
   );
 };

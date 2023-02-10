@@ -1,10 +1,8 @@
 import { Box, Card, Typography, useTheme } from '@mui/material';
-import React,{useCallback, useEffect, useMemo} from 'react';
-import { FormikErrors } from 'formik';
-import { MixTheme } from '../../theme';
-import * as Yup from 'yup';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { useFormik } from 'formik';
-
+import * as Yup from 'yup';
+import { MixTheme } from '../../theme';
 import { PaymentTypes } from '../../constants';
 import { Icons } from '../../assets';
 import { Button } from '../../components';
@@ -15,6 +13,7 @@ import { PaymentMethodView } from './PaymentMethodView';
 import { WireTransferForm, WireTransferFormData } from './WireTransferForm';
 import { CreditCardForm } from './CreditCardForm';
 import { DebugBox } from '../../components/shared/DebugBox';
+import moment from 'moment'
 
 interface PaymentContainerProps {
   paymentType: string;
@@ -32,7 +31,7 @@ interface PaymentContainerProps {
   screeningError?: string;
   paymentInfo?: PaymentData;
   onSubmitWireTransfer : (values : WireTransferFormData)=>void;
-  onSubmitCreditCard: (values : CreditCardFormType )=>void
+  onSubmitCreditCard: (values : CreditCardFormType)=>void
 }
 
 const PaymentContainer = ({
@@ -45,7 +44,7 @@ const PaymentContainer = ({
   screeningError,
   paymentInfo,
   onSubmitCreditCard,
-  onSubmitWireTransfer
+  onSubmitWireTransfer,
 }: PaymentContainerProps) => {
   const theme = useTheme<MixTheme>();
 
@@ -66,7 +65,10 @@ const PaymentContainer = ({
     isNew: Yup.boolean(),
     expiry: Yup.string()
       .matches(/^(0[1-9]|1[0-2])\/?([0-9]{2})$/, 'Invalid expiry')
-      .required('Please enter expiry'),
+      .required('Please enter expiry')
+      .test('is-expiry','Invalid expiry',(value)=>
+         moment(value,'MM/YY').isValid() && moment().isBefore(moment(value,'MM/YY'))
+      ),
     cvv: Yup.string()
       .matches(/^[\d\s]+$/, 'Invalid account number')
       .min(3, 'Invalid CVV')
@@ -91,8 +93,8 @@ const PaymentContainer = ({
     setFieldValue: onSetWireTransferField,
     errors: wireTransferFormErrors,
     isValid: isValidWireTransfer,
-    handleSubmit : handleWireTransferSubmit,
-    dirty : wireHasDirty
+    handleSubmit: handleWireTransferSubmit,
+    dirty: wireHasDirty,
   } = useFormik({
     initialValues: {
       accountNumber: paymentInfo?.wireData?.accountNumber ?? '',
@@ -101,7 +103,7 @@ const PaymentContainer = ({
       bankName: paymentInfo?.wireData?.bankAddress?.bankName ?? '',
     } as WireTransferFormData,
     validationSchema,
-    onSubmit: onSubmitWireTransfer
+    onSubmit: onSubmitWireTransfer,
   });
 
   const {
@@ -110,8 +112,8 @@ const PaymentContainer = ({
     setFieldValue: onSetCreditCardField,
     errors: creditCardFormErrors,
     isValid: isValidCreditCardValues,
-    handleSubmit : handleCreditCardSubmit,
-    dirty : creditHasDirty
+    handleSubmit: handleCreditCardSubmit,
+    dirty: creditHasDirty,
   } = useFormik({
     initialValues: {
       isNew: paymentInfo?.creditCardData?.isNew ?? false,
@@ -123,25 +125,24 @@ const PaymentContainer = ({
       save: paymentInfo?.creditCardData?.save ?? false,
     } as CreditCardFormType,
     validationSchema: creditCardSchema,
-    onSubmit: onSubmitCreditCard
+    onSubmit: onSubmitCreditCard,
   });
 
-  useEffect(()=>{
+  useEffect(() => {
     if (creditCardList.length > 0) {
       onSetCreditCardField('cardId', creditCardList[0].id);
     }
-      onSetCreditCardField('isNew', creditCardList.length === 0);
+    onSetCreditCardField('isNew', creditCardList.length === 0);
+  }, [creditCardList, onSetCreditCardField]);
 
-  },[creditCardList])
-
-  const onClickDelivery = useCallback(()=>{
-    if(paymentInfo?.paymentType === PaymentTypes.CREDIT_CARD) {
-      handleCreditCardSubmit()
+  const onClickDelivery = useCallback(() => {
+    if (paymentInfo?.paymentType === PaymentTypes.CREDIT_CARD) {
+      handleCreditCardSubmit();
     }
-    if(paymentInfo?.paymentType === PaymentTypes.WIRE_TRANSFER) {
-      handleWireTransferSubmit()
+    if (paymentInfo?.paymentType === PaymentTypes.WIRE_TRANSFER) {
+      handleWireTransferSubmit();
     }
-  },[paymentInfo])
+  }, [paymentInfo, handleCreditCardSubmit, handleWireTransferSubmit]);
 
   const buttonDisabled = useMemo<boolean>(() => {
     if (paymentType === PaymentTypes.CREDIT_CARD) {
@@ -151,7 +152,7 @@ const PaymentContainer = ({
       return !wireHasDirty || !isValidWireTransfer;
     }
     return true;
-  }, [isValidCreditCardValues, isValidWireTransfer, paymentType,wireHasDirty,creditHasDirty]);
+  }, [isValidCreditCardValues, isValidWireTransfer, paymentType, wireHasDirty, creditHasDirty]);
 
   return (
     <>
@@ -179,8 +180,7 @@ const PaymentContainer = ({
                 handleChange={ onChangeCreditCardField }
                 setFieldValue={ onSetCreditCardField }
                 errors={ creditCardFormErrors }
-                screeningError={screeningError}
-                />
+                screeningError={ screeningError } />
             ) }
             onChoosePaymentType={ onChoosePaymentType } />
         ) }

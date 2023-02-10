@@ -6,12 +6,12 @@ import {
   useTheme,
 } from '@mui/material';
 import { FormikErrors } from 'formik';
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback } from 'react';
+import ErrorIcon from '@mui/icons-material/Error';
 import { TextInput, CreditCardDropdown } from '../../components';
 import { CreditCardFormType, PaymentMethod } from '../../interfaces';
 import { useBilling } from '../../providers';
 import { MixTheme } from '../../theme';
-import ErrorIcon from '@mui/icons-material/Error';
 
 interface CreditCardProps {
   creditCardList: PaymentMethod[];
@@ -32,7 +32,7 @@ export const CreditCardForm = ({
   setFieldValue,
   errors,
   handleChange,
-  screeningError
+  screeningError,
 }: CreditCardProps) => {
   const theme = useTheme<MixTheme>();
   const { billingInfo } = useBilling();
@@ -84,26 +84,26 @@ export const CreditCardForm = ({
     <>
 
       { screeningError && (
-          <Box
-            display="flex"
-            flexDirection="row"
-            alignItems="center"
-            marginTop="16px"
-            sx={{
-              background: theme.global?.errorBackground,
-              padding: '14px',
-              borderRadius: '4px',
-            }}>
-            <ErrorIcon
-              sx={{
-                color: theme.global?.required,
-                marginRight: '10px',
-              }} />
-            <Typography fontWeight="400" fontSize="16px">
-              {screeningError}
-            </Typography>
-          </Box>
-        ) }
+      <Box
+        display="flex"
+        flexDirection="row"
+        alignItems="center"
+        marginTop="16px"
+        sx={{
+          background: theme.global?.errorBackground,
+          padding: '14px',
+          borderRadius: '4px',
+        }}>
+        <ErrorIcon
+          sx={{
+            color: theme.global?.required,
+            marginRight: '10px',
+          }} />
+        <Typography fontWeight="400" fontSize="16px">
+          { screeningError }
+        </Typography>
+      </Box>
+      ) }
       <CreditCardDropdown
         value={ values?.isNew ? 'true' : values?.cardId }
         onChange={ handleCardChange }

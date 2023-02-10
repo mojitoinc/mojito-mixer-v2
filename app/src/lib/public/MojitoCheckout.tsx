@@ -27,7 +27,7 @@ import {
 } from '../config/UIConfiguration';
 import {
   CheckoutOptions,
-  MojitoUIConfiguration
+  MojitoUIConfiguration,
 } from '../interfaces/ContextInterface';
 
 declare global {

@@ -1,6 +1,6 @@
 import { Icons } from '../assets';
 import { wireTransferInstructions, creditCardInstructions } from '.';
-import { UIConfiguration,MojitoUIConfiguration } from '../interfaces/ContextInterface';
+import { UIConfiguration, MojitoUIConfiguration } from '../interfaces/ContextInterface';
 
 export const DefaultUIConfiguration: UIConfiguration = {
   global: {

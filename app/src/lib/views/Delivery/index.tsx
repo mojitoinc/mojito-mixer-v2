@@ -21,7 +21,7 @@ export const Delivery = () => {
   const { orgId } = useCheckout();
   const { paymentInfo, onConfirmCreditCardPurchase, onConfirmWireTransferPurchase } = usePayment();
   const { data: meData } = useQuery(meQuery);
-  const [addressScreening,{loading : isLoading }] = useMutation(addressScreeningQuery);
+  const [addressScreening, { loading: isLoading }] = useMutation(addressScreeningQuery);
   const [error, setError] = useState<string>();
 
   const {
@@ -111,7 +111,6 @@ export const Delivery = () => {
       connect={ connect }
       onDisconnect={ onDisconnect }
       error={ error }
-      isLoading={isLoading}
-      />
+      isLoading={ isLoading } />
   );
 };
