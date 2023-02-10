@@ -1,13 +1,15 @@
 import { Box, Card, Typography, useTheme } from '@mui/material';
-import React from 'react';
+import React,{useCallback, useEffect, useMemo} from 'react';
 import { FormikErrors } from 'formik';
 import { MixTheme } from '../../theme';
+import * as Yup from 'yup';
+import { useFormik } from 'formik';
 
 import { PaymentTypes } from '../../constants';
 import { Icons } from '../../assets';
 import { Button } from '../../components';
 import { CreditCardFormType, PaymentMethod } from '../../interfaces';
-import { BillingFormData, PaymentMethodLimit } from '../../providers';
+import { BillingFormData, PaymentData, PaymentMethodLimit } from '../../providers';
 import { PaymentInfoCards } from './InfoCards';
 import { PaymentMethodView } from './PaymentMethodView';
 import { WireTransferForm, WireTransferFormData } from './WireTransferForm';
@@ -17,25 +19,7 @@ import { DebugBox } from '../../components/shared/DebugBox';
 interface PaymentContainerProps {
   paymentType: string;
   onChoosePaymentType: (name: PaymentTypes, value: boolean) => void;
-  wireTransferFormValues: WireTransferFormData;
-
-  onChangeWireTransferField: any;
-  onSetWireTransferField: (
-    field: string,
-    value: any,
-    shouldValidate?: boolean | undefined
-  ) => Promise<void> | Promise<FormikErrors<WireTransferFormData>>;
-  wireTransferFormErrors: FormikErrors<WireTransferFormData>;
   creditCardList: PaymentMethod[];
-  creditCardFormValues: CreditCardFormType;
-  onChangeCreditCardField: any;
-  onSetCreditCardField: (
-    field: string,
-    value: any,
-    shouldValidate?: boolean | undefined
-  ) => Promise<void> | Promise<FormikErrors<CreditCardFormType>>;
-  creditCardFormErrors: FormikErrors<CreditCardFormType>;
-  onClickDelivery: () => void;
   config?: {
     gpay?: boolean;
     applepay?: boolean;
@@ -44,29 +28,130 @@ interface PaymentContainerProps {
     creditCard?: boolean;
   };
   billingInfo: BillingFormData | undefined;
-  buttonDisabled: boolean;
   paymentMethodLimit: PaymentMethodLimit | undefined;
+  screeningError?: string;
+  paymentInfo?: PaymentData;
+  onSubmitWireTransfer : (values : WireTransferFormData)=>void;
+  onSubmitCreditCard: (values : CreditCardFormType )=>void
 }
 
 const PaymentContainer = ({
   paymentType,
   onChoosePaymentType,
-  wireTransferFormValues,
-  onChangeWireTransferField,
-  onSetWireTransferField,
-  wireTransferFormErrors,
   creditCardList,
-  creditCardFormErrors,
-  creditCardFormValues,
-  onChangeCreditCardField,
-  onSetCreditCardField,
-  onClickDelivery,
   config,
   billingInfo,
-  buttonDisabled,
   paymentMethodLimit,
+  screeningError,
+  paymentInfo,
+  onSubmitCreditCard,
+  onSubmitWireTransfer
 }: PaymentContainerProps) => {
   const theme = useTheme<MixTheme>();
+
+  const validationSchema = Yup.object().shape({
+    accountNumber: Yup.string()
+      .matches(/^[\d\s]+$/, 'Invalid account number')
+      .min(9, 'Invalid account number')
+      .required('Please enter account number'),
+    aba: Yup.string()
+      .matches(/^[\d\s]+$/, 'Invalid aba')
+      .min(10, 'Invalid aba')
+      .required('Please enter aba'),
+    bankCountry: Yup.string().required('Please select bank country'),
+    bankName: Yup.string().required('Please select bank name'),
+  });
+
+  const creditCardSchema = Yup.object().shape({
+    isNew: Yup.boolean(),
+    expiry: Yup.string()
+      .matches(/^(0[1-9]|1[0-2])\/?([0-9]{2})$/, 'Invalid expiry')
+      .required('Please enter expiry'),
+    cvv: Yup.string()
+      .matches(/^[\d\s]+$/, 'Invalid account number')
+      .min(3, 'Invalid CVV')
+      .required('Please enter CVV'),
+    cardNumber: Yup.string().when('isNew', {
+      is: true,
+      then: Yup.string()
+        .required('Please enter card number')
+        .min(12, 'Please enter valid card number'),
+      otherwise: Yup.string(),
+    }),
+    cardId: Yup.string().when('isNew', {
+      is: (isNew?: boolean) => !isNew,
+      then: Yup.string().required('Please select a card'),
+      otherwise: Yup.string().nullable(),
+    }),
+  });
+
+  const {
+    values: wireTransferFormValues,
+    handleChange: onChangeWireTransferField,
+    setFieldValue: onSetWireTransferField,
+    errors: wireTransferFormErrors,
+    isValid: isValidWireTransfer,
+    handleSubmit : handleWireTransferSubmit,
+    dirty : wireHasDirty
+  } = useFormik({
+    initialValues: {
+      accountNumber: paymentInfo?.wireData?.accountNumber ?? '',
+      aba: paymentInfo?.wireData?.routingNumber ?? '',
+      bankCountry: paymentInfo?.wireData?.bankAddress?.country ?? '',
+      bankName: paymentInfo?.wireData?.bankAddress?.bankName ?? '',
+    } as WireTransferFormData,
+    validationSchema,
+    onSubmit: onSubmitWireTransfer
+  });
+
+  const {
+    values: creditCardFormValues,
+    handleChange: onChangeCreditCardField,
+    setFieldValue: onSetCreditCardField,
+    errors: creditCardFormErrors,
+    isValid: isValidCreditCardValues,
+    handleSubmit : handleCreditCardSubmit,
+    dirty : creditHasDirty
+  } = useFormik({
+    initialValues: {
+      isNew: paymentInfo?.creditCardData?.isNew ?? false,
+      cardData: paymentInfo?.creditCardData?.cardData ?? undefined,
+      cardId: paymentInfo?.creditCardData?.cardId ?? '',
+      cardNumber: paymentInfo?.creditCardData?.cardNumber ?? '',
+      cvv: paymentInfo?.creditCardData?.cvv ?? '',
+      expiry: paymentInfo?.creditCardData?.expiry ?? '',
+      save: paymentInfo?.creditCardData?.save ?? false,
+    } as CreditCardFormType,
+    validationSchema: creditCardSchema,
+    onSubmit: onSubmitCreditCard
+  });
+
+  useEffect(()=>{
+    if (creditCardList.length > 0) {
+      onSetCreditCardField('cardId', creditCardList[0].id);
+    }
+      onSetCreditCardField('isNew', creditCardList.length === 0);
+
+  },[creditCardList])
+
+  const onClickDelivery = useCallback(()=>{
+    if(paymentInfo?.paymentType === PaymentTypes.CREDIT_CARD) {
+      handleCreditCardSubmit()
+    }
+    if(paymentInfo?.paymentType === PaymentTypes.WIRE_TRANSFER) {
+      handleWireTransferSubmit()
+    }
+  },[paymentInfo])
+
+  const buttonDisabled = useMemo<boolean>(() => {
+    if (paymentType === PaymentTypes.CREDIT_CARD) {
+      return !creditHasDirty || !isValidCreditCardValues;
+    }
+    if (paymentType === PaymentTypes.WIRE_TRANSFER) {
+      return !wireHasDirty || !isValidWireTransfer;
+    }
+    return true;
+  }, [isValidCreditCardValues, isValidWireTransfer, paymentType,wireHasDirty,creditHasDirty]);
 
   return (
     <>
@@ -93,7 +178,9 @@ const PaymentContainer = ({
                 values={ creditCardFormValues }
                 handleChange={ onChangeCreditCardField }
                 setFieldValue={ onSetCreditCardField }
-                errors={ creditCardFormErrors } />
+                errors={ creditCardFormErrors }
+                screeningError={screeningError}
+                />
             ) }
             onChoosePaymentType={ onChoosePaymentType } />
         ) }

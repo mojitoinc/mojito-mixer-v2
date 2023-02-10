@@ -11,6 +11,7 @@ import { TextInput, CreditCardDropdown } from '../../components';
 import { CreditCardFormType, PaymentMethod } from '../../interfaces';
 import { useBilling } from '../../providers';
 import { MixTheme } from '../../theme';
+import ErrorIcon from '@mui/icons-material/Error';
 
 interface CreditCardProps {
   creditCardList: PaymentMethod[];
@@ -22,6 +23,7 @@ interface CreditCardProps {
     shouldValidate?: boolean | undefined
   ) => Promise<void> | Promise<FormikErrors<CreditCardFormType>>;
   errors: FormikErrors<CreditCardFormType>;
+  screeningError?:string;
 }
 
 export const CreditCardForm = ({
@@ -30,17 +32,14 @@ export const CreditCardForm = ({
   setFieldValue,
   errors,
   handleChange,
+  screeningError
 }: CreditCardProps) => {
   const theme = useTheme<MixTheme>();
   const { billingInfo } = useBilling();
 
-  const isNewCreditCard = useMemo(() => {
-    return (values?.isNew || (creditCardList && creditCardList.length === 0));
-  }, [values, creditCardList]);
-
   const handleCardChange = useCallback(
     (val: string) => {
-      setFieldValue('isNew', val === 'null');
+      setFieldValue('isNew', val === 'true');
       setFieldValue('cardId', val);
     },
     [setFieldValue],
@@ -83,8 +82,30 @@ export const CreditCardForm = ({
 
   return (
     <>
+
+      { screeningError && (
+          <Box
+            display="flex"
+            flexDirection="row"
+            alignItems="center"
+            marginTop="16px"
+            sx={{
+              background: theme.global?.errorBackground,
+              padding: '14px',
+              borderRadius: '4px',
+            }}>
+            <ErrorIcon
+              sx={{
+                color: theme.global?.required,
+                marginRight: '10px',
+              }} />
+            <Typography fontWeight="400" fontSize="16px">
+              {screeningError}
+            </Typography>
+          </Box>
+        ) }
       <CreditCardDropdown
-        value={ isNewCreditCard ? 'true' : values?.cardId }
+        value={ values?.isNew ? 'true' : values?.cardId }
         onChange={ handleCardChange }
         error={ errors?.cardId }
         title="Card info"
@@ -96,7 +117,7 @@ export const CreditCardForm = ({
           Phone number is mandatory for credit card payment
         </FormHelperText>
       ) }
-      { isNewCreditCard && (
+      { values?.isNew && (
         <TextInput
           value={ values?.cardNumber }
           onChange={ formatCardNumber }
@@ -151,7 +172,7 @@ export const CreditCardForm = ({
         NFTs purchased by credit card can only be transferred to your multi-sig
         wallet and cannot be transferred out for 14 days.
       </Typography>
-      { isNewCreditCard && (
+      { values?.isNew && (
         <Box display="flex" alignItems="center" marginTop={ 2 }>
           <Checkbox
             sx={{ padding: 0 }}
