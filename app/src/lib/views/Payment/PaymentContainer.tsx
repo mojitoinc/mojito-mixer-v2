@@ -2,6 +2,7 @@ import { Box, Card, Typography, useTheme } from '@mui/material';
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import moment from 'moment';
 import { MixTheme } from '../../theme';
 import { PaymentTypes } from '../../constants';
 import { Icons } from '../../assets';
@@ -13,7 +14,6 @@ import { PaymentMethodView } from './PaymentMethodView';
 import { WireTransferForm, WireTransferFormData } from './WireTransferForm';
 import { CreditCardForm } from './CreditCardForm';
 import { DebugBox } from '../../components/shared/DebugBox';
-import moment from 'moment'
 
 interface PaymentContainerProps {
   paymentType: string;
@@ -66,9 +66,7 @@ const PaymentContainer = ({
     expiry: Yup.string()
       .matches(/^(0[1-9]|1[0-2])\/?([0-9]{2})$/, 'Invalid expiry')
       .required('Please enter expiry')
-      .test('is-expiry','Invalid expiry',(value)=>
-         moment(value,'MM/YY').isValid() && moment().isBefore(moment(value,'MM/YY'))
-      ),
+      .test('is-expiry', 'Invalid expiry', value => moment(value, 'MM/YY').isValid() && moment().isBefore(moment(value, 'MM/YY'))),
     cvv: Yup.string()
       .matches(/^[\d\s]+$/, 'Invalid account number')
       .min(3, 'Invalid CVV')
