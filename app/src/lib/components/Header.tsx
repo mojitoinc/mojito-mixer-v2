@@ -48,7 +48,7 @@ const Header = ({ isPaymentConfirmation }: HeaderProps) => {
           justifyContent: 'center',
           display: 'flex',
         }}>
-        <img src={ global?.logoSrc } width="162px" height="37px" alt="logo" />
+        <img src={ global.logoSrc } width="162px" height="37px" alt="logo" />
       </Box>
     </Box>
   );
