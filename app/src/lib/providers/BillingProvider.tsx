@@ -85,11 +85,11 @@ export const BillingProvider = ({ children }: { children?: React.ReactNode }) =>
 
   useEffect(() => {
     if (!loading && vertexEnabled) {
-      const verifiedAddress = taxQuoteData?.verifiedAddress  as (any | undefined)
-      setPincodeError (verifiedAddress !== undefined)
+      const verifiedAddress = taxQuoteData?.verifiedAddress as (any | undefined);
+      setPincodeError(verifiedAddress !== undefined);
     }
-    debug.info('taxQuoteData-onChanve', { taxQuoteData, loading, vertexEnabled })
-    console.log('600008', {taxQuoteData})
+    debug.info('taxQuoteData-onChanve', { taxQuoteData, loading, vertexEnabled });
+    console.log('600008', { taxQuoteData });
   }, [taxQuoteData, loading, debug, vertexEnabled]);
 
   useEffect(() => {

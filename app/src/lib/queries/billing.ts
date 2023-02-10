@@ -88,3 +88,26 @@ query GetPaymentMethodList($orgID: UUID1!) {
     }
   }  
 `;
+
+
+export const validatePaymentLimitQuery = gql`
+query ValidatePaymentLimit($collectionId: UUID1!, $itemsCount: Int!) {
+  validatePaymentLimit(collectionID: $collectionId, itemsCount: $itemsCount) {
+    ach {
+      remainingTotal
+      isLimitExceeded
+      remainingTransaction
+    }
+    wire {
+      remainingTotal
+      isLimitExceeded
+      remainingTransaction
+    }
+    creditCard {
+      remainingTotal
+      isLimitExceeded
+      remainingTransaction
+    }
+  }
+}
+`;

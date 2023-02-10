@@ -5,7 +5,7 @@ import { useLazyQuery, useQuery } from '@apollo/client';
 import { paymentMethodsQuery } from '../../queries/billing';
 import { CreditCardFormType, PaymentMethod } from '../../interfaces';
 import { PaymentTypes } from '../../constants';
-import { ContainerTypes } from '../../interfaces/ContextInterface'
+import { ContainerTypes } from '../../interfaces/ContextInterface';
 import {
   useContainer,
   useCheckout,
@@ -22,7 +22,7 @@ import PaymentContainerView from './PaymentContainer';
 export const PaymentContainer = () => {
   const { orgId } = useCheckout();
 
-  const { setPaymentInfo, paymentInfo } = usePayment();
+  const { setPaymentInfo, paymentInfo, paymentMethods } = usePayment();
   const { setContainerState } = useContainer();
 
   const { billingInfo, taxes } = useBilling();
@@ -141,7 +141,6 @@ export const PaymentContainer = () => {
     validateOnChange: true,
     validateOnMount: true,
   });
-
 
   useEffect(() => {
     if (paymentData) {
@@ -288,6 +287,7 @@ export const PaymentContainer = () => {
       onClickDelivery={ onClickDelivery }
       config={ uiConfiguration?.payment }
       billingInfo={ billingInfo }
-      buttonDisabled={ buttonDisabled } />
+      buttonDisabled={ buttonDisabled }
+      paymentMethodLimit={ paymentMethods } />
   );
 };

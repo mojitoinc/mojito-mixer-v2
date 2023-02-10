@@ -1,24 +1,59 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useLazyQuery } from '@apollo/client';
+import { useLazyQuery, useQuery } from '@apollo/client';
 import { uuid } from 'uuidv4';
-import { paymentMethodsQuery } from '../../queries/billing';
+import {
+  paymentMethodsQuery,
+  validatePaymentLimitQuery,
+} from '../../queries/billing';
 import { PaymentMethod } from '../../interfaces';
-import { useContainer, useCheckout, BillingFormData, useBilling, useDebug, usePayment } from '../../providers';
+import {
+  useContainer,
+  useCheckout,
+  BillingFormData,
+  useBilling,
+  useDebug,
+  usePayment,
+} from '../../providers';
 import BillingView from './BillingView';
-import { ContainerTypes } from '../../interfaces/ContextInterface'
+import { ContainerTypes } from '../../interfaces/ContextInterface';
 
 const BillingContainer = () => {
   const debug = useDebug('Billing');
-  const { orgId } = useCheckout();
-  const { setBillingInfo, billingInfo, refetchTaxes, pincodeError } = useBilling();
+  const { orgId, collectionItemId, quantity } = useCheckout();
+  const { setBillingInfo, billingInfo, refetchTaxes, pincodeError } =
+    useBilling();
 
   const [isEditing, setIsEditing] = useState<boolean>(true);
   const { setContainerState } = useContainer();
-  const { setPaymentInfo, paymentInfo } = usePayment();
+  const { setPaymentInfo, paymentInfo, setPaymentMethods } = usePayment();
 
-  const [fetchBilling, { data: paymentData }] = useLazyQuery(paymentMethodsQuery);
+  const [fetchBilling, { data: paymentData }] =
+    useLazyQuery(paymentMethodsQuery);
+  const { data: validPaymnetMethods, loading: validpaymentMethodLoading } =
+    useQuery(validatePaymentLimitQuery, {
+      variables: {
+        collectionId: collectionItemId,
+        itemsCount: quantity,
+      },
+      skip: !collectionItemId || !quantity,
+    });
+
+  useEffect(() => {
+    if (
+      validPaymnetMethods?.validatePaymentLimit &&
+      !validpaymentMethodLoading
+    ) {
+      setPaymentMethods({
+        exceedCreditCard:
+          !validPaymnetMethods?.validatePaymentLimit?.creditCard
+            ?.isLimitExceeded,
+        exceedWire:
+          !validPaymnetMethods?.validatePaymentLimit?.wire?.isLimitExceeded,
+      });
+    }
+  }, [validPaymnetMethods, setPaymentMethods, validpaymentMethodLoading]);
 
   useEffect(() => {
     debug.info('load', { orgId });
@@ -43,7 +78,7 @@ const BillingContainer = () => {
     street1: Yup.string().required('Please enter your address'),
   });
 
-  const { values, errors, handleChange, setValues, isValid, } = useFormik({
+  const { values, errors, handleChange, setValues, isValid } = useFormik({
     initialValues: {
       email: '',
       country: '',
@@ -59,7 +94,14 @@ const BillingContainer = () => {
   });
 
   const isValidBillingForm = useMemo<boolean>(() => {
-    return !(errors?.country || errors?.state || errors?.city || errors?.postalCode || errors?.phoneNumber || errors?.name);
+    return !(
+      errors?.country ||
+      errors?.state ||
+      errors?.city ||
+      errors?.postalCode ||
+      errors?.phoneNumber ||
+      errors?.name
+    );
   }, [errors]);
 
   const setBillingValues = useCallback(async () => {
@@ -98,7 +140,9 @@ const BillingContainer = () => {
   }, []);
 
   useEffect(() => {
-    if (isValidBillingForm) { refetchTaxes(values); } else {
+    if (isValidBillingForm) {
+      refetchTaxes(values);
+    } else {
       setIsEditing(true);
     }
   }, [values, refetchTaxes, isValidBillingForm]);
@@ -117,7 +161,15 @@ const BillingContainer = () => {
       ...paymentInfo,
     });
     setContainerState(ContainerTypes.PAYMENT);
-  }, [values, setBillingInfo, isEditing, isValid, setContainerState, paymentInfo, setPaymentInfo]);
+  }, [
+    values,
+    setBillingInfo,
+    isEditing,
+    isValid,
+    setContainerState,
+    paymentInfo,
+    setPaymentInfo,
+  ]);
 
   return (
     <BillingView

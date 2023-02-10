@@ -7,7 +7,7 @@ import ConfirmationContainer from './PaymentConfirmation';
 import { PaymentContainer } from './Payment';
 import { Delivery } from './Delivery';
 import { useContainer, useError } from '../providers';
-import { ContainerTypes } from '../interfaces/ContextInterface'
+import { ContainerTypes } from '../interfaces/ContextInterface';
 
 import LoadingContainer from './Loading';
 import ErrorContainer from './Error';

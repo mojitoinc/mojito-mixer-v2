@@ -7,7 +7,7 @@ import { PaymentTypes } from '../../constants';
 import { Icons } from '../../assets';
 import { Button } from '../../components';
 import { CreditCardFormType, PaymentMethod } from '../../interfaces';
-import { BillingFormData } from '../../providers';
+import { BillingFormData, PaymentMethodLimit } from '../../providers';
 import { PaymentInfoCards } from './InfoCards';
 import { PaymentMethodView } from './PaymentMethodView';
 import { WireTransferForm, WireTransferFormData } from './WireTransferForm';
@@ -45,6 +45,7 @@ interface PaymentContainerProps {
   };
   billingInfo: BillingFormData | undefined;
   buttonDisabled: boolean;
+  paymentMethodLimit: PaymentMethodLimit | undefined;
 }
 
 const PaymentContainer = ({
@@ -63,6 +64,7 @@ const PaymentContainer = ({
   config,
   billingInfo,
   buttonDisabled,
+  paymentMethodLimit,
 }: PaymentContainerProps) => {
   const theme = useTheme<MixTheme>();
 
@@ -79,7 +81,7 @@ const PaymentContainer = ({
         <Typography sx={{ fontSize: '20px', fontWeight: 500 }}>
           Payment Method
         </Typography>
-        { config?.creditCard && (
+        { config?.creditCard && paymentMethodLimit?.exceedCreditCard && (
           <PaymentMethodView
             logo={ Icons.creditCards }
             isSelected={ paymentType }
@@ -122,7 +124,7 @@ const PaymentContainer = ({
             bodyContent={ <>Test</> }
             onChoosePaymentType={ onChoosePaymentType } />
         ) }
-        { config?.wire && (
+        { config?.wire && paymentMethodLimit?.exceedWire && (
           <PaymentMethodView
             logo={ Icons.wireTransfer }
             isSelected={ paymentType }

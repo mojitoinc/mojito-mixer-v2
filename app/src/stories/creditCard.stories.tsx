@@ -32,7 +32,11 @@ export const CreditCardStories = () => {
         wire: true,
         creditCard: true,
       }}
-      buttonDisabled={ false } />
+      buttonDisabled={ false }
+      paymentMethodLimit={{
+        exceedCreditCard: true,
+        exceedWire: true,
+      }} />
   );
 };
 const stories = {
