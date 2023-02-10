@@ -79,7 +79,7 @@ export const formCreatePaymentMethodObject = (
         address2: '',
         district: billingInfo?.state,
         postalCode: billingInfo?.postalCode,
-        name: `${ billingInfo?.firstName} ${ billingInfo?.lastName }`,
+        name: `${ billingInfo?.firstName } ${ billingInfo?.lastName }`,
       },
     },
   };

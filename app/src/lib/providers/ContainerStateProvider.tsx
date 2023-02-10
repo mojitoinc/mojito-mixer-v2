@@ -32,11 +32,11 @@ export const ContainerStateProvider = ({
     success ? ContainerTypes.CONFIRMATION : ContainerTypes.CHECKOUT,
   );
 
-  const { onEvent } = useEvents()
+  const { onEvent } = useEvents();
 
-  useEffect(()=>{
-    onEvent?.(containerState)
-  },[onEvent,containerState])
+  useEffect(() => {
+    onEvent?.(containerState);
+  }, [onEvent, containerState]);
 
   useEffect(() => {
     debug.info('paymentId', { paymentId, success });

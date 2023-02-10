@@ -93,20 +93,21 @@ const Delivery = ({
               </Typography>
             ) }
             {
-              delivery?.showConnectWallet &&
+              delivery?.showConnectWallet && (
               <Stack
-              flexDirection="row"
-              alignItems="flex-end"
-              justifyContent="flex-end">
-              <Button
-                title="Connect Wallet"
-                textColor={ theme.global?.highlightedText }
-                backgroundColor={ theme.global?.white }
-                variant="outlined"
-                sx={{ marginTop: 2 }}
-                onClick={ onClickConnectWallet } />
-            </Stack>
-            }
+                flexDirection="row"
+                alignItems="flex-end"
+                justifyContent="flex-end">
+                <Button
+                  title="Connect Wallet"
+                  textColor={ theme.global?.highlightedText }
+                  backgroundColor={ theme.global?.white }
+                  variant="outlined"
+                  sx={{ marginTop: 2 }}
+                  onClick={ onClickConnectWallet } />
+              </Stack>
+              )
+}
           </>
         ) : (
           <Box

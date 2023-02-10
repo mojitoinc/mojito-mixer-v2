@@ -1,10 +1,9 @@
 import { Box, Typography } from '@mui/material';
 import React from 'react';
-import { Icons } from '../../assets';
 import { useUIConfiguration } from '../../providers';
 
 const LoadingContainer = () => {
-  const { global } = useUIConfiguration()
+  const { global } = useUIConfiguration();
 
   return (
     <Box

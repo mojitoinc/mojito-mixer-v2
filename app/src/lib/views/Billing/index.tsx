@@ -21,7 +21,7 @@ import { ContainerTypes } from '../../interfaces/ContextInterface';
 
 const BillingContainer = () => {
   const debug = useDebug('Billing');
-  const { orgId, collectionItemId, quantity,vertexEnabled } = useCheckout();
+  const { orgId, collectionItemId, quantity, vertexEnabled } = useCheckout();
   const { setBillingInfo, billingInfo, refetchTaxes, pincodeError } =
     useBilling();
 
@@ -90,8 +90,8 @@ const BillingContainer = () => {
       phoneNumber: '',
       street1: '',
       name: '',
-      firstName:'',
-      lastName:'',
+      firstName: '',
+      lastName: '',
     } as BillingFormData,
     onSubmit: () => undefined,
     validationSchema: schema,
@@ -114,7 +114,7 @@ const BillingContainer = () => {
     ) ?? paymentData?.getPaymentMethodList[0];
     if (paymentItem) {
       setIsEditing(false);
-      const name = paymentItem?.billingDetails?.name?.split(" ");
+      const name = paymentItem?.billingDetails?.name?.split(' ');
       const billingValues: BillingFormData = {
         city: billingInfo?.city ?? paymentItem?.billingDetails?.city,
         country: billingInfo?.country ?? paymentItem?.billingDetails?.country,
@@ -147,14 +147,13 @@ const BillingContainer = () => {
   }, []);
 
   useEffect(() => {
-    if (isValidBillingForm ) {
-      console.log("isValidBillingForm",isValidBillingForm,values)
-      if(vertexEnabled)
-      refetchTaxes(values);
+    if (isValidBillingForm) {
+      console.log('isValidBillingForm', isValidBillingForm, values);
+      if (vertexEnabled) refetchTaxes(values);
     } else {
       setIsEditing(true);
     }
-  }, [values, refetchTaxes, isValidBillingForm,vertexEnabled]);
+  }, [values, refetchTaxes, isValidBillingForm, vertexEnabled]);
 
   const onClickContinue = useCallback(async () => {
     if (isEditing && !isValid) return;
@@ -163,8 +162,9 @@ const BillingContainer = () => {
       const isValidEmail = emailRegex.test(values?.email ?? '');
       if (!isValidEmail) return;
     }
-    setBillingInfo({ ...values,
-    name:values?.firstName+' '+values?.lastName
+    setBillingInfo({
+      ...values,
+      name: `${ values?.firstName } ${ values?.lastName }`,
     });
 
     setPaymentInfo({

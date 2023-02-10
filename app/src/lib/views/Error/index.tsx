@@ -1,7 +1,6 @@
-import { useUIConfiguration } from '../../providers';
 import { Box, useTheme, Typography } from '@mui/material';
 import React from 'react';
-import { Icons } from '../../assets';
+import { useUIConfiguration } from '../../providers';
 import { MixTheme } from '../../theme';
 
 interface ErrorContainerProps {
@@ -9,7 +8,7 @@ interface ErrorContainerProps {
 }
 const ErrorContainer = ({ error }: ErrorContainerProps) => {
   const theme = useTheme<MixTheme>();
-  const { global } = useUIConfiguration()
+  const { global } = useUIConfiguration();
 
   return (
     <Box

@@ -30,9 +30,9 @@ export const DefaultUIConfiguration: UIConfiguration = {
     creditCardInstructions,
     onGoTo: () => undefined,
   },
-  delivery:{
-    showConnectWallet:true,
-  }
+  delivery: {
+    showConnectWallet: true,
+  },
 };
 
 
@@ -58,9 +58,9 @@ export const makeUIConfiguration = (configurations: UIConfiguration) => {
       ...DefaultUIConfiguration.paymentConfirmation,
       ...configurations.paymentConfirmation,
     },
-    delivery:{
+    delivery: {
       ...DefaultUIConfiguration.delivery,
       ...configurations.delivery,
-    }
+    },
   } as UIConfiguration;
 };

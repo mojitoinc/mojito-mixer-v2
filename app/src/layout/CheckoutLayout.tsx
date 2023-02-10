@@ -1,5 +1,5 @@
 // import { MojitoCheckout } from '@mojitonft/mojito-mixers';
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import {
   Box,
   Stack,
@@ -119,9 +119,9 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
     router.replace('/');
   }, [router]);
 
-  const onEvent = useCallback((e:string)=>{
-    console.log("EVENT",e)
-  },[])
+  const onEvent = useCallback((e:string) => {
+    console.log('EVENT', e);
+  }, []);
 
   return (
     <>
@@ -250,7 +250,7 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
             quantity: parseInt(values.lotUnits ?? '1', 10),
             collectionItemId: values.itemId ?? '',
             invoiceId: values?.invoiceId,
-            vertexEnabled:true,
+            vertexEnabled: true,
           }}
           uiConfiguration={{
 
@@ -274,12 +274,12 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
             paymentConfirmation: {
               onGoTo: onClickGoToMarketPlace,
             },
-            global:{
-              logoSrc :require('../../public/img/logos/sotheby-logo.svg')
-            }
+            global: {
+              // logoSrc: require('../../public/img/logos/sotheby-logo.svg'),
+            },
           }}
           events={{
-            onEvent:onEvent
+            onEvent,
           }}
           show={ show } />
       ) }

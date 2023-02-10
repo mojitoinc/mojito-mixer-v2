@@ -88,7 +88,7 @@ export const CreditCardForm = ({
         onChange={ handleCardChange }
         error={ errors?.cardId }
         title="Card info"
-        sx={{ marginRight: '8px',marginTop:2 }}
+        sx={{ marginRight: '8px', marginTop: 2 }}
         options={ creditCardList } />
 
       { !billingInfo?.phoneNumber && (

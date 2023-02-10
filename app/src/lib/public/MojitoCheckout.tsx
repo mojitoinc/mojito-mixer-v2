@@ -13,7 +13,7 @@ import {
   DebugProvider,
   ErrorProvider,
   EventContext,
-  EventConfig
+  EventConfig,
 } from '../providers';
 import { ConnectProvider } from '../providers/ConnectContext';
 import { SardineEnvironment } from '../config';
@@ -56,7 +56,7 @@ const MojitoCheckout: React.FC<MojitoCheckoutProps> = ({
   enableSardine = false,
   success,
   sardineEnvironment = 'production',
-  events = {}
+  events = {},
 }: MojitoCheckoutProps) => {
   const themes = useMemo(() => makeTheme(theme), [theme]);
 
@@ -93,11 +93,11 @@ const MojitoCheckout: React.FC<MojitoCheckoutProps> = ({
         <ThemeProvider theme={ themes }>
           <CheckoutContext.Provider value={ checkoutOptions }>
             <UIConfigurationContext.Provider value={ uiConfigurations }>
-            <EventContext.Provider value={ events }>
-              <ContainerStateProvider
-                paymentId={ checkoutOptions?.paymentId }
-                success={ success }>
-                <ErrorProvider>
+              <EventContext.Provider value={ events }>
+                <ContainerStateProvider
+                  paymentId={ checkoutOptions?.paymentId }
+                  success={ success }>
+                  <ErrorProvider>
                     <BillingProvider>
                       <PaymentProvider>
                         <ConnectProvider>
@@ -108,8 +108,8 @@ const MojitoCheckout: React.FC<MojitoCheckoutProps> = ({
                         </ConnectProvider>
                       </PaymentProvider>
                     </BillingProvider>
-                </ErrorProvider>
-              </ContainerStateProvider>
+                  </ErrorProvider>
+                </ContainerStateProvider>
               </EventContext.Provider>
             </UIConfigurationContext.Provider>
           </CheckoutContext.Provider>

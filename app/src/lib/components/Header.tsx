@@ -9,7 +9,7 @@ interface HeaderProps {
 }
 const Header = ({ isPaymentConfirmation }: HeaderProps) => {
   const theme = useTheme<MixTheme>();
-  const { paymentConfirmation,global } = useUIConfiguration();
+  const { paymentConfirmation, global } = useUIConfiguration();
   return (
     <Box
       sx={{

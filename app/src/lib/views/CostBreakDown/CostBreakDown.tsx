@@ -22,9 +22,9 @@ interface CostBreakDownProps {
 const CostBreakDown = ({ taxes, collectionData }: CostBreakDownProps) => {
   const theme = useTheme<MixTheme>();
   const uiConfiguration = useUIConfiguration();
-  const { quantity,vertexEnabled } = useCheckout();
+  const { quantity, vertexEnabled } = useCheckout();
   const { containerState } = useContainer();
-  const { taxablePrice } = useBilling()
+  const { taxablePrice } = useBilling();
 
   const renderTextRow = (text: string, value: string) => {
     return (
@@ -144,14 +144,14 @@ const CostBreakDown = ({ taxes, collectionData }: CostBreakDownProps) => {
             margin: '20px 0px 20px 0px',
           }} />
         <Box>
-          { renderTextRow('Subtotal', `${  vertexEnabled ? (taxes?.taxablePrice ?? '0'):taxablePrice } USD`) }
+          { renderTextRow('Subtotal', `${ vertexEnabled ? (taxes?.taxablePrice ?? '0') : taxablePrice } USD`) }
           {
-            vertexEnabled && 
-           renderTextRow('Taxes', `${ taxes?.totalTaxAmount ?? '0' } USD`) 
+            vertexEnabled &&
+           renderTextRow('Taxes', `${ taxes?.totalTaxAmount ?? '0' } USD`)
           }
           {
-            vertexEnabled && 
-            renderTextRow('Fee', '0 USD') 
+            vertexEnabled &&
+            renderTextRow('Fee', '0 USD')
           }
         </Box>
 
@@ -170,7 +170,7 @@ const CostBreakDown = ({ taxes, collectionData }: CostBreakDownProps) => {
           </Typography>
           <Box display="flex" flexDirection="column" alignItems="flex-end">
             <Typography variant="h5" fontWeight="700" fontSize="20px">
-              { vertexEnabled ? ( taxes?.totalTaxedPrice ?? '0') : taxablePrice } USD
+              { vertexEnabled ? (taxes?.totalTaxedPrice ?? '0') : taxablePrice } USD
             </Typography>
             <Typography variant="body1" fontSize="16px">
               2.00 ETH
