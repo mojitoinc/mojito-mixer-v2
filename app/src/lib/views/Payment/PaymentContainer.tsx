@@ -1,5 +1,5 @@
 import { Box, Card, Typography, useTheme } from '@mui/material';
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import moment from 'moment';
@@ -116,7 +116,7 @@ const PaymentContainer = ({
     initialValues: {
       isNew: paymentInfo?.creditCardData?.isNew ?? creditCardList.length === 0 ?? false,
       cardData: paymentInfo?.creditCardData?.cardData ?? undefined,
-      cardId: paymentInfo?.creditCardData?.cardId ?? creditCardList[0]?.id ??'',
+      cardId: paymentInfo?.creditCardData?.cardId ?? creditCardList[0]?.id ?? '',
       cardNumber: paymentInfo?.creditCardData?.cardNumber ?? '',
       cvv: paymentInfo?.creditCardData?.cvv ?? '',
       expiry: paymentInfo?.creditCardData?.expiry ?? '',
@@ -124,7 +124,7 @@ const PaymentContainer = ({
     } as CreditCardFormType,
     validationSchema: creditCardSchema,
     onSubmit: onSubmitCreditCard,
-    enableReinitialize:true,
+    enableReinitialize: true,
   });
 
 

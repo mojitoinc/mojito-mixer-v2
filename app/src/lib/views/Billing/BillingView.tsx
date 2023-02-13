@@ -1,6 +1,7 @@
 import { Box, Card, Typography, useTheme } from '@mui/material';
 import React, { useEffect, useMemo } from 'react';
-import { FormikErrors } from 'formik';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 import { useUIConfiguration, BillingFormData } from '../../providers';
 import { Button, TextInput } from '../../components';
 import { MixTheme } from '../../theme';
@@ -8,8 +9,6 @@ import BillingForm from './BillingForm';
 import ExpressCheckoutView from './ExpressCheckout';
 import BillingDetails from './BillingDetails';
 import { DebugBox } from '../../components/shared/DebugBox';
-import * as Yup from 'yup';
-import { useFormik } from 'formik';
 import { PaymentMethod } from '../../interfaces';
 
 interface BillingProps {
@@ -19,7 +18,7 @@ interface BillingProps {
   pincodeError?: boolean;
   paymentItem?: PaymentMethod;
   billingInfo?:BillingFormData;
-  fetchTaxes:(isValid:boolean,values:BillingFormData)=>void;
+  onChangeValues:(isValid:boolean, values:BillingFormData)=>void;
 }
 const schema = Yup.object().shape({
   country: Yup.string().required('Please select a country'),
@@ -41,10 +40,9 @@ const BillingView = ({
   pincodeError,
   billingInfo,
   paymentItem,
-  fetchTaxes
+  onChangeValues,
 }: BillingProps) => {
-
-  const { values, errors, handleChange:onChange, setValues, isValid,handleSubmit } = useFormik({
+  const { values, errors, handleChange: onChange, isValid, handleSubmit } = useFormik({
     initialValues: {
       email: billingInfo?.email ?? paymentItem?.metadata?.email,
       country: billingInfo?.country ?? paymentItem?.billingDetails?.country,
@@ -53,13 +51,13 @@ const BillingView = ({
       postalCode: billingInfo?.postalCode ?? paymentItem?.billingDetails?.postalCode,
       phoneNumber: billingInfo?.phoneNumber ?? paymentItem?.metadata?.phoneNumber,
       street1: billingInfo?.street1 ?? paymentItem?.billingDetails?.address1,
-      name:  billingInfo?.name ?? paymentItem?.billingDetails?.name,
+      name: billingInfo?.name ?? paymentItem?.billingDetails?.name,
       firstName: billingInfo?.lastName ?? paymentItem?.billingDetails?.name?.split(' ')?.[0],
       lastName: billingInfo?.lastName ?? paymentItem?.billingDetails?.name?.split(' ')?.[1],
     } as BillingFormData,
     onSubmit: onClickContinue,
     validationSchema: schema,
-    enableReinitialize:true,
+    enableReinitialize: true,
   });
 
   const isValidBillingForm = useMemo<boolean>(() => {
@@ -73,9 +71,9 @@ const BillingView = ({
     );
   }, [errors]);
 
-  useEffect(()=>{
-    fetchTaxes(isValidBillingForm,values)
-  },[isValidBillingForm,values])
+  useEffect(() => {
+    onChangeValues(isValidBillingForm, values);
+  }, [isValidBillingForm, values, onChangeValues]);
 
   const theme = useTheme<MixTheme>();
   const uiConfiguration = useUIConfiguration();

@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { useFormik } from 'formik';
 import { useLazyQuery, useQuery } from '@apollo/client';
 import { uuid } from 'uuidv4';
 import {
@@ -67,18 +66,17 @@ const BillingContainer = () => {
   }, [fetchBilling, orgId, debug]);
 
 
- 
-  const paymentItem = useMemo<PaymentMethod>(()=>{
+  const paymentItem = useMemo<PaymentMethod>(() => {
     return paymentData?.getPaymentMethodList?.find(
       (item: PaymentMethod) => item.type === PaymentTypes.CREDIT_CARD && item.billingDetails,
     ) ?? paymentData?.getPaymentMethodList[0];
-  },[paymentData])
+  }, [paymentData]);
 
   useEffect(() => {
-    debug.info('paymentData', paymentData);
+    debug.info('paymentData', paymentItem);
     if (paymentItem) {
       setIsEditing(false);
-    }else {
+    } else {
       setIsEditing(true);
     }
   }, [paymentItem, debug]);
@@ -87,14 +85,14 @@ const BillingContainer = () => {
     setIsEditing(true);
   }, []);
 
-  const fetchTaxes = useCallback((isValid:boolean,values:BillingFormData)=>{
+  const onChangeValues = useCallback((isValid:boolean, values:BillingFormData) => {
     if (isValid) {
       console.log('isValidBillingForm', isValid, values);
       if (vertexEnabled) refetchTaxes(values);
     } else {
       setIsEditing(true);
     }
-  },[vertexEnabled,refetchTaxes])
+  }, [vertexEnabled, refetchTaxes]);
 
   const onClickContinue = useCallback(async (values:BillingFormData) => {
     if (!isEditing) {
@@ -127,9 +125,8 @@ const BillingContainer = () => {
       onClickContinue={ onClickContinue }
       pincodeError={ pincodeError }
       billingInfo={ billingInfo }
-      paymentItem={ paymentItem}
-      fetchTaxes={fetchTaxes}
- />
+      paymentItem={ paymentItem }
+      onChangeValues={ onChangeValues } />
   );
 };
 

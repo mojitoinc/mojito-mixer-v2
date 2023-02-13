@@ -7,8 +7,7 @@ export const BillingViewStories = () => {
       isEditing
       onClickContinue={ () => undefined }
       onClickEdit={ () => undefined }
-      fetchTaxes={()=>undefined}
-       />
+      fetchTaxes={ () => undefined } />
   );
 };
 const stories = {
