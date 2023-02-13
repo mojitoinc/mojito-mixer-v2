@@ -1,6 +1,7 @@
 import { Box, Card, Typography, useTheme } from '@mui/material';
-import React from 'react';
-import { FormikErrors } from 'formik';
+import React, { useEffect, useMemo } from 'react';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 import { useUIConfiguration, BillingFormData } from '../../providers';
 import { Button, TextInput } from '../../components';
 import { MixTheme } from '../../theme';
@@ -8,32 +9,75 @@ import BillingForm from './BillingForm';
 import ExpressCheckoutView from './ExpressCheckout';
 import BillingDetails from './BillingDetails';
 import { DebugBox } from '../../components/shared/DebugBox';
+import { PaymentMethod } from '../../interfaces';
 
 interface BillingProps {
   isEditing: boolean;
-  values: BillingFormData;
-  errors: FormikErrors<BillingFormData>;
-  onChange: any;
   onClickEdit: () => void;
-  onClickContinue: () => void;
-  isValid: boolean;
-  isValidBillingForm: boolean;
+  onClickContinue: (values:BillingFormData) => void;
   pincodeError?: boolean;
+  paymentItem?: PaymentMethod;
+  billingInfo?:BillingFormData;
+  onChangeValues:(isValid:boolean, values:BillingFormData)=>void;
 }
-
+const schema = Yup.object().shape({
+  country: Yup.string().required('Please select a country'),
+  state: Yup.string().required('Please select a state'),
+  city: Yup.string().required('Please select a city'),
+  postalCode: Yup.string().required('Please enter zipcode'),
+  email: Yup.string()
+    .email('Please enter valid email')
+    .required('Please enter email'),
+  phoneNumber: Yup.string().required('Please enter a mobile number'),
+  street1: Yup.string().required('Please enter your address'),
+  firstName: Yup.string().required('Please enter first name'),
+  lastName: Yup.string().required('Please enter last name'),
+});
 const BillingView = ({
   isEditing,
-  values,
-  errors,
-  onChange,
   onClickEdit,
   onClickContinue,
-  isValid,
-  isValidBillingForm,
   pincodeError,
+  billingInfo,
+  paymentItem,
+  onChangeValues,
 }: BillingProps) => {
+  const { values, errors, handleChange: onChange, isValid, handleSubmit } = useFormik({
+    initialValues: {
+      email: billingInfo?.email ?? paymentItem?.metadata?.email,
+      country: billingInfo?.country ?? paymentItem?.billingDetails?.country,
+      state: billingInfo?.state ?? paymentItem?.billingDetails?.district,
+      city: billingInfo?.city ?? paymentItem?.billingDetails?.city,
+      postalCode: billingInfo?.postalCode ?? paymentItem?.billingDetails?.postalCode,
+      phoneNumber: billingInfo?.phoneNumber ?? paymentItem?.metadata?.phoneNumber,
+      street1: billingInfo?.street1 ?? paymentItem?.billingDetails?.address1,
+      name: billingInfo?.name ?? paymentItem?.billingDetails?.name,
+      firstName: billingInfo?.lastName ?? paymentItem?.billingDetails?.name?.split(' ')?.[0],
+      lastName: billingInfo?.lastName ?? paymentItem?.billingDetails?.name?.split(' ')?.[1],
+    } as BillingFormData,
+    onSubmit: onClickContinue,
+    validationSchema: schema,
+    enableReinitialize: true,
+  });
+
+  const isValidBillingForm = useMemo<boolean>(() => {
+    return !(
+      errors?.country ||
+      errors?.state ||
+      errors?.city ||
+      errors?.postalCode ||
+      errors?.phoneNumber ||
+      errors?.name
+    );
+  }, [errors]);
+
+  useEffect(() => {
+    onChangeValues(isValidBillingForm, values);
+  }, [isValidBillingForm, values, onChangeValues]);
+
   const theme = useTheme<MixTheme>();
   const uiConfiguration = useUIConfiguration();
+
   return (
     <Box width="100%">
       { !uiConfiguration?.billing?.isEnableExpressCheckout && (
@@ -76,7 +120,7 @@ const BillingView = ({
           title="Continue to Payment"
           backgroundColor={ theme.global?.checkout?.continueButtonBackground }
           textColor={ theme.global?.checkout?.continueButtonTextColor }
-          onClick={ onClickContinue }
+          onClick={ handleSubmit }
           sx={{
             margin: '24px 0px',
             '&: hover': {

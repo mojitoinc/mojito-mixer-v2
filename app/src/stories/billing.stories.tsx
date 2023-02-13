@@ -4,14 +4,10 @@ import BillingView from '@lib/views/Billing/BillingView';
 export const BillingViewStories = () => {
   return (
     <BillingView
-      errors={{}}
       isEditing
-      onChange={ () => undefined }
       onClickContinue={ () => undefined }
       onClickEdit={ () => undefined }
-      values={{}}
-      isValid={ false }
-      isValidBillingForm={ false } />
+      fetchTaxes={ () => undefined } />
   );
 };
 const stories = {
