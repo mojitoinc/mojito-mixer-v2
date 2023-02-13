@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useFormik } from 'formik';
-import * as Yup from 'yup';
 import { useLazyQuery, useQuery } from '@apollo/client';
 import { uuid } from 'uuidv4';
 import {
@@ -18,6 +17,7 @@ import {
 } from '../../providers';
 import BillingView from './BillingView';
 import { ContainerTypes } from '../../interfaces/ContextInterface';
+import { PaymentTypes } from '../../constants';
 
 const BillingContainer = () => {
   const debug = useDebug('Billing');
@@ -66,97 +66,37 @@ const BillingContainer = () => {
     }
   }, [fetchBilling, orgId, debug]);
 
-  const schema = Yup.object().shape({
-    country: Yup.string().required('Please select a country'),
-    state: Yup.string().required('Please select a state'),
-    city: Yup.string().required('Please select a city'),
-    postalCode: Yup.string().required('Please enter zipcode'),
-    email: Yup.string()
-      .email('Please enter valid email')
-      .required('Please enter email'),
-    phoneNumber: Yup.string().required('Please enter a mobile number'),
-    street1: Yup.string().required('Please enter your address'),
-    firstName: Yup.string().required('Please enter first name'),
-    lastName: Yup.string().required('Please enter last name'),
-  });
 
-  const { values, errors, handleChange, setValues, isValid } = useFormik({
-    initialValues: {
-      email: '',
-      country: '',
-      state: '',
-      city: '',
-      postalCode: '',
-      phoneNumber: '',
-      street1: '',
-      name: '',
-      firstName: '',
-      lastName: '',
-    } as BillingFormData,
-    onSubmit: () => undefined,
-    validationSchema: schema,
-  });
-
-  const isValidBillingForm = useMemo<boolean>(() => {
-    return !(
-      errors?.country ||
-      errors?.state ||
-      errors?.city ||
-      errors?.postalCode ||
-      errors?.phoneNumber ||
-      errors?.name
-    );
-  }, [errors]);
-
-  const setBillingValues = useCallback(async () => {
-    const paymentItem: PaymentMethod = paymentData?.getPaymentMethodList?.find(
-      (item: PaymentMethod) => item.type === 'CreditCard' && item.billingDetails,
+ 
+  const paymentItem = useMemo<PaymentMethod>(()=>{
+    return paymentData?.getPaymentMethodList?.find(
+      (item: PaymentMethod) => item.type === PaymentTypes.CREDIT_CARD && item.billingDetails,
     ) ?? paymentData?.getPaymentMethodList[0];
-    if (paymentItem) {
-      setIsEditing(false);
-      const name = paymentItem?.billingDetails?.name?.split(' ');
-      const billingValues: BillingFormData = {
-        city: billingInfo?.city ?? paymentItem?.billingDetails?.city,
-        country: billingInfo?.country ?? paymentItem?.billingDetails?.country,
-        postalCode:
-          billingInfo?.postalCode ?? paymentItem?.billingDetails?.postalCode,
-        state: billingInfo?.state ?? paymentItem?.billingDetails?.district,
-        email: billingInfo?.email ?? paymentItem?.metadata?.email,
-        phoneNumber:
-          billingInfo?.phoneNumber ?? paymentItem?.metadata?.phoneNumber,
-        street1: billingInfo?.street1 ?? paymentItem?.billingDetails?.address1,
-        name: billingInfo?.name ?? paymentItem?.billingDetails?.name,
-        firstName: billingInfo?.firstName ?? name?.[0],
-        lastName: billingInfo?.lastName ?? name?.[1],
-      };
-      setValues(billingValues);
-    } else {
-      setIsEditing(true);
-    }
-  }, [billingInfo, paymentData, setValues]);
+  },[paymentData])
 
   useEffect(() => {
     debug.info('paymentData', paymentData);
-    if (paymentData) {
-      setBillingValues();
+    if (paymentItem) {
+      setIsEditing(false);
+    }else {
+      setIsEditing(true);
     }
-  }, [paymentData, setBillingValues, debug]);
+  }, [paymentItem, debug]);
 
   const onClickEdit = useCallback(() => {
     setIsEditing(true);
   }, []);
 
-  useEffect(() => {
-    if (isValidBillingForm) {
-      console.log('isValidBillingForm', isValidBillingForm, values);
+  const fetchTaxes = useCallback((isValid:boolean,values:BillingFormData)=>{
+    if (isValid) {
+      console.log('isValidBillingForm', isValid, values);
       if (vertexEnabled) refetchTaxes(values);
     } else {
       setIsEditing(true);
     }
-  }, [values, refetchTaxes, isValidBillingForm, vertexEnabled]);
+  },[vertexEnabled,refetchTaxes])
 
-  const onClickContinue = useCallback(async () => {
-    if (isEditing && !isValid) return;
+  const onClickContinue = useCallback(async (values:BillingFormData) => {
     if (!isEditing) {
       const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
       const isValidEmail = emailRegex.test(values?.email ?? '');
@@ -173,10 +113,8 @@ const BillingContainer = () => {
     });
     setContainerState(ContainerTypes.PAYMENT);
   }, [
-    values,
     setBillingInfo,
     isEditing,
-    isValid,
     setContainerState,
     paymentInfo,
     setPaymentInfo,
@@ -185,14 +123,13 @@ const BillingContainer = () => {
   return (
     <BillingView
       isEditing={ isEditing }
-      values={ values }
-      errors={ errors }
-      onChange={ handleChange }
       onClickEdit={ onClickEdit }
       onClickContinue={ onClickContinue }
-      isValidBillingForm={ isValidBillingForm }
       pincodeError={ pincodeError }
-      isValid={ isValid } />
+      billingInfo={ billingInfo }
+      paymentItem={ paymentItem}
+      fetchTaxes={fetchTaxes}
+ />
   );
 };
 

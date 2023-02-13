@@ -114,9 +114,9 @@ const PaymentContainer = ({
     dirty: creditHasDirty,
   } = useFormik({
     initialValues: {
-      isNew: paymentInfo?.creditCardData?.isNew ?? false,
+      isNew: paymentInfo?.creditCardData?.isNew ?? creditCardList.length === 0 ?? false,
       cardData: paymentInfo?.creditCardData?.cardData ?? undefined,
-      cardId: paymentInfo?.creditCardData?.cardId ?? '',
+      cardId: paymentInfo?.creditCardData?.cardId ?? creditCardList[0]?.id ??'',
       cardNumber: paymentInfo?.creditCardData?.cardNumber ?? '',
       cvv: paymentInfo?.creditCardData?.cvv ?? '',
       expiry: paymentInfo?.creditCardData?.expiry ?? '',
@@ -124,14 +124,9 @@ const PaymentContainer = ({
     } as CreditCardFormType,
     validationSchema: creditCardSchema,
     onSubmit: onSubmitCreditCard,
+    enableReinitialize:true,
   });
 
-  useEffect(() => {
-    if (creditCardList.length > 0) {
-      onSetCreditCardField('cardId', creditCardList[0].id);
-    }
-    onSetCreditCardField('isNew', creditCardList.length === 0);
-  }, [creditCardList, onSetCreditCardField]);
 
   const onClickDelivery = useCallback(() => {
     if (paymentInfo?.paymentType === PaymentTypes.CREDIT_CARD) {
