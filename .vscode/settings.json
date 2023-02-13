@@ -10,5 +10,8 @@
     80,
     120,
     160
-  ]
+  ],
+  "jest.nodeEnv": {
+    "NODE_OPTIONS": "--experimental-vm-modules"
+  }
 }
