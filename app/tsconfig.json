@@ -16,7 +16,7 @@
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "jsx": "react",
+    "jsx": "preserve",
     "isolatedModules": true,
     "paths": {
       "@components": [

@@ -32,7 +32,7 @@ export const PaymentContainer = () => {
   );
   const onChoosePaymentType = useCallback(
     (name: PaymentTypes, value: boolean) => {
-      setPaymentType(value ? name : paymentType);
+      value && setPaymentType(name);
     },
     [paymentType],
   );
@@ -70,7 +70,8 @@ export const PaymentContainer = () => {
     }
   }, [paymentData]);
 
-  const onSubmitCreditCard = useCallback(async (creditCardFormValues : CreditCardFormType) => {
+  const onSubmitCreditCard = useCallback(async (creditCardFormValues: CreditCardFormType) => {
+    console.log('creditCardFormValues', { creditCardFormValues })
     const selectedCard = creditCardList.find(
       (item: PaymentMethod) => item.id === creditCardFormValues?.cardId,
     );
@@ -121,7 +122,7 @@ export const PaymentContainer = () => {
     setPaymentInfo,
   ]);
 
-  const onSubmitWireTransfer = useCallback((wireTransferFormValues : WireTransferFormData) => {
+  const onSubmitWireTransfer = useCallback((wireTransferFormValues: WireTransferFormData) => {
     setPaymentInfo({
       ...paymentInfo,
       paymentType,
@@ -145,15 +146,15 @@ export const PaymentContainer = () => {
 
   return (
     <PaymentContainerView
-      paymentType={ paymentType }
-      onChoosePaymentType={ onChoosePaymentType }
-      creditCardList={ creditCardList }
-      config={ uiConfiguration?.payment }
-      billingInfo={ billingInfo }
-      paymentMethodLimit={ paymentMethods }
-      screeningError={ screeningError }
-      paymentInfo={ paymentInfo }
-      onSubmitWireTransfer={ onSubmitWireTransfer }
-      onSubmitCreditCard={ onSubmitCreditCard } />
+      paymentType={paymentType}
+      onChoosePaymentType={onChoosePaymentType}
+      creditCardList={creditCardList}
+      config={uiConfiguration?.payment}
+      billingInfo={billingInfo}
+      paymentMethodLimit={paymentMethods}
+      screeningError={screeningError}
+      paymentInfo={paymentInfo}
+      onSubmitWireTransfer={onSubmitWireTransfer}
+      onSubmitCreditCard={onSubmitCreditCard} />
   );
 };
