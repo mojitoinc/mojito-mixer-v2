@@ -210,8 +210,8 @@ export const useCreatePayment = (paymentInfo: PaymentData | undefined, orgId: st
         billingDetails: copiedBillingDetails,
       };
     } else {
-      // delete wireData.accountNumber;
-      // delete wireData.routingNumber;
+      delete wireData.accountNumber;
+      delete wireData.routingNumber;
       delete wireData.country;
       inputData.wireData = {
         ...wireData,
