@@ -16,7 +16,7 @@ import { formCardScreeningVariable } from '../Delivery/Delivery.service';
 import { cardScreeningQuery } from '../../queries/creditCard';
 import { meQuery } from '../../queries/me';
 import PaymentContainerView from './PaymentContainer';
-import { WireTransferFormData } from './WireTransferForm';
+import { Countries, WireTransferFormData } from './WireTransferForm';
 
 export const PaymentContainer = () => {
   const { orgId } = useCheckout();
@@ -129,10 +129,13 @@ export const PaymentContainer = () => {
       wireData: {
         accountNumber: wireTransferFormValues.accountNumber.split(' ').join(''),
         routingNumber: wireTransferFormValues.aba.split(' ').join(''),
+        iban: wireTransferFormValues.iban.split(' ').join(''),
         bankAddress: {
           bankName: wireTransferFormValues.bankName,
-          country: wireTransferFormValues.bankCountry,
+          country: wireTransferFormValues.country === Countries.US ? Countries.US : wireTransferFormValues.bankCountry,
+          city: wireTransferFormValues.city,
         },
+        country: wireTransferFormValues.country,
       },
     });
     setContainerState(ContainerTypes.DELIVERY);

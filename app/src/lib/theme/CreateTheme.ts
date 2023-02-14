@@ -76,6 +76,9 @@ export const makeTheme = (themeConfiguration?: MojitoThemeConfiguration) => {
       },
       cardGrayedText: '#5C5C9B',
       grayBackground: '#F4F4F5',
+      multiSigBorder: '#0b96b4',
+      multiSigBackground: '#c0f2ff',
+      multiSigText: '#0b96b4',
     },
   } as MixThemeOptions) as MixTheme;
 };

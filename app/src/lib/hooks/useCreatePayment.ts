@@ -12,12 +12,15 @@ import { useAPIService } from './useAPIService';
 export interface PaymentData {
   creditCardData?: CreditCardFormType;
   wireData? : {
-    accountNumber: string,
-    routingNumber: string,
+    accountNumber: string;
+    routingNumber: string;
+    iban: string;
     bankAddress: {
       bankName: string;
       country: string;
+      city: string;
     };
+    country: string;
   };
   paymentId?: string;
   paymentType?: string;
@@ -34,7 +37,10 @@ export interface PaymentOptions {
   billingInfo: BillingFormData | undefined;
 }
 
-
+export const Countries = {
+  US: 'US',
+  INTERNATIONAL: 'International',
+};
 export interface PaymentReceiptData {
   paymentData: PaymentData;
   reserveLotData: ReserveNow
@@ -195,10 +201,23 @@ export const useCreatePayment = (paymentInfo: PaymentData | undefined, orgId: st
     delete copiedBillingDetails.firstName;
     delete copiedBillingDetails.lastName;
     inputData.paymentType = 'Wire';
-    inputData.wireData = {
-      ...paymentInfo?.wireData,
-      billingDetails: copiedBillingDetails,
-    };
+    const wireData = { ...paymentInfo?.wireData };
+    if (paymentInfo?.wireData?.country === Countries.US) {
+      delete wireData.iban;
+      delete wireData.country;
+      inputData.wireData = {
+        ...wireData,
+        billingDetails: copiedBillingDetails,
+      };
+    } else {
+      delete wireData.accountNumber;
+      delete wireData.routingNumber;
+      delete wireData.country;
+      inputData.wireData = {
+        ...wireData,
+        billingDetails: copiedBillingDetails,
+      };
+    }
     const result = await createPaymentMethod({
       variables: {
         orgID: orgId,
