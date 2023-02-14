@@ -24,14 +24,14 @@ const schema = Yup.object().shape({
   country: Yup.string().required('Please select a country'),
   state: Yup.string().required('Please select a state'),
   city: Yup.string().required('Please select a city'),
-  postalCode: Yup.string().required('Please enter zipcode'),
+  postalCode: Yup.string().min(5,"Invalid zipcode").required('Please enter zipcode'),
   email: Yup.string()
     .email('Please enter valid email')
     .required('Please enter email'),
   phoneNumber: Yup.string().required('Please enter a mobile number'),
   street1: Yup.string().required('Please enter your address'),
-  firstName: Yup.string().required('Please enter first name'),
-  lastName: Yup.string().required('Please enter last name'),
+  firstName: Yup.string().min(2,"Invalid first name").required('Please enter first name'),
+  lastName: Yup.string().min(2,"Invalid last name").required('Please enter last name'),
 });
 const BillingView = ({
   isEditing,

@@ -69,15 +69,30 @@ export const CreditCardForm = ({
   const formatExpiry = useCallback(
     async (value: string) => {
       const expiryLength = values?.expiry ? values?.expiry?.length : 0;
+
+      const isValid = value.split('/').join('').match(/^[\d\s]+$/);
+
       if (expiryLength > value.length) {
         await setFieldValue('expiry', value);
         return;
       }
+      if(isValid || value === ''){
+
       const expiry = value.split('/').join('');
 
       await setFieldValue('expiry', expiry.replace(/\d{2}(?=.)/g, '$&/'));
+    }
     },
     [setFieldValue, values],
+  );
+  const formatCVV = useCallback(
+    async (value: string) => {
+      const isValid = value.match(/^[\d\s]+$/);
+      if(isValid || value === ''){
+        await setFieldValue('cvv', value);
+      }
+    },
+    [setFieldValue],
   );
 
   return (
@@ -148,12 +163,12 @@ export const CreditCardForm = ({
           placeholder="MM/YY" />
         <TextInput
           value={ values?.cvv }
-          onChange={ handleChange('cvv') }
+          onChange={ formatCVV }
           error={ errors?.cvv }
           inputProps={{
             maxLength: 3,
           }}
-          type="number"
+          type="text"
           sx={{
             marginTop: '16px',
             width: '48%',

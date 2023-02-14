@@ -20,10 +20,13 @@ export interface PaymentData {
   wireData?: {
     accountNumber: string;
     routingNumber: string;
+    iban: string;
     bankAddress: {
       bankName: string;
       country: string;
+      city: string;
     };
+    country: string;
   };
   paymentId?: string;
   paymentType?: string;

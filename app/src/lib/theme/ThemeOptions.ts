@@ -29,6 +29,9 @@ export interface ExtendsThemeOptions {
         paymentConfirmation: PaymentConfirmationColor;
         cardGrayedText: string;
         grayBackground: string;
+        multiSigBorder:string,
+        multiSigBackground:string,
+        multiSigText:string,
     };
 }
 export type MixThemeOptions = ExtendsThemeOptions & ThemeOptions;
