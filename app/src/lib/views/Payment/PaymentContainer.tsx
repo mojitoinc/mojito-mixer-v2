@@ -30,8 +30,8 @@ interface PaymentContainerProps {
   paymentMethodLimit: PaymentMethodLimit | undefined;
   screeningError?: string;
   paymentInfo?: PaymentData;
-  onSubmitWireTransfer : (values : WireTransferFormData)=>void;
-  onSubmitCreditCard: (values : CreditCardFormType)=>void
+  onSubmitWireTransfer: (values: WireTransferFormData) => void;
+  onSubmitCreditCard: (values: CreditCardFormType) => void
 }
 
 const validationSchema = Yup.object().shape({
@@ -129,13 +129,13 @@ const PaymentContainer = ({
 
 
   const onClickDelivery = useCallback(() => {
-    if (paymentInfo?.paymentType === PaymentTypes.CREDIT_CARD) {
+    if (paymentType === PaymentTypes.CREDIT_CARD) {
       handleCreditCardSubmit();
     }
-    if (paymentInfo?.paymentType === PaymentTypes.WIRE_TRANSFER) {
+    if (paymentType === PaymentTypes.WIRE_TRANSFER) {
       handleWireTransferSubmit();
     }
-  }, [paymentInfo, handleCreditCardSubmit, handleWireTransferSubmit]);
+  }, [paymentType, handleCreditCardSubmit, handleWireTransferSubmit]);
 
   const buttonDisabled = useMemo<boolean>(() => {
     if (paymentType === PaymentTypes.CREDIT_CARD) {

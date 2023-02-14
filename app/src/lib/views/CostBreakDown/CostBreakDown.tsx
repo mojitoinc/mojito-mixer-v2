@@ -98,7 +98,7 @@ const CostBreakDown = ({ taxes, collectionData }: CostBreakDownProps) => {
                   fontSize: '14px',
                   fontStyle: 'italic',
                 }}>
-                { collectionData?.details?.totalUnits ?? '0' } remaining
+                { collectionData?.details?.totalAvailableUnits ?? '0' } remaining
               </Typography>
             </Box>
           </Box>
@@ -106,9 +106,9 @@ const CostBreakDown = ({ taxes, collectionData }: CostBreakDownProps) => {
             <Typography variant="subtitle2" fontWeight="700" fontSize="14px">
               { taxes?.taxablePrice ?? '0' } USD
             </Typography>
-            <Typography variant="body2" fontSize="14px">
+            { /* <Typography variant="body2" fontSize="14px">
               2.00 ETH
-            </Typography>
+            </Typography> */ }
           </Box>
         </Box>
         { uiConfiguration?.costBreakdown?.showDiscountCode &&
@@ -147,7 +147,7 @@ const CostBreakDown = ({ taxes, collectionData }: CostBreakDownProps) => {
           { renderTextRow('Subtotal', `${ vertexEnabled ? (taxes?.taxablePrice ?? '0') : taxablePrice } USD`) }
           {
             vertexEnabled &&
-           renderTextRow('Taxes', `${ taxes?.totalTaxAmount ?? '0' } USD`)
+            renderTextRow('Taxes', `${ taxes?.totalTaxAmount ?? '0' } USD`)
           }
           {
             vertexEnabled &&
@@ -172,9 +172,9 @@ const CostBreakDown = ({ taxes, collectionData }: CostBreakDownProps) => {
             <Typography variant="h5" fontWeight="700" fontSize="20px">
               { vertexEnabled ? (taxes?.totalTaxedPrice ?? '0') : taxablePrice } USD
             </Typography>
-            <Typography variant="body1" fontSize="16px">
+            { /* <Typography variant="body1" fontSize="16px">
               2.00 ETH
-            </Typography>
+            </Typography> */ }
           </Box>
         </Box>
       </Box>

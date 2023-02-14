@@ -32,9 +32,9 @@ export const PaymentContainer = () => {
   );
   const onChoosePaymentType = useCallback(
     (name: PaymentTypes, value: boolean) => {
-      setPaymentType(value ? name : paymentType);
+      if (value) setPaymentType(name);
     },
-    [paymentType],
+    [],
   );
   useEffect(() => {
     setPaymentType(paymentInfo?.paymentType ?? PaymentTypes.CREDIT_CARD);
@@ -70,7 +70,8 @@ export const PaymentContainer = () => {
     }
   }, [paymentData]);
 
-  const onSubmitCreditCard = useCallback(async (creditCardFormValues : CreditCardFormType) => {
+  const onSubmitCreditCard = useCallback(async (creditCardFormValues: CreditCardFormType) => {
+    console.log('creditCardFormValues', { creditCardFormValues });
     const selectedCard = creditCardList.find(
       (item: PaymentMethod) => item.id === creditCardFormValues?.cardId,
     );
@@ -121,7 +122,7 @@ export const PaymentContainer = () => {
     setPaymentInfo,
   ]);
 
-  const onSubmitWireTransfer = useCallback((wireTransferFormValues : WireTransferFormData) => {
+  const onSubmitWireTransfer = useCallback((wireTransferFormValues: WireTransferFormData) => {
     setPaymentInfo({
       ...paymentInfo,
       paymentType,
