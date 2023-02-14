@@ -34,10 +34,10 @@ const CostBreakDown = ({ taxes, collectionData }: CostBreakDownProps) => {
         justifyContent="space-between"
         margin="10px 0px">
         <Typography variant="body2" fontSize="14px">
-          {text}
+          { text }
         </Typography>
         <Typography variant="subtitle2" fontWeight="700">
-          {value}
+          { value }
         </Typography>
       </Box>
     );
@@ -48,7 +48,7 @@ const CostBreakDown = ({ taxes, collectionData }: CostBreakDownProps) => {
       width="calc(50% - 80px)"
       height="100%"
       sx={{
-        backgroundImage: `url(${Icons.background})`,
+        backgroundImage: `url(${ Icons.background })`,
         backgroundSize: '100%',
         alignSelf: 'stretch',
         padding: '40px',
@@ -72,7 +72,7 @@ const CostBreakDown = ({ taxes, collectionData }: CostBreakDownProps) => {
                 width: '80px',
                 height: '80px',
               }}
-              src={Icons.item} />
+              src={ Icons.item } />
             <Box
               sx={{
                 marginLeft: '16px',
@@ -84,12 +84,12 @@ const CostBreakDown = ({ taxes, collectionData }: CostBreakDownProps) => {
                   fontSize: '20px',
                   marginBottom: '4px',
                 }}>
-                {collectionData?.name}
+                { collectionData?.name }
               </Typography>
               <Typography
                 variant="body1"
                 sx={{ marginBottom: '12px', fontSize: '14px' }}>
-                Qty : {quantity}
+                Qty : { quantity }
               </Typography>
               <Typography
                 variant="body1"
@@ -98,20 +98,20 @@ const CostBreakDown = ({ taxes, collectionData }: CostBreakDownProps) => {
                   fontSize: '14px',
                   fontStyle: 'italic',
                 }}>
-                {collectionData?.details?.totalAvailableUnits ?? '0'} remaining
+                { collectionData?.details?.totalAvailableUnits ?? '0' } remaining
               </Typography>
             </Box>
           </Box>
           <Box display="flex" flexDirection="column" alignItems="flex-end">
             <Typography variant="subtitle2" fontWeight="700" fontSize="14px">
-              {taxes?.taxablePrice ?? '0'} USD
+              { taxes?.taxablePrice ?? '0' } USD
             </Typography>
-            {/* <Typography variant="body2" fontSize="14px">
+            { /* <Typography variant="body2" fontSize="14px">
               2.00 ETH
-            </Typography> */}
+            </Typography> */ }
           </Box>
         </Box>
-        {uiConfiguration?.costBreakdown?.showDiscountCode &&
+        { uiConfiguration?.costBreakdown?.showDiscountCode &&
           containerState !== ContainerTypes.CONFIRMATION && (
             <>
               <Divider
@@ -129,14 +129,14 @@ const CostBreakDown = ({ taxes, collectionData }: CostBreakDownProps) => {
                   }} />
                 <Button
                   title="Apply"
-                  backgroundColor={theme.global?.costBreakdown?.applyButtonBackground}
+                  backgroundColor={ theme.global?.costBreakdown?.applyButtonBackground }
                   sx={{
                     marginLeft: '8px',
                   }}
-                  textColor={theme.global?.costBreakdown?.applyButtonTextColor} />
+                  textColor={ theme.global?.costBreakdown?.applyButtonTextColor } />
               </Box>
             </>
-          )}
+        ) }
 
         <Divider
           sx={{
@@ -144,10 +144,10 @@ const CostBreakDown = ({ taxes, collectionData }: CostBreakDownProps) => {
             margin: '20px 0px 20px 0px',
           }} />
         <Box>
-          {renderTextRow('Subtotal', `${vertexEnabled ? (taxes?.taxablePrice ?? '0') : taxablePrice} USD`)}
+          { renderTextRow('Subtotal', `${ vertexEnabled ? (taxes?.taxablePrice ?? '0') : taxablePrice } USD`) }
           {
             vertexEnabled &&
-            renderTextRow('Taxes', `${taxes?.totalTaxAmount ?? '0'} USD`)
+            renderTextRow('Taxes', `${ taxes?.totalTaxAmount ?? '0' } USD`)
           }
           {
             vertexEnabled &&
@@ -170,11 +170,11 @@ const CostBreakDown = ({ taxes, collectionData }: CostBreakDownProps) => {
           </Typography>
           <Box display="flex" flexDirection="column" alignItems="flex-end">
             <Typography variant="h5" fontWeight="700" fontSize="20px">
-              {vertexEnabled ? (taxes?.totalTaxedPrice ?? '0') : taxablePrice} USD
+              { vertexEnabled ? (taxes?.totalTaxedPrice ?? '0') : taxablePrice } USD
             </Typography>
-            {/* <Typography variant="body1" fontSize="16px">
+            { /* <Typography variant="body1" fontSize="16px">
               2.00 ETH
-            </Typography> */}
+            </Typography> */ }
           </Box>
         </Box>
       </Box>
