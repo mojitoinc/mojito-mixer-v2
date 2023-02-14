@@ -38,8 +38,8 @@ export interface PaymentOptions {
 }
 
 export const Countries = {
-  US: "US",
-  INTERNATIONAL: "International",
+  US: 'US',
+  INTERNATIONAL: 'International',
 };
 export interface PaymentReceiptData {
   paymentData: PaymentData;
@@ -201,15 +201,15 @@ export const useCreatePayment = (paymentInfo: PaymentData | undefined, orgId: st
     delete copiedBillingDetails.firstName;
     delete copiedBillingDetails.lastName;
     inputData.paymentType = 'Wire';
-    const wireData = {...paymentInfo?.wireData,}
-    if(paymentInfo?.wireData?.country === Countries.US) {
+    const wireData = { ...paymentInfo?.wireData };
+    if (paymentInfo?.wireData?.country === Countries.US) {
       delete wireData.iban;
       delete wireData.country;
       inputData.wireData = {
         ...wireData,
         billingDetails: copiedBillingDetails,
       };
-    }else {
+    } else {
       // delete wireData.accountNumber;
       // delete wireData.routingNumber;
       delete wireData.country;

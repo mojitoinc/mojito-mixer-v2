@@ -132,7 +132,7 @@ export const PaymentContainer = () => {
         iban: wireTransferFormValues.iban.split(' ').join(''),
         bankAddress: {
           bankName: wireTransferFormValues.bankName,
-          country:wireTransferFormValues.country === Countries.US? Countries.US : wireTransferFormValues.bankCountry,
+          country: wireTransferFormValues.country === Countries.US ? Countries.US : wireTransferFormValues.bankCountry,
           city: wireTransferFormValues.city,
         },
         country: wireTransferFormValues.country,

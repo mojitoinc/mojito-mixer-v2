@@ -11,7 +11,7 @@ import { CreditCardFormType, PaymentMethod } from '../../interfaces';
 import { BillingFormData, PaymentData, PaymentMethodLimit } from '../../providers';
 import { PaymentInfoCards } from './InfoCards';
 import { PaymentMethodView } from './PaymentMethodView';
-import { WireTransferForm, WireTransferFormData,Countries } from './WireTransferForm';
+import { WireTransferForm, WireTransferFormData, Countries } from './WireTransferForm';
 import { CreditCardForm } from './CreditCardForm';
 import { DebugBox } from '../../components/shared/DebugBox';
 
@@ -36,32 +36,32 @@ interface PaymentContainerProps {
 
 const validationSchema = Yup.object().shape({
   country: Yup.string().required('Please select country'),
-  bankCountry:Yup.string().when('country', {
+  bankCountry: Yup.string().when('country', {
     is: Countries.INTERNATIONAL,
-    then : Yup.string().required('Please select bank country'),
+    then: Yup.string().required('Please select bank country'),
     otherwise: Yup.string(),
   }),
   accountNumber: Yup.string().when('country', {
     is: Countries.US,
-    then : Yup.string().matches(/^[\d\s]+$/, 'Invalid account number')
-    .min(8, 'Invalid account number')
-    .required('Please enter account number'),
+    then: Yup.string().matches(/^[\d\s]+$/, 'Invalid account number')
+      .min(8, 'Invalid account number')
+      .required('Please enter account number'),
     otherwise: Yup.string(),
   }),
   aba: Yup.string().when('country', {
     is: Countries.US,
-    then : Yup.string().matches(/^[\d\s]+$/, 'Invalid aba')
-    .min(9, 'Invalid aba')
-    .required('Please enter aba'),
+    then: Yup.string().matches(/^[\d\s]+$/, 'Invalid aba')
+      .min(9, 'Invalid aba')
+      .required('Please enter aba'),
     otherwise: Yup.string(),
   }),
   iban: Yup.string().when('country', {
     is: Countries.INTERNATIONAL,
-    then : Yup.string().matches(/^([A-Z]{2}[ \-]?[0-9]{2})(?=(?:[ \-]?[A-Z0-9]){9,30}$)((?:[ \-]?[A-Z0-9]{3,5}){2,7})([ \-]?[A-Z0-9]{1,3})?$/
-    , 'Invalid International Bank Account Number')
+    then: Yup.string().matches(/^([A-Z]{2}[ -]?[0-9]{2})(?=(?:[ -]?[A-Z0-9]){9,30}$)((?:[ -]?[A-Z0-9]{3,5}){2,7})([ -]?[A-Z0-9]{1,3})?$/,
+      'Invalid International Bank Account Number')
       .min(20, 'Invalid International Bank Account Number')
       .required('Please enter International Bank Account Number'),
-    otherwise: Yup.string()
+    otherwise: Yup.string(),
   }),
   bankName: Yup.string().min(2, 'Invalid Bank name').required('Please enter bank name'),
   city: Yup.string().min(2, 'Invalid city').required('Please enter city'),
@@ -119,7 +119,7 @@ const PaymentContainer = ({
       aba: paymentInfo?.wireData?.routingNumber ?? '',
       bankCountry: paymentInfo?.wireData?.bankAddress?.country ?? '',
       bankName: paymentInfo?.wireData?.bankAddress?.bankName ?? '',
-      iban:paymentInfo?.wireData?.iban ?? '',
+      iban: paymentInfo?.wireData?.iban ?? '',
       city: paymentInfo?.wireData?.bankAddress?.city ?? '',
       country: paymentInfo?.wireData?.country ?? '',
     } as WireTransferFormData,

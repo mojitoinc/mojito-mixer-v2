@@ -76,19 +76,18 @@ export const CreditCardForm = ({
         await setFieldValue('expiry', value);
         return;
       }
-      if(isValid || value === ''){
+      if (isValid || value === '') {
+        const expiry = value.split('/').join('');
 
-      const expiry = value.split('/').join('');
-
-      await setFieldValue('expiry', expiry.replace(/\d{2}(?=.)/g, '$&/'));
-    }
+        await setFieldValue('expiry', expiry.replace(/\d{2}(?=.)/g, '$&/'));
+      }
     },
     [setFieldValue, values],
   );
   const formatCVV = useCallback(
     async (value: string) => {
       const isValid = value.match(/^[\d\s]+$/);
-      if(isValid || value === ''){
+      if (isValid || value === '') {
         await setFieldValue('cvv', value);
       }
     },

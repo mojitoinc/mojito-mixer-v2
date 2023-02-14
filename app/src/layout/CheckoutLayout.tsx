@@ -281,8 +281,7 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
           events={{
             onEvent,
           }}
-          show={ show }
-           />
+          show={ show } />
       ) }
     </>
   );
