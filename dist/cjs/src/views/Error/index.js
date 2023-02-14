@@ -298,7 +298,14 @@ require('../../../node_modules/@mui/material/Typography/typographyClasses.js');
 require('../../../node_modules/@mui/material/Zoom/Zoom.js');
 require('../../../node_modules/@mui/material/GlobalStyles/GlobalStyles.js');
 require('../../../node_modules/@mui/base/FocusTrap/FocusTrap.js');
-var index = require('../../assets/index.js');
+require('../../providers/DebugProvider.js');
+require('../../providers/ErrorProvider.js');
+require('../../providers/BillingProvider.js');
+require('../../providers/ContainerStateProvider.js');
+var UIConfigurationProvider = require('../../providers/UIConfigurationProvider.js');
+require('../../providers/CheckoutProvider.js');
+require('../../providers/PaymentProvider.js');
+require('../../providers/EventProvider.js');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -307,6 +314,7 @@ var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 const ErrorContainer = ({ error }) => {
     var _a, _b;
     const theme = useTheme["default"]();
+    const { global } = UIConfigurationProvider.useUIConfiguration();
     return (React__default["default"].createElement(Box["default"], { display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", height: "100%" },
         React__default["default"].createElement(Box["default"], { sx: {
                 padding: '16px',
@@ -316,7 +324,7 @@ const ErrorContainer = ({ error }) => {
                 flexDirection: 'column',
                 margin: '8px 0px',
             } },
-            React__default["default"].createElement("img", { alt: "loading", src: index.Icons.ErrorLoader, style: {
+            React__default["default"].createElement("img", { alt: "error", src: global === null || global === void 0 ? void 0 : global.errorImageSrc, style: {
                     height: 200,
                 } }),
             React__default["default"].createElement(Typography["default"], { variant: "body1", sx: {

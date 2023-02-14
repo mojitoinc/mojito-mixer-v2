@@ -298,6 +298,7 @@ require('../../../node_modules/@mui/material/Typography/typographyClasses.js');
 require('../../../node_modules/@mui/material/Zoom/Zoom.js');
 require('../../../node_modules/@mui/material/GlobalStyles/GlobalStyles.js');
 require('../../../node_modules/@mui/base/FocusTrap/FocusTrap.js');
+var Modal = require('react-modal');
 var Button = require('../../components/Button.js');
 var Dropdown = require('../../components/Dropdown.js');
 require('@mui/icons-material/ArrowBack');
@@ -305,24 +306,28 @@ require('../../providers/DebugProvider.js');
 require('../../providers/ErrorProvider.js');
 require('../../providers/BillingProvider.js');
 require('../../providers/ContainerStateProvider.js');
-require('../../providers/UIConfigurationProvider.js');
+var UIConfigurationProvider = require('../../providers/UIConfigurationProvider.js');
 require('../../providers/CheckoutProvider.js');
 require('../../providers/PaymentProvider.js');
-var index$2 = require('../../assets/index.js');
+require('../../providers/EventProvider.js');
 require('../../components/Stepper.js');
+var index$2 = require('../../assets/index.js');
 var CopyButton = require('../../components/shared/CopyButton.js');
 require('../../components/shared/ErrorBoundary.js');
 var index = require('../../constants/index.js');
 var DeliveryInfoCard = require('./DeliveryInfoCard.js');
 var index$1 = require('./index.js');
+var index$3 = require('../Loading/index.js');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
 var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
+var Modal__default = /*#__PURE__*/_interopDefaultLegacy(Modal);
 
-const Delivery = ({ onWalletChange, walletOptions, selectedDeliveryAddress, onClickConfirmPurchase, organizationName, billingInfo, paymentInfo, onClickConnectWallet, connect, onDisconnect, error, }) => {
+const Delivery = ({ onWalletChange, walletOptions, selectedDeliveryAddress, onClickConfirmPurchase, organizationName, billingInfo, paymentInfo, onClickConnectWallet, connect, onDisconnect, error, isLoading, }) => {
     var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p;
     const theme = useTheme["default"]();
+    const { delivery } = UIConfigurationProvider.useUIConfiguration();
     const isCreditCard = React.useMemo(() => (paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.paymentType) === index.PaymentTypes.CREDIT_CARD, [paymentInfo]);
     return (React__default["default"].createElement(React__default["default"].Fragment, null,
         React__default["default"].createElement(DeliveryInfoCard.DeliveryInfoCard, { billingInfo: billingInfo, paymentInfo: paymentInfo }),
@@ -342,8 +347,8 @@ const Delivery = ({ onWalletChange, walletOptions, selectedDeliveryAddress, onCl
             !(connect === null || connect === void 0 ? void 0 : connect.connected) ? (React__default["default"].createElement(React__default["default"].Fragment, null,
                 React__default["default"].createElement(Dropdown["default"], { value: selectedDeliveryAddress, onChange: onWalletChange, placeholder: "Select or Enter Wallet Address", sx: { marginRight: '8px' }, options: walletOptions }),
                 selectedDeliveryAddress === index$1.NEW_MULTI_SIG && (React__default["default"].createElement(Typography["default"], { variant: "body2", sx: { marginTop: '6px', color: (_d = theme.global) === null || _d === void 0 ? void 0 : _d.cardGrayedText } }, "A new multi-sig wallet will be created for you when purchase is complete")),
-                React__default["default"].createElement(Stack["default"], { flexDirection: "row", alignItems: "flex-end", justifyContent: "flex-end" },
-                    React__default["default"].createElement(Button["default"], { title: "Connect Wallet", textColor: (_e = theme.global) === null || _e === void 0 ? void 0 : _e.highlightedText, backgroundColor: (_f = theme.global) === null || _f === void 0 ? void 0 : _f.white, variant: "outlined", sx: { marginTop: 2 }, onClick: onClickConnectWallet })))) : (React__default["default"].createElement(Box["default"], { display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between", border: `1px solid ${(_g = theme.global) === null || _g === void 0 ? void 0 : _g.cardBorder}`, padding: "16px", sx: {
+                (delivery === null || delivery === void 0 ? void 0 : delivery.showConnectWallet) && (React__default["default"].createElement(Stack["default"], { flexDirection: "row", alignItems: "flex-end", justifyContent: "flex-end" },
+                    React__default["default"].createElement(Button["default"], { title: "Connect Wallet", textColor: (_e = theme.global) === null || _e === void 0 ? void 0 : _e.highlightedText, backgroundColor: (_f = theme.global) === null || _f === void 0 ? void 0 : _f.white, variant: "outlined", sx: { marginTop: 2 }, onClick: onClickConnectWallet }))))) : (React__default["default"].createElement(Box["default"], { display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between", border: `1px solid ${(_g = theme.global) === null || _g === void 0 ? void 0 : _g.cardBorder}`, padding: "16px", sx: {
                     background: (_h = theme.global) === null || _h === void 0 ? void 0 : _h.background,
                 } },
                 React__default["default"].createElement(Box["default"], { display: "flex", flexDirection: "row", alignItems: "center" },
@@ -364,7 +369,19 @@ const Delivery = ({ onWalletChange, walletOptions, selectedDeliveryAddress, onCl
                     '&: hover': {
                         backgroundColor: 'rgba(102, 99, 253, 0.8)',
                     },
-                } }))));
+                } })),
+        React__default["default"].createElement(Modal__default["default"], { ariaHideApp: false, isOpen: isLoading, style: {
+                content: {
+                    width: '100vw',
+                    height: '100vh',
+                    top: 0,
+                    left: 0,
+                    bottom: 0,
+                    right: 0,
+                    padding: 0,
+                },
+            } },
+            React__default["default"].createElement(index$3["default"], null))));
 };
 
 exports["default"] = Delivery;

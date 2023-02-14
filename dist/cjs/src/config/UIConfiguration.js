@@ -2,9 +2,15 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
+var index = require('../assets/index.js');
 var paymentConfiguration = require('./paymentConfiguration.js');
 
 const DefaultUIConfiguration = {
+    global: {
+        logoSrc: index.Icons.logo,
+        loaderImageSrc: index.Icons.loading,
+        errorImageSrc: index.Icons.ErrorLoader,
+    },
     billing: {
         isEnableExpressCheckout: true,
         gpay: true,
@@ -25,15 +31,20 @@ const DefaultUIConfiguration = {
     paymentConfirmation: {
         wireTransferInstructions: paymentConfiguration.wireTransferInstructions,
         creditCardInstructions: paymentConfiguration.creditCardInstructions,
-        onGoToMarketPlace: () => undefined,
+        onGoTo: () => undefined,
+    },
+    delivery: {
+        showConnectWallet: true,
     },
 };
 const makeUIConfiguration = (configurations) => {
     return {
+        global: Object.assign(Object.assign({}, DefaultUIConfiguration.global), configurations.global),
         billing: Object.assign(Object.assign({}, DefaultUIConfiguration === null || DefaultUIConfiguration === void 0 ? void 0 : DefaultUIConfiguration.billing), configurations === null || configurations === void 0 ? void 0 : configurations.billing),
         costBreakdown: Object.assign(Object.assign({}, DefaultUIConfiguration === null || DefaultUIConfiguration === void 0 ? void 0 : DefaultUIConfiguration.costBreakdown), configurations === null || configurations === void 0 ? void 0 : configurations.costBreakdown),
         payment: Object.assign(Object.assign({}, DefaultUIConfiguration === null || DefaultUIConfiguration === void 0 ? void 0 : DefaultUIConfiguration.payment), configurations === null || configurations === void 0 ? void 0 : configurations.payment),
         paymentConfirmation: Object.assign(Object.assign({}, DefaultUIConfiguration.paymentConfirmation), configurations.paymentConfirmation),
+        delivery: Object.assign(Object.assign({}, DefaultUIConfiguration.delivery), configurations.delivery),
     };
 };
 

@@ -14,6 +14,7 @@ interface DeliveryProps {
     connect: ConnectType;
     onDisconnect: () => void;
     error?: string;
+    isLoading: boolean;
 }
-declare const Delivery: ({ onWalletChange, walletOptions, selectedDeliveryAddress, onClickConfirmPurchase, organizationName, billingInfo, paymentInfo, onClickConnectWallet, connect, onDisconnect, error, }: DeliveryProps) => JSX.Element;
+declare const Delivery: ({ onWalletChange, walletOptions, selectedDeliveryAddress, onClickConfirmPurchase, organizationName, billingInfo, paymentInfo, onClickConnectWallet, connect, onDisconnect, error, isLoading, }: DeliveryProps) => JSX.Element;
 export default Delivery;

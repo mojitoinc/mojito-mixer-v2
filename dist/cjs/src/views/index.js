@@ -313,6 +313,7 @@ var ContainerStateProvider = require('../providers/ContainerStateProvider.js');
 require('../providers/UIConfigurationProvider.js');
 require('../providers/CheckoutProvider.js');
 require('../providers/PaymentProvider.js');
+require('../providers/EventProvider.js');
 var RootContainer = require('../interfaces/ContextInterface/RootContainer.js');
 var index$1 = require('./Loading/index.js');
 var index = require('./Error/index.js');

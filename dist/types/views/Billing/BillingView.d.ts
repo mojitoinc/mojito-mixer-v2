@@ -1,15 +1,14 @@
 /// <reference types="react" />
-import { FormikErrors } from 'formik';
 import { BillingFormData } from '../../providers';
+import { PaymentMethod } from '../../interfaces';
 interface BillingProps {
     isEditing: boolean;
-    values: BillingFormData;
-    errors: FormikErrors<BillingFormData>;
-    onChange: any;
     onClickEdit: () => void;
-    onClickContinue: () => void;
-    isValid: boolean;
-    isValidBillingForm: boolean;
+    onClickContinue: (values: BillingFormData) => void;
+    pincodeError?: boolean;
+    paymentItem?: PaymentMethod;
+    billingInfo?: BillingFormData;
+    onChangeValues: (isValid: boolean, values: BillingFormData) => void;
 }
-declare const BillingView: ({ isEditing, values, errors, onChange, onClickEdit, onClickContinue, isValid, isValidBillingForm, }: BillingProps) => JSX.Element;
+declare const BillingView: ({ isEditing, onClickEdit, onClickContinue, pincodeError, billingInfo, paymentItem, onChangeValues, }: BillingProps) => JSX.Element;
 export default BillingView;

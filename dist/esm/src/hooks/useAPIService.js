@@ -20,6 +20,7 @@ import '../providers/ContainerStateProvider.js';
 import '../providers/UIConfigurationProvider.js';
 import '../providers/CheckoutProvider.js';
 import '../providers/PaymentProvider.js';
+import '../providers/EventProvider.js';
 
 const useAPIService = () => {
     const debug = useDebug('useAPIClient');

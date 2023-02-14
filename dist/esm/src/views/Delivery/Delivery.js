@@ -294,6 +294,7 @@ import '../../../node_modules/@mui/material/Typography/typographyClasses.js';
 import '../../../node_modules/@mui/material/Zoom/Zoom.js';
 import '../../../node_modules/@mui/material/GlobalStyles/GlobalStyles.js';
 import '../../../node_modules/@mui/base/FocusTrap/FocusTrap.js';
+import Modal from 'react-modal';
 import Button from '../../components/Button.js';
 import Dropdown from '../../components/Dropdown.js';
 import '@mui/icons-material/ArrowBack';
@@ -301,20 +302,23 @@ import '../../providers/DebugProvider.js';
 import '../../providers/ErrorProvider.js';
 import '../../providers/BillingProvider.js';
 import '../../providers/ContainerStateProvider.js';
-import '../../providers/UIConfigurationProvider.js';
+import { useUIConfiguration } from '../../providers/UIConfigurationProvider.js';
 import '../../providers/CheckoutProvider.js';
 import '../../providers/PaymentProvider.js';
-import { Icons } from '../../assets/index.js';
+import '../../providers/EventProvider.js';
 import '../../components/Stepper.js';
+import { Icons } from '../../assets/index.js';
 import CopyButton from '../../components/shared/CopyButton.js';
 import '../../components/shared/ErrorBoundary.js';
 import { PaymentTypes } from '../../constants/index.js';
 import { DeliveryInfoCard } from './DeliveryInfoCard.js';
 import { NEW_MULTI_SIG } from './index.js';
+import LoadingContainer from '../Loading/index.js';
 
-const Delivery = ({ onWalletChange, walletOptions, selectedDeliveryAddress, onClickConfirmPurchase, organizationName, billingInfo, paymentInfo, onClickConnectWallet, connect, onDisconnect, error, }) => {
+const Delivery = ({ onWalletChange, walletOptions, selectedDeliveryAddress, onClickConfirmPurchase, organizationName, billingInfo, paymentInfo, onClickConnectWallet, connect, onDisconnect, error, isLoading, }) => {
     var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p;
     const theme = useTheme();
+    const { delivery } = useUIConfiguration();
     const isCreditCard = useMemo(() => (paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.paymentType) === PaymentTypes.CREDIT_CARD, [paymentInfo]);
     return (React__default.createElement(React__default.Fragment, null,
         React__default.createElement(DeliveryInfoCard, { billingInfo: billingInfo, paymentInfo: paymentInfo }),
@@ -334,8 +338,8 @@ const Delivery = ({ onWalletChange, walletOptions, selectedDeliveryAddress, onCl
             !(connect === null || connect === void 0 ? void 0 : connect.connected) ? (React__default.createElement(React__default.Fragment, null,
                 React__default.createElement(Dropdown, { value: selectedDeliveryAddress, onChange: onWalletChange, placeholder: "Select or Enter Wallet Address", sx: { marginRight: '8px' }, options: walletOptions }),
                 selectedDeliveryAddress === NEW_MULTI_SIG && (React__default.createElement(Typography, { variant: "body2", sx: { marginTop: '6px', color: (_d = theme.global) === null || _d === void 0 ? void 0 : _d.cardGrayedText } }, "A new multi-sig wallet will be created for you when purchase is complete")),
-                React__default.createElement(Stack, { flexDirection: "row", alignItems: "flex-end", justifyContent: "flex-end" },
-                    React__default.createElement(Button, { title: "Connect Wallet", textColor: (_e = theme.global) === null || _e === void 0 ? void 0 : _e.highlightedText, backgroundColor: (_f = theme.global) === null || _f === void 0 ? void 0 : _f.white, variant: "outlined", sx: { marginTop: 2 }, onClick: onClickConnectWallet })))) : (React__default.createElement(Box, { display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between", border: `1px solid ${(_g = theme.global) === null || _g === void 0 ? void 0 : _g.cardBorder}`, padding: "16px", sx: {
+                (delivery === null || delivery === void 0 ? void 0 : delivery.showConnectWallet) && (React__default.createElement(Stack, { flexDirection: "row", alignItems: "flex-end", justifyContent: "flex-end" },
+                    React__default.createElement(Button, { title: "Connect Wallet", textColor: (_e = theme.global) === null || _e === void 0 ? void 0 : _e.highlightedText, backgroundColor: (_f = theme.global) === null || _f === void 0 ? void 0 : _f.white, variant: "outlined", sx: { marginTop: 2 }, onClick: onClickConnectWallet }))))) : (React__default.createElement(Box, { display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between", border: `1px solid ${(_g = theme.global) === null || _g === void 0 ? void 0 : _g.cardBorder}`, padding: "16px", sx: {
                     background: (_h = theme.global) === null || _h === void 0 ? void 0 : _h.background,
                 } },
                 React__default.createElement(Box, { display: "flex", flexDirection: "row", alignItems: "center" },
@@ -356,7 +360,19 @@ const Delivery = ({ onWalletChange, walletOptions, selectedDeliveryAddress, onCl
                     '&: hover': {
                         backgroundColor: 'rgba(102, 99, 253, 0.8)',
                     },
-                } }))));
+                } })),
+        React__default.createElement(Modal, { ariaHideApp: false, isOpen: isLoading, style: {
+                content: {
+                    width: '100vw',
+                    height: '100vh',
+                    top: 0,
+                    left: 0,
+                    bottom: 0,
+                    right: 0,
+                    padding: 0,
+                },
+            } },
+            React__default.createElement(LoadingContainer, null))));
 };
 
 export { Delivery as default };

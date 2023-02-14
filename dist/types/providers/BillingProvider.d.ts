@@ -9,13 +9,17 @@ export interface BillingFormData {
     phoneNumber?: string;
     street1?: string;
     name?: string;
+    firstName?: string;
+    lastName?: string;
 }
 export interface Billing {
     billingInfo?: BillingFormData;
     setBillingInfo: (val: BillingFormData) => void;
     collectionData: CollectionItem;
     taxes: Taxes;
+    pincodeError?: boolean;
     refetchTaxes: (val: BillingFormData) => void;
+    taxablePrice?: number;
 }
 export declare const BillingProvider: ({ children }: {
     children?: React.ReactNode;

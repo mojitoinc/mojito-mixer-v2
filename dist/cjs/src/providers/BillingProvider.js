@@ -18,6 +18,7 @@ require('../../node_modules/@apollo/client/react/hooks/useQuery.js');
 var invoiceDetails = require('../queries/invoiceDetails.js');
 var collection = require('../queries/collection.js');
 var CheckoutProvider = require('./CheckoutProvider.js');
+var DebugProvider = require('./DebugProvider.js');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -25,8 +26,10 @@ var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 
 const BillingContext = React.createContext({});
 const BillingProvider = ({ children }) => {
+    const debug = DebugProvider.useDebug('BillingProvider');
     const [billingInfo, setBillingInfo] = React.useState();
-    const { quantity, orgId, collectionItemId } = CheckoutProvider.useCheckout();
+    const [pincodeError, setPincodeError] = React.useState(false);
+    const { quantity, orgId, collectionItemId, vertexEnabled } = CheckoutProvider.useCheckout();
     const [fetchCollection, { data: collection$1 }] = useLazyQuery.useLazyQuery(collection.collectionByIdQuery);
     const collectionData = React.useMemo(() => {
         return collection$1 === null || collection$1 === void 0 ? void 0 : collection$1.collectionItemById;
@@ -39,7 +42,7 @@ const BillingProvider = ({ children }) => {
         }
         return 0;
     }, [collectionData, quantity]);
-    const [taxQuote, { data: taxQuoteData }] = useLazyQuery.useLazyQuery(invoiceDetails.getTaxQuoteQuery);
+    const [taxQuote, { data: taxQuoteData, loading }] = useLazyQuery.useLazyQuery(invoiceDetails.getTaxQuoteQuery);
     const refetchTaxes = React.useCallback((val) => {
         if (orgId && taxablePrice) {
             taxQuote({
@@ -60,6 +63,14 @@ const BillingProvider = ({ children }) => {
         }
     }, [orgId, taxablePrice, taxQuote]);
     React.useEffect(() => {
+        if (!loading && vertexEnabled) {
+            const verifiedAddress = taxQuoteData === null || taxQuoteData === void 0 ? void 0 : taxQuoteData.verifiedAddress;
+            setPincodeError(verifiedAddress !== undefined);
+        }
+        debug.info('taxQuoteData-onChanve', { taxQuoteData, loading, vertexEnabled });
+        console.log('600008', { taxQuoteData });
+    }, [taxQuoteData, loading, debug, vertexEnabled]);
+    React.useEffect(() => {
         if (!collectionItemId) {
             return;
         }
@@ -70,10 +81,10 @@ const BillingProvider = ({ children }) => {
         });
     }, [collectionItemId, fetchCollection]);
     React.useEffect(() => {
-        if (billingInfo && orgId && taxablePrice) {
+        if (billingInfo && orgId && taxablePrice && vertexEnabled) {
             refetchTaxes(billingInfo);
         }
-    }, [billingInfo, taxablePrice, orgId, taxQuote, refetchTaxes]);
+    }, [billingInfo, taxablePrice, orgId, taxQuote, refetchTaxes, vertexEnabled]);
     const taxes = React.useMemo(() => {
         return taxQuoteData === null || taxQuoteData === void 0 ? void 0 : taxQuoteData.getTaxQuote;
     }, [taxQuoteData]);
@@ -84,8 +95,10 @@ const BillingProvider = ({ children }) => {
             collectionData,
             taxes,
             refetchTaxes,
+            pincodeError,
+            taxablePrice,
         };
-    }, [billingInfo, setBillingInfo, collectionData, taxes, refetchTaxes]);
+    }, [billingInfo, setBillingInfo, collectionData, taxes, refetchTaxes, pincodeError, taxablePrice]);
     return (React__default["default"].createElement(BillingContext.Provider, { value: value }, children));
 };
 const useBilling = () => {

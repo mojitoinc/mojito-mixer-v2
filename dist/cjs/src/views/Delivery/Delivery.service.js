@@ -3,7 +3,7 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 const formCardScreeningVariable = (orgId, paymentInfo, billingInfo, taxes, meData) => {
-    var _a, _b, _c, _d, _e;
+    var _a, _b, _c;
     const cardNumber = (_a = paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.creditCardData) === null || _a === void 0 ? void 0 : _a.cardNumber;
     const first6 = cardNumber === null || cardNumber === void 0 ? void 0 : cardNumber.substring(0, 6);
     const last4 = cardNumber === null || cardNumber === void 0 ? void 0 : cardNumber.substring((cardNumber === null || cardNumber === void 0 ? void 0 : cardNumber.length) > 4 ? (cardNumber.length - 4) : 0);
@@ -13,8 +13,8 @@ const formCardScreeningVariable = (orgId, paymentInfo, billingInfo, taxes, meDat
             flow: 'card-payment',
             sessionKey: paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.sessionKey,
             customer: {
-                firstName: (_b = paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.creditCardData) === null || _b === void 0 ? void 0 : _b.firstName,
-                lastName: (_c = paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.creditCardData) === null || _c === void 0 ? void 0 : _c.lastName,
+                firstName: billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.firstName,
+                lastName: billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.lastName,
                 emailAddress: billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.email,
                 isEmailVerified: true,
                 isPhoneVerified: false,
@@ -37,7 +37,7 @@ const formCardScreeningVariable = (orgId, paymentInfo, billingInfo, taxes, meDat
                     card: {
                         first6,
                         last4,
-                        hash: `${first6}${last4}${(_e = (_d = meData === null || meData === void 0 ? void 0 : meData.me) === null || _d === void 0 ? void 0 : _d.user) === null || _e === void 0 ? void 0 : _e.id}`,
+                        hash: `${first6}${last4}${(_c = (_b = meData === null || meData === void 0 ? void 0 : meData.me) === null || _b === void 0 ? void 0 : _b.user) === null || _c === void 0 ? void 0 : _c.id}`,
                     },
                 },
             },
@@ -45,7 +45,7 @@ const formCardScreeningVariable = (orgId, paymentInfo, billingInfo, taxes, meDat
     };
 };
 const formCreatePaymentMethodObject = (orgId, paymentInfo, billingInfo, keyID, encryptedCardData) => {
-    var _a, _b, _c, _d, _e, _f;
+    var _a, _b, _c, _d;
     const expiry = (_b = (_a = paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.creditCardData) === null || _a === void 0 ? void 0 : _a.expiry) === null || _b === void 0 ? void 0 : _b.split('/').map(value => parseInt(value.trim(), 10));
     const expirationYear = 2000 + ((_c = expiry === null || expiry === void 0 ? void 0 : expiry[1]) !== null && _c !== void 0 ? _c : 0);
     const expirationMonth = expiry === null || expiry === void 0 ? void 0 : expiry[0];
@@ -67,7 +67,7 @@ const formCreatePaymentMethodObject = (orgId, paymentInfo, billingInfo, keyID, e
                 address2: '',
                 district: billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.state,
                 postalCode: billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.postalCode,
-                name: `${(_e = paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.creditCardData) === null || _e === void 0 ? void 0 : _e.firstName} ${(_f = paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.creditCardData) === null || _f === void 0 ? void 0 : _f.lastName}`,
+                name: `${billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.firstName} ${billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.lastName}`,
             },
         },
     };

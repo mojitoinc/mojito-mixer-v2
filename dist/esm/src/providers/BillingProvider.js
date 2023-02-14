@@ -14,11 +14,14 @@ import '../../node_modules/@apollo/client/react/hooks/useQuery.js';
 import { getTaxQuoteQuery } from '../queries/invoiceDetails.js';
 import { collectionByIdQuery } from '../queries/collection.js';
 import { useCheckout } from './CheckoutProvider.js';
+import { useDebug } from './DebugProvider.js';
 
 const BillingContext = createContext({});
 const BillingProvider = ({ children }) => {
+    const debug = useDebug('BillingProvider');
     const [billingInfo, setBillingInfo] = useState();
-    const { quantity, orgId, collectionItemId } = useCheckout();
+    const [pincodeError, setPincodeError] = useState(false);
+    const { quantity, orgId, collectionItemId, vertexEnabled } = useCheckout();
     const [fetchCollection, { data: collection }] = useLazyQuery(collectionByIdQuery);
     const collectionData = useMemo(() => {
         return collection === null || collection === void 0 ? void 0 : collection.collectionItemById;
@@ -31,7 +34,7 @@ const BillingProvider = ({ children }) => {
         }
         return 0;
     }, [collectionData, quantity]);
-    const [taxQuote, { data: taxQuoteData }] = useLazyQuery(getTaxQuoteQuery);
+    const [taxQuote, { data: taxQuoteData, loading }] = useLazyQuery(getTaxQuoteQuery);
     const refetchTaxes = useCallback((val) => {
         if (orgId && taxablePrice) {
             taxQuote({
@@ -52,6 +55,14 @@ const BillingProvider = ({ children }) => {
         }
     }, [orgId, taxablePrice, taxQuote]);
     useEffect(() => {
+        if (!loading && vertexEnabled) {
+            const verifiedAddress = taxQuoteData === null || taxQuoteData === void 0 ? void 0 : taxQuoteData.verifiedAddress;
+            setPincodeError(verifiedAddress !== undefined);
+        }
+        debug.info('taxQuoteData-onChanve', { taxQuoteData, loading, vertexEnabled });
+        console.log('600008', { taxQuoteData });
+    }, [taxQuoteData, loading, debug, vertexEnabled]);
+    useEffect(() => {
         if (!collectionItemId) {
             return;
         }
@@ -62,10 +73,10 @@ const BillingProvider = ({ children }) => {
         });
     }, [collectionItemId, fetchCollection]);
     useEffect(() => {
-        if (billingInfo && orgId && taxablePrice) {
+        if (billingInfo && orgId && taxablePrice && vertexEnabled) {
             refetchTaxes(billingInfo);
         }
-    }, [billingInfo, taxablePrice, orgId, taxQuote, refetchTaxes]);
+    }, [billingInfo, taxablePrice, orgId, taxQuote, refetchTaxes, vertexEnabled]);
     const taxes = useMemo(() => {
         return taxQuoteData === null || taxQuoteData === void 0 ? void 0 : taxQuoteData.getTaxQuote;
     }, [taxQuoteData]);
@@ -76,8 +87,10 @@ const BillingProvider = ({ children }) => {
             collectionData,
             taxes,
             refetchTaxes,
+            pincodeError,
+            taxablePrice,
         };
-    }, [billingInfo, setBillingInfo, collectionData, taxes, refetchTaxes]);
+    }, [billingInfo, setBillingInfo, collectionData, taxes, refetchTaxes, pincodeError, taxablePrice]);
     return (React__default.createElement(BillingContext.Provider, { value: value }, children));
 };
 const useBilling = () => {

@@ -23,6 +23,13 @@ const DefaultThemes = {
             applyButtonBackground: '#DADAE9',
             applyButtonTextColor: '#FFFFFF',
         },
+        paymentConfirmation: {
+            awaitingPaymentBackground: '#FCFB99',
+            awaitingPaymentTextColor: '#F98028',
+            processedBackground: '#E7EFE8',
+            processedTextColor: '#0B4D12',
+            copyIconColor: '#B0AFFE',
+        },
     },
 };
 

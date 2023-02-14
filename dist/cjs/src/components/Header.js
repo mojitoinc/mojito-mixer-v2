@@ -306,7 +306,7 @@ require('../providers/ContainerStateProvider.js');
 var UIConfigurationProvider = require('../providers/UIConfigurationProvider.js');
 require('../providers/CheckoutProvider.js');
 require('../providers/PaymentProvider.js');
-var index = require('../assets/index.js');
+require('../providers/EventProvider.js');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -316,12 +316,12 @@ var ArrowBackIcon__default = /*#__PURE__*/_interopDefaultLegacy(ArrowBackIcon);
 const Header = ({ isPaymentConfirmation }) => {
     var _a, _b, _c;
     const theme = useTheme["default"]();
-    const { paymentConfirmation } = UIConfigurationProvider.useUIConfiguration();
+    const { paymentConfirmation, global } = UIConfigurationProvider.useUIConfiguration();
     return (React__default["default"].createElement(Box["default"], { sx: {
             width: '100%',
             backgroundColor: (_a = theme.global) === null || _a === void 0 ? void 0 : _a.background,
         } },
-        isPaymentConfirmation && (React__default["default"].createElement(Stack["default"], { flexDirection: "row", alignItems: "center", sx: { cursor: 'pointer' }, marginBottom: "24px", onClick: paymentConfirmation === null || paymentConfirmation === void 0 ? void 0 : paymentConfirmation.onGoToMarketPlace },
+        isPaymentConfirmation && (React__default["default"].createElement(Stack["default"], { flexDirection: "row", alignItems: "center", sx: { cursor: 'pointer' }, marginBottom: "24px", onClick: paymentConfirmation === null || paymentConfirmation === void 0 ? void 0 : paymentConfirmation.onGoTo },
             React__default["default"].createElement(ArrowBackIcon__default["default"], { sx: {
                     color: (_b = theme === null || theme === void 0 ? void 0 : theme.global) === null || _b === void 0 ? void 0 : _b.unHighlightedText,
                     width: '17px',
@@ -339,7 +339,7 @@ const Header = ({ isPaymentConfirmation }) => {
                 justifyContent: 'center',
                 display: 'flex',
             } },
-            React__default["default"].createElement("img", { src: index.Icons.logo, width: "162px", height: "37px", alt: "logo" }))));
+            React__default["default"].createElement("img", { src: global.logoSrc, width: "162px", height: "37px", alt: "logo" }))));
 };
 
 exports["default"] = Header;

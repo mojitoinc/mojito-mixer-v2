@@ -297,15 +297,23 @@ require('../../../node_modules/@mui/material/Typography/typographyClasses.js');
 require('../../../node_modules/@mui/material/Zoom/Zoom.js');
 require('../../../node_modules/@mui/material/GlobalStyles/GlobalStyles.js');
 require('../../../node_modules/@mui/base/FocusTrap/FocusTrap.js');
-var index = require('../../assets/index.js');
+require('../../providers/DebugProvider.js');
+require('../../providers/ErrorProvider.js');
+require('../../providers/BillingProvider.js');
+require('../../providers/ContainerStateProvider.js');
+var UIConfigurationProvider = require('../../providers/UIConfigurationProvider.js');
+require('../../providers/CheckoutProvider.js');
+require('../../providers/PaymentProvider.js');
+require('../../providers/EventProvider.js');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
 var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 
 const LoadingContainer = () => {
+    const { global } = UIConfigurationProvider.useUIConfiguration();
     return (React__default["default"].createElement(Box["default"], { display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", height: "100%" },
-        React__default["default"].createElement("img", { alt: "loading", src: index.Icons.loading, style: {} }),
+        React__default["default"].createElement("img", { alt: "loading", src: global === null || global === void 0 ? void 0 : global.loaderImageSrc, style: {} }),
         React__default["default"].createElement(Typography["default"], { sx: {
                 width: '280px',
                 textAlign: 'center',

@@ -294,11 +294,19 @@ import '../../../node_modules/@mui/material/Typography/typographyClasses.js';
 import '../../../node_modules/@mui/material/Zoom/Zoom.js';
 import '../../../node_modules/@mui/material/GlobalStyles/GlobalStyles.js';
 import '../../../node_modules/@mui/base/FocusTrap/FocusTrap.js';
-import { Icons } from '../../assets/index.js';
+import '../../providers/DebugProvider.js';
+import '../../providers/ErrorProvider.js';
+import '../../providers/BillingProvider.js';
+import '../../providers/ContainerStateProvider.js';
+import { useUIConfiguration } from '../../providers/UIConfigurationProvider.js';
+import '../../providers/CheckoutProvider.js';
+import '../../providers/PaymentProvider.js';
+import '../../providers/EventProvider.js';
 
 const ErrorContainer = ({ error }) => {
     var _a, _b;
     const theme = useTheme();
+    const { global } = useUIConfiguration();
     return (React__default.createElement(Box, { display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", height: "100%" },
         React__default.createElement(Box, { sx: {
                 padding: '16px',
@@ -308,7 +316,7 @@ const ErrorContainer = ({ error }) => {
                 flexDirection: 'column',
                 margin: '8px 0px',
             } },
-            React__default.createElement("img", { alt: "loading", src: Icons.ErrorLoader, style: {
+            React__default.createElement("img", { alt: "error", src: global === null || global === void 0 ? void 0 : global.errorImageSrc, style: {
                     height: 200,
                 } }),
             React__default.createElement(Typography, { variant: "body1", sx: {

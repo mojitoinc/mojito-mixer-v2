@@ -15,7 +15,6 @@ exports.PaymentTypes = void 0;
     PaymentTypes["GOOGLE_PAY"] = "GooglePayCheckout";
     PaymentTypes["WIRE_TRANSFER"] = "Wire";
 })(exports.PaymentTypes || (exports.PaymentTypes = {}));
-const BanksList = ['Bank of America', 'Capitol One', 'Chase', 'Citi Bank', 'Wells Fargo', 'US Bank'];
 exports.PaymentStatus = void 0;
 (function (PaymentStatus) {
     PaymentStatus["PENDING"] = "pending";
@@ -30,7 +29,6 @@ function isLocalhost() {
     return window.location.hostname === 'localhost';
 }
 
-exports.BanksList = BanksList;
 exports.IS_BROWSER = IS_BROWSER;
 exports.IS_SERVER = IS_SERVER;
 exports.isLocalhost = isLocalhost;

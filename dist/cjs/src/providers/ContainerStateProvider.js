@@ -5,6 +5,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 var React = require('react');
 var DebugProvider = require('./DebugProvider.js');
 var RootContainer = require('../interfaces/ContextInterface/RootContainer.js');
+var EventProvider = require('./EventProvider.js');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -14,6 +15,10 @@ const ContainerStateContext = React.createContext({});
 const ContainerStateProvider = ({ paymentId, success, children, }) => {
     const debug = DebugProvider.useDebug('ContainerStateProvider');
     const [containerState, setContainerState] = React.useState(success ? RootContainer.ContainerTypes.CONFIRMATION : RootContainer.ContainerTypes.CHECKOUT);
+    const { onEvent } = EventProvider.useEvents();
+    React.useEffect(() => {
+        onEvent === null || onEvent === void 0 ? void 0 : onEvent(containerState);
+    }, [onEvent, containerState]);
     React.useEffect(() => {
         debug.info('paymentId', { paymentId, success });
         if (paymentId || success)

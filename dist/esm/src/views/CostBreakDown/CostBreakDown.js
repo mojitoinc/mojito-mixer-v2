@@ -298,14 +298,15 @@ import Button from '../../components/Button.js';
 import '@mui/icons-material/ArrowBack';
 import '../../providers/DebugProvider.js';
 import '../../providers/ErrorProvider.js';
-import '../../providers/BillingProvider.js';
+import { useBilling } from '../../providers/BillingProvider.js';
 import { useContainer } from '../../providers/ContainerStateProvider.js';
 import { useUIConfiguration } from '../../providers/UIConfigurationProvider.js';
 import { useCheckout } from '../../providers/CheckoutProvider.js';
 import '../../providers/PaymentProvider.js';
-import { Icons } from '../../assets/index.js';
+import '../../providers/EventProvider.js';
 import '../../components/Stepper.js';
 import TextInput from '../../components/TextInput.js';
+import { Icons } from '../../assets/index.js';
 import '@mui/icons-material/ContentCopy';
 import '../../components/shared/ErrorBoundary.js';
 import { ContainerTypes } from '../../interfaces/ContextInterface/RootContainer.js';
@@ -314,8 +315,9 @@ const CostBreakDown = ({ taxes, collectionData }) => {
     var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q;
     const theme = useTheme();
     const uiConfiguration = useUIConfiguration();
-    const { quantity } = useCheckout();
+    const { quantity, vertexEnabled } = useCheckout();
     const { containerState } = useContainer();
+    const { taxablePrice } = useBilling();
     const renderTextRow = (text, value) => {
         return (React__default.createElement(Box, { display: "flex", flexDirection: "row", justifyContent: "space-between", margin: "10px 0px" },
             React__default.createElement(Typography, { variant: "body2", fontSize: "14px" }, text),
@@ -354,12 +356,11 @@ const CostBreakDown = ({ taxes, collectionData }) => {
                                 marginBottom: '12px',
                                 fontSize: '14px',
                                 fontStyle: 'italic',
-                            } }, (_b = (_a = collectionData === null || collectionData === void 0 ? void 0 : collectionData.details) === null || _a === void 0 ? void 0 : _a.totalUnits) !== null && _b !== void 0 ? _b : '0',
+                            } }, (_b = (_a = collectionData === null || collectionData === void 0 ? void 0 : collectionData.details) === null || _a === void 0 ? void 0 : _a.totalAvailableUnits) !== null && _b !== void 0 ? _b : '0',
                             " remaining"))),
                 React__default.createElement(Box, { display: "flex", flexDirection: "column", alignItems: "flex-end" },
                     React__default.createElement(Typography, { variant: "subtitle2", fontWeight: "700", fontSize: "14px" }, (_c = taxes === null || taxes === void 0 ? void 0 : taxes.taxablePrice) !== null && _c !== void 0 ? _c : '0',
-                        " USD"),
-                    React__default.createElement(Typography, { variant: "body2", fontSize: "14px" }, "2.00 ETH"))),
+                        " USD"))),
             ((_d = uiConfiguration === null || uiConfiguration === void 0 ? void 0 : uiConfiguration.costBreakdown) === null || _d === void 0 ? void 0 : _d.showDiscountCode) &&
                 containerState !== ContainerTypes.CONFIRMATION && (React__default.createElement(React__default.Fragment, null,
                 React__default.createElement(Divider, { sx: {
@@ -380,9 +381,11 @@ const CostBreakDown = ({ taxes, collectionData }) => {
                     margin: '20px 0px 20px 0px',
                 } }),
             React__default.createElement(Box, null,
-                renderTextRow('Subtotal', `${(_m = taxes === null || taxes === void 0 ? void 0 : taxes.taxablePrice) !== null && _m !== void 0 ? _m : '0'} USD`),
-                renderTextRow('Taxes', `${(_o = taxes === null || taxes === void 0 ? void 0 : taxes.totalTaxAmount) !== null && _o !== void 0 ? _o : '0'} USD`),
-                renderTextRow('Fee', '0 USD')),
+                renderTextRow('Subtotal', `${vertexEnabled ? ((_m = taxes === null || taxes === void 0 ? void 0 : taxes.taxablePrice) !== null && _m !== void 0 ? _m : '0') : taxablePrice} USD`),
+                vertexEnabled &&
+                    renderTextRow('Taxes', `${(_o = taxes === null || taxes === void 0 ? void 0 : taxes.totalTaxAmount) !== null && _o !== void 0 ? _o : '0'} USD`),
+                vertexEnabled &&
+                    renderTextRow('Fee', '0 USD')),
             React__default.createElement(Divider, { sx: {
                     background: (_p = theme.global) === null || _p === void 0 ? void 0 : _p.border,
                     margin: '20px 0px',
@@ -390,9 +393,9 @@ const CostBreakDown = ({ taxes, collectionData }) => {
             React__default.createElement(Box, { display: "flex", flexDirection: "row", justifyContent: "space-between", marginBottom: "20px" },
                 React__default.createElement(Typography, { variant: "subtitle1", fontWeight: "700", fontSize: "16px" }, "Total"),
                 React__default.createElement(Box, { display: "flex", flexDirection: "column", alignItems: "flex-end" },
-                    React__default.createElement(Typography, { variant: "h5", fontWeight: "700", fontSize: "20px" }, (_q = taxes === null || taxes === void 0 ? void 0 : taxes.totalTaxedPrice) !== null && _q !== void 0 ? _q : '0',
-                        " USD"),
-                    React__default.createElement(Typography, { variant: "body1", fontSize: "16px" }, "2.00 ETH"))))));
+                    React__default.createElement(Typography, { variant: "h5", fontWeight: "700", fontSize: "20px" },
+                        vertexEnabled ? ((_q = taxes === null || taxes === void 0 ? void 0 : taxes.totalTaxedPrice) !== null && _q !== void 0 ? _q : '0') : taxablePrice,
+                        " USD"))))));
 };
 
 export { CostBreakDown as default };

@@ -135,16 +135,16 @@ require('../../../node_modules/@mui/material/Fab/fabClasses.js');
 require('../../../node_modules/@mui/material/Fade/Fade.js');
 require('../../../node_modules/@mui/material/FilledInput/FilledInput.js');
 require('../../../node_modules/@mui/material/FilledInput/filledInputClasses.js');
-require('../../../node_modules/@mui/material/FormControl/FormControl.js');
+var FormControl = require('../../../node_modules/@mui/material/FormControl/FormControl.js');
 require('../../../node_modules/@mui/material/FormControl/FormControlContext.js');
 require('../../../node_modules/@mui/material/FormControl/formControlClasses.js');
-require('../../../node_modules/@mui/material/FormControlLabel/FormControlLabel.js');
+var FormControlLabel = require('../../../node_modules/@mui/material/FormControlLabel/FormControlLabel.js');
 require('../../../node_modules/@mui/material/FormControlLabel/formControlLabelClasses.js');
 require('../../../node_modules/@mui/material/FormGroup/FormGroup.js');
 require('../../../node_modules/@mui/material/FormGroup/formGroupClasses.js');
 require('../../../node_modules/@mui/material/FormHelperText/FormHelperText.js');
 require('../../../node_modules/@mui/material/FormHelperText/formHelperTextClasses.js');
-require('../../../node_modules/@mui/material/FormLabel/FormLabel.js');
+var FormLabel = require('../../../node_modules/@mui/material/FormLabel/FormLabel.js');
 require('../../../node_modules/@mui/material/FormLabel/formLabelClasses.js');
 require('../../../node_modules/@mui/material/Grid/Grid.js');
 require('../../../node_modules/@mui/material/Grid/gridClasses.js');
@@ -215,9 +215,9 @@ require('../../../node_modules/@mui/material/Popover/Popover.js');
 require('../../../node_modules/@mui/material/Popover/popoverClasses.js');
 require('../../../node_modules/@mui/material/Popper/Popper.js');
 require('../../../node_modules/@mui/base/Portal/Portal.js');
-require('../../../node_modules/@mui/material/Radio/Radio.js');
+var Radio = require('../../../node_modules/@mui/material/Radio/Radio.js');
 require('../../../node_modules/@mui/material/Radio/radioClasses.js');
-require('../../../node_modules/@mui/material/RadioGroup/RadioGroup.js');
+var RadioGroup = require('../../../node_modules/@mui/material/RadioGroup/RadioGroup.js');
 require('../../../node_modules/@mui/material/RadioGroup/RadioGroupContext.js');
 require('../../../node_modules/@mui/material/Rating/Rating.js');
 require('../../../node_modules/@mui/material/Rating/ratingClasses.js');
@@ -308,11 +308,11 @@ require('../../providers/ContainerStateProvider.js');
 require('../../providers/UIConfigurationProvider.js');
 require('../../providers/CheckoutProvider.js');
 require('../../providers/PaymentProvider.js');
+require('../../providers/EventProvider.js');
 require('../../components/Stepper.js');
 var TextInput = require('../../components/TextInput.js');
 require('@mui/icons-material/ContentCopy');
 require('../../components/shared/ErrorBoundary.js');
-var index = require('../../constants/index.js');
 require('../../service/CookieService.js');
 require('openpgp');
 require('atob');
@@ -339,16 +339,14 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 
+const Countries = {
+    US: 'US',
+    INTERNATIONAL: 'International',
+};
 const WireTransferForm = ({ values, handleChange, setFieldValue, errors, }) => {
     var _a, _b;
     const countryOptions = useDropdowns.useCountryOptions();
     const theme = useTheme["default"]();
-    const bankOptions = React.useMemo(() => {
-        return index.BanksList.map((item) => ({
-            label: item,
-            value: item,
-        }));
-    }, []);
     const formatAccountNumber = React.useCallback((value) => tslib_es6.__awaiter(void 0, void 0, void 0, function* () {
         var _c;
         const accountNumberLength = (values === null || values === void 0 ? void 0 : values.accountNumber)
@@ -376,14 +374,31 @@ const WireTransferForm = ({ values, handleChange, setFieldValue, errors, }) => {
     }), [setFieldValue, values]);
     return (React__default["default"].createElement(React__default["default"].Fragment, null,
         React__default["default"].createElement(Typography["default"], { variant: "body2", sx: { marginTop: 2 } }, "Third-party wire transfers are not accepted."),
-        React__default["default"].createElement(TextInput["default"], { value: values.accountNumber, title: "Account Number", onChange: formatAccountNumber, sx: {
+        React__default["default"].createElement(FormControl["default"], { sx: {
                 marginTop: '16px',
-            }, placeholder: "Enter account number", type: "text", error: errors.accountNumber }),
-        React__default["default"].createElement(TextInput["default"], { value: values.aba, title: "Routing Number (ABA)", onChange: formatRouterNumber, sx: {
-                marginTop: '16px',
-            }, placeholder: "Enter routing number", type: "text", error: errors.aba }),
-        React__default["default"].createElement(Dropdown["default"], { value: values.bankCountry, onChange: handleChange('bankCountry'), title: "Bank Country", sx: { marginRight: '8px', marginTop: 2 }, placeholder: "Select one", options: countryOptions, error: errors.bankCountry }),
-        React__default["default"].createElement(Dropdown["default"], { value: values.bankName, onChange: handleChange('bankName'), title: "Bank Name", placeholder: "Type to search or select", sx: { marginRight: '8px', marginTop: 2 }, options: bankOptions, error: errors.bankName }),
+            } },
+            React__default["default"].createElement(FormLabel["default"], { id: "country", sx: {
+                    color: 'text.primary',
+                } }, "Country"),
+            React__default["default"].createElement(RadioGroup["default"], { row: true, "aria-labelledby": "country", name: "country", value: values.country, onChange: handleChange('country') },
+                React__default["default"].createElement(FormControlLabel["default"], { value: Countries.US, control: React__default["default"].createElement(Radio["default"], null), label: Countries.US }),
+                React__default["default"].createElement(FormControlLabel["default"], { value: Countries.INTERNATIONAL, control: React__default["default"].createElement(Radio["default"], null), label: Countries.INTERNATIONAL }))),
+        values.country && (React__default["default"].createElement(React__default["default"].Fragment, null,
+            values.country === Countries.US
+                ? (React__default["default"].createElement(React__default["default"].Fragment, null,
+                    React__default["default"].createElement(TextInput["default"], { value: values.accountNumber, title: "Account Number", onChange: formatAccountNumber, sx: {
+                            marginTop: '16px',
+                        }, placeholder: "Enter account number", type: "text", error: errors.accountNumber }),
+                    React__default["default"].createElement(TextInput["default"], { value: values.aba, title: "Routing Number (ABA)", onChange: formatRouterNumber, sx: {
+                            marginTop: '16px',
+                        }, placeholder: "Enter routing number", type: "text", error: errors.aba })))
+                : (React__default["default"].createElement(React__default["default"].Fragment, null,
+                    React__default["default"].createElement(TextInput["default"], { value: values.iban, title: "Internation Bank Account Number", onChange: handleChange('iban'), sx: {
+                            marginTop: '16px',
+                        }, placeholder: "Enter routing number", type: "text", error: errors.iban }),
+                    React__default["default"].createElement(Dropdown["default"], { value: values.bankCountry, onChange: handleChange('bankCountry'), title: "Bank Country", sx: { marginRight: '8px', marginTop: 2 }, placeholder: "Select one", options: countryOptions, error: errors.bankCountry }))),
+            React__default["default"].createElement(TextInput["default"], { value: values.bankName, onChange: handleChange('bankName'), title: "Bank Name", placeholder: "Enter Bank name", sx: { marginRight: '8px', marginTop: 2 }, error: errors.bankName }),
+            React__default["default"].createElement(TextInput["default"], { value: values.city, onChange: handleChange('city'), title: "Bank City", placeholder: "Enter Bank city", sx: { marginRight: '8px', marginTop: 2 }, error: errors.city }))),
         React__default["default"].createElement(Typography["default"], { variant: "body2", sx: {
                 color: (_a = theme.global) === null || _a === void 0 ? void 0 : _a.cardGrayedText,
                 padding: '12px 16px',
@@ -393,5 +408,6 @@ const WireTransferForm = ({ values, handleChange, setFieldValue, errors, }) => {
             } }, "Please note that wire transfers usually take 1-3 business days to complete and your NFT will not be transferred until payment has been settled.")));
 };
 
+exports.Countries = Countries;
 exports.WireTransferForm = WireTransferForm;
 //# sourceMappingURL=WireTransferForm.js.map

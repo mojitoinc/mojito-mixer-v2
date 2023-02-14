@@ -82,9 +82,7 @@ interface CreditCardFormType {
     isNew: boolean;
     expiry?: string;
     cvv?: string;
-    firstName?: string;
     cardNumber?: string;
-    lastName?: string;
     cardId?: string;
     save?: boolean;
     cardData?: PaymentMethod;
@@ -105,22 +103,58 @@ interface ReserveNow {
     __typename: string;
 }
 
+interface Font {
+    primary: string;
+    secondary: string;
+}
+interface PaymentConfirmationColor {
+    processedBackground: string;
+    processedTextColor: string;
+    awaitingPaymentBackground: string;
+    awaitingPaymentTextColor: string;
+    copyIconColor: string;
+}
+interface CheckoutColor {
+    continueButtonBackground: string;
+    continueButtonTextColor: string;
+}
+interface CostBreakDownColor {
+    applyButtonBackground: string;
+    applyButtonTextColor: string;
+}
+interface Color {
+    primary: string;
+    secondary: string;
+    background: string;
+    errorBackground: string;
+    text: string;
+    cardBackground: string;
+    placeholder: string;
+    checkout: CheckoutColor;
+    costBreakdown: CostBreakDownColor;
+    paymentConfirmation: PaymentConfirmationColor;
+}
+interface ThemeConfiguration {
+    color: Color;
+    font: Font;
+}
+
 interface MojitoFont {
     primary?: string;
     secondary?: string;
 }
-interface PaymentConfirmationColor {
+interface MojitoPaymentConfirmationColor {
     processedBackground?: string;
     processedTextColor?: string;
     awaitingPaymentBackground?: string;
     awaitingPaymentTextColor?: string;
     copyIconColor?: string;
 }
-interface CheckoutColor {
+interface MojitoCheckoutColor {
     continueButtonBackground?: string;
     continueButtonTextColor?: string;
 }
-interface CostBreakDownColor {
+interface MojitoCostBreakDownColor {
     applyButtonBackground?: string;
     applyButtonTextColor?: string;
 }
@@ -132,13 +166,128 @@ interface MojitoColor {
     text?: string;
     cardBackground?: string;
     placeholder?: string;
-    checkout?: CheckoutColor;
-    costBreakdown?: CostBreakDownColor;
-    paymentConfirmation?: PaymentConfirmationColor;
+    checkout?: MojitoCheckoutColor;
+    costBreakdown?: MojitoCostBreakDownColor;
+    paymentConfirmation?: MojitoPaymentConfirmationColor;
 }
-interface ThemeConfiguration {
+interface MojitoThemeConfiguration {
     color?: MojitoColor;
     font?: MojitoFont;
+}
+
+interface BillingFormData {
+    email?: string;
+    country?: string;
+    state?: string;
+    city?: string;
+    postalCode?: string;
+    phoneNumber?: string;
+    street1?: string;
+    name?: string;
+    firstName?: string;
+    lastName?: string;
+}
+
+interface CheckoutOptions {
+    orgId?: string;
+    lotId?: string;
+    quantity?: number;
+    paymentId?: string;
+    collectionItemId?: string;
+    invoiceId?: string;
+    discountCode?: string;
+    vertexEnabled?: boolean;
+}
+
+interface MojitoUIConfiguration {
+    global?: {
+        logoSrc?: string;
+        loaderImageSrc?: string;
+        errorImageSrc?: string;
+    };
+    billing?: {
+        isEnableExpressCheckout?: boolean;
+        gpay?: boolean;
+        applepay?: boolean;
+        walletConnect?: boolean;
+        metaMask?: boolean;
+    };
+    payment?: {
+        gpay?: boolean;
+        applepay?: boolean;
+        walletConnect?: boolean;
+        wire?: boolean;
+        creditCard?: boolean;
+    };
+    costBreakdown?: {
+        showDiscountCode?: boolean;
+    };
+    paymentConfirmation?: {
+        wireTransferInstructions?: JSX.Element;
+        creditCardInstructions?: JSX.Element;
+        onGoTo?: () => void;
+    };
+    delivery?: {
+        showConnectWallet?: boolean;
+    };
+}
+interface UIConfiguration {
+    global: {
+        logoSrc: string;
+        loaderImageSrc: string;
+        errorImageSrc: string;
+    };
+    billing: {
+        isEnableExpressCheckout: boolean;
+        gpay: boolean;
+        applepay: boolean;
+        walletConnect: boolean;
+        metaMask: boolean;
+    };
+    payment: {
+        gpay: boolean;
+        applepay: boolean;
+        walletConnect: boolean;
+        wire: boolean;
+        creditCard: boolean;
+    };
+    costBreakdown: {
+        showDiscountCode: boolean;
+    };
+    paymentConfirmation: {
+        wireTransferInstructions: JSX.Element;
+        creditCardInstructions: JSX.Element;
+        onGoTo: () => void;
+    };
+    delivery: {
+        showConnectWallet: boolean;
+    };
+}
+
+interface PaymentData {
+    creditCardData?: CreditCardFormType;
+    wireData?: {
+        accountNumber: string;
+        routingNumber: string;
+        iban: string;
+        bankAddress: {
+            bankName: string;
+            country: string;
+            city: string;
+        };
+        country: string;
+    };
+    paymentId?: string;
+    paymentType?: string;
+    destinationAddress?: string;
+    deliveryStatus?: string;
+    sessionKey?: string;
+}
+
+interface EventConfig {
+    onError?: (e: any) => void;
+    onEvent?: (e: any) => void;
+    onCatch?: (e: any) => void;
 }
 
 declare const DefaultThemes: ThemeConfiguration;
@@ -163,87 +312,24 @@ interface ThemeProviderProps extends CommonProviderProps {
 }
 type ProvidersInjectorProps = ThemeProviderProps & AuthorizedApolloProviderProps;
 
-interface CheckoutOptions {
-    orgId?: string;
-    lotId?: string;
-    quantity?: number;
-    paymentId?: string;
-    collectionItemId?: string;
-    invoiceId?: string;
-    discountCode?: string;
-    vertexEnabled?: boolean;
-}
-
-interface UIConfiguration {
-    billing?: {
-        isEnableExpressCheckout?: boolean;
-        gpay?: boolean;
-        applepay?: boolean;
-        walletConnect?: boolean;
-        metaMask?: boolean;
-    };
-    payment?: {
-        gpay?: boolean;
-        applepay?: boolean;
-        walletConnect?: boolean;
-        wire?: boolean;
-        creditCard?: boolean;
-    };
-    costBreakdown?: {
-        showDiscountCode?: boolean;
-    };
-    paymentConfirmation?: {
-        wireTransferInstructions?: JSX.Element;
-        creditCardInstructions?: JSX.Element;
-        onGoToMarketPlace?: () => void;
-    };
-}
-
 declare global {
     interface Window {
         _Sardine: any;
     }
 }
 interface MojitoCheckoutProps {
-    uiConfiguration?: UIConfiguration;
+    uiConfiguration?: MojitoUIConfiguration;
     checkoutOptions: CheckoutOptions;
-    theme?: ThemeConfiguration;
+    theme?: MojitoThemeConfiguration;
     success?: boolean;
     show: boolean;
     debug?: boolean;
     sardineEnvironment?: SardineEnvironment;
     enableSardine?: boolean;
+    events?: EventConfig;
 }
 type PUICheckoutProps = MojitoCheckoutProps & ProvidersInjectorProps;
 declare const PUIMojitoCheckout: React.FC<PUICheckoutProps>;
-
-interface BillingFormData {
-    email?: string;
-    country?: string;
-    state?: string;
-    city?: string;
-    postalCode?: string;
-    phoneNumber?: string;
-    street1?: string;
-    name?: string;
-}
-
-interface PaymentData {
-    creditCardData?: CreditCardFormType;
-    wireData?: {
-        accountNumber: string;
-        routingNumber: string;
-        bankAddress: {
-            bankName: string;
-            country: string;
-        };
-    };
-    paymentId?: string;
-    paymentType?: string;
-    destinationAddress?: string;
-    deliveryStatus?: string;
-    sessionKey?: string;
-}
 
 interface PaymentInfo {
     billingInfo?: BillingFormData;
@@ -254,4 +340,4 @@ interface PaymentInfo {
 }
 declare const usePaymentInfo: () => PaymentInfo;
 
-export { CheckoutColor, CheckoutOptions, CostBreakDownColor, DefaultThemes, PUIMojitoCheckout as MojitoCheckout, MojitoColor, MojitoFont, PUICheckoutProps, PaymentConfirmationColor, THREEDS_FLOW_SEARCH_PARAM_SUCCESS_KEY, ThemeConfiguration, UIConfiguration, usePaymentInfo };
+export { CheckoutColor, CheckoutOptions, Color, CostBreakDownColor, DefaultThemes, Font, PUIMojitoCheckout as MojitoCheckout, PUICheckoutProps, PaymentConfirmationColor, THREEDS_FLOW_SEARCH_PARAM_SUCCESS_KEY, ThemeConfiguration, UIConfiguration, usePaymentInfo };

@@ -5,10 +5,13 @@ export interface PaymentData {
     wireData?: {
         accountNumber: string;
         routingNumber: string;
+        iban: string;
         bankAddress: {
             bankName: string;
             country: string;
+            city: string;
         };
+        country: string;
     };
     paymentId?: string;
     paymentType?: string;
@@ -16,13 +19,19 @@ export interface PaymentData {
     deliveryStatus?: string;
     sessionKey?: string;
 }
+export interface PaymentMethodLimit {
+    exceedCreditCard?: boolean;
+    exceedWire?: boolean;
+}
 export interface Payment {
     paymentInfo?: PaymentData;
-    setPaymentInfo: (value: PaymentData) => void;
+    setPaymentInfo: React.Dispatch<React.SetStateAction<PaymentData | undefined>>;
     onConfirmCreditCardPurchase: (deliveryAddress: string) => void;
     onConfirmWireTransferPurchase: (deliveryAddress: string) => void;
+    paymentMethods?: PaymentMethodLimit;
+    setPaymentMethods: React.Dispatch<React.SetStateAction<PaymentMethodLimit | undefined>>;
 }
-export declare const PaymentProvider: ({ children }: {
+export declare const PaymentProvider: ({ children, }: {
     children?: React.ReactNode;
 }) => JSX.Element;
 export declare const usePayment: () => Payment;

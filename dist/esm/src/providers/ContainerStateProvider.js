@@ -1,11 +1,16 @@
 import React__default, { createContext, useState, useEffect, useMemo, useContext } from 'react';
 import { useDebug } from './DebugProvider.js';
 import { ContainerTypes } from '../interfaces/ContextInterface/RootContainer.js';
+import { useEvents } from './EventProvider.js';
 
 const ContainerStateContext = createContext({});
 const ContainerStateProvider = ({ paymentId, success, children, }) => {
     const debug = useDebug('ContainerStateProvider');
     const [containerState, setContainerState] = useState(success ? ContainerTypes.CONFIRMATION : ContainerTypes.CHECKOUT);
+    const { onEvent } = useEvents();
+    useEffect(() => {
+        onEvent === null || onEvent === void 0 ? void 0 : onEvent(containerState);
+    }, [onEvent, containerState]);
     useEffect(() => {
         debug.info('paymentId', { paymentId, success });
         if (paymentId || success)

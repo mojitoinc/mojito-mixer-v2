@@ -3,7 +3,7 @@ import DefaultThemes from '../config/themes.js';
 import '../config/paymentConfiguration.js';
 
 const makeTheme = (themeConfiguration) => {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14;
     return createTheme({
         typography: {
             fontFamily: 'Sneak',
@@ -64,15 +64,12 @@ const makeTheme = (themeConfiguration) => {
             placeholder: (_7 = (_6 = themeConfiguration === null || themeConfiguration === void 0 ? void 0 : themeConfiguration.color) === null || _6 === void 0 ? void 0 : _6.placeholder) !== null && _7 !== void 0 ? _7 : (_8 = DefaultThemes.color) === null || _8 === void 0 ? void 0 : _8.placeholder,
             checkout: Object.assign(Object.assign({}, (_9 = DefaultThemes.color) === null || _9 === void 0 ? void 0 : _9.checkout), (_10 = themeConfiguration === null || themeConfiguration === void 0 ? void 0 : themeConfiguration.color) === null || _10 === void 0 ? void 0 : _10.checkout),
             costBreakdown: Object.assign(Object.assign({}, (_11 = DefaultThemes.color) === null || _11 === void 0 ? void 0 : _11.costBreakdown), (_12 = themeConfiguration === null || themeConfiguration === void 0 ? void 0 : themeConfiguration.color) === null || _12 === void 0 ? void 0 : _12.costBreakdown),
-            paymentConfirmation: {
-                awaitingPaymentBackground: '#FCFB99',
-                awaitingPaymentTextColor: '#F98028',
-                processedBackground: '#E7EFE8',
-                processedTextColor: '#0B4D12',
-                copyIconColor: '#B0AFFE',
-            },
+            paymentConfirmation: Object.assign(Object.assign({}, (_13 = DefaultThemes.color) === null || _13 === void 0 ? void 0 : _13.paymentConfirmation), (_14 = themeConfiguration === null || themeConfiguration === void 0 ? void 0 : themeConfiguration.color) === null || _14 === void 0 ? void 0 : _14.paymentConfirmation),
             cardGrayedText: '#5C5C9B',
             grayBackground: '#F4F4F5',
+            multiSigBorder: '#0b96b4',
+            multiSigBackground: '#c0f2ff',
+            multiSigText: '#0b96b4',
         },
     });
 };

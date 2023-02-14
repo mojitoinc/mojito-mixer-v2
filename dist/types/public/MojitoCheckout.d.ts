@@ -1,22 +1,24 @@
 import React from 'react';
-import { ThemeConfiguration } from '../interfaces';
+import { MojitoThemeConfiguration } from '../interfaces';
+import { EventConfig } from '../providers';
 import { SardineEnvironment } from '../config';
 import { ProvidersInjectorProps } from '../providers/ProvidersInjector';
-import { UIConfiguration, CheckoutOptions } from '../interfaces/ContextInterface';
+import { CheckoutOptions, MojitoUIConfiguration } from '../interfaces/ContextInterface';
 declare global {
     interface Window {
         _Sardine: any;
     }
 }
 interface MojitoCheckoutProps {
-    uiConfiguration?: UIConfiguration;
+    uiConfiguration?: MojitoUIConfiguration;
     checkoutOptions: CheckoutOptions;
-    theme?: ThemeConfiguration;
+    theme?: MojitoThemeConfiguration;
     success?: boolean;
     show: boolean;
     debug?: boolean;
     sardineEnvironment?: SardineEnvironment;
     enableSardine?: boolean;
+    events?: EventConfig;
 }
 export type PUICheckoutProps = MojitoCheckoutProps & ProvidersInjectorProps;
 declare const PUIMojitoCheckout: React.FC<PUICheckoutProps>;

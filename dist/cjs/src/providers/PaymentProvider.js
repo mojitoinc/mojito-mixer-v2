@@ -11,6 +11,7 @@ var BillingProvider = require('./BillingProvider.js');
 var ContainerStateProvider = require('./ContainerStateProvider.js');
 require('./UIConfigurationProvider.js');
 var CheckoutProvider = require('./CheckoutProvider.js');
+require('./EventProvider.js');
 require('openpgp');
 require('atob');
 require('btoa');
@@ -39,10 +40,11 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 
 const PaymentContext = React.createContext({});
-const PaymentProvider = ({ children }) => {
+const PaymentProvider = ({ children, }) => {
     const debug = DebugProvider.useDebug('PaymentProvider');
     const { setError } = ErrorProvider.useError();
     const [paymentInfo, setPaymentInfo] = React.useState();
+    const [paymentMethods, setPaymentMethods] = React.useState();
     const { billingInfo, collectionData, taxes } = BillingProvider.useBilling();
     const { orgId, lotId, quantity, invoiceId } = CheckoutProvider.useCheckout();
     const { setContainerState } = ContainerStateProvider.useContainer();
@@ -58,11 +60,17 @@ const PaymentProvider = ({ children }) => {
         var _a, _b, _c, _d;
         setContainerState(RootContainer.ContainerTypes.LOADING);
         try {
-            const paymentReceipt = yield makeCreditCardPurchase({ deliveryAddress, lotId, quantity: quantity !== null && quantity !== void 0 ? quantity : 1, invoiceId, billingInfo });
+            const paymentReceipt = yield makeCreditCardPurchase({
+                deliveryAddress,
+                lotId,
+                quantity: quantity !== null && quantity !== void 0 ? quantity : 1,
+                invoiceId,
+                billingInfo,
+            });
             debug.success('paymentData', { paymentReceipt });
             saveToCookies(paymentReceipt.paymentData, paymentReceipt.reserveLotData);
-            window.location.href = (_c = (_b = (_a = paymentReceipt
-                .notificationData) === null || _a === void 0 ? void 0 : _a.getPaymentNotification) === null || _b === void 0 ? void 0 : _b.message) === null || _c === void 0 ? void 0 : _c.redirectURL;
+            window.location.href =
+                (_c = (_b = (_a = paymentReceipt.notificationData) === null || _a === void 0 ? void 0 : _a.getPaymentNotification) === null || _b === void 0 ? void 0 : _b.message) === null || _c === void 0 ? void 0 : _c.redirectURL;
         }
         catch (e) {
             const message = (_d = e.message) !== null && _d !== void 0 ? _d : '';
@@ -84,7 +92,13 @@ const PaymentProvider = ({ children }) => {
         var _e;
         setContainerState(RootContainer.ContainerTypes.LOADING);
         try {
-            const paymentReceipt = yield makeWireTransferPurchase({ deliveryAddress, lotId, quantity: quantity !== null && quantity !== void 0 ? quantity : 1, invoiceId, billingInfo });
+            const paymentReceipt = yield makeWireTransferPurchase({
+                deliveryAddress,
+                lotId,
+                quantity: quantity !== null && quantity !== void 0 ? quantity : 1,
+                invoiceId,
+                billingInfo,
+            });
             debug.success('paymentData-wire', { paymentReceipt });
             saveToCookies(paymentReceipt.paymentData, paymentReceipt.reserveLotData);
             setPaymentInfo(paymentReceipt.paymentData);
@@ -113,8 +127,17 @@ const PaymentProvider = ({ children }) => {
             setPaymentInfo,
             onConfirmCreditCardPurchase,
             onConfirmWireTransferPurchase,
+            setPaymentMethods,
+            paymentMethods,
         };
-    }, [paymentInfo, setPaymentInfo, onConfirmCreditCardPurchase, onConfirmWireTransferPurchase]);
+    }, [
+        paymentInfo,
+        setPaymentInfo,
+        onConfirmCreditCardPurchase,
+        onConfirmWireTransferPurchase,
+        setPaymentMethods,
+        paymentMethods,
+    ]);
     return (React__default["default"].createElement(PaymentContext.Provider, { value: values }, children));
 };
 const usePayment = () => {

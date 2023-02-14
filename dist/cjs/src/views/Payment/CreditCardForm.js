@@ -299,6 +299,7 @@ require('../../../node_modules/@mui/material/Typography/typographyClasses.js');
 require('../../../node_modules/@mui/material/Zoom/Zoom.js');
 require('../../../node_modules/@mui/material/GlobalStyles/GlobalStyles.js');
 require('../../../node_modules/@mui/base/FocusTrap/FocusTrap.js');
+var ErrorIcon = require('@mui/icons-material/Error');
 require('@mui/icons-material/ArrowBack');
 require('../../providers/DebugProvider.js');
 require('../../providers/ErrorProvider.js');
@@ -307,6 +308,7 @@ require('../../providers/ContainerStateProvider.js');
 require('../../providers/UIConfigurationProvider.js');
 require('../../providers/CheckoutProvider.js');
 require('../../providers/PaymentProvider.js');
+require('../../providers/EventProvider.js');
 require('../../components/Stepper.js');
 var TextInput = require('../../components/TextInput.js');
 var CreditCardDropdown = require('../../components/shared/CreditCardDropdown.js');
@@ -316,22 +318,20 @@ require('../../components/shared/ErrorBoundary.js');
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
 var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
+var ErrorIcon__default = /*#__PURE__*/_interopDefaultLegacy(ErrorIcon);
 
-const CreditCardForm = ({ creditCardList, values, setFieldValue, errors, handleChange, }) => {
-    var _a, _b;
+const CreditCardForm = ({ creditCardList, values, setFieldValue, errors, handleChange, screeningError, }) => {
+    var _a, _b, _c, _d;
     const theme = useTheme["default"]();
     const { billingInfo } = BillingProvider.useBilling();
-    const isNewCreditCard = React.useMemo(() => {
-        return ((values === null || values === void 0 ? void 0 : values.isNew) || (creditCardList && creditCardList.length === 0));
-    }, [values, creditCardList]);
     const handleCardChange = React.useCallback((val) => {
-        setFieldValue('isNew', val === 'null');
+        setFieldValue('isNew', val === 'true');
         setFieldValue('cardId', val);
     }, [setFieldValue]);
     const formatCardNumber = React.useCallback((value) => tslib_es6.__awaiter(void 0, void 0, void 0, function* () {
-        var _c;
+        var _e;
         const cardNumberLength = (values === null || values === void 0 ? void 0 : values.cardNumber)
-            ? (_c = values === null || values === void 0 ? void 0 : values.cardNumber) === null || _c === void 0 ? void 0 : _c.length
+            ? (_e = values === null || values === void 0 ? void 0 : values.cardNumber) === null || _e === void 0 ? void 0 : _e.length
             : 0;
         if (cardNumberLength > value.length) {
             yield setFieldValue('cardNumber', value);
@@ -344,28 +344,38 @@ const CreditCardForm = ({ creditCardList, values, setFieldValue, errors, handleC
         }
     }), [setFieldValue, values]);
     const formatExpiry = React.useCallback((value) => tslib_es6.__awaiter(void 0, void 0, void 0, function* () {
-        var _d;
-        const expiryLength = (values === null || values === void 0 ? void 0 : values.expiry) ? (_d = values === null || values === void 0 ? void 0 : values.expiry) === null || _d === void 0 ? void 0 : _d.length : 0;
+        var _f;
+        const expiryLength = (values === null || values === void 0 ? void 0 : values.expiry) ? (_f = values === null || values === void 0 ? void 0 : values.expiry) === null || _f === void 0 ? void 0 : _f.length : 0;
+        const isValid = value.split('/').join('').match(/^[\d\s]+$/);
         if (expiryLength > value.length) {
             yield setFieldValue('expiry', value);
             return;
         }
-        const expiry = value.split('/').join('');
-        yield setFieldValue('expiry', expiry.replace(/\d{2}(?=.)/g, '$&/'));
+        if (isValid || value === '') {
+            const expiry = value.split('/').join('');
+            yield setFieldValue('expiry', expiry.replace(/\d{2}(?=.)/g, '$&/'));
+        }
     }), [setFieldValue, values]);
+    const formatCVV = React.useCallback((value) => tslib_es6.__awaiter(void 0, void 0, void 0, function* () {
+        const isValid = value.match(/^[\d\s]+$/);
+        if (isValid || value === '') {
+            yield setFieldValue('cvv', value);
+        }
+    }), [setFieldValue]);
     return (React__default["default"].createElement(React__default["default"].Fragment, null,
-        React__default["default"].createElement(CreditCardDropdown["default"], { value: isNewCreditCard ? 'true' : values === null || values === void 0 ? void 0 : values.cardId, onChange: handleCardChange, error: errors === null || errors === void 0 ? void 0 : errors.cardId, title: "Card info", sx: { marginRight: '8px' }, options: creditCardList }),
+        screeningError && (React__default["default"].createElement(Box["default"], { display: "flex", flexDirection: "row", alignItems: "center", marginTop: "16px", sx: {
+                background: (_a = theme.global) === null || _a === void 0 ? void 0 : _a.errorBackground,
+                padding: '14px',
+                borderRadius: '4px',
+            } },
+            React__default["default"].createElement(ErrorIcon__default["default"], { sx: {
+                    color: (_b = theme.global) === null || _b === void 0 ? void 0 : _b.required,
+                    marginRight: '10px',
+                } }),
+            React__default["default"].createElement(Typography["default"], { fontWeight: "400", fontSize: "16px" }, screeningError))),
+        React__default["default"].createElement(CreditCardDropdown["default"], { value: (values === null || values === void 0 ? void 0 : values.isNew) ? 'true' : values === null || values === void 0 ? void 0 : values.cardId, onChange: handleCardChange, error: errors === null || errors === void 0 ? void 0 : errors.cardId, title: "Card info", sx: { marginRight: '8px', marginTop: 2 }, options: creditCardList }),
         !(billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.phoneNumber) && (React__default["default"].createElement(FormHelperText["default"], { error: true }, "Phone number is mandatory for credit card payment")),
-        isNewCreditCard && (React__default["default"].createElement(Box["default"], { display: "flex", justifyContent: "space-between" },
-            React__default["default"].createElement(TextInput["default"], { value: values === null || values === void 0 ? void 0 : values.firstName, onChange: handleChange('firstName'), error: errors === null || errors === void 0 ? void 0 : errors.firstName, title: "First name", sx: {
-                    marginTop: '16px',
-                    width: '48%',
-                }, required: true, placeholder: "First name", type: "text" }),
-            React__default["default"].createElement(TextInput["default"], { value: values === null || values === void 0 ? void 0 : values.lastName, onChange: handleChange('lastName'), error: errors === null || errors === void 0 ? void 0 : errors.lastName, title: "Last name", sx: {
-                    marginTop: '16px',
-                    width: '48%',
-                }, required: true, placeholder: "Last name", type: "text" }))),
-        isNewCreditCard && (React__default["default"].createElement(TextInput["default"], { value: values === null || values === void 0 ? void 0 : values.cardNumber, onChange: formatCardNumber, error: errors === null || errors === void 0 ? void 0 : errors.cardNumber, inputProps: {
+        (values === null || values === void 0 ? void 0 : values.isNew) && (React__default["default"].createElement(TextInput["default"], { value: values === null || values === void 0 ? void 0 : values.cardNumber, onChange: formatCardNumber, error: errors === null || errors === void 0 ? void 0 : errors.cardNumber, inputProps: {
                 maxLength: 19,
             }, type: "text", title: "Card info", sx: {
                 marginTop: '16px',
@@ -377,20 +387,20 @@ const CreditCardForm = ({ creditCardList, values, setFieldValue, errors, handleC
                 }, inputProps: {
                     maxLength: 5,
                 }, type: "text", placeholder: "MM/YY" }),
-            React__default["default"].createElement(TextInput["default"], { value: values === null || values === void 0 ? void 0 : values.cvv, onChange: handleChange('cvv'), error: errors === null || errors === void 0 ? void 0 : errors.cvv, inputProps: {
+            React__default["default"].createElement(TextInput["default"], { value: values === null || values === void 0 ? void 0 : values.cvv, onChange: formatCVV, error: errors === null || errors === void 0 ? void 0 : errors.cvv, inputProps: {
                     maxLength: 3,
-                }, type: "number", sx: {
+                }, type: "text", sx: {
                     marginTop: '16px',
                     width: '48%',
                 }, placeholder: "CVV" })),
         React__default["default"].createElement(Typography["default"], { variant: "body2", sx: {
-                color: (_a = theme.global) === null || _a === void 0 ? void 0 : _a.cardGrayedText,
+                color: (_c = theme.global) === null || _c === void 0 ? void 0 : _c.cardGrayedText,
                 padding: '12px 16px',
                 marginTop: 2,
-                backgroundColor: (_b = theme.global) === null || _b === void 0 ? void 0 : _b.grayBackground,
+                backgroundColor: (_d = theme.global) === null || _d === void 0 ? void 0 : _d.grayBackground,
                 borderRadius: '4px',
             } }, "NFTs purchased by credit card can only be transferred to your multi-sig wallet and cannot be transferred out for 14 days."),
-        isNewCreditCard && (React__default["default"].createElement(Box["default"], { display: "flex", alignItems: "center", marginTop: 2 },
+        (values === null || values === void 0 ? void 0 : values.isNew) && (React__default["default"].createElement(Box["default"], { display: "flex", alignItems: "center", marginTop: 2 },
             React__default["default"].createElement(Checkbox["default"], { sx: { padding: 0 }, checked: values === null || values === void 0 ? void 0 : values.save, onChange: handleChange('save') }),
             React__default["default"].createElement(Typography["default"], { variant: "body1", sx: { marginLeft: 1 } }, "Save my credit card info for faster checkout")))));
 };

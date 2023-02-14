@@ -302,17 +302,17 @@ import '../providers/ContainerStateProvider.js';
 import { useUIConfiguration } from '../providers/UIConfigurationProvider.js';
 import '../providers/CheckoutProvider.js';
 import '../providers/PaymentProvider.js';
-import { Icons } from '../assets/index.js';
+import '../providers/EventProvider.js';
 
 const Header = ({ isPaymentConfirmation }) => {
     var _a, _b, _c;
     const theme = useTheme();
-    const { paymentConfirmation } = useUIConfiguration();
+    const { paymentConfirmation, global } = useUIConfiguration();
     return (React__default.createElement(Box, { sx: {
             width: '100%',
             backgroundColor: (_a = theme.global) === null || _a === void 0 ? void 0 : _a.background,
         } },
-        isPaymentConfirmation && (React__default.createElement(Stack, { flexDirection: "row", alignItems: "center", sx: { cursor: 'pointer' }, marginBottom: "24px", onClick: paymentConfirmation === null || paymentConfirmation === void 0 ? void 0 : paymentConfirmation.onGoToMarketPlace },
+        isPaymentConfirmation && (React__default.createElement(Stack, { flexDirection: "row", alignItems: "center", sx: { cursor: 'pointer' }, marginBottom: "24px", onClick: paymentConfirmation === null || paymentConfirmation === void 0 ? void 0 : paymentConfirmation.onGoTo },
             React__default.createElement(ArrowBackIcon, { sx: {
                     color: (_b = theme === null || theme === void 0 ? void 0 : theme.global) === null || _b === void 0 ? void 0 : _b.unHighlightedText,
                     width: '17px',
@@ -330,7 +330,7 @@ const Header = ({ isPaymentConfirmation }) => {
                 justifyContent: 'center',
                 display: 'flex',
             } },
-            React__default.createElement("img", { src: Icons.logo, width: "162px", height: "37px", alt: "logo" }))));
+            React__default.createElement("img", { src: global.logoSrc, width: "162px", height: "37px", alt: "logo" }))));
 };
 
 export { Header as default };

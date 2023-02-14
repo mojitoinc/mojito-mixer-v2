@@ -7,6 +7,7 @@ import '../../providers/ContainerStateProvider.js';
 import '../../providers/UIConfigurationProvider.js';
 import '../../providers/CheckoutProvider.js';
 import '../../providers/PaymentProvider.js';
+import '../../providers/EventProvider.js';
 import 'openpgp';
 import 'atob';
 import 'btoa';

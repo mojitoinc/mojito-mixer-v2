@@ -301,6 +301,7 @@ import { useContainer } from '../../providers/ContainerStateProvider.js';
 import '../../providers/UIConfigurationProvider.js';
 import '../../providers/CheckoutProvider.js';
 import '../../providers/PaymentProvider.js';
+import '../../providers/EventProvider.js';
 import { ContainerTypes } from '../../interfaces/ContextInterface/RootContainer.js';
 
 const PaymentInfoCards = ({ billingInfo }) => {

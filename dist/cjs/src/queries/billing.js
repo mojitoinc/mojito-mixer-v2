@@ -104,6 +104,28 @@ query GetPaymentMethodList($orgID: UUID1!) {
     }
   }  
 `;
+const validatePaymentLimitQuery = index.gql `
+query ValidatePaymentLimit($collectionId: UUID1!, $itemsCount: Int!) {
+  validatePaymentLimit(collectionID: $collectionId, itemsCount: $itemsCount) {
+    ach {
+      remainingTotal
+      isLimitExceeded
+      remainingTransaction
+    }
+    wire {
+      remainingTotal
+      isLimitExceeded
+      remainingTransaction
+    }
+    creditCard {
+      remainingTotal
+      isLimitExceeded
+      remainingTransaction
+    }
+  }
+}
+`;
 
 exports.paymentMethodsQuery = paymentMethodsQuery;
+exports.validatePaymentLimitQuery = validatePaymentLimitQuery;
 //# sourceMappingURL=billing.js.map

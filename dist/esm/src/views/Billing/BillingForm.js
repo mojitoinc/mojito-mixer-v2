@@ -304,6 +304,7 @@ import '../../providers/ContainerStateProvider.js';
 import '../../providers/UIConfigurationProvider.js';
 import '../../providers/CheckoutProvider.js';
 import '../../providers/PaymentProvider.js';
+import '../../providers/EventProvider.js';
 import '../../components/Stepper.js';
 import TextInput from '../../components/TextInput.js';
 import '@mui/icons-material/ContentCopy';
@@ -353,6 +354,15 @@ const BillingForm = ({ values, errors, onChange, isValid, }) => {
                         marginRight: '10px',
                     } }),
                 React__default.createElement(Typography, { fontWeight: "400", fontSize: "16px" }, "Complete necessary changes to continue"))),
+            React__default.createElement(Box, { display: "flex", justifyContent: "space-between" },
+                React__default.createElement(TextInput, { value: values === null || values === void 0 ? void 0 : values.firstName, onChange: onChange('firstName'), error: errors === null || errors === void 0 ? void 0 : errors.firstName, title: "First name", sx: {
+                        marginTop: '16px',
+                        width: '48%',
+                    }, required: true, placeholder: "First name", type: "text" }),
+                React__default.createElement(TextInput, { value: values === null || values === void 0 ? void 0 : values.lastName, onChange: onChange('lastName'), error: errors === null || errors === void 0 ? void 0 : errors.lastName, title: "Last name", sx: {
+                        marginTop: '16px',
+                        width: '48%',
+                    }, required: true, placeholder: "Last name", type: "text" })),
             React__default.createElement(Box, { display: "flex", flexDirection: "row", marginTop: "16px" },
                 React__default.createElement(Dropdown, { value: values === null || values === void 0 ? void 0 : values.country, onChange: onChange('country'), title: "Country/Region", required: true, sx: { marginRight: '8px' }, error: errors === null || errors === void 0 ? void 0 : errors.country, placeholder: "Select one...", options: countries }),
                 React__default.createElement(Dropdown, { value: values === null || values === void 0 ? void 0 : values.state, onChange: onChange('state'), title: "State", sx: {

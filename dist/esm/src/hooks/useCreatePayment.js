@@ -23,8 +23,13 @@ import '../providers/ContainerStateProvider.js';
 import '../providers/UIConfigurationProvider.js';
 import '../providers/CheckoutProvider.js';
 import '../providers/PaymentProvider.js';
+import '../providers/EventProvider.js';
 import { useAPIService } from './useAPIService.js';
 
+const Countries = {
+    US: 'US',
+    INTERNATIONAL: 'International',
+};
 const useCreatePayment = (paymentInfo, orgId) => {
     const debug = useDebug('useCreatePayment');
     const { getPaymentNotification } = useAPIService();
@@ -136,40 +141,53 @@ const useCreatePayment = (paymentInfo, orgId) => {
         getInvoiceData,
     ]);
     const makeWireTransferPurchase = useCallback((options) => __awaiter(void 0, void 0, void 0, function* () {
-        var _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5, _6, _7;
+        var _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5, _6, _7, _8;
         const inputData = {};
         const copiedBillingDetails = Object.assign(Object.assign({}, options.billingInfo), { district: (_t = options.billingInfo) === null || _t === void 0 ? void 0 : _t.state, address1: (_u = options.billingInfo) === null || _u === void 0 ? void 0 : _u.street1 });
         delete copiedBillingDetails.state;
         delete copiedBillingDetails.street1;
         delete copiedBillingDetails.email;
         delete copiedBillingDetails.phoneNumber;
+        delete copiedBillingDetails.firstName;
+        delete copiedBillingDetails.lastName;
         inputData.paymentType = 'Wire';
-        inputData.wireData = Object.assign(Object.assign({}, paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.wireData), { billingDetails: copiedBillingDetails });
+        const wireData = Object.assign({}, paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.wireData);
+        if (((_v = paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.wireData) === null || _v === void 0 ? void 0 : _v.country) === Countries.US) {
+            delete wireData.iban;
+            delete wireData.country;
+            inputData.wireData = Object.assign(Object.assign({}, wireData), { billingDetails: copiedBillingDetails });
+        }
+        else {
+            delete wireData.accountNumber;
+            delete wireData.routingNumber;
+            delete wireData.country;
+            inputData.wireData = Object.assign(Object.assign({}, wireData), { billingDetails: copiedBillingDetails });
+        }
         const result = yield createPaymentMethod({
             variables: {
                 orgID: orgId,
                 input: inputData,
             },
         });
-        if ((_w = (_v = result === null || result === void 0 ? void 0 : result.data) === null || _v === void 0 ? void 0 : _v.createPaymentMethod) === null || _w === void 0 ? void 0 : _w.id) {
-            if (((_y = (_x = result === null || result === void 0 ? void 0 : result.data) === null || _x === void 0 ? void 0 : _x.createPaymentMethod) === null || _y === void 0 ? void 0 : _y.status) !== 'complete') {
+        if ((_x = (_w = result === null || result === void 0 ? void 0 : result.data) === null || _w === void 0 ? void 0 : _w.createPaymentMethod) === null || _x === void 0 ? void 0 : _x.id) {
+            if (((_z = (_y = result === null || result === void 0 ? void 0 : result.data) === null || _y === void 0 ? void 0 : _y.createPaymentMethod) === null || _z === void 0 ? void 0 : _z.status) !== 'complete') {
                 yield paymentMethodStatus({
                     variables: {
-                        paymentMethodID: (_0 = (_z = result === null || result === void 0 ? void 0 : result.data) === null || _z === void 0 ? void 0 : _z.createPaymentMethod) === null || _0 === void 0 ? void 0 : _0.id,
+                        paymentMethodID: (_1 = (_0 = result === null || result === void 0 ? void 0 : result.data) === null || _0 === void 0 ? void 0 : _0.createPaymentMethod) === null || _1 === void 0 ? void 0 : _1.id,
                     },
                 });
             }
             const reserveLotData = yield getInvoiceData(options.invoiceId, options.lotId, options.quantity);
             const result1 = yield createPayment({
                 variables: {
-                    paymentMethodID: (_2 = (_1 = result === null || result === void 0 ? void 0 : result.data) === null || _1 === void 0 ? void 0 : _1.createPaymentMethod) === null || _2 === void 0 ? void 0 : _2.id,
+                    paymentMethodID: (_3 = (_2 = result === null || result === void 0 ? void 0 : result.data) === null || _2 === void 0 ? void 0 : _2.createPaymentMethod) === null || _3 === void 0 ? void 0 : _3.id,
                     invoiceID: reserveLotData === null || reserveLotData === void 0 ? void 0 : reserveLotData.invoiceID,
                     metadata: {
                         destinationAddress: options.deliveryAddress,
                     },
                 },
             });
-            const paymentData = Object.assign(Object.assign({}, paymentInfo), { deliveryStatus: (_4 = (_3 = result1 === null || result1 === void 0 ? void 0 : result1.data) === null || _3 === void 0 ? void 0 : _3.createPayment) === null || _4 === void 0 ? void 0 : _4.status, paymentId: (_7 = (_6 = (_5 = result === null || result === void 0 ? void 0 : result.data) === null || _5 === void 0 ? void 0 : _5.createPaymentMethod) === null || _6 === void 0 ? void 0 : _6.id) !== null && _7 !== void 0 ? _7 : '', destinationAddress: options.deliveryAddress });
+            const paymentData = Object.assign(Object.assign({}, paymentInfo), { deliveryStatus: (_5 = (_4 = result1 === null || result1 === void 0 ? void 0 : result1.data) === null || _4 === void 0 ? void 0 : _4.createPayment) === null || _5 === void 0 ? void 0 : _5.status, paymentId: (_8 = (_7 = (_6 = result === null || result === void 0 ? void 0 : result.data) === null || _6 === void 0 ? void 0 : _6.createPaymentMethod) === null || _7 === void 0 ? void 0 : _7.id) !== null && _8 !== void 0 ? _8 : '', destinationAddress: options.deliveryAddress });
             return { paymentData, reserveLotData };
         }
         throw new Error('unable to create paymentMethod');
@@ -190,5 +208,5 @@ const useCreatePayment = (paymentInfo, orgId) => {
     return values;
 };
 
-export { useCreatePayment };
+export { Countries, useCreatePayment };
 //# sourceMappingURL=useCreatePayment.js.map

@@ -11,6 +11,7 @@ require('../providers/ContainerStateProvider.js');
 require('../providers/UIConfigurationProvider.js');
 require('../providers/CheckoutProvider.js');
 require('../providers/PaymentProvider.js');
+require('../providers/EventProvider.js');
 var encryptionUtils = require('../utils/encryptionUtils.js');
 var useAPIService = require('./useAPIService.js');
 

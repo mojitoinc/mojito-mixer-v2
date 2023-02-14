@@ -18,6 +18,7 @@ import '../../providers/ContainerStateProvider.js';
 import '../../providers/UIConfigurationProvider.js';
 import { useCheckout } from '../../providers/CheckoutProvider.js';
 import { usePayment } from '../../providers/PaymentProvider.js';
+import '../../providers/EventProvider.js';
 import ConfirmationView from './ConfirmationView.js';
 
 const PaymentConfirmationContainer = () => {

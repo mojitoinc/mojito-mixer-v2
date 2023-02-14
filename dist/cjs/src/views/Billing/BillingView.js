@@ -298,6 +298,16 @@ require('../../../node_modules/@mui/material/Typography/typographyClasses.js');
 require('../../../node_modules/@mui/material/Zoom/Zoom.js');
 require('../../../node_modules/@mui/material/GlobalStyles/GlobalStyles.js');
 require('../../../node_modules/@mui/base/FocusTrap/FocusTrap.js');
+var formik_esm = require('../../../node_modules/formik/dist/formik.esm.js');
+require('../../../node_modules/yup/es/mixed.js');
+require('../../../node_modules/yup/es/boolean.js');
+var string = require('../../../node_modules/yup/es/string.js');
+require('../../../node_modules/yup/es/locale.js');
+require('../../../node_modules/yup/es/schema.js');
+require('../../../node_modules/yup/es/date.js');
+var object = require('../../../node_modules/yup/es/object.js');
+require('../../../node_modules/yup/es/Reference.js');
+require('property-expr');
 require('../../providers/DebugProvider.js');
 require('../../providers/ErrorProvider.js');
 require('../../providers/BillingProvider.js');
@@ -305,6 +315,7 @@ require('../../providers/ContainerStateProvider.js');
 var UIConfigurationProvider = require('../../providers/UIConfigurationProvider.js');
 require('../../providers/CheckoutProvider.js');
 require('../../providers/PaymentProvider.js');
+require('../../providers/EventProvider.js');
 var Button = require('../../components/Button.js');
 require('@mui/icons-material/ArrowBack');
 require('../../components/Stepper.js');
@@ -320,31 +331,72 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 
-const BillingView = ({ isEditing, values, errors, onChange, onClickEdit, onClickContinue, isValid, isValidBillingForm, }) => {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
+const schema = object.create().shape({
+    country: string.create().required('Please select a country'),
+    state: string.create().required('Please select a state'),
+    city: string.create().required('Please select a city'),
+    postalCode: string.create().min(5, 'Invalid zipcode').required('Please enter zipcode'),
+    email: string.create()
+        .email('Please enter valid email')
+        .required('Please enter email'),
+    phoneNumber: string.create().required('Please enter a mobile number'),
+    street1: string.create().required('Please enter your address'),
+    firstName: string.create().min(2, 'Invalid first name').required('Please enter first name'),
+    lastName: string.create().min(2, 'Invalid last name').required('Please enter last name'),
+});
+const BillingView = ({ isEditing, onClickEdit, onClickContinue, pincodeError, billingInfo, paymentItem, onChangeValues, }) => {
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5, _6, _7, _8, _9;
+    const { values, errors, handleChange: onChange, isValid, handleSubmit } = formik_esm.useFormik({
+        initialValues: {
+            email: (_a = billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.email) !== null && _a !== void 0 ? _a : (_b = paymentItem === null || paymentItem === void 0 ? void 0 : paymentItem.metadata) === null || _b === void 0 ? void 0 : _b.email,
+            country: (_c = billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.country) !== null && _c !== void 0 ? _c : (_d = paymentItem === null || paymentItem === void 0 ? void 0 : paymentItem.billingDetails) === null || _d === void 0 ? void 0 : _d.country,
+            state: (_e = billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.state) !== null && _e !== void 0 ? _e : (_f = paymentItem === null || paymentItem === void 0 ? void 0 : paymentItem.billingDetails) === null || _f === void 0 ? void 0 : _f.district,
+            city: (_g = billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.city) !== null && _g !== void 0 ? _g : (_h = paymentItem === null || paymentItem === void 0 ? void 0 : paymentItem.billingDetails) === null || _h === void 0 ? void 0 : _h.city,
+            postalCode: (_j = billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.postalCode) !== null && _j !== void 0 ? _j : (_k = paymentItem === null || paymentItem === void 0 ? void 0 : paymentItem.billingDetails) === null || _k === void 0 ? void 0 : _k.postalCode,
+            phoneNumber: (_l = billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.phoneNumber) !== null && _l !== void 0 ? _l : (_m = paymentItem === null || paymentItem === void 0 ? void 0 : paymentItem.metadata) === null || _m === void 0 ? void 0 : _m.phoneNumber,
+            street1: (_o = billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.street1) !== null && _o !== void 0 ? _o : (_p = paymentItem === null || paymentItem === void 0 ? void 0 : paymentItem.billingDetails) === null || _p === void 0 ? void 0 : _p.address1,
+            name: (_q = billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.name) !== null && _q !== void 0 ? _q : (_r = paymentItem === null || paymentItem === void 0 ? void 0 : paymentItem.billingDetails) === null || _r === void 0 ? void 0 : _r.name,
+            firstName: (_s = billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.lastName) !== null && _s !== void 0 ? _s : (_v = (_u = (_t = paymentItem === null || paymentItem === void 0 ? void 0 : paymentItem.billingDetails) === null || _t === void 0 ? void 0 : _t.name) === null || _u === void 0 ? void 0 : _u.split(' ')) === null || _v === void 0 ? void 0 : _v[0],
+            lastName: (_w = billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.lastName) !== null && _w !== void 0 ? _w : (_z = (_y = (_x = paymentItem === null || paymentItem === void 0 ? void 0 : paymentItem.billingDetails) === null || _x === void 0 ? void 0 : _x.name) === null || _y === void 0 ? void 0 : _y.split(' ')) === null || _z === void 0 ? void 0 : _z[1],
+        },
+        onSubmit: onClickContinue,
+        validationSchema: schema,
+        enableReinitialize: true,
+    });
+    const isValidBillingForm = React.useMemo(() => {
+        return !((errors === null || errors === void 0 ? void 0 : errors.country) ||
+            (errors === null || errors === void 0 ? void 0 : errors.state) ||
+            (errors === null || errors === void 0 ? void 0 : errors.city) ||
+            (errors === null || errors === void 0 ? void 0 : errors.postalCode) ||
+            (errors === null || errors === void 0 ? void 0 : errors.phoneNumber) ||
+            (errors === null || errors === void 0 ? void 0 : errors.name));
+    }, [errors]);
+    React.useEffect(() => {
+        onChangeValues(isValidBillingForm, values);
+    }, [isValidBillingForm, values, onChangeValues]);
     const theme = useTheme["default"]();
     const uiConfiguration = UIConfigurationProvider.useUIConfiguration();
     return (React__default["default"].createElement(Box["default"], { width: "100%" },
-        !((_a = uiConfiguration === null || uiConfiguration === void 0 ? void 0 : uiConfiguration.billing) === null || _a === void 0 ? void 0 : _a.isEnableExpressCheckout) && (React__default["default"].createElement(ExpressCheckout["default"], { config: uiConfiguration === null || uiConfiguration === void 0 ? void 0 : uiConfiguration.billing })),
+        !((_0 = uiConfiguration === null || uiConfiguration === void 0 ? void 0 : uiConfiguration.billing) === null || _0 === void 0 ? void 0 : _0.isEnableExpressCheckout) && (React__default["default"].createElement(ExpressCheckout["default"], { config: uiConfiguration === null || uiConfiguration === void 0 ? void 0 : uiConfiguration.billing })),
         React__default["default"].createElement(Card["default"], { sx: {
-                border: `1px solid ${(_b = theme.global) === null || _b === void 0 ? void 0 : _b.cardBorder}`,
-                backgroundColor: (_c = theme.global) === null || _c === void 0 ? void 0 : _c.cardBackground,
-                boxShadow: `0px 4px 16px ${(_d = theme.global) === null || _d === void 0 ? void 0 : _d.cardShadow}`,
+                border: `1px solid ${(_1 = theme.global) === null || _1 === void 0 ? void 0 : _1.cardBorder}`,
+                backgroundColor: (_2 = theme.global) === null || _2 === void 0 ? void 0 : _2.cardBackground,
+                boxShadow: `0px 4px 16px ${(_3 = theme.global) === null || _3 === void 0 ? void 0 : _3.cardShadow}`,
                 marginBottom: '24px',
                 padding: '24px',
             } },
-            React__default["default"].createElement(Typography["default"], { color: (_f = (_e = theme.palette) === null || _e === void 0 ? void 0 : _e.text) === null || _f === void 0 ? void 0 : _f.primary, fontWeight: "500", fontSize: "20px" }, "Contact info"),
+            React__default["default"].createElement(Typography["default"], { color: (_5 = (_4 = theme.palette) === null || _4 === void 0 ? void 0 : _4.text) === null || _5 === void 0 ? void 0 : _5.primary, fontWeight: "500", fontSize: "20px" }, "Contact info"),
             React__default["default"].createElement(TextInput["default"], { value: values === null || values === void 0 ? void 0 : values.email, onChange: onChange('email'), error: errors === null || errors === void 0 ? void 0 : errors.email, placeholder: "Email", sx: {
                     marginTop: '16px',
                 } })),
         isEditing ? (React__default["default"].createElement(BillingForm["default"], { values: values, errors: errors, onChange: onChange, isValid: isValidBillingForm })) : (React__default["default"].createElement(BillingDetails["default"], { values: values, onClickEdit: onClickEdit })),
         React__default["default"].createElement(Box["default"], { display: "flex", justifyContent: "flex-end" },
-            React__default["default"].createElement(Button["default"], { title: "Continue to Payment", backgroundColor: (_h = (_g = theme.global) === null || _g === void 0 ? void 0 : _g.checkout) === null || _h === void 0 ? void 0 : _h.continueButtonBackground, textColor: (_k = (_j = theme.global) === null || _j === void 0 ? void 0 : _j.checkout) === null || _k === void 0 ? void 0 : _k.continueButtonTextColor, onClick: onClickContinue, sx: {
+            React__default["default"].createElement(Button["default"], { title: "Continue to Payment", backgroundColor: (_7 = (_6 = theme.global) === null || _6 === void 0 ? void 0 : _6.checkout) === null || _7 === void 0 ? void 0 : _7.continueButtonBackground, textColor: (_9 = (_8 = theme.global) === null || _8 === void 0 ? void 0 : _8.checkout) === null || _9 === void 0 ? void 0 : _9.continueButtonTextColor, onClick: handleSubmit, sx: {
                     margin: '24px 0px',
                     '&: hover': {
                         backgroundColor: 'rgba(102, 99, 253, 0.8)',
                     },
-                }, disabled: !isValid })),
+                }, disabled: !isValid || pincodeError || !isValidBillingForm })),
         React__default["default"].createElement(DebugBox.DebugBox, { value: values })));
 };
 

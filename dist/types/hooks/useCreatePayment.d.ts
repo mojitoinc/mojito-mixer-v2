@@ -5,10 +5,13 @@ export interface PaymentData {
     wireData?: {
         accountNumber: string;
         routingNumber: string;
+        iban: string;
         bankAddress: {
             bankName: string;
             country: string;
+            city: string;
         };
+        country: string;
     };
     paymentId?: string;
     paymentType?: string;
@@ -23,6 +26,10 @@ export interface PaymentOptions {
     invoiceId?: string | undefined;
     billingInfo: BillingFormData | undefined;
 }
+export declare const Countries: {
+    US: string;
+    INTERNATIONAL: string;
+};
 export interface PaymentReceiptData {
     paymentData: PaymentData;
     reserveLotData: ReserveNow;

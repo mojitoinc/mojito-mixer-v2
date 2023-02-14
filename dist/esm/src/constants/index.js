@@ -11,7 +11,6 @@ var PaymentTypes;
     PaymentTypes["GOOGLE_PAY"] = "GooglePayCheckout";
     PaymentTypes["WIRE_TRANSFER"] = "Wire";
 })(PaymentTypes || (PaymentTypes = {}));
-const BanksList = ['Bank of America', 'Capitol One', 'Chase', 'Citi Bank', 'Wells Fargo', 'US Bank'];
 var PaymentStatus;
 (function (PaymentStatus) {
     PaymentStatus["PENDING"] = "pending";
@@ -26,5 +25,5 @@ function isLocalhost() {
     return window.location.hostname === 'localhost';
 }
 
-export { BanksList, IS_BROWSER, IS_SERVER, PaymentStatus, PaymentTypes, RiskRating, isLocalhost };
+export { IS_BROWSER, IS_SERVER, PaymentStatus, PaymentTypes, RiskRating, isLocalhost };
 //# sourceMappingURL=index.js.map
