@@ -1,9 +1,9 @@
 import { createTheme } from '@mui/material/styles';
 import { DefaultThemes } from '../config';
-import { ThemeConfiguration } from '../interfaces';
+import { MojitoThemeConfiguration } from '../interfaces';
 import { MixThemeOptions, MixTheme } from '.';
 
-export const makeTheme = (themeConfiguration?: ThemeConfiguration) => {
+export const makeTheme = (themeConfiguration?: MojitoThemeConfiguration) => {
   return createTheme({
     typography: {
       fontFamily: 'Sneak',
@@ -71,14 +71,14 @@ export const makeTheme = (themeConfiguration?: ThemeConfiguration) => {
         ...themeConfiguration?.color?.costBreakdown,
       },
       paymentConfirmation: {
-        awaitingPaymentBackground: '#FCFB99',
-        awaitingPaymentTextColor: '#F98028',
-        processedBackground: '#E7EFE8',
-        processedTextColor: '#0B4D12',
-        copyIconColor: '#B0AFFE',
+        ...DefaultThemes.color?.paymentConfirmation,
+        ...themeConfiguration?.color?.paymentConfirmation,
       },
       cardGrayedText: '#5C5C9B',
       grayBackground: '#F4F4F5',
+      multiSigBorder: '#0b96b4',
+      multiSigBackground: '#c0f2ff',
+      multiSigText: '#0b96b4',
     },
   } as MixThemeOptions) as MixTheme;
 };

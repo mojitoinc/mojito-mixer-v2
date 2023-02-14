@@ -1,7 +1,13 @@
+import { Icons } from '../assets';
 import { wireTransferInstructions, creditCardInstructions } from '.';
-import { UIConfiguration } from '../interfaces/ContextInterface';
+import { UIConfiguration, MojitoUIConfiguration } from '../interfaces/ContextInterface';
 
 export const DefaultUIConfiguration: UIConfiguration = {
+  global: {
+    logoSrc: Icons.logo,
+    loaderImageSrc: Icons.loading,
+    errorImageSrc: Icons.ErrorLoader,
+  },
   billing: {
     isEnableExpressCheckout: true,
     gpay: true,
@@ -22,13 +28,20 @@ export const DefaultUIConfiguration: UIConfiguration = {
   paymentConfirmation: {
     wireTransferInstructions,
     creditCardInstructions,
-    onGoToMarketPlace: () => undefined,
+    onGoTo: () => undefined,
+  },
+  delivery: {
+    showConnectWallet: true,
   },
 };
 
 
-export const makeUIConfiguration = (configurations: UIConfiguration) => {
+export const makeUIConfiguration = (configurations: MojitoUIConfiguration) => {
   return {
+    global: {
+      ...DefaultUIConfiguration.global,
+      ...configurations.global,
+    },
     billing: {
       ...DefaultUIConfiguration?.billing,
       ...configurations?.billing,
@@ -44,6 +57,10 @@ export const makeUIConfiguration = (configurations: UIConfiguration) => {
     paymentConfirmation: {
       ...DefaultUIConfiguration.paymentConfirmation,
       ...configurations.paymentConfirmation,
+    },
+    delivery: {
+      ...DefaultUIConfiguration.delivery,
+      ...configurations.delivery,
     },
   } as UIConfiguration;
 };

@@ -119,6 +119,9 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
     router.replace('/');
   }, [router]);
 
+  const onEvent = useCallback((e:string) => {
+    console.log('EVENT', e);
+  }, []);
 
   return (
     <>
@@ -247,6 +250,7 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
             quantity: parseInt(values.lotUnits ?? '1', 10),
             collectionItemId: values.itemId ?? '',
             invoiceId: values?.invoiceId,
+            vertexEnabled: true,
           }}
           uiConfiguration={{
 
@@ -268,8 +272,14 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
             costBreakdown: { showDiscountCode: Boolean(values.discountCode ?? true) },
 
             paymentConfirmation: {
-              onGoToMarketPlace: onClickGoToMarketPlace,
+              onGoTo: onClickGoToMarketPlace,
             },
+            global: {
+              // logoSrc: require('../../public/img/logos/sotheby-logo.svg'),
+            },
+          }}
+          events={{
+            onEvent,
           }}
           show={ show } />
       ) }

@@ -6,7 +6,8 @@ import React, {
   useState,
 } from 'react';
 import { useDebug } from './DebugProvider';
-import { ContainerTypes } from '../interfaces/ContextInterface'
+import { ContainerTypes } from '../interfaces/ContextInterface';
+import { useEvents } from './EventProvider';
 
 export interface Container {
   containerState: ContainerTypes;
@@ -30,6 +31,12 @@ export const ContainerStateProvider = ({
   const [containerState, setContainerState] = useState<ContainerTypes>(
     success ? ContainerTypes.CONFIRMATION : ContainerTypes.CHECKOUT,
   );
+
+  const { onEvent } = useEvents();
+
+  useEffect(() => {
+    onEvent?.(containerState);
+  }, [onEvent, containerState]);
 
   useEffect(() => {
     debug.info('paymentId', { paymentId, success });

@@ -4,7 +4,7 @@ import Modal from 'react-modal';
 import { UIConfigurationContext } from '../providers/UIConfigurationProvider';
 import { makeTheme, styles } from '../theme';
 import MojitoCheckoutView from '../views/index';
-import { ThemeConfiguration } from '../interfaces';
+import { MojitoThemeConfiguration } from '../interfaces';
 import {
   CheckoutContext,
   ContainerStateProvider,
@@ -12,6 +12,8 @@ import {
   PaymentProvider,
   DebugProvider,
   ErrorProvider,
+  EventContext,
+  EventConfig,
 } from '../providers';
 import { ConnectProvider } from '../providers/ConnectContext';
 import { SardineEnvironment } from '../config';
@@ -24,8 +26,8 @@ import {
   makeUIConfiguration,
 } from '../config/UIConfiguration';
 import {
-  UIConfiguration,
   CheckoutOptions,
+  MojitoUIConfiguration,
 } from '../interfaces/ContextInterface';
 
 declare global {
@@ -35,14 +37,15 @@ declare global {
 }
 
 interface MojitoCheckoutProps {
-  uiConfiguration?: UIConfiguration;
+  uiConfiguration?: MojitoUIConfiguration;
   checkoutOptions: CheckoutOptions;
-  theme?: ThemeConfiguration;
+  theme?: MojitoThemeConfiguration;
   success?: boolean;
   show: boolean;
   debug?: boolean;
   sardineEnvironment?: SardineEnvironment;
   enableSardine?: boolean;
+  events?: EventConfig
 }
 const MojitoCheckout: React.FC<MojitoCheckoutProps> = ({
   uiConfiguration = DefaultUIConfiguration,
@@ -53,6 +56,7 @@ const MojitoCheckout: React.FC<MojitoCheckoutProps> = ({
   enableSardine = false,
   success,
   sardineEnvironment = 'production',
+  events = {},
 }: MojitoCheckoutProps) => {
   const themes = useMemo(() => makeTheme(theme), [theme]);
 
@@ -89,21 +93,24 @@ const MojitoCheckout: React.FC<MojitoCheckoutProps> = ({
         <ThemeProvider theme={ themes }>
           <CheckoutContext.Provider value={ checkoutOptions }>
             <UIConfigurationContext.Provider value={ uiConfigurations }>
-              <ContainerStateProvider
-                paymentId={ checkoutOptions?.paymentId } success={success} > 
-                <ErrorProvider>
-                  <BillingProvider>
-                    <PaymentProvider>
-                      <ConnectProvider>
-                        <GlobalStyles styles={ styles } />
-                        <MojitoCheckoutView
-                          enableSardine={ enableSardine }
-                          sardineEnvironment={ sardineEnvironment } />
-                      </ConnectProvider>
-                    </PaymentProvider>
-                  </BillingProvider>
-                </ErrorProvider>
-              </ContainerStateProvider>
+              <EventContext.Provider value={ events }>
+                <ContainerStateProvider
+                  paymentId={ checkoutOptions?.paymentId }
+                  success={ success }>
+                  <ErrorProvider>
+                    <BillingProvider>
+                      <PaymentProvider>
+                        <ConnectProvider>
+                          <GlobalStyles styles={ styles } />
+                          <MojitoCheckoutView
+                            enableSardine={ enableSardine }
+                            sardineEnvironment={ sardineEnvironment } />
+                        </ConnectProvider>
+                      </PaymentProvider>
+                    </BillingProvider>
+                  </ErrorProvider>
+                </ContainerStateProvider>
+              </EventContext.Provider>
             </UIConfigurationContext.Provider>
           </CheckoutContext.Provider>
         </ThemeProvider>

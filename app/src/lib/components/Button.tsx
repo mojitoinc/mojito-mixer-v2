@@ -8,7 +8,7 @@ interface ButtonProps {
   backgroundColor?: string;
   textColor?: string;
   sx?: SxProps<Theme>;
-  children? : JSX.Element;
+  children?: JSX.Element;
   variant?: 'text' | 'outlined' | 'contained';
   disabled?: boolean
 }
@@ -53,4 +53,5 @@ const Button = ({
     </MuiButton>
   );
 };
+
 export default Button;

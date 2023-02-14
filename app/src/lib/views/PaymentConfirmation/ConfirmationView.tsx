@@ -1,5 +1,6 @@
 import { Box, Card, Typography, useTheme } from '@mui/material';
 import React, { useMemo } from 'react';
+import InfoIcon from '@mui/icons-material/InfoOutlined';
 import { Button } from '../../components';
 import { MixTheme } from '../../theme';
 import { PaymentStatus, PaymentTypes } from '../../constants';
@@ -42,7 +43,7 @@ const ConfirmationView = ({ paymentStatus }: ConfirmationViewProps) => {
   }, [paymentStatus]);
 
   return (
-    <Box sx={{ marginTop: '24px' }}>
+    <Box sx={{ margin: '24px 0px' }}>
       <Card
         sx={{
           padding: '24px',
@@ -87,13 +88,40 @@ const ConfirmationView = ({ paymentStatus }: ConfirmationViewProps) => {
             </Typography>
           </Box>
         </Box>
-
-        <RowItem
-          title="Delivery Address"
-          value={ paymentInfo?.destinationAddress }
-          copyValue={ paymentInfo?.destinationAddress }
-          showCopy
-          isWire={ paymentInfo?.paymentType === PaymentTypes.WIRE_TRANSFER } />
+        { paymentInfo?.destinationAddress === ''
+          ? (
+            <RowItem
+              title="Delivery Address">
+              <Box
+                display="flex"
+                flexDirection="row"
+                alignItems="center"
+                padding="4px 12px"
+                borderRadius="4px"
+                sx={{
+                  background: theme.global?.multiSigBackground,
+                  border: `1px solid ${ theme.global?.multiSigBorder }`,
+                }}>
+                <Typography color={ theme.global?.multiSigText } fontWeight="700">
+                  MultiSig
+                </Typography>
+                <InfoIcon
+                  sx={{
+                    color: theme.global?.multiSigText,
+                    marginLeft: '8px',
+                  }}
+                  fontSize="small" />
+              </Box>
+            </RowItem>
+          )
+          : (
+            <RowItem
+              title="Delivery Address"
+              value={ paymentInfo?.destinationAddress }
+              copyValue={ paymentInfo?.destinationAddress }
+              showCopy
+              isWire={ paymentInfo?.paymentType === PaymentTypes.WIRE_TRANSFER } />
+          ) }
         { paymentInfo?.paymentType === PaymentTypes.WIRE_TRANSFER && (
           <Typography
             variant="body2"
@@ -166,7 +194,7 @@ const ConfirmationView = ({ paymentStatus }: ConfirmationViewProps) => {
           sx={{
             background: theme.palette.primary?.main,
           }}
-          onClick={ paymentConfiguration?.onGoToMarketPlace } />
+          onClick={ paymentConfiguration?.onGoTo } />
       </Box>
     </Box>
   );

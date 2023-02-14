@@ -1,6 +1,6 @@
 import { Box, useTheme, Typography } from '@mui/material';
 import React from 'react';
-import { Icons } from '../../assets';
+import { useUIConfiguration } from '../../providers';
 import { MixTheme } from '../../theme';
 
 interface ErrorContainerProps {
@@ -8,6 +8,7 @@ interface ErrorContainerProps {
 }
 const ErrorContainer = ({ error }: ErrorContainerProps) => {
   const theme = useTheme<MixTheme>();
+  const { global } = useUIConfiguration();
 
   return (
     <Box
@@ -26,8 +27,8 @@ const ErrorContainer = ({ error }: ErrorContainerProps) => {
           margin: '8px 0px',
         }}>
         <img
-          alt="loading"
-          src={ Icons.ErrorLoader }
+          alt="error"
+          src={ global?.errorImageSrc }
           style={{
             height: 200,
           }} />

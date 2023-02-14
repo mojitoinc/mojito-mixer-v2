@@ -19,8 +19,8 @@ export const formCardScreeningVariable = (
       flow: 'card-payment',
       sessionKey: paymentInfo?.sessionKey,
       customer: {
-        firstName: paymentInfo?.creditCardData?.firstName,
-        lastName: paymentInfo?.creditCardData?.lastName,
+        firstName: billingInfo?.firstName,
+        lastName: billingInfo?.lastName,
         emailAddress: billingInfo?.email,
         isEmailVerified: true,
         isPhoneVerified: false,
@@ -79,7 +79,7 @@ export const formCreatePaymentMethodObject = (
         address2: '',
         district: billingInfo?.state,
         postalCode: billingInfo?.postalCode,
-        name: `${ paymentInfo?.creditCardData?.firstName } ${ paymentInfo?.creditCardData?.lastName }`,
+        name: `${ billingInfo?.firstName } ${ billingInfo?.lastName }`,
       },
     },
   };
