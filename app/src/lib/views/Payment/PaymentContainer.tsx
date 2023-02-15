@@ -57,7 +57,7 @@ const validationSchema = Yup.object().shape({
   }),
   iban: Yup.string().when('country', {
     is: Countries.INTERNATIONAL,
-    then: Yup.string().matches(/^([A-Z]{2}[ -]?[0-9]{2})(?=(?:[ -]?[A-Z0-9]){9,30}$)((?:[ -]?[A-Z0-9]{3,5}){2,7})([ -]?[A-Z0-9]{1,3})?$/,
+    then: Yup.string().matches(/^([0-9]{2})(?=(?:[ -]?[A-Z0-9]){9,30}$)((?:[ -]?[A-Z0-9]{3,5}){2,7})([ -]?[A-Z0-9]{1,3})?$/,
       'Invalid International Bank Account Number')
       .min(20, 'Invalid International Bank Account Number')
       .required('Please enter International Bank Account Number'),

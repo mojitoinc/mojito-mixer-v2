@@ -13,7 +13,7 @@ const theme = createTheme({
 });
 
 const RootProviders = (children: ReactElement, options?: TestRendererOptions): ReactTestRenderer => {
-  return create(<ThemeProvider theme={theme}>{children}</ThemeProvider>, options);
+  return create(<ThemeProvider theme={ theme }>{ children }</ThemeProvider>, options);
 };
 
 export * from '@testing-library/react';
