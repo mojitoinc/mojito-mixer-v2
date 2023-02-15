@@ -151,7 +151,7 @@ export const useCreatePayment = (paymentInfo: PaymentData | undefined, orgId: st
           },
         },
       });
-      const paymentResult = await createPayment({
+      const paymentResponse = await createPayment({
         variables: {
           paymentMethodID: paymentMethodId,
           invoiceID: reserveLotData?.invoiceID,
@@ -164,7 +164,7 @@ export const useCreatePayment = (paymentInfo: PaymentData | undefined, orgId: st
           },
         },
       });
-      const paymentResult : CreatePaymentResult = paymentResult?.data?.createPayment;
+      const paymentResult : CreatePaymentResult = paymentResponse?.data?.createPayment;
 
       debug.info('ready-createPayment');
       const notificationData = await getPaymentNotification();
