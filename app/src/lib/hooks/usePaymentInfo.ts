@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { CollectionItem, Taxes, ReserveNow } from '../interfaces';
+import { CollectionItem, Taxes, ReserveNow, CreatePaymentResult } from '../interfaces';
 import { BillingFormData, PaymentData } from '../providers';
 import { CookieService } from '../service/CookieService';
 
@@ -9,6 +9,7 @@ interface PaymentInfo {
   lotData? : ReserveNow;
   taxData? : Taxes;
   collection? : CollectionItem;
+  paymentResult? : CreatePaymentResult;
 }
 const getObject = (value:any) => {
   if (!value || value === 'undefined') return value;
@@ -26,12 +27,14 @@ const usePaymentInfo = (): PaymentInfo => {
     const taxes = CookieService.taxes.getValue();
     const reserveLotData = CookieService.reserveLotData.getValue();
     const collectionData = CookieService.collectionData.getValue();
+    const paymentResultData = CookieService.paymentResult.getValue();
 
     const billingInfo = getObject(billing) as BillingFormData;
     const paymentInfo = getObject(payment) as PaymentData;
     const lotData = getObject(reserveLotData) as ReserveNow;
     const taxData = getObject(taxes) as Taxes;
     const collection = getObject(collectionData) as CollectionItem;
+    const paymentResult = getObject(paymentResultData) as CreatePaymentResult;
     // CookieService.billing.remove();
     // CookieService.paymentInfo.remove();
     // CookieService.taxes.remove();
@@ -43,6 +46,7 @@ const usePaymentInfo = (): PaymentInfo => {
       lotData,
       taxData,
       collection,
+      paymentResult
     });
   }, []);
 

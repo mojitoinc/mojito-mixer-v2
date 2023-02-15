@@ -1,4 +1,4 @@
-import { Box, Typography, useTheme } from '@mui/material';
+import { Box, SxProps, Theme, Typography, useTheme } from '@mui/material';
 import FileCopyOutlinedIcon from '@mui/icons-material/FileCopyOutlined';
 import React, { useCallback } from 'react';
 import { MixTheme } from '../../theme';
@@ -10,6 +10,7 @@ interface RowItemProps {
   copyValue?: string;
   showCopy?: boolean;
   isWire?: boolean;
+  sx?: SxProps<Theme>;
 }
 
 const RowItem = ({
@@ -19,6 +20,7 @@ const RowItem = ({
   copyValue,
   value,
   isWire,
+  sx
 }: RowItemProps) => {
   const theme = useTheme<MixTheme>();
 
@@ -39,6 +41,7 @@ const RowItem = ({
         marginBottom: isWire ? '0' : undefined,
         borderBottom: isWire ? 'none' : undefined,
         borderRadius: isWire ? '4px 4px 0 0' : '4px',
+        ...sx
       }}>
       <Typography fontSize="16px" width="40%" variant="body1">
         { title }

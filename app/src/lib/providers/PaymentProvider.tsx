@@ -6,7 +6,7 @@ import React, {
   useCallback,
 } from 'react';
 import { useCreatePayment } from '../hooks';
-import { CreditCardFormType, ReserveNow } from '../interfaces';
+import { CreditCardFormType, ReserveNow, CreatePaymentResult } from '../interfaces';
 import { CookieService } from '../service/CookieService';
 import { useDebug, useError } from '.';
 import { useContainer } from './ContainerStateProvider';
@@ -70,12 +70,13 @@ export const PaymentProvider = ({
   );
 
   const saveToCookies = useCallback(
-    (paymentData: PaymentData, reserveLotData: ReserveNow) => {
+    (paymentData: PaymentData, reserveLotData: ReserveNow,paymentResult?:CreatePaymentResult) => {
       CookieService.billing.setValue(JSON.stringify(billingInfo));
       CookieService.paymentInfo.setValue(JSON.stringify(paymentData));
       CookieService.taxes.setValue(JSON.stringify(taxes));
       CookieService.collectionData.setValue(JSON.stringify(collectionData));
       CookieService.reserveLotData.setValue(JSON.stringify(reserveLotData));
+      CookieService.paymentResult.setValue(JSON.stringify(paymentResult));
     },
     [billingInfo, collectionData, taxes],
   );
@@ -97,6 +98,7 @@ export const PaymentProvider = ({
         saveToCookies(
           paymentReceipt.paymentData,
           paymentReceipt.reserveLotData,
+          paymentReceipt.paymentResult
         );
 
         window.location.href =
@@ -137,6 +139,7 @@ export const PaymentProvider = ({
         saveToCookies(
           paymentReceipt.paymentData,
           paymentReceipt.reserveLotData,
+          paymentReceipt.paymentResult
         );
         setPaymentInfo(paymentReceipt.paymentData);
         setContainerState(ContainerTypes.CONFIRMATION);

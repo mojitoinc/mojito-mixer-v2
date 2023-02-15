@@ -5,3 +5,4 @@ export * from './Invoice';
 export * from './PaymentMethods';
 export * from './ThemeConfiguration';
 export * from './MojitoThemeConfiguration';
+export * from './CreatePayment';

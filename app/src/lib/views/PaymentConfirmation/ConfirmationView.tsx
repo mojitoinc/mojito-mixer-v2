@@ -7,6 +7,7 @@ import { PaymentStatus, PaymentTypes } from '../../constants';
 import { usePaymentInfo } from '../../hooks';
 import { useUIConfiguration } from '../../providers';
 import RowItem from './RowItem';
+import PaymentDetailsView from './PaymentDetailsView';
 
 interface ConfirmationViewProps {
   paymentStatus: string;
@@ -62,6 +63,9 @@ const ConfirmationView = ({ paymentStatus }: ConfirmationViewProps) => {
           paymentConfiguration?.wireTransferInstructions }
         { paymentInfo?.paymentType === PaymentTypes.CREDIT_CARD &&
           paymentConfiguration?.creditCardInstructions }
+        { paymentInfo?.paymentType === PaymentTypes.WIRE_TRANSFER &&
+          <PaymentDetailsView />
+        }
       </Card>
       <Card
         sx={{
