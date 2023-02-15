@@ -151,7 +151,7 @@ export const useCreatePayment = (paymentInfo: PaymentData | undefined, orgId: st
           },
         },
       });
-      const result1 = await createPayment({
+      const paymentResult = await createPayment({
         variables: {
           paymentMethodID: paymentMethodId,
           invoiceID: reserveLotData?.invoiceID,
@@ -164,7 +164,7 @@ export const useCreatePayment = (paymentInfo: PaymentData | undefined, orgId: st
           },
         },
       });
-      const paymentResult : CreatePaymentResult = result1?.data?.createPayment;
+      const paymentResult : CreatePaymentResult = paymentResult?.data?.createPayment;
 
       debug.info('ready-createPayment');
       const notificationData = await getPaymentNotification();
@@ -242,7 +242,7 @@ export const useCreatePayment = (paymentInfo: PaymentData | undefined, orgId: st
 
       const reserveLotData = await getInvoiceData(options.invoiceId, options.lotId, options.quantity);
 
-      const result1 = await createPayment({
+      const paymentResponse = await createPayment({
         variables: {
           paymentMethodID: result?.data?.createPaymentMethod?.id,
           invoiceID: reserveLotData?.invoiceID,
@@ -251,7 +251,7 @@ export const useCreatePayment = (paymentInfo: PaymentData | undefined, orgId: st
           },
         },
       });
-      const paymentResult : CreatePaymentResult = result1?.data?.createPayment;
+      const paymentResult : CreatePaymentResult = paymentResponse?.data?.createPayment;
       const paymentData: PaymentData = {
         ...paymentInfo,
         deliveryStatus: paymentResult?.status,
