@@ -205,7 +205,7 @@ export const useCreatePayment = (paymentInfo: PaymentData | undefined, orgId: st
       bankAddress: {
         bankName: paymentInfo?.wireData?.bankAddress?.bankName,
         country: paymentInfo?.wireData?.bankAddress?.country,
-        city: paymentInfo?.wireData?.bankAddress?.bankName,
+        city: paymentInfo?.wireData?.bankAddress?.city,
       },
     };
     if (paymentInfo?.wireData?.country === Countries.US) {
