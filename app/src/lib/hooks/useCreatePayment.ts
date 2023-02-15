@@ -201,22 +201,22 @@ export const useCreatePayment = (paymentInfo: PaymentData | undefined, orgId: st
     delete copiedBillingDetails.firstName;
     delete copiedBillingDetails.lastName;
     inputData.paymentType = 'Wire';
-    let wireData:any = {
+    const wireData:any = {
       bankAddress: {
         bankName: paymentInfo?.wireData?.bankAddress?.bankName,
         country: paymentInfo?.wireData?.bankAddress?.country,
         city: paymentInfo?.wireData?.bankAddress?.bankName,
       },
-    }
+    };
     if (paymentInfo?.wireData?.country === Countries.US) {
-      wireData.accountNumber = paymentInfo?.wireData?.accountNumber
-      wireData.routingNumber = paymentInfo?.wireData?.routingNumber
+      wireData.accountNumber = paymentInfo?.wireData?.accountNumber;
+      wireData.routingNumber = paymentInfo?.wireData?.routingNumber;
       inputData.wireData = {
         ...wireData,
         billingDetails: copiedBillingDetails,
       };
     } else {
-      wireData.iban =(paymentInfo?.wireData?.bankAddress?.country ?? '')+ paymentInfo?.wireData?.iban
+      wireData.iban = (paymentInfo?.wireData?.bankAddress?.country ?? '') + (paymentInfo?.wireData?.iban ?? '');
       inputData.wireData = {
         ...wireData,
         billingDetails: copiedBillingDetails,
