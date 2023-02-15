@@ -46,7 +46,7 @@ const usePaymentInfo = (): PaymentInfo => {
       lotData,
       taxData,
       collection,
-      paymentResult
+      paymentResult,
     });
   }, []);
 

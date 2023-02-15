@@ -64,8 +64,7 @@ const ConfirmationView = ({ paymentStatus }: ConfirmationViewProps) => {
         { paymentInfo?.paymentType === PaymentTypes.CREDIT_CARD &&
           paymentConfiguration?.creditCardInstructions }
         { paymentInfo?.paymentType === PaymentTypes.WIRE_TRANSFER &&
-          <PaymentDetailsView />
-        }
+          <PaymentDetailsView /> }
       </Card>
       <Card
         sx={{

@@ -70,7 +70,7 @@ export const PaymentProvider = ({
   );
 
   const saveToCookies = useCallback(
-    (paymentData: PaymentData, reserveLotData: ReserveNow,paymentResult?:CreatePaymentResult) => {
+    (paymentData: PaymentData, reserveLotData: ReserveNow, paymentResult?:CreatePaymentResult) => {
       CookieService.billing.setValue(JSON.stringify(billingInfo));
       CookieService.paymentInfo.setValue(JSON.stringify(paymentData));
       CookieService.taxes.setValue(JSON.stringify(taxes));
@@ -98,7 +98,7 @@ export const PaymentProvider = ({
         saveToCookies(
           paymentReceipt.paymentData,
           paymentReceipt.reserveLotData,
-          paymentReceipt.paymentResult
+          paymentReceipt.paymentResult,
         );
 
         window.location.href =
@@ -139,7 +139,7 @@ export const PaymentProvider = ({
         saveToCookies(
           paymentReceipt.paymentData,
           paymentReceipt.reserveLotData,
-          paymentReceipt.paymentResult
+          paymentReceipt.paymentResult,
         );
         setPaymentInfo(paymentReceipt.paymentData);
         setContainerState(ContainerTypes.CONFIRMATION);

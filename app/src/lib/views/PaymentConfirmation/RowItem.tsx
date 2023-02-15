@@ -20,7 +20,7 @@ const RowItem = ({
   copyValue,
   value,
   isWire,
-  sx
+  sx,
 }: RowItemProps) => {
   const theme = useTheme<MixTheme>();
 
@@ -41,7 +41,7 @@ const RowItem = ({
         marginBottom: isWire ? '0' : undefined,
         borderBottom: isWire ? 'none' : undefined,
         borderRadius: isWire ? '4px 4px 0 0' : '4px',
-        ...sx
+        ...sx,
       }}>
       <Typography fontSize="16px" width="40%" variant="body1">
         { title }

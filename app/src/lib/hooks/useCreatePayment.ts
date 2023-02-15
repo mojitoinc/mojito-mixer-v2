@@ -2,7 +2,7 @@ import { useLazyQuery, useMutation } from '@apollo/client';
 import { formCreatePaymentMethodObject } from '@views/Delivery/Delivery.service';
 import { useMemo, useCallback } from 'react';
 import { useEncryptCardData } from './useEncryptCard';
-import { CreditCardFormType, ReserveNow,CreatePaymentResult } from '../interfaces';
+import { CreditCardFormType, ReserveNow, CreatePaymentResult } from '../interfaces';
 import { reserveNowBuyLotQuery } from '../queries/invoiceDetails';
 import { createPaymentMethodQuery, createPaymentQuery, getPaymentMethodStatus } from '../queries/Payment';
 import { BillingFormData, useDebug } from '../providers';
@@ -151,7 +151,7 @@ export const useCreatePayment = (paymentInfo: PaymentData | undefined, orgId: st
           },
         },
       });
-      const result1 =await createPayment({
+      const result1 = await createPayment({
         variables: {
           paymentMethodID: paymentMethodId,
           invoiceID: reserveLotData?.invoiceID,
@@ -175,7 +175,7 @@ export const useCreatePayment = (paymentInfo: PaymentData | undefined, orgId: st
       };
       debug.success('paymentData', { paymentData, notificationData });
 
-      return { paymentData, reserveLotData, notificationData: notificationData?.data,paymentResult };
+      return { paymentData, reserveLotData, notificationData: notificationData?.data, paymentResult };
     }
     throw new Error('unable to create paymentMethod');
   }, [
@@ -258,7 +258,7 @@ export const useCreatePayment = (paymentInfo: PaymentData | undefined, orgId: st
         paymentId: paymentResult?.id ?? '',
         destinationAddress: options.deliveryAddress,
       };
-      return { paymentData, reserveLotData,paymentResult };
+      return { paymentData, reserveLotData, paymentResult };
     }
     throw new Error('unable to create paymentMethod');
   }, [
