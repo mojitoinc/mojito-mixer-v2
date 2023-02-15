@@ -165,9 +165,19 @@ const ConfirmationView = ({ paymentStatus }: ConfirmationViewProps) => {
             <Typography variant="body1" fontSize="16px">
               { paymentInfo?.paymentType }
               <br />
-              { paymentInfo?.wireData?.accountNumber }
-              <br />
-              { paymentInfo?.wireData?.routingNumber }
+              {
+                paymentInfo?.wireData?.iban ?
+                <>
+                { paymentInfo?.wireData?.iban }
+                </>
+                :
+                <>
+                { paymentInfo?.wireData?.accountNumber }
+                <br />
+                { paymentInfo?.wireData?.routingNumber }
+                </>
+              }
+              
               <br />
               { paymentInfo?.wireData?.bankAddress?.country }
               <br />
