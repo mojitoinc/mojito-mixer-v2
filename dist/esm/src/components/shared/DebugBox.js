@@ -302,6 +302,7 @@ import '../../providers/UIConfigurationProvider.js';
 import '../../providers/CheckoutProvider.js';
 import '../../providers/PaymentProvider.js';
 import '../../providers/EventProvider.js';
+import '../../providers/SecurityOptionsProvider.js';
 
 const SM_BORDER_RADIUS = 6;
 const DEBUG_BOX_OUTER_SX = {

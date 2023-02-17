@@ -27,6 +27,7 @@ var UIConfigurationProvider = require('../../providers/UIConfigurationProvider.j
 var CheckoutProvider = require('../../providers/CheckoutProvider.js');
 var PaymentProvider = require('../../providers/PaymentProvider.js');
 require('../../providers/EventProvider.js');
+var SecurityOptionsProvider = require('../../providers/SecurityOptionsProvider.js');
 var Delivery_service = require('../Delivery/Delivery.service.js');
 var creditCard = require('../../queries/creditCard.js');
 var me = require('../../queries/me.js');
@@ -48,6 +49,7 @@ const PaymentContainer = () => {
         if (value)
             setPaymentType(name);
     }, []);
+    const { enableSardine } = SecurityOptionsProvider.useSecurityOptions();
     React.useEffect(() => {
         var _a;
         setPaymentType((_a = paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.paymentType) !== null && _a !== void 0 ? _a : index.PaymentTypes.CREDIT_CARD);
@@ -77,7 +79,7 @@ const PaymentContainer = () => {
         const selectedCard = creditCardList.find((item) => item.id === (creditCardFormValues === null || creditCardFormValues === void 0 ? void 0 : creditCardFormValues.cardId));
         const paymentInfoData = Object.assign(Object.assign({}, paymentInfo), { paymentType, creditCardData: Object.assign(Object.assign({}, creditCardFormValues), { cardData: selectedCard }) });
         try {
-            if (creditCardFormValues === null || creditCardFormValues === void 0 ? void 0 : creditCardFormValues.isNew) {
+            if ((creditCardFormValues === null || creditCardFormValues === void 0 ? void 0 : creditCardFormValues.isNew) && enableSardine) {
                 const variables = Delivery_service.formCardScreeningVariable(orgId !== null && orgId !== void 0 ? orgId : '', paymentInfoData, billingInfo, taxes, meData);
                 const cardScreeningData = yield cardScreening({
                     variables,
@@ -109,6 +111,7 @@ const PaymentContainer = () => {
         cardScreening,
         setContainerState,
         setPaymentInfo,
+        enableSardine,
     ]);
     const onSubmitWireTransfer = React.useCallback((wireTransferFormValues) => {
         setPaymentInfo(Object.assign(Object.assign({}, paymentInfo), { paymentType, wireData: {

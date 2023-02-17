@@ -309,6 +309,7 @@ var ContainerStateProvider = require('../providers/ContainerStateProvider.js');
 var CheckoutProvider = require('../providers/CheckoutProvider.js');
 var PaymentProvider = require('../providers/PaymentProvider.js');
 var EventProvider = require('../providers/EventProvider.js');
+var SecurityOptionsProvider = require('../providers/SecurityOptionsProvider.js');
 var ConnectContext = require('../providers/ConnectContext.js');
 var ProvidersInjector = require('../providers/ProvidersInjector.js');
 var UIConfiguration = require('../config/UIConfiguration.js');
@@ -321,6 +322,9 @@ var Modal__default = /*#__PURE__*/_interopDefaultLegacy(Modal);
 const MojitoCheckout = ({ uiConfiguration = UIConfiguration.DefaultUIConfiguration, theme, show, debug = false, checkoutOptions, enableSardine = false, success, sardineEnvironment = 'production', events = {}, }) => {
     const themes = React.useMemo(() => CreateTheme.makeTheme(theme), [theme]);
     const uiConfigurations = React.useMemo(() => UIConfiguration.makeUIConfiguration(uiConfiguration), [uiConfiguration]);
+    const securityParams = React.useMemo(() => {
+        return { sardineEnvironment, enableSardine };
+    }, [sardineEnvironment, enableSardine]);
     // useEffect(() => {
     //   const params = new URLSearchParams(window.location.search);
     //   params.delete(THREEDS_FLOW_SEARCH_PARAM_SUCCESS_KEY);
@@ -342,15 +346,16 @@ const MojitoCheckout = ({ uiConfiguration = UIConfiguration.DefaultUIConfigurati
         React__default["default"].createElement(DebugProvider["default"], { debug: debug },
             React__default["default"].createElement(ThemeProvider["default"], { theme: themes },
                 React__default["default"].createElement(CheckoutProvider.CheckoutContext.Provider, { value: checkoutOptions },
-                    React__default["default"].createElement(UIConfigurationProvider.UIConfigurationContext.Provider, { value: uiConfigurations },
-                        React__default["default"].createElement(EventProvider.EventContext.Provider, { value: events },
-                            React__default["default"].createElement(ContainerStateProvider.ContainerStateProvider, { paymentId: checkoutOptions === null || checkoutOptions === void 0 ? void 0 : checkoutOptions.paymentId, success: success },
-                                React__default["default"].createElement(ErrorProvider["default"], null,
-                                    React__default["default"].createElement(BillingProvider.BillingProvider, null,
-                                        React__default["default"].createElement(PaymentProvider.PaymentProvider, null,
-                                            React__default["default"].createElement(ConnectContext.ConnectProvider, null,
-                                                React__default["default"].createElement(GlobalStyles["default"], { styles: GlobalStyles$1.styles }),
-                                                React__default["default"].createElement(index["default"], { enableSardine: enableSardine, sardineEnvironment: sardineEnvironment })))))))))))));
+                    React__default["default"].createElement(SecurityOptionsProvider.SecurityContext.Provider, { value: securityParams },
+                        React__default["default"].createElement(UIConfigurationProvider.UIConfigurationContext.Provider, { value: uiConfigurations },
+                            React__default["default"].createElement(EventProvider.EventContext.Provider, { value: events },
+                                React__default["default"].createElement(ContainerStateProvider.ContainerStateProvider, { paymentId: checkoutOptions === null || checkoutOptions === void 0 ? void 0 : checkoutOptions.paymentId, success: success },
+                                    React__default["default"].createElement(ErrorProvider["default"], null,
+                                        React__default["default"].createElement(BillingProvider.BillingProvider, null,
+                                            React__default["default"].createElement(PaymentProvider.PaymentProvider, null,
+                                                React__default["default"].createElement(ConnectContext.ConnectProvider, null,
+                                                    React__default["default"].createElement(GlobalStyles["default"], { styles: GlobalStyles$1.styles }),
+                                                    React__default["default"].createElement(index["default"], { enableSardine: enableSardine, sardineEnvironment: sardineEnvironment }))))))))))))));
 };
 const PUIMojitoCheckout = ProvidersInjector.withProviders(MojitoCheckout);
 

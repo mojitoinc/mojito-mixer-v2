@@ -306,6 +306,7 @@ import { useUIConfiguration } from '../../providers/UIConfigurationProvider.js';
 import '../../providers/CheckoutProvider.js';
 import '../../providers/PaymentProvider.js';
 import '../../providers/EventProvider.js';
+import '../../providers/SecurityOptionsProvider.js';
 import '../../components/Stepper.js';
 import { Icons } from '../../assets/index.js';
 import CopyButton from '../../components/shared/CopyButton.js';

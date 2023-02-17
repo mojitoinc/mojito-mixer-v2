@@ -307,6 +307,7 @@ require('../../providers/UIConfigurationProvider.js');
 require('../../providers/CheckoutProvider.js');
 require('../../providers/PaymentProvider.js');
 require('../../providers/EventProvider.js');
+require('../../providers/SecurityOptionsProvider.js');
 var RootContainer = require('../../interfaces/ContextInterface/RootContainer.js');
 var index$1 = require('../../constants/index.js');
 require('@mui/icons-material/ArrowBack');

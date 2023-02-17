@@ -1,4 +1,4 @@
-import { CreditCardFormType, ReserveNow } from '../interfaces';
+import { CreditCardFormType, ReserveNow, CreatePaymentResult } from '../interfaces';
 import { BillingFormData } from '../providers';
 export interface PaymentData {
     creditCardData?: CreditCardFormType;
@@ -34,6 +34,7 @@ export interface PaymentReceiptData {
     paymentData: PaymentData;
     reserveLotData: ReserveNow;
     notificationData?: any | undefined;
+    paymentResult?: CreatePaymentResult;
 }
 export interface UseCreatePaymentData {
     makeCreditCardPurchase: (options: PaymentOptions) => Promise<PaymentReceiptData>;

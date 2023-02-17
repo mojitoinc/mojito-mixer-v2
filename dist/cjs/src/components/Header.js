@@ -307,6 +307,7 @@ var UIConfigurationProvider = require('../providers/UIConfigurationProvider.js')
 require('../providers/CheckoutProvider.js');
 require('../providers/PaymentProvider.js');
 require('../providers/EventProvider.js');
+require('../providers/SecurityOptionsProvider.js');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 

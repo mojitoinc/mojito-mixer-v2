@@ -305,6 +305,7 @@ import '../../providers/UIConfigurationProvider.js';
 import '../../providers/CheckoutProvider.js';
 import '../../providers/PaymentProvider.js';
 import '../../providers/EventProvider.js';
+import '../../providers/SecurityOptionsProvider.js';
 import '../../components/Stepper.js';
 import TextInput from '../../components/TextInput.js';
 import '@mui/icons-material/ContentCopy';

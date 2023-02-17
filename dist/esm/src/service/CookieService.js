@@ -26,6 +26,7 @@ const CookieService = {
     taxes: new CookieStorage('taxes'),
     reserveLotData: new CookieStorage('reserveLotData'),
     collectionData: new CookieStorage('collectionData'),
+    paymentResult: new CookieStorage('paymentResult'),
 };
 
 export { CookieService };

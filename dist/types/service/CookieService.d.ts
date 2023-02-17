@@ -13,5 +13,6 @@ export declare const CookieService: {
     taxes: CookieStorage;
     reserveLotData: CookieStorage;
     collectionData: CookieStorage;
+    paymentResult: CookieStorage;
 };
 export {};

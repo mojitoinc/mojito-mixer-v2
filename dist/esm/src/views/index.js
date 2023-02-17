@@ -310,6 +310,7 @@ import '../providers/UIConfigurationProvider.js';
 import '../providers/CheckoutProvider.js';
 import '../providers/PaymentProvider.js';
 import '../providers/EventProvider.js';
+import '../providers/SecurityOptionsProvider.js';
 import { ContainerTypes } from '../interfaces/ContextInterface/RootContainer.js';
 import LoadingContainer from './Loading/index.js';
 import ErrorContainer from './Error/index.js';

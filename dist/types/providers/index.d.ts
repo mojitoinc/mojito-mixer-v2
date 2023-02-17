@@ -6,4 +6,5 @@ export * from './UIConfigurationProvider';
 export * from './CheckoutProvider';
 export * from './PaymentProvider';
 export * from './EventProvider';
+export * from './SecurityOptionsProvider';
 export { DebugProvider, useDebug, ErrorProvider, useError };

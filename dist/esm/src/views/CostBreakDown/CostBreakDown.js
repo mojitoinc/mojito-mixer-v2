@@ -304,6 +304,7 @@ import { useUIConfiguration } from '../../providers/UIConfigurationProvider.js';
 import { useCheckout } from '../../providers/CheckoutProvider.js';
 import '../../providers/PaymentProvider.js';
 import '../../providers/EventProvider.js';
+import '../../providers/SecurityOptionsProvider.js';
 import '../../components/Stepper.js';
 import TextInput from '../../components/TextInput.js';
 import { Icons } from '../../assets/index.js';

@@ -25,6 +25,7 @@ require('../../providers/UIConfigurationProvider.js');
 var CheckoutProvider = require('../../providers/CheckoutProvider.js');
 var PaymentProvider = require('../../providers/PaymentProvider.js');
 require('../../providers/EventProvider.js');
+var SecurityOptionsProvider = require('../../providers/SecurityOptionsProvider.js');
 var index = require('../../constants/index.js');
 var Web3ModalConnect = require('../../providers/Web3ModalConnect.js');
 var Delivery$1 = require('./Delivery.js');
@@ -45,6 +46,7 @@ const Delivery = () => {
     const { data: meData } = useQuery.useQuery(me.meQuery);
     const [addressScreening, { loading: isLoading }] = useMutation.useMutation(Payment.addressScreeningQuery);
     const [error, setError] = React.useState();
+    const { enableSardine } = SecurityOptionsProvider.useSecurityOptions();
     const { connect, onWalletConnect, onDisconnect, } = Web3ModalConnect.useWeb3ModalConnect();
     const handleChange = React.useCallback((value) => {
         setSelectedDeliveryAddress(value);
@@ -75,7 +77,7 @@ const Delivery = () => {
                 setError('Please select a delivery address');
                 return;
             }
-            if (deliveryAddress !== '') {
+            if (deliveryAddress !== '' && enableSardine) {
                 const screeningData = yield addressScreening({
                     variables: {
                         orgID: orgId,
@@ -111,6 +113,7 @@ const Delivery = () => {
         selectedDeliveryAddress,
         addressScreening,
         connect,
+        enableSardine,
     ]);
     return (React__default["default"].createElement(Delivery$1["default"], { onWalletChange: handleChange, walletOptions: walletOptions, selectedDeliveryAddress: selectedDeliveryAddress, onClickConfirmPurchase: onClickConfirmPurchase, organizationName: (_c = (_b = (_a = meData === null || meData === void 0 ? void 0 : meData.me) === null || _a === void 0 ? void 0 : _a.userOrgs[0]) === null || _b === void 0 ? void 0 : _b.organization) === null || _c === void 0 ? void 0 : _c.name, billingInfo: billingInfo, paymentInfo: paymentInfo, onClickConnectWallet: onWalletConnect, connect: connect, onDisconnect: onDisconnect, error: error, isLoading: isLoading }));
 };

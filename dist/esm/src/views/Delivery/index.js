@@ -21,6 +21,7 @@ import '../../providers/UIConfigurationProvider.js';
 import { useCheckout } from '../../providers/CheckoutProvider.js';
 import { usePayment } from '../../providers/PaymentProvider.js';
 import '../../providers/EventProvider.js';
+import { useSecurityOptions } from '../../providers/SecurityOptionsProvider.js';
 import { RiskRating, PaymentTypes } from '../../constants/index.js';
 import { useWeb3ModalConnect } from '../../providers/Web3ModalConnect.js';
 import Delivery$1 from './Delivery.js';
@@ -37,6 +38,7 @@ const Delivery = () => {
     const { data: meData } = useQuery(meQuery);
     const [addressScreening, { loading: isLoading }] = useMutation(addressScreeningQuery);
     const [error, setError] = useState();
+    const { enableSardine } = useSecurityOptions();
     const { connect, onWalletConnect, onDisconnect, } = useWeb3ModalConnect();
     const handleChange = useCallback((value) => {
         setSelectedDeliveryAddress(value);
@@ -67,7 +69,7 @@ const Delivery = () => {
                 setError('Please select a delivery address');
                 return;
             }
-            if (deliveryAddress !== '') {
+            if (deliveryAddress !== '' && enableSardine) {
                 const screeningData = yield addressScreening({
                     variables: {
                         orgID: orgId,
@@ -103,6 +105,7 @@ const Delivery = () => {
         selectedDeliveryAddress,
         addressScreening,
         connect,
+        enableSardine,
     ]);
     return (React__default.createElement(Delivery$1, { onWalletChange: handleChange, walletOptions: walletOptions, selectedDeliveryAddress: selectedDeliveryAddress, onClickConfirmPurchase: onClickConfirmPurchase, organizationName: (_c = (_b = (_a = meData === null || meData === void 0 ? void 0 : meData.me) === null || _a === void 0 ? void 0 : _a.userOrgs[0]) === null || _b === void 0 ? void 0 : _b.organization) === null || _c === void 0 ? void 0 : _c.name, billingInfo: billingInfo, paymentInfo: paymentInfo, onClickConnectWallet: onWalletConnect, connect: connect, onDisconnect: onDisconnect, error: error, isLoading: isLoading }));
 };

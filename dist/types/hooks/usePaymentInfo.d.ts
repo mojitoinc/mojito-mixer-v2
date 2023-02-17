@@ -1,4 +1,4 @@
-import { CollectionItem, Taxes, ReserveNow } from '../interfaces';
+import { CollectionItem, Taxes, ReserveNow, CreatePaymentResult } from '../interfaces';
 import { BillingFormData, PaymentData } from '../providers';
 interface PaymentInfo {
     billingInfo?: BillingFormData;
@@ -6,6 +6,7 @@ interface PaymentInfo {
     lotData?: ReserveNow;
     taxData?: Taxes;
     collection?: CollectionItem;
+    paymentResult?: CreatePaymentResult;
 }
 declare const usePaymentInfo: () => PaymentInfo;
 export default usePaymentInfo;

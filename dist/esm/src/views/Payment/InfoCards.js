@@ -302,6 +302,7 @@ import '../../providers/UIConfigurationProvider.js';
 import '../../providers/CheckoutProvider.js';
 import '../../providers/PaymentProvider.js';
 import '../../providers/EventProvider.js';
+import '../../providers/SecurityOptionsProvider.js';
 import { ContainerTypes } from '../../interfaces/ContextInterface/RootContainer.js';
 
 const PaymentInfoCards = ({ billingInfo }) => {

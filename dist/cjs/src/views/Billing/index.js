@@ -26,6 +26,7 @@ require('../../providers/UIConfigurationProvider.js');
 var CheckoutProvider = require('../../providers/CheckoutProvider.js');
 var PaymentProvider = require('../../providers/PaymentProvider.js');
 require('../../providers/EventProvider.js');
+require('../../providers/SecurityOptionsProvider.js');
 var BillingView = require('./BillingView.js');
 var RootContainer = require('../../interfaces/ContextInterface/RootContainer.js');
 var index = require('../../constants/index.js');

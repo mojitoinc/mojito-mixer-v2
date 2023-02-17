@@ -310,6 +310,7 @@ var UIConfigurationProvider = require('../../providers/UIConfigurationProvider.j
 require('../../providers/CheckoutProvider.js');
 require('../../providers/PaymentProvider.js');
 require('../../providers/EventProvider.js');
+require('../../providers/SecurityOptionsProvider.js');
 require('../../components/Stepper.js');
 var index$2 = require('../../assets/index.js');
 var CopyButton = require('../../components/shared/CopyButton.js');

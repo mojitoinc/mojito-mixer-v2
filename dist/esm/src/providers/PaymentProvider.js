@@ -8,6 +8,7 @@ import { useContainer } from './ContainerStateProvider.js';
 import './UIConfigurationProvider.js';
 import { useCheckout } from './CheckoutProvider.js';
 import './EventProvider.js';
+import './SecurityOptionsProvider.js';
 import 'openpgp';
 import 'atob';
 import 'btoa';
@@ -41,12 +42,13 @@ const PaymentProvider = ({ children, }) => {
     const { orgId, lotId, quantity, invoiceId } = useCheckout();
     const { setContainerState } = useContainer();
     const { makeCreditCardPurchase, makeWireTransferPurchase } = useCreatePayment(paymentInfo, orgId);
-    const saveToCookies = useCallback((paymentData, reserveLotData) => {
+    const saveToCookies = useCallback((paymentData, reserveLotData, paymentResult) => {
         CookieService.billing.setValue(JSON.stringify(billingInfo));
         CookieService.paymentInfo.setValue(JSON.stringify(paymentData));
         CookieService.taxes.setValue(JSON.stringify(taxes));
         CookieService.collectionData.setValue(JSON.stringify(collectionData));
         CookieService.reserveLotData.setValue(JSON.stringify(reserveLotData));
+        CookieService.paymentResult.setValue(JSON.stringify(paymentResult));
     }, [billingInfo, collectionData, taxes]);
     const onConfirmCreditCardPurchase = useCallback((deliveryAddress = '') => __awaiter(void 0, void 0, void 0, function* () {
         var _a, _b, _c, _d;
@@ -60,7 +62,7 @@ const PaymentProvider = ({ children, }) => {
                 billingInfo,
             });
             debug.success('paymentData', { paymentReceipt });
-            saveToCookies(paymentReceipt.paymentData, paymentReceipt.reserveLotData);
+            saveToCookies(paymentReceipt.paymentData, paymentReceipt.reserveLotData, paymentReceipt.paymentResult);
             window.location.href =
                 (_c = (_b = (_a = paymentReceipt.notificationData) === null || _a === void 0 ? void 0 : _a.getPaymentNotification) === null || _b === void 0 ? void 0 : _b.message) === null || _c === void 0 ? void 0 : _c.redirectURL;
         }
@@ -92,7 +94,7 @@ const PaymentProvider = ({ children, }) => {
                 billingInfo,
             });
             debug.success('paymentData-wire', { paymentReceipt });
-            saveToCookies(paymentReceipt.paymentData, paymentReceipt.reserveLotData);
+            saveToCookies(paymentReceipt.paymentData, paymentReceipt.reserveLotData, paymentReceipt.paymentResult);
             setPaymentInfo(paymentReceipt.paymentData);
             setContainerState(ContainerTypes.CONFIRMATION);
         }

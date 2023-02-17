@@ -308,6 +308,7 @@ var UIConfigurationProvider = require('../../providers/UIConfigurationProvider.j
 var CheckoutProvider = require('../../providers/CheckoutProvider.js');
 require('../../providers/PaymentProvider.js');
 require('../../providers/EventProvider.js');
+require('../../providers/SecurityOptionsProvider.js');
 require('../../components/Stepper.js');
 var TextInput = require('../../components/TextInput.js');
 var index = require('../../assets/index.js');

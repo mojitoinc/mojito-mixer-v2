@@ -22,11 +22,13 @@ const usePaymentInfo = () => {
         const taxes = CookieService.CookieService.taxes.getValue();
         const reserveLotData = CookieService.CookieService.reserveLotData.getValue();
         const collectionData = CookieService.CookieService.collectionData.getValue();
+        const paymentResultData = CookieService.CookieService.paymentResult.getValue();
         const billingInfo = getObject(billing);
         const paymentInfo = getObject(payment);
         const lotData = getObject(reserveLotData);
         const taxData = getObject(taxes);
         const collection = getObject(collectionData);
+        const paymentResult = getObject(paymentResultData);
         // CookieService.billing.remove();
         // CookieService.paymentInfo.remove();
         // CookieService.taxes.remove();
@@ -38,6 +40,7 @@ const usePaymentInfo = () => {
             lotData,
             taxData,
             collection,
+            paymentResult,
         });
     }, []);
     return Object.assign({}, paymentData);

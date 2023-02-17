@@ -305,6 +305,7 @@ import { useUIConfiguration } from '../../providers/UIConfigurationProvider.js';
 import '../../providers/CheckoutProvider.js';
 import '../../providers/PaymentProvider.js';
 import '../../providers/EventProvider.js';
+import '../../providers/SecurityOptionsProvider.js';
 import '../../components/Stepper.js';
 import '@mui/icons-material/ContentCopy';
 import '../../components/shared/ErrorBoundary.js';
@@ -333,9 +334,10 @@ import '../../config/paymentConfiguration.js';
 import '../../queries/invoiceDetails.js';
 import '../../queries/Payment.js';
 import RowItem from './RowItem.js';
+import PaymentDetailsView from './PaymentDetailsView.js';
 
 const ConfirmationView = ({ paymentStatus }) => {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s;
     const theme = useTheme();
     const { paymentInfo, billingInfo } = usePaymentInfo();
     const { paymentConfirmation: paymentConfiguration } = useUIConfiguration();
@@ -372,7 +374,9 @@ const ConfirmationView = ({ paymentStatus }) => {
             (paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.paymentType) === PaymentTypes.WIRE_TRANSFER &&
                 (paymentConfiguration === null || paymentConfiguration === void 0 ? void 0 : paymentConfiguration.wireTransferInstructions),
             (paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.paymentType) === PaymentTypes.CREDIT_CARD &&
-                (paymentConfiguration === null || paymentConfiguration === void 0 ? void 0 : paymentConfiguration.creditCardInstructions)),
+                (paymentConfiguration === null || paymentConfiguration === void 0 ? void 0 : paymentConfiguration.creditCardInstructions),
+            (paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.paymentType) === PaymentTypes.WIRE_TRANSFER &&
+                React__default.createElement(PaymentDetailsView, null)),
         React__default.createElement(Card, { sx: {
                 padding: '24px 24px 0',
                 borderRadius: '4px',
@@ -415,14 +419,17 @@ const ConfirmationView = ({ paymentStatus }) => {
             (paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.paymentType) === PaymentTypes.WIRE_TRANSFER && (React__default.createElement(RowItem, { title: "Payment Method" },
                 React__default.createElement(Typography, { variant: "body1", fontSize: "16px" }, paymentInfo === null || paymentInfo === void 0 ? void 0 :
                     paymentInfo.paymentType,
-                    React__default.createElement("br", null), (_j = paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.wireData) === null || _j === void 0 ? void 0 :
-                    _j.accountNumber,
-                    React__default.createElement("br", null), (_k = paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.wireData) === null || _k === void 0 ? void 0 :
-                    _k.routingNumber,
-                    React__default.createElement("br", null), (_m = (_l = paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.wireData) === null || _l === void 0 ? void 0 : _l.bankAddress) === null || _m === void 0 ? void 0 :
-                    _m.country,
+                    React__default.createElement("br", null),
+                    ((_j = paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.wireData) === null || _j === void 0 ? void 0 : _j.iban)
+                        ? (React__default.createElement(React__default.Fragment, null, (_k = paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.wireData) === null || _k === void 0 ? void 0 : _k.iban))
+                        : (React__default.createElement(React__default.Fragment, null, (_l = paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.wireData) === null || _l === void 0 ? void 0 :
+                            _l.accountNumber,
+                            React__default.createElement("br", null), (_m = paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.wireData) === null || _m === void 0 ? void 0 :
+                            _m.routingNumber)),
                     React__default.createElement("br", null), (_p = (_o = paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.wireData) === null || _o === void 0 ? void 0 : _o.bankAddress) === null || _p === void 0 ? void 0 :
-                    _p.bankName))),
+                    _p.country,
+                    React__default.createElement("br", null), (_r = (_q = paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.wireData) === null || _q === void 0 ? void 0 : _q.bankAddress) === null || _r === void 0 ? void 0 :
+                    _r.bankName))),
             React__default.createElement(Box, { sx: { marginBottom: '24px' } },
                 React__default.createElement(RowItem, { title: "Billing Information" },
                     React__default.createElement(Typography, { fontSize: "16px" }, billingInfo === null || billingInfo === void 0 ? void 0 :
@@ -437,7 +444,7 @@ const ConfirmationView = ({ paymentStatus }) => {
                         billingInfo.phoneNumber)))),
         React__default.createElement(Box, { display: "flex", flexDirection: "row", justifyContent: "flex-end" },
             React__default.createElement(Button, { title: "Back To Marketplace", sx: {
-                    background: (_q = theme.palette.primary) === null || _q === void 0 ? void 0 : _q.main,
+                    background: (_s = theme.palette.primary) === null || _s === void 0 ? void 0 : _s.main,
                 }, onClick: paymentConfiguration === null || paymentConfiguration === void 0 ? void 0 : paymentConfiguration.onGoTo }))));
 };
 

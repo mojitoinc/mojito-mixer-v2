@@ -309,6 +309,7 @@ require('./UIConfigurationProvider.js');
 require('./CheckoutProvider.js');
 require('./PaymentProvider.js');
 require('./EventProvider.js');
+require('./SecurityOptionsProvider.js');
 require('../components/Stepper.js');
 require('@mui/icons-material/ContentCopy');
 var ErrorBoundary = require('../components/shared/ErrorBoundary.js');

@@ -302,10 +302,7 @@ const creditCardInstructions = (React__default.createElement(Typography, { margi
     React__default.createElement("br", null),
     React__default.createElement("br", null),
     "After 14 days have passed, you'll be able to transfer your NFT(s) to a non-custodial wallet (like MetaMask) if you'd like!"));
-const wireTransferInstructions = (React__default.createElement(Typography, { marginTop: "16px" },
-    "Thank you for your payment. If you selected to have your NFT(s) transferred directly to your non-custodial wallet (such as MetaMask), we will do so as soon as payment confirmation is received; otherwise, your NFT(s) will be transferred to a MultiSig wallet (also known as a custodial wallet) for safekeeping. You can view your NFT(s) on your Account page at any time.",
-    React__default.createElement("br", null),
-    "You can transfer your NFT(s) to your own non-custodial wallet (like MetaMask) at any time after they have been transferred to the MultiSig wallet."));
+const wireTransferInstructions = (React__default.createElement(Typography, { marginTop: "16px" }, "Please find the necessary bank details displayed below. It's important that the funds come from the account you provided during checkout. As soon as funds have been confirmed, we'll send you an email to account@email.com with your order confirmation and receipt."));
 
 export { creditCardInstructions, wireTransferInstructions };
 //# sourceMappingURL=paymentConfiguration.js.map

@@ -21,6 +21,7 @@ import '../providers/UIConfigurationProvider.js';
 import '../providers/CheckoutProvider.js';
 import '../providers/PaymentProvider.js';
 import '../providers/EventProvider.js';
+import '../providers/SecurityOptionsProvider.js';
 
 const useAPIService = () => {
     const debug = useDebug('useAPIClient');

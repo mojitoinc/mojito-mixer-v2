@@ -317,6 +317,7 @@ import '../../providers/UIConfigurationProvider.js';
 import '../../providers/CheckoutProvider.js';
 import '../../providers/PaymentProvider.js';
 import '../../providers/EventProvider.js';
+import '../../providers/SecurityOptionsProvider.js';
 import '../../components/Stepper.js';
 import '@mui/icons-material/ContentCopy';
 import '../../components/shared/ErrorBoundary.js';
@@ -349,7 +350,7 @@ const validationSchema = create().shape({
     }),
     iban: create$1().when('country', {
         is: Countries.INTERNATIONAL,
-        then: create$1().matches(/^([A-Z]{2}[ -]?[0-9]{2})(?=(?:[ -]?[A-Z0-9]){9,30}$)((?:[ -]?[A-Z0-9]{3,5}){2,7})([ -]?[A-Z0-9]{1,3})?$/, 'Invalid International Bank Account Number')
+        then: create$1().matches(/^([0-9]{2})(?=(?:[ -]?[A-Z0-9]){9,30}$)((?:[ -]?[A-Z0-9]{3,5}){2,7})([ -]?[A-Z0-9]{1,3})?$/, 'Invalid International Bank Account Number')
             .min(20, 'Invalid International Bank Account Number')
             .required('Please enter International Bank Account Number'),
         otherwise: create$1(),

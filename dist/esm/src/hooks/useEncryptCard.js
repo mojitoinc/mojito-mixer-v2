@@ -8,6 +8,7 @@ import '../providers/UIConfigurationProvider.js';
 import '../providers/CheckoutProvider.js';
 import '../providers/PaymentProvider.js';
 import '../providers/EventProvider.js';
+import '../providers/SecurityOptionsProvider.js';
 import { encryptCardData } from '../utils/encryptionUtils.js';
 import { useAPIService } from './useAPIService.js';
 

@@ -308,6 +308,7 @@ require('../../providers/UIConfigurationProvider.js');
 require('../../providers/CheckoutProvider.js');
 require('../../providers/PaymentProvider.js');
 require('../../providers/EventProvider.js');
+require('../../providers/SecurityOptionsProvider.js');
 require('../../components/Stepper.js');
 var index = require('../../assets/index.js');
 var LinedText = require('../../components/shared/LinedText.js');

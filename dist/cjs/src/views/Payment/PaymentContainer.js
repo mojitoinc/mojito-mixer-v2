@@ -321,6 +321,7 @@ require('../../providers/UIConfigurationProvider.js');
 require('../../providers/CheckoutProvider.js');
 require('../../providers/PaymentProvider.js');
 require('../../providers/EventProvider.js');
+require('../../providers/SecurityOptionsProvider.js');
 require('../../components/Stepper.js');
 require('@mui/icons-material/ContentCopy');
 require('../../components/shared/ErrorBoundary.js');
@@ -358,7 +359,7 @@ const validationSchema = object.create().shape({
     }),
     iban: string.create().when('country', {
         is: WireTransferForm.Countries.INTERNATIONAL,
-        then: string.create().matches(/^([A-Z]{2}[ -]?[0-9]{2})(?=(?:[ -]?[A-Z0-9]){9,30}$)((?:[ -]?[A-Z0-9]{3,5}){2,7})([ -]?[A-Z0-9]{1,3})?$/, 'Invalid International Bank Account Number')
+        then: string.create().matches(/^([0-9]{2})(?=(?:[ -]?[A-Z0-9]){9,30}$)((?:[ -]?[A-Z0-9]{3,5}){2,7})([ -]?[A-Z0-9]{1,3})?$/, 'Invalid International Bank Account Number')
             .min(20, 'Invalid International Bank Account Number')
             .required('Please enter International Bank Account Number'),
         otherwise: string.create(),

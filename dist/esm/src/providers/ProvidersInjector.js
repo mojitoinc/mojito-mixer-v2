@@ -305,6 +305,7 @@ import './UIConfigurationProvider.js';
 import './CheckoutProvider.js';
 import './PaymentProvider.js';
 import './EventProvider.js';
+import './SecurityOptionsProvider.js';
 import '../components/Stepper.js';
 import '@mui/icons-material/ContentCopy';
 import { ErrorBoundary } from '../components/shared/ErrorBoundary.js';

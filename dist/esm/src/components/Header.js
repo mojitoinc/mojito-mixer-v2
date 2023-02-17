@@ -303,6 +303,7 @@ import { useUIConfiguration } from '../providers/UIConfigurationProvider.js';
 import '../providers/CheckoutProvider.js';
 import '../providers/PaymentProvider.js';
 import '../providers/EventProvider.js';
+import '../providers/SecurityOptionsProvider.js';
 
 const Header = ({ isPaymentConfirmation }) => {
     var _a, _b, _c;
