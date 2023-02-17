@@ -5,7 +5,7 @@ import { meQuery } from '../../queries/me';
 import {
   addressScreeningQuery,
 } from '../../queries/Payment';
-import { useCheckout, useBilling, usePayment, useDebug } from '../../providers';
+import { useCheckout, useBilling, usePayment, useDebug, useSecurityOptions } from '../../providers';
 import { PaymentTypes, RiskRating } from '../../constants';
 import { useWeb3ModalConnect } from '../../providers/Web3ModalConnect';
 import DeliveryLayout from './Delivery';
@@ -23,6 +23,7 @@ export const Delivery = () => {
   const { data: meData } = useQuery(meQuery);
   const [addressScreening, { loading: isLoading }] = useMutation(addressScreeningQuery);
   const [error, setError] = useState<string>();
+  const { enableSardine } = useSecurityOptions();
 
   const {
     connect,
@@ -61,7 +62,7 @@ export const Delivery = () => {
         setError('Please select a delivery address');
         return;
       }
-      if (deliveryAddress !== '') {
+      if (deliveryAddress !== '' && enableSardine) {
         const screeningData = await addressScreening({
           variables: {
             orgID: orgId,
@@ -96,6 +97,7 @@ export const Delivery = () => {
     selectedDeliveryAddress,
     addressScreening,
     connect,
+    enableSardine,
   ]);
 
   return (

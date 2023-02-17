@@ -11,6 +11,7 @@ import {
   useUIConfiguration,
   PaymentData,
   usePayment,
+  useSecurityOptions,
 } from '../../providers';
 import { formCardScreeningVariable } from '../Delivery/Delivery.service';
 import { cardScreeningQuery } from '../../queries/creditCard';
@@ -36,6 +37,9 @@ export const PaymentContainer = () => {
     },
     [],
   );
+
+  const { enableSardine } = useSecurityOptions();
+
   useEffect(() => {
     setPaymentType(paymentInfo?.paymentType ?? PaymentTypes.CREDIT_CARD);
   }, [paymentInfo]);
@@ -84,7 +88,7 @@ export const PaymentContainer = () => {
       },
     };
     try {
-      if (creditCardFormValues?.isNew) {
+      if (creditCardFormValues?.isNew && enableSardine) {
         const variables = formCardScreeningVariable(
           orgId ?? '',
           paymentInfoData,
@@ -120,6 +124,7 @@ export const PaymentContainer = () => {
     cardScreening,
     setContainerState,
     setPaymentInfo,
+    enableSardine,
   ]);
 
   const onSubmitWireTransfer = useCallback((wireTransferFormValues: WireTransferFormData) => {

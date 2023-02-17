@@ -2,7 +2,7 @@ import { useLazyQuery, useMutation } from '@apollo/client';
 import { formCreatePaymentMethodObject } from '@views/Delivery/Delivery.service';
 import { useMemo, useCallback } from 'react';
 import { useEncryptCardData } from './useEncryptCard';
-import { CreditCardFormType, ReserveNow } from '../interfaces';
+import { CreditCardFormType, ReserveNow, CreatePaymentResult } from '../interfaces';
 import { reserveNowBuyLotQuery } from '../queries/invoiceDetails';
 import { createPaymentMethodQuery, createPaymentQuery, getPaymentMethodStatus } from '../queries/Payment';
 import { BillingFormData, useDebug } from '../providers';
@@ -44,7 +44,8 @@ export const Countries = {
 export interface PaymentReceiptData {
   paymentData: PaymentData;
   reserveLotData: ReserveNow
-  notificationData?: any | undefined
+  notificationData?: any | undefined;
+  paymentResult?: CreatePaymentResult;
 }
 export interface UseCreatePaymentData {
   makeCreditCardPurchase:(options: PaymentOptions)=>Promise<PaymentReceiptData>;
@@ -150,7 +151,7 @@ export const useCreatePayment = (paymentInfo: PaymentData | undefined, orgId: st
           },
         },
       });
-      await createPayment({
+      const paymentResponse = await createPayment({
         variables: {
           paymentMethodID: paymentMethodId,
           invoiceID: reserveLotData?.invoiceID,
@@ -163,6 +164,8 @@ export const useCreatePayment = (paymentInfo: PaymentData | undefined, orgId: st
           },
         },
       });
+      const paymentResult : CreatePaymentResult = paymentResponse?.data?.createPayment;
+
       debug.info('ready-createPayment');
       const notificationData = await getPaymentNotification();
       const paymentData: PaymentData = {
@@ -172,7 +175,7 @@ export const useCreatePayment = (paymentInfo: PaymentData | undefined, orgId: st
       };
       debug.success('paymentData', { paymentData, notificationData });
 
-      return { paymentData, reserveLotData, notificationData: notificationData?.data };
+      return { paymentData, reserveLotData, notificationData: notificationData?.data, paymentResult };
     }
     throw new Error('unable to create paymentMethod');
   }, [
@@ -201,18 +204,22 @@ export const useCreatePayment = (paymentInfo: PaymentData | undefined, orgId: st
     delete copiedBillingDetails.firstName;
     delete copiedBillingDetails.lastName;
     inputData.paymentType = 'Wire';
-    const wireData = { ...paymentInfo?.wireData };
+    const wireData:any = {
+      bankAddress: {
+        bankName: paymentInfo?.wireData?.bankAddress?.bankName,
+        country: paymentInfo?.wireData?.bankAddress?.country,
+        city: paymentInfo?.wireData?.bankAddress?.city,
+      },
+    };
     if (paymentInfo?.wireData?.country === Countries.US) {
-      delete wireData.iban;
-      delete wireData.country;
+      wireData.accountNumber = paymentInfo?.wireData?.accountNumber;
+      wireData.routingNumber = paymentInfo?.wireData?.routingNumber;
       inputData.wireData = {
         ...wireData,
         billingDetails: copiedBillingDetails,
       };
     } else {
-      delete wireData.accountNumber;
-      delete wireData.routingNumber;
-      delete wireData.country;
+      wireData.iban = (paymentInfo?.wireData?.bankAddress?.country ?? '') + (paymentInfo?.wireData?.iban ?? '');
       inputData.wireData = {
         ...wireData,
         billingDetails: copiedBillingDetails,
@@ -235,7 +242,7 @@ export const useCreatePayment = (paymentInfo: PaymentData | undefined, orgId: st
 
       const reserveLotData = await getInvoiceData(options.invoiceId, options.lotId, options.quantity);
 
-      const result1 = await createPayment({
+      const paymentResponse = await createPayment({
         variables: {
           paymentMethodID: result?.data?.createPaymentMethod?.id,
           invoiceID: reserveLotData?.invoiceID,
@@ -244,13 +251,14 @@ export const useCreatePayment = (paymentInfo: PaymentData | undefined, orgId: st
           },
         },
       });
+      const paymentResult : CreatePaymentResult = paymentResponse?.data?.createPayment;
       const paymentData: PaymentData = {
         ...paymentInfo,
-        deliveryStatus: result1?.data?.createPayment?.status,
-        paymentId: result?.data?.createPaymentMethod?.id ?? '',
+        deliveryStatus: paymentResult?.status,
+        paymentId: paymentResult?.id ?? '',
         destinationAddress: options.deliveryAddress,
       };
-      return { paymentData, reserveLotData };
+      return { paymentData, reserveLotData, paymentResult };
     }
     throw new Error('unable to create paymentMethod');
   }, [

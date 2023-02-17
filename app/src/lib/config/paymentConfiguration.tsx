@@ -19,14 +19,9 @@ export const creditCardInstructions: JSX.Element = (
 );
 export const wireTransferInstructions: JSX.Element = (
   <Typography marginTop="16px">
-    Thank you for your payment. If you selected to have your NFT(s) transferred
-    directly to your non-custodial wallet (such as MetaMask), we will do so as
-    soon as payment confirmation is received; otherwise, your NFT(s) will be
-    transferred to a MultiSig wallet (also known as a custodial wallet) for
-    safekeeping. You can view your NFT(s) on your Account page at any time.
-    <br />
-    You can transfer your NFT(s) to your own non-custodial wallet (like
-    MetaMask) at any time after they have been transferred to the MultiSig
-    wallet.
+    Please find the necessary bank details displayed below. It&apos;s important that
+    the funds come from the account you provided during checkout. As soon as
+    funds have been confirmed, we&apos;ll send you an email to account@email.com with
+    your order confirmation and receipt.
   </Typography>
 );
