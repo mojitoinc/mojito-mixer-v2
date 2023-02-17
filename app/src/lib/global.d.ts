@@ -3,7 +3,7 @@ declare namespace NodeJS {
     browser: boolean;
   }
 }
-declare module "*.svg" {
-  const content: React.FunctionComponent<React.SVGAttributes<SVGElement>>;
+declare module '*.svg' {
+  const content: string;
   export default content;
 }
