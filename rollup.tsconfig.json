@@ -42,7 +42,8 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "globals.d.ts"
+    "globals.d.ts",
+    "images.d.ts"
   ],
   "exclude": [
     "node_modules",
