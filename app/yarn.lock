@@ -2150,9 +2150,9 @@
   resolved "https://registry.yarnpkg.com/@metamask/safe-event-emitter/-/safe-event-emitter-2.0.0.tgz#af577b477c683fad17c619a78208cede06f9605c"
   integrity sha512-/kSXhY692qiV1MXu6EeOZvg5nECLclxNXcKCxJ3cXQgYuRymRHpdx/t7JXfsK+JLjwA1e1c1/SBrlQYpusC29Q==
 
-"@mojitonft/mojito-mixers@git+https://github.com/mojitoinc/mojito-mixer-v2.git#8f564402ac8b8a4b261f0a8ca745f206caa9a301":
-  version "0.0.6"
-  resolved "git+https://github.com/mojitoinc/mojito-mixer-v2.git#8f564402ac8b8a4b261f0a8ca745f206caa9a301"
+"@mojitonft/mojito-mixers@git+https://github.com/mojitoinc/mojito-mixer-v2.git#3213517e7e54fc72eb0c6bd2f087d7f7bb136fcb":
+  version "0.0.14"
+  resolved "git+https://github.com/mojitoinc/mojito-mixer-v2.git#3213517e7e54fc72eb0c6bd2f087d7f7bb136fcb"
   dependencies:
     "@apollo/client" "3.7.3"
     "@auth0/auth0-react" "^1.12.0"
@@ -2178,6 +2178,7 @@
     formik "^2.2.9"
     graphql "^16.6.0"
     merge-options "^3.0.4"
+    moment "^2.29.4"
     openpgp "5.2.0"
     patch-package "^6.5.1"
     react-hook-form "^7.31.2"

@@ -109,6 +109,7 @@
     "@graphql-codegen/typescript-operations": "^2.5.1",
     "@graphql-codegen/typescript-react-apollo": "^3.3.1",
     "@rollup/plugin-commonjs": "^22.0.1",
+    "@rollup/plugin-image": "^3.0.2",
     "@rollup/plugin-node-resolve": "^13.3.0",
     "@rollup/plugin-typescript": "^8.3.3",
     "@types/atob": "^2.1.2",

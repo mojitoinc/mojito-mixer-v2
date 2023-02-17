@@ -8,7 +8,8 @@ import { visualizer } from 'rollup-plugin-visualizer';
 import pkg from "./package.json";
 import { typescriptPaths } from 'rollup-plugin-typescript-paths';
 import copy from 'rollup-plugin-copy'
-import svg from 'rollup-plugin-svg'
+// import svg from 'rollup-plugin-svg'
+import image from '@rollup/plugin-image';
 
 
 // import { terser } from "rollup-plugin-terser";
@@ -116,7 +117,7 @@ export default [{
         { src: 'node_modules/country-state-city/lib/assets', dest: 'dist/esm/node_modules/country-state-city/lib' },
       ]
     }),
-    svg(),
+    image(),
     // babel({
     //   configFile: "./rollup.babel.json",
     //   extensions: EXTENSIONS,  // Compile our TypeScript files

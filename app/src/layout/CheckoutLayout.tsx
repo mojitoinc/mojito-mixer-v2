@@ -43,10 +43,10 @@ interface CheckoutProps {
   ) =>
     | Promise<void>
     | Promise<
-        FormikErrors<
-          ConfigurationValues & ExpressCheckoutPayment & PaymentMethodTypes
-        >
-      >;
+      FormikErrors<
+        ConfigurationValues & ExpressCheckoutPayment & PaymentMethodTypes
+      >
+    >;
 }
 
 const expressOptions: CheckboxOptions[] = [
@@ -103,12 +103,12 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
       return (
         <FormGroup>
           <FormControlLabel
-            control={ (
+            control={(
               <Checkbox
-                checked={ isChecked }
-                onChange={ (_, checked) => handleFieldChange(fieldName, checked) } />
-            ) }
-            label={ label } />
+                checked={isChecked}
+                onChange={(_, checked) => handleFieldChange(fieldName, checked)} />
+            )}
+            label={label} />
         </FormGroup>
       );
     },
@@ -119,18 +119,18 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
     router.replace('/');
   }, [router]);
 
-  const onEvent = useCallback((e:string) => {
+  const onEvent = useCallback((e: string) => {
     console.log('EVENT', e);
   }, []);
 
   return (
     <>
       <Box sx={{ my: 4 }}>
-        <Stack spacing={ 2 } direction="row">
+        <Stack spacing={2} direction="row">
           <Button
             variant="contained"
-            onClick={ onOpen }
-            disabled={ !isAuthenticated }>
+            onClick={onOpen}
+            disabled={!isAuthenticated}>
             Open Checkout Modal
           </Button>
         </Stack>
@@ -138,16 +138,16 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
           <Dropdown
             title="Organization"
             sx={{ width: '50%' }}
-            options={ organizationOptions }
-            value={ values.organization }
-            onChange={ handleChange('organization') } />
-          { values.organization === 'custom-org-id' && (
+            options={organizationOptions}
+            value={values.organization}
+            onChange={handleChange('organization')} />
+          {values.organization === 'custom-org-id' && (
             <TextInput
               placeholder="Custom Org ID"
               sx={{ width: '50%', marginTop: 2 }}
-              value={ values.customOrganization ?? '' }
-              onChange={ handleChange('customOrganization') } />
-          ) }
+              value={values.customOrganization ?? ''}
+              onChange={handleChange('customOrganization')} />
+          )}
           <Typography variant="body2" sx={{ marginTop: 1 }}>
             If left empty, the modal will fail to load your saved payment
             methods and at making a purchase.
@@ -159,91 +159,91 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
             <Dropdown
               title="Payment Type"
               sx={{ width: '200px' }}
-              options={ PaymentType }
-              value={ values.type }
-              onChange={ handleChange('type') } />
+              options={PaymentType}
+              value={values.type}
+              onChange={handleChange('type')} />
             <TextInput
               title="Lot ID"
               placeholder="Lot ID"
-              value={ values.lotId }
-              onChange={ handleChange('lotId') }
+              value={values.lotId}
+              onChange={handleChange('lotId')}
               sx={{ width: '200px', marginLeft: 2 }} />
             <TextInput
               title="Item ID"
               placeholder="Item ID"
-              value={ values.itemId }
-              onChange={ handleChange('itemId') }
+              value={values.itemId}
+              onChange={handleChange('itemId')}
               sx={{ width: '200px', marginLeft: 2 }} />
             <TextInput
               title="Lot Units"
               placeholder="Lot Units"
-              value={ values.lotUnits }
-              onChange={ handleChange('lotUnits') }
+              value={values.lotUnits}
+              onChange={handleChange('lotUnits')}
               sx={{ width: '120px', marginLeft: 2 }}
               type="number" />
             {
-                values.type === 'AUCTION' && (
+              values.type === 'AUCTION' && (
                 <TextInput
                   title="Invoice ID"
                   placeholder="Invoice ID"
-                  value={ values.invoiceId }
-                  onChange={ handleChange('invoiceId') }
+                  value={values.invoiceId}
+                  onChange={handleChange('invoiceId')}
                   sx={{ width: '200px', marginLeft: 2 }} />
-                )
+              )
             }
           </Stack>
         </Box>
         <Box sx={{ marginTop: 2 }}>
-          { renderCheckbox(
+          {renderCheckbox(
             'Express Checkout',
             values.express ?? false,
             'express',
-          ) }
-          { values.express && (
+          )}
+          {values.express && (
             <Grid container>
-              { expressOptions.map(
+              {expressOptions.map(
                 (item: CheckboxOptions) => (
-                  <Grid item xs={ 3 } key={ item.field.toString() }>
-                    { renderCheckbox(
+                  <Grid item xs={3} key={item.field.toString()}>
+                    {renderCheckbox(
                       item.label,
                       values[item.field as keyof ExpressCheckoutPayment] ?? item.checked,
                       item.field,
-                    ) }
+                    )}
                   </Grid>
                 ),
-              ) }
+              )}
             </Grid>
-          ) }
+          )}
         </Box>
         <Box sx={{ marginTop: 2 }}>
           <Typography fontSize="18px">Payment Methods</Typography>
           <Grid container>
-            { paymentOptions.map(
+            {paymentOptions.map(
               (item: CheckboxOptions) => (
-                <Grid item xs={ 3 } key={ item.field.toString() }>
-                  { renderCheckbox(
+                <Grid item xs={3} key={item.field.toString()}>
+                  {renderCheckbox(
                     item.label,
                     values[item.field as keyof PaymentMethodTypes] ?? item.checked,
                     item.field,
-                  ) }
+                  )}
                 </Grid>
               ),
-            ) }
+            )}
           </Grid>
         </Box>
         <Box sx={{ marginTop: 2 }}>
-          { renderCheckbox(
+          {renderCheckbox(
             'Discount Code',
             values?.discountCode ?? true,
             'discountCode',
-          ) }
+          )}
         </Box>
       </Box>
-      { isAuthenticated && (
+      {isAuthenticated && (
         <MojitoCheckout
           debug
-          uri={ RuntimeConfiguration.API_HOST_URL ?? '' }
-          getAuthenticationToken={ getAuthenticationToken }
+          uri={RuntimeConfiguration.API_HOST_URL ?? ''}
+          getAuthenticationToken={getAuthenticationToken}
           checkoutOptions={{
             orgId,
             lotId: values.lotId ?? '',
@@ -281,8 +281,8 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
           events={{
             onEvent,
           }}
-          show={ show } />
-      ) }
+          show={show} />
+      )}
     </>
   );
 };
