@@ -8,6 +8,7 @@ import { visualizer } from 'rollup-plugin-visualizer';
 import pkg from "./package.json";
 import { typescriptPaths } from 'rollup-plugin-typescript-paths';
 import copy from 'rollup-plugin-copy'
+import svg from 'rollup-plugin-svg'
 
 
 // import { terser } from "rollup-plugin-terser";
@@ -18,7 +19,7 @@ import copy from 'rollup-plugin-copy'
 function writeTo(analysisString) {
   try {
     fs.writeFileSync('./stats.md', analysisString);
-  } catch(err) {
+  } catch (err) {
     console.log('Could not write stats.md.', err);
   }
 }
@@ -115,7 +116,7 @@ export default [{
         { src: 'node_modules/country-state-city/lib/assets', dest: 'dist/esm/node_modules/country-state-city/lib' },
       ]
     }),
-
+    svg(),
     // babel({
     //   configFile: "./rollup.babel.json",
     //   extensions: EXTENSIONS,  // Compile our TypeScript files
