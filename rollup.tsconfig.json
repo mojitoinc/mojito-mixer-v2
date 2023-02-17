@@ -2,7 +2,11 @@
   "compilerOptions": {
     "baseUrl": "./src",
     "target": "es6",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -15,15 +19,34 @@
     "jsx": "react",
     "isolatedModules": true,
     "paths": {
-      "@views/*": ["views/*"],
-      "@lib/*": ["/*"],
-      "@lib/interfaces": ["/interfaces"],
-      "@lib/providers": ["/providers/index.ts"],
-      "@hooks/*": ["hooks/*"]
+      "@views/*": [
+        "views/*"
+      ],
+      "@lib/*": [
+        "/*"
+      ],
+      "@lib/interfaces": [
+        "/interfaces"
+      ],
+      "@lib/providers": [
+        "/providers/index.ts"
+      ],
+      "@hooks/*": [
+        "hooks/*"
+      ]
     },
     "declaration": true,
     "declarationDir": "dist/types"
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules", "functions", "app"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "globals.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "functions",
+    "app"
+  ]
 }
