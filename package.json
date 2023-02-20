@@ -1,6 +1,6 @@
 {
   "name": "@mojitonft/mojito-mixers",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "🍸 React components for the Mojito Platform, Reference App and third-party projects.",
   "keywords": [
     "react",
@@ -46,8 +46,7 @@
     "dist:uninstall": "rm -rf node_modules",
     "codegen": "graphql-codegen --config codegen.yml",
     "storybook": "yarn --cwd app storybook",
-    "build-storybook": "yarn --cwd app build-storybook",
-    "postinstall": "patch-package"
+    "build-storybook": "yarn --cwd app build-storybook"
   },
   "engines": {
     "node": ">=16.0.0"
@@ -79,7 +78,6 @@
     "merge-options": "^3.0.4",
     "moment": "^2.29.4",
     "openpgp": "5.2.0",
-    "patch-package": "^6.5.1",
     "react-hook-form": "^7.31.2",
     "react-modal": "^3.16.1",
     "react-payment-inputs": "^1.1.9",
@@ -95,7 +93,6 @@
   },
   "peerDependencies": {
     "@emotion/styled": "^11.10.5",
-    "patch-package": "^6.5.1",
     "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
     "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0"
   },
@@ -109,6 +106,7 @@
     "@graphql-codegen/typescript-operations": "^2.5.1",
     "@graphql-codegen/typescript-react-apollo": "^3.3.1",
     "@rollup/plugin-commonjs": "^22.0.1",
+    "@rollup/plugin-json": "^6.0.0",
     "@rollup/plugin-node-resolve": "^13.3.0",
     "@rollup/plugin-typescript": "^8.3.3",
     "@types/atob": "^2.1.2",

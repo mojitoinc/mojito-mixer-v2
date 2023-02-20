@@ -8,6 +8,7 @@ import { visualizer } from 'rollup-plugin-visualizer';
 import pkg from "./package.json";
 import { typescriptPaths } from 'rollup-plugin-typescript-paths';
 import copy from 'rollup-plugin-copy'
+import json from "@rollup/plugin-json";
 
 
 // import { terser } from "rollup-plugin-terser";
@@ -101,6 +102,7 @@ export default [{
     commonjs({
       ignoreGlobal: true,
     }),
+    json(),      // <---- put after commonjs
     typescriptPaths(),
 
     typescript({
