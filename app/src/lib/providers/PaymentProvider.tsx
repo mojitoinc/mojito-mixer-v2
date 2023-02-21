@@ -61,8 +61,8 @@ export const PaymentProvider = ({
   const { setError } = useError();
   const [paymentInfo, setPaymentInfo] = useState<PaymentData>();
   const [paymentMethods, setPaymentMethods] = useState<PaymentMethodLimit>();
-  const { billingInfo, collectionData, taxes } = useBilling();
-  const { orgId, lotId, quantity, invoiceId } = useCheckout();
+  const { billingInfo, collectionData, taxes, taxablePrice } = useBilling();
+  const { orgId, lotId, quantity, invoiceId, vertexEnabled } = useCheckout();
   const { setContainerState } = useContainer();
   const { makeCreditCardPurchase, makeWireTransferPurchase } = useCreatePayment(
     paymentInfo,
@@ -77,8 +77,11 @@ export const PaymentProvider = ({
       CookieService.collectionData.setValue(JSON.stringify(collectionData));
       CookieService.reserveLotData.setValue(JSON.stringify(reserveLotData));
       CookieService.paymentResult.setValue(JSON.stringify(paymentResult));
+      CookieService.taxablePrice.setValue(taxablePrice);
+      CookieService.vertexEnabled.setValue(vertexEnabled);
+      CookieService.quantity.setValue(quantity);
     },
-    [billingInfo, collectionData, taxes],
+    [billingInfo, collectionData, taxes, quantity, vertexEnabled, taxablePrice],
   );
 
   const onConfirmCreditCardPurchase = useCallback(
@@ -100,7 +103,6 @@ export const PaymentProvider = ({
           paymentReceipt.reserveLotData,
           paymentReceipt.paymentResult,
         );
-
         window.location.href =
           paymentReceipt.notificationData?.getPaymentNotification?.message?.redirectURL;
       } catch (e: any) {

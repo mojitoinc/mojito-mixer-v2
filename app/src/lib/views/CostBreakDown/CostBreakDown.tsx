@@ -7,24 +7,23 @@ import { CollectionItem, Taxes } from '../../interfaces';
 import {
   useContainer,
   useUIConfiguration,
-  useCheckout,
-  useBilling,
 } from '../../providers';
 import { ContainerTypes } from '../../interfaces/ContextInterface';
 
 import { MixTheme } from '../../theme';
 
 interface CostBreakDownProps {
-  taxes: Taxes;
-  collectionData: CollectionItem;
+  taxes?: Taxes;
+  collectionData?: CollectionItem;
+  quantity?: number;
+  vertexEnabled?: boolean;
+  taxablePrice?: number;
 }
 
-const CostBreakDown = ({ taxes, collectionData }: CostBreakDownProps) => {
+const CostBreakDown = ({ taxes, collectionData, quantity, vertexEnabled, taxablePrice }: CostBreakDownProps) => {
   const theme = useTheme<MixTheme>();
   const uiConfiguration = useUIConfiguration();
-  const { quantity, vertexEnabled } = useCheckout();
   const { containerState } = useContainer();
-  const { taxablePrice } = useBilling();
 
   const renderTextRow = (text: string, value: string) => {
     return (
@@ -89,7 +88,7 @@ const CostBreakDown = ({ taxes, collectionData }: CostBreakDownProps) => {
               <Typography
                 variant="body1"
                 sx={{ marginBottom: '12px', fontSize: '14px' }}>
-                Qty : { quantity }
+                { `Qty : ${ quantity }` }
               </Typography>
               <Typography
                 variant="body1"
@@ -98,13 +97,13 @@ const CostBreakDown = ({ taxes, collectionData }: CostBreakDownProps) => {
                   fontSize: '14px',
                   fontStyle: 'italic',
                 }}>
-                { collectionData?.details?.totalAvailableUnits ?? '0' } remaining
+                { ` ${ collectionData?.details?.totalAvailableUnits ?? '0' } remaining` }
               </Typography>
             </Box>
           </Box>
           <Box display="flex" flexDirection="column" alignItems="flex-end">
             <Typography variant="subtitle2" fontWeight="700" fontSize="14px">
-              { taxes?.taxablePrice ?? '0' } USD
+              { `${ vertexEnabled ? (taxes?.totalTaxedPrice ?? '0') : taxablePrice } USD` }
             </Typography>
             { /* <Typography variant="body2" fontSize="14px">
               2.00 ETH
@@ -170,7 +169,7 @@ const CostBreakDown = ({ taxes, collectionData }: CostBreakDownProps) => {
           </Typography>
           <Box display="flex" flexDirection="column" alignItems="flex-end">
             <Typography variant="h5" fontWeight="700" fontSize="20px">
-              { vertexEnabled ? (taxes?.totalTaxedPrice ?? '0') : taxablePrice } USD
+              { `${ vertexEnabled ? (taxes?.totalTaxedPrice ?? '0') : taxablePrice } USD` }
             </Typography>
             { /* <Typography variant="body1" fontSize="16px">
               2.00 ETH

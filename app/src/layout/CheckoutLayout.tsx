@@ -250,8 +250,9 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
             quantity: parseInt(values.lotUnits ?? '1', 10),
             collectionItemId: values.itemId ?? '',
             invoiceId: values?.invoiceId,
-            vertexEnabled: true,
+            vertexEnabled: false,
           }}
+          enableSardine={ false }
           uiConfiguration={{
 
             billing: {

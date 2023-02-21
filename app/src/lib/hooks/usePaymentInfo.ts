@@ -10,12 +10,15 @@ interface PaymentInfo {
   taxData? : Taxes;
   collection? : CollectionItem;
   paymentResult? : CreatePaymentResult;
+  taxablePrice?: number;
+  vertexEnabled?: boolean;
+  quantity?: number;
 }
 const getObject = (value:any) => {
   if (!value || value === 'undefined') return value;
   if (typeof value === 'object') return value;
   if (typeof value === 'string') return JSON.parse(value);
-  return undefined;
+  return value;
 };
 
 const usePaymentInfo = (): PaymentInfo => {
@@ -28,6 +31,9 @@ const usePaymentInfo = (): PaymentInfo => {
     const reserveLotData = CookieService.reserveLotData.getValue();
     const collectionData = CookieService.collectionData.getValue();
     const paymentResultData = CookieService.paymentResult.getValue();
+    const price = CookieService.taxablePrice.getValue();
+    const vertex = CookieService.vertexEnabled.getValue();
+    const totalQuantity = CookieService.quantity.getValue();
 
     const billingInfo = getObject(billing) as BillingFormData;
     const paymentInfo = getObject(payment) as PaymentData;
@@ -35,6 +41,9 @@ const usePaymentInfo = (): PaymentInfo => {
     const taxData = getObject(taxes) as Taxes;
     const collection = getObject(collectionData) as CollectionItem;
     const paymentResult = getObject(paymentResultData) as CreatePaymentResult;
+    const taxablePrice = Number(getObject(price));
+    const vertexEnabled = Boolean(getObject(vertex));
+    const quantity = Number(getObject(totalQuantity));
     // CookieService.billing.remove();
     // CookieService.paymentInfo.remove();
     // CookieService.taxes.remove();
@@ -47,6 +56,9 @@ const usePaymentInfo = (): PaymentInfo => {
       taxData,
       collection,
       paymentResult,
+      taxablePrice,
+      vertexEnabled,
+      quantity,
     });
   }, []);
 
