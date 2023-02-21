@@ -27,6 +27,9 @@ const CookieService = {
     reserveLotData: new CookieStorage('reserveLotData'),
     collectionData: new CookieStorage('collectionData'),
     paymentResult: new CookieStorage('paymentResult'),
+    quantity: new CookieStorage('quantity'),
+    vertexEnabled: new CookieStorage('vertexEnabled'),
+    taxablePrice: new CookieStorage('taxablePrice'),
 };
 
 export { CookieService };

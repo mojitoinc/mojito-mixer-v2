@@ -8,7 +8,7 @@ const getObject = (value) => {
         return value;
     if (typeof value === 'string')
         return JSON.parse(value);
-    return undefined;
+    return value;
 };
 const usePaymentInfo = () => {
     const [paymentData, setPaymentData] = useState();
@@ -19,12 +19,18 @@ const usePaymentInfo = () => {
         const reserveLotData = CookieService.reserveLotData.getValue();
         const collectionData = CookieService.collectionData.getValue();
         const paymentResultData = CookieService.paymentResult.getValue();
+        const price = CookieService.taxablePrice.getValue();
+        const vertex = CookieService.vertexEnabled.getValue();
+        const totalQuantity = CookieService.quantity.getValue();
         const billingInfo = getObject(billing);
         const paymentInfo = getObject(payment);
         const lotData = getObject(reserveLotData);
         const taxData = getObject(taxes);
         const collection = getObject(collectionData);
         const paymentResult = getObject(paymentResultData);
+        const taxablePrice = Number(getObject(price));
+        const vertexEnabled = Boolean(getObject(vertex));
+        const quantity = Number(getObject(totalQuantity));
         // CookieService.billing.remove();
         // CookieService.paymentInfo.remove();
         // CookieService.taxes.remove();
@@ -37,6 +43,9 @@ const usePaymentInfo = () => {
             taxData,
             collection,
             paymentResult,
+            taxablePrice,
+            vertexEnabled,
+            quantity,
         });
     }, []);
     return Object.assign({}, paymentData);

@@ -7,6 +7,9 @@ interface PaymentInfo {
     taxData?: Taxes;
     collection?: CollectionItem;
     paymentResult?: CreatePaymentResult;
+    taxablePrice?: number;
+    vertexEnabled?: boolean;
+    quantity?: number;
 }
 declare const usePaymentInfo: () => PaymentInfo;
 export default usePaymentInfo;

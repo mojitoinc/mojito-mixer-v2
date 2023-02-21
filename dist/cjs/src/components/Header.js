@@ -228,6 +228,7 @@ require('../../node_modules/@mui/material/Skeleton/Skeleton.js');
 require('../../node_modules/@mui/material/Skeleton/skeletonClasses.js');
 require('../../node_modules/@mui/material/Slide/Slide.js');
 require('../../node_modules/@mui/material/Slider/Slider.js');
+require('../../node_modules/@mui/material/Slider/sliderClasses.js');
 require('../../node_modules/@mui/material/Snackbar/Snackbar.js');
 require('../../node_modules/@mui/material/Snackbar/snackbarClasses.js');
 require('../../node_modules/@mui/material/SnackbarContent/SnackbarContent.js');

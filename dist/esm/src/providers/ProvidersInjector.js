@@ -226,6 +226,7 @@ import '../../node_modules/@mui/material/Skeleton/Skeleton.js';
 import '../../node_modules/@mui/material/Skeleton/skeletonClasses.js';
 import '../../node_modules/@mui/material/Slide/Slide.js';
 import '../../node_modules/@mui/material/Slider/Slider.js';
+import '../../node_modules/@mui/material/Slider/sliderClasses.js';
 import '../../node_modules/@mui/material/Snackbar/Snackbar.js';
 import '../../node_modules/@mui/material/Snackbar/snackbarClasses.js';
 import '../../node_modules/@mui/material/SnackbarContent/SnackbarContent.js';

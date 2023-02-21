@@ -40,13 +40,22 @@ const useAPIService = () => {
         return data;
     }), [client, debug]);
     const getPaymentNotification = React.useCallback(() => tslib_es6.__awaiter(void 0, void 0, void 0, function* () {
-        debug.warn('getPaymentNotificationQuery');
-        const data = yield client.query({
-            query: creditCard.getPaymentNotificationQuery,
-            variables: {},
+        return new Promise((resolve) => {
+            const interval = setInterval(() => tslib_es6.__awaiter(void 0, void 0, void 0, function* () {
+                var _a, _b, _c;
+                debug.warn('getPaymentNotificationQuery');
+                const data = yield client.query({
+                    query: creditCard.getPaymentNotificationQuery,
+                    variables: {},
+                    fetchPolicy: 'network-only',
+                });
+                debug.success('getPaymentNotificationQuery', { data });
+                if (((_c = (_b = (_a = data.data) === null || _a === void 0 ? void 0 : _a.getPaymentNotification) === null || _b === void 0 ? void 0 : _b.message) === null || _c === void 0 ? void 0 : _c.redirectURL) !== '') {
+                    clearInterval(interval);
+                    resolve(data);
+                }
+            }), 2 * 1000);
         });
-        debug.success('getPaymentNotificationQuery', { data });
-        return data;
     }), [client, debug]);
     return React.useMemo(() => {
         return { getPaymentNotification, getCreditCardPublicKey };

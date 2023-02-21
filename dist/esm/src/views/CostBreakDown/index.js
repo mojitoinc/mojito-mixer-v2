@@ -1,11 +1,11 @@
-import React__default from 'react';
+import React__default, { useMemo } from 'react';
 import usePaymentInfo from '../../hooks/usePaymentInfo.js';
 import '../../providers/DebugProvider.js';
 import '../../providers/ErrorProvider.js';
 import { useBilling } from '../../providers/BillingProvider.js';
-import '../../providers/ContainerStateProvider.js';
+import { useContainer } from '../../providers/ContainerStateProvider.js';
 import '../../providers/UIConfigurationProvider.js';
-import '../../providers/CheckoutProvider.js';
+import { useCheckout } from '../../providers/CheckoutProvider.js';
 import '../../providers/PaymentProvider.js';
 import '../../providers/EventProvider.js';
 import '../../providers/SecurityOptionsProvider.js';
@@ -24,19 +24,23 @@ import '../../../node_modules/@apollo/client/react/hooks/useQuery.js';
 import '../../../node_modules/@apollo/client/react/parser/index.js';
 import '../../../node_modules/@apollo/client/errors/index.js';
 import '../../queries/creditCard.js';
-import '../../../node_modules/country-state-city/lib/country.js';
-import '../../../node_modules/country-state-city/lib/state.js';
-import '../../../node_modules/country-state-city/lib/city.js';
 import 'uuidv4';
 import '../../config/paymentConfiguration.js';
 import '../../queries/invoiceDetails.js';
 import '../../queries/Payment.js';
 import CostBreakDown from './CostBreakDown.js';
+import { ContainerTypes } from '../../interfaces/ContextInterface/RootContainer.js';
 
 const CostBreakdownContainer = () => {
     const { taxes, collectionData } = useBilling();
-    const { taxData, collection } = usePaymentInfo();
-    return (React__default.createElement(CostBreakDown, { taxes: taxData !== null && taxData !== void 0 ? taxData : taxes, collectionData: collection !== null && collection !== void 0 ? collection : collectionData }));
+    const { quantity, vertexEnabled } = useCheckout();
+    const { taxablePrice } = useBilling();
+    const { taxData, collection, vertexEnabled: vertex, taxablePrice: price, quantity: totalQuanity } = usePaymentInfo();
+    const { containerState } = useContainer();
+    const isConfirmation = useMemo(() => {
+        return containerState === ContainerTypes.CONFIRMATION;
+    }, [containerState]);
+    return (React__default.createElement(CostBreakDown, { taxes: isConfirmation ? taxData : taxes, collectionData: isConfirmation ? collection : collectionData, quantity: isConfirmation ? totalQuanity : quantity, taxablePrice: isConfirmation ? price : taxablePrice, vertexEnabled: isConfirmation ? vertex : vertexEnabled }));
 };
 
 export { CostBreakdownContainer as default };

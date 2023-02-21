@@ -24,9 +24,6 @@ import '../../node_modules/@apollo/client/react/hooks/useQuery.js';
 import '../../node_modules/@apollo/client/react/parser/index.js';
 import '../../node_modules/@apollo/client/errors/index.js';
 import '../queries/creditCard.js';
-import '../../node_modules/country-state-city/lib/country.js';
-import '../../node_modules/country-state-city/lib/state.js';
-import '../../node_modules/country-state-city/lib/city.js';
 import 'uuidv4';
 import '../config/paymentConfiguration.js';
 import { useCreatePayment } from '../hooks/useCreatePayment.js';
@@ -38,8 +35,8 @@ const PaymentProvider = ({ children, }) => {
     const { setError } = useError();
     const [paymentInfo, setPaymentInfo] = useState();
     const [paymentMethods, setPaymentMethods] = useState();
-    const { billingInfo, collectionData, taxes } = useBilling();
-    const { orgId, lotId, quantity, invoiceId } = useCheckout();
+    const { billingInfo, collectionData, taxes, taxablePrice } = useBilling();
+    const { orgId, lotId, quantity, invoiceId, vertexEnabled } = useCheckout();
     const { setContainerState } = useContainer();
     const { makeCreditCardPurchase, makeWireTransferPurchase } = useCreatePayment(paymentInfo, orgId);
     const saveToCookies = useCallback((paymentData, reserveLotData, paymentResult) => {
@@ -49,7 +46,10 @@ const PaymentProvider = ({ children, }) => {
         CookieService.collectionData.setValue(JSON.stringify(collectionData));
         CookieService.reserveLotData.setValue(JSON.stringify(reserveLotData));
         CookieService.paymentResult.setValue(JSON.stringify(paymentResult));
-    }, [billingInfo, collectionData, taxes]);
+        CookieService.taxablePrice.setValue(taxablePrice);
+        CookieService.vertexEnabled.setValue(vertexEnabled);
+        CookieService.quantity.setValue(quantity);
+    }, [billingInfo, collectionData, taxes, quantity, vertexEnabled, taxablePrice]);
     const onConfirmCreditCardPurchase = useCallback((deliveryAddress = '') => __awaiter(void 0, void 0, void 0, function* () {
         var _a, _b, _c, _d;
         setContainerState(ContainerTypes.LOADING);

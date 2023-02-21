@@ -28,9 +28,6 @@ require('../../node_modules/@apollo/client/react/hooks/useQuery.js');
 require('../../node_modules/@apollo/client/react/parser/index.js');
 require('../../node_modules/@apollo/client/errors/index.js');
 require('../queries/creditCard.js');
-require('../../node_modules/country-state-city/lib/country.js');
-require('../../node_modules/country-state-city/lib/state.js');
-require('../../node_modules/country-state-city/lib/city.js');
 require('uuidv4');
 require('../config/paymentConfiguration.js');
 var useCreatePayment = require('../hooks/useCreatePayment.js');
@@ -46,8 +43,8 @@ const PaymentProvider = ({ children, }) => {
     const { setError } = ErrorProvider.useError();
     const [paymentInfo, setPaymentInfo] = React.useState();
     const [paymentMethods, setPaymentMethods] = React.useState();
-    const { billingInfo, collectionData, taxes } = BillingProvider.useBilling();
-    const { orgId, lotId, quantity, invoiceId } = CheckoutProvider.useCheckout();
+    const { billingInfo, collectionData, taxes, taxablePrice } = BillingProvider.useBilling();
+    const { orgId, lotId, quantity, invoiceId, vertexEnabled } = CheckoutProvider.useCheckout();
     const { setContainerState } = ContainerStateProvider.useContainer();
     const { makeCreditCardPurchase, makeWireTransferPurchase } = useCreatePayment.useCreatePayment(paymentInfo, orgId);
     const saveToCookies = React.useCallback((paymentData, reserveLotData, paymentResult) => {
@@ -57,7 +54,10 @@ const PaymentProvider = ({ children, }) => {
         CookieService.CookieService.collectionData.setValue(JSON.stringify(collectionData));
         CookieService.CookieService.reserveLotData.setValue(JSON.stringify(reserveLotData));
         CookieService.CookieService.paymentResult.setValue(JSON.stringify(paymentResult));
-    }, [billingInfo, collectionData, taxes]);
+        CookieService.CookieService.taxablePrice.setValue(taxablePrice);
+        CookieService.CookieService.vertexEnabled.setValue(vertexEnabled);
+        CookieService.CookieService.quantity.setValue(quantity);
+    }, [billingInfo, collectionData, taxes, quantity, vertexEnabled, taxablePrice]);
     const onConfirmCreditCardPurchase = React.useCallback((deliveryAddress = '') => tslib_es6.__awaiter(void 0, void 0, void 0, function* () {
         var _a, _b, _c, _d;
         setContainerState(RootContainer.ContainerTypes.LOADING);

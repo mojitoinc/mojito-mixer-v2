@@ -14,5 +14,8 @@ export declare const CookieService: {
     reserveLotData: CookieStorage;
     collectionData: CookieStorage;
     paymentResult: CookieStorage;
+    quantity: CookieStorage;
+    vertexEnabled: CookieStorage;
+    taxablePrice: CookieStorage;
 };
 export {};
