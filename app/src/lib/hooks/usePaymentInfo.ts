@@ -10,9 +10,9 @@ interface PaymentInfo {
   taxData? : Taxes;
   collection? : CollectionItem;
   paymentResult? : CreatePaymentResult;
-  taxablePrice?: Number;
+  taxablePrice?: number;
   vertexEnabled?: boolean;
-  quantity?: Number;
+  quantity?: number;
 }
 const getObject = (value:any) => {
   if (!value || value === 'undefined') return value;
@@ -58,7 +58,7 @@ const usePaymentInfo = (): PaymentInfo => {
       paymentResult,
       taxablePrice,
       vertexEnabled,
-      quantity
+      quantity,
     });
   }, []);
 

@@ -252,7 +252,7 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
             invoiceId: values?.invoiceId,
             vertexEnabled: false,
           }}
-          enableSardine={false}
+          enableSardine={ false }
           uiConfiguration={{
 
             billing: {
