@@ -43,7 +43,7 @@ const usePaymentInfo = (): PaymentInfo => {
     const paymentResult = getObject(paymentResultData) as CreatePaymentResult;
     const taxablePrice = Number(getObject(price));
     const vertexEnabled = Boolean(getObject(vertex));
-    const quantity = getObject(totalQuantity) as CreatePaymentResult;
+    const quantity = Number(getObject(totalQuantity));
     // CookieService.billing.remove();
     // CookieService.paymentInfo.remove();
     // CookieService.taxes.remove();
