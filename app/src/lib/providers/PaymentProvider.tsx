@@ -103,7 +103,6 @@ export const PaymentProvider = ({
           paymentReceipt.reserveLotData,
           paymentReceipt.paymentResult,
         );
-        console.log('paymentReceipt.notificationData?.getPaymentNotification?.message?.redirectURL', paymentReceipt.notificationData);
         window.location.href =
           paymentReceipt.notificationData?.getPaymentNotification?.message?.redirectURL;
       } catch (e: any) {
