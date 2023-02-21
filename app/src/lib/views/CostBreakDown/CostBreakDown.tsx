@@ -15,16 +15,17 @@ import { ContainerTypes } from '../../interfaces/ContextInterface';
 import { MixTheme } from '../../theme';
 
 interface CostBreakDownProps {
-  taxes: Taxes;
-  collectionData: CollectionItem;
+  taxes?: Taxes;
+  collectionData?: CollectionItem;
+  quantity?: Number;
+  vertexEnabled?: boolean;
+  taxablePrice?: Number;
 }
 
-const CostBreakDown = ({ taxes, collectionData }: CostBreakDownProps) => {
+const CostBreakDown = ({ taxes, collectionData,quantity,vertexEnabled,taxablePrice }: CostBreakDownProps) => {
   const theme = useTheme<MixTheme>();
   const uiConfiguration = useUIConfiguration();
-  const { quantity, vertexEnabled } = useCheckout();
   const { containerState } = useContainer();
-  const { taxablePrice } = useBilling();
 
   const renderTextRow = (text: string, value: string) => {
     return (
@@ -104,7 +105,7 @@ const CostBreakDown = ({ taxes, collectionData }: CostBreakDownProps) => {
           </Box>
           <Box display="flex" flexDirection="column" alignItems="flex-end">
             <Typography variant="subtitle2" fontWeight="700" fontSize="14px">
-              { taxes?.taxablePrice ?? '0' } USD
+              {  vertexEnabled ? (taxes?.totalTaxedPrice ?? '0') : taxablePrice } USD
             </Typography>
             { /* <Typography variant="body2" fontSize="14px">
               2.00 ETH

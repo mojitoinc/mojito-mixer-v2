@@ -23,14 +23,22 @@ export const useAPIService = (): APIClientOptions => {
     return data;
   }, [client, debug]);
 
-  const getPaymentNotification = useCallback(async () => {
-    debug.warn('getPaymentNotificationQuery');
-    const data = await client.query({
-      query: getPaymentNotificationQuery,
-      variables: { },
-    });
-    debug.success('getPaymentNotificationQuery', { data });
-    return data;
+  const getPaymentNotification = useCallback(async ():Promise<any> => {
+    return new Promise((resolve,reject)=>{
+      const interval = setInterval(async() => {
+        debug.warn('getPaymentNotificationQuery');
+        const data = await client.query({
+          query: getPaymentNotificationQuery,
+          variables: { },
+          fetchPolicy:'network-only',
+        });
+        debug.success('getPaymentNotificationQuery', { data });
+        if(data.data?.getPaymentNotification?.message?.redirectURL !== "") {
+          clearInterval(interval);
+          resolve(data)
+        } 
+      }, 2*1000);
+    })
   }, [client, debug]);
 
   return useMemo<APIClientOptions>(() => {

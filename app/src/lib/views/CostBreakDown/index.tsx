@@ -1,16 +1,34 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { usePaymentInfo } from '../../hooks';
-import { useBilling } from '../../providers';
 import CostBreakDownLayout from './CostBreakDown';
+import { ContainerTypes } from '../../interfaces/ContextInterface';
+import {
+  useContainer,
+  useUIConfiguration,
+  useCheckout,
+  useBilling,
+} from '../../providers';
 
 const CostBreakdownContainer = () => {
   const { taxes, collectionData } = useBilling();
-  const { taxData, collection } = usePaymentInfo();
+  const { quantity, vertexEnabled } = useCheckout();
+  const { taxablePrice } = useBilling();
+
+  const { taxData, collection,vertexEnabled:vertex,taxablePrice:price,quantity:totalQuanity } = usePaymentInfo();
+  const { containerState } = useContainer();
+
+  const isConfirmation = useMemo<boolean>(()=>{
+    return containerState === ContainerTypes.CONFIRMATION
+  },[containerState])
 
   return (
     <CostBreakDownLayout
-      taxes={ taxData ?? taxes }
-      collectionData={ collection ?? collectionData } />
+      taxes={ isConfirmation? taxData : taxes }
+      collectionData={  isConfirmation? collection : collectionData } 
+      quantity={  isConfirmation? totalQuanity : quantity } 
+      taxablePrice={  isConfirmation? price : taxablePrice }
+      vertexEnabled={  isConfirmation? vertex : vertexEnabled }
+      />
   );
 };
 
