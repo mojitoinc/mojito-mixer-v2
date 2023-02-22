@@ -46,11 +46,11 @@ const BillingView = ({
   const { user } = useAuth0();
   const debug = useDebug('Auth0');
 
-  useEffect(()=>{
-    if(user) {
-      debug.info("Auth0",user)
+  useEffect(() => {
+    if (user) {
+      debug.info('Auth0', user);
     }
-  },[user,debug])
+  }, [user, debug]);
 
   const { values, errors, handleChange: onChange, isValid, handleSubmit } = useFormik({
     initialValues: {
