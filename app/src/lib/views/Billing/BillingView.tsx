@@ -3,7 +3,7 @@ import React, { useEffect, useMemo } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useAuth0 } from '@auth0/auth0-react';
-import { useUIConfiguration, BillingFormData } from '../../providers';
+import { useUIConfiguration, BillingFormData, useDebug } from '../../providers';
 import { Button, TextInput } from '../../components';
 import { MixTheme } from '../../theme';
 import BillingForm from './BillingForm';
@@ -44,6 +44,13 @@ const BillingView = ({
   onChangeValues,
 }: BillingProps) => {
   const { user } = useAuth0();
+  const debug = useDebug('Auth0');
+
+  useEffect(()=>{
+    if(user) {
+      debug.info("Auth0",user)
+    }
+  },[user,debug])
 
   const { values, errors, handleChange: onChange, isValid, handleSubmit } = useFormik({
     initialValues: {
