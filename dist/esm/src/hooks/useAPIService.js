@@ -22,6 +22,7 @@ import '../providers/CheckoutProvider.js';
 import '../providers/PaymentProvider.js';
 import '../providers/EventProvider.js';
 import '../providers/SecurityOptionsProvider.js';
+import '../providers/UserInfoProvider.js';
 
 const useAPIService = () => {
     const debug = useDebug('useAPIClient');

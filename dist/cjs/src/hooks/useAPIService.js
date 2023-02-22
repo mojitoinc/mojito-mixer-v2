@@ -26,6 +26,7 @@ require('../providers/CheckoutProvider.js');
 require('../providers/PaymentProvider.js');
 require('../providers/EventProvider.js');
 require('../providers/SecurityOptionsProvider.js');
+require('../providers/UserInfoProvider.js');
 
 const useAPIService = () => {
     const debug = DebugProvider.useDebug('useAPIClient');

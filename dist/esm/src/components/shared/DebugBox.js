@@ -224,7 +224,6 @@ import '../../../node_modules/@mui/material/Skeleton/Skeleton.js';
 import '../../../node_modules/@mui/material/Skeleton/skeletonClasses.js';
 import '../../../node_modules/@mui/material/Slide/Slide.js';
 import '../../../node_modules/@mui/material/Slider/Slider.js';
-import '../../../node_modules/@mui/material/Slider/sliderClasses.js';
 import '../../../node_modules/@mui/material/Snackbar/Snackbar.js';
 import '../../../node_modules/@mui/material/Snackbar/snackbarClasses.js';
 import '../../../node_modules/@mui/material/SnackbarContent/SnackbarContent.js';
@@ -304,6 +303,7 @@ import '../../providers/CheckoutProvider.js';
 import '../../providers/PaymentProvider.js';
 import '../../providers/EventProvider.js';
 import '../../providers/SecurityOptionsProvider.js';
+import '../../providers/UserInfoProvider.js';
 
 const SM_BORDER_RADIUS = 6;
 const DEBUG_BOX_OUTER_SX = {

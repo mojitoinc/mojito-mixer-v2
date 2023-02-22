@@ -13,6 +13,7 @@ require('./UIConfigurationProvider.js');
 var CheckoutProvider = require('./CheckoutProvider.js');
 require('./EventProvider.js');
 require('./SecurityOptionsProvider.js');
+require('./UserInfoProvider.js');
 require('openpgp');
 require('atob');
 require('btoa');

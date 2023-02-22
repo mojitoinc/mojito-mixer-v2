@@ -9,6 +9,7 @@ import './UIConfigurationProvider.js';
 import { useCheckout } from './CheckoutProvider.js';
 import './EventProvider.js';
 import './SecurityOptionsProvider.js';
+import './UserInfoProvider.js';
 import 'openpgp';
 import 'atob';
 import 'btoa';

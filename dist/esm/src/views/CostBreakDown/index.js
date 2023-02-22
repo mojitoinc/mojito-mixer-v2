@@ -9,6 +9,7 @@ import { useCheckout } from '../../providers/CheckoutProvider.js';
 import '../../providers/PaymentProvider.js';
 import '../../providers/EventProvider.js';
 import '../../providers/SecurityOptionsProvider.js';
+import '../../providers/UserInfoProvider.js';
 import 'openpgp';
 import 'atob';
 import 'btoa';

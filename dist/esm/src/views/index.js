@@ -224,7 +224,6 @@ import '../../node_modules/@mui/material/Skeleton/Skeleton.js';
 import '../../node_modules/@mui/material/Skeleton/skeletonClasses.js';
 import '../../node_modules/@mui/material/Slide/Slide.js';
 import '../../node_modules/@mui/material/Slider/Slider.js';
-import '../../node_modules/@mui/material/Slider/sliderClasses.js';
 import '../../node_modules/@mui/material/Snackbar/Snackbar.js';
 import '../../node_modules/@mui/material/Snackbar/snackbarClasses.js';
 import '../../node_modules/@mui/material/SnackbarContent/SnackbarContent.js';
@@ -312,6 +311,7 @@ import '../providers/CheckoutProvider.js';
 import '../providers/PaymentProvider.js';
 import '../providers/EventProvider.js';
 import '../providers/SecurityOptionsProvider.js';
+import '../providers/UserInfoProvider.js';
 import { ContainerTypes } from '../interfaces/ContextInterface/RootContainer.js';
 import LoadingContainer from './Loading/index.js';
 import ErrorContainer from './Error/index.js';
@@ -356,9 +356,8 @@ const MojitoCheckoutLayout = ({ sardineEnvironment, enableSardine, }) => {
             display: 'flex',
             width: '100%',
             flexDirection: 'row',
-            justifyContent: 'space-between',
         } },
-        React__default.createElement(Box, { width: "100%", padding: "40px" },
+        React__default.createElement(Box, { padding: "40px", width: "50%" },
             React__default.createElement(Header, { isPaymentConfirmation: containerState === ContainerTypes.CONFIRMATION }),
             containerState !== ContainerTypes.CONFIRMATION && (React__default.createElement(Stepper, { currentState: containerState })),
             containerState === ContainerTypes.CHECKOUT && React__default.createElement(BillingContainer, null),

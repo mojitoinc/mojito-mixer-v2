@@ -22,6 +22,7 @@ import { useCheckout } from '../../providers/CheckoutProvider.js';
 import { usePayment } from '../../providers/PaymentProvider.js';
 import '../../providers/EventProvider.js';
 import { useSecurityOptions } from '../../providers/SecurityOptionsProvider.js';
+import '../../providers/UserInfoProvider.js';
 import { RiskRating, PaymentTypes } from '../../constants/index.js';
 import { useWeb3ModalConnect } from '../../providers/Web3ModalConnect.js';
 import Delivery$1 from './Delivery.js';

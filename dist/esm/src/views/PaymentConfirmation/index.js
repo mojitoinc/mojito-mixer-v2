@@ -20,6 +20,7 @@ import { useCheckout } from '../../providers/CheckoutProvider.js';
 import { usePayment } from '../../providers/PaymentProvider.js';
 import '../../providers/EventProvider.js';
 import '../../providers/SecurityOptionsProvider.js';
+import '../../providers/UserInfoProvider.js';
 import ConfirmationView from './ConfirmationView.js';
 
 const PaymentConfirmationContainer = () => {

@@ -26,6 +26,7 @@ var CheckoutProvider = require('../../providers/CheckoutProvider.js');
 var PaymentProvider = require('../../providers/PaymentProvider.js');
 require('../../providers/EventProvider.js');
 var SecurityOptionsProvider = require('../../providers/SecurityOptionsProvider.js');
+require('../../providers/UserInfoProvider.js');
 var index = require('../../constants/index.js');
 var Web3ModalConnect = require('../../providers/Web3ModalConnect.js');
 var Delivery$1 = require('./Delivery.js');

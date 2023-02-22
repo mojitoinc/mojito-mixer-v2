@@ -23,6 +23,7 @@ import { useCheckout } from '../../providers/CheckoutProvider.js';
 import { usePayment } from '../../providers/PaymentProvider.js';
 import '../../providers/EventProvider.js';
 import '../../providers/SecurityOptionsProvider.js';
+import '../../providers/UserInfoProvider.js';
 import BillingView from './BillingView.js';
 import { ContainerTypes } from '../../interfaces/ContextInterface/RootContainer.js';
 import { PaymentTypes } from '../../constants/index.js';

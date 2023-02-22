@@ -224,7 +224,6 @@ import '../../../node_modules/@mui/material/Skeleton/Skeleton.js';
 import '../../../node_modules/@mui/material/Skeleton/skeletonClasses.js';
 import '../../../node_modules/@mui/material/Slide/Slide.js';
 import '../../../node_modules/@mui/material/Slider/Slider.js';
-import '../../../node_modules/@mui/material/Slider/sliderClasses.js';
 import '../../../node_modules/@mui/material/Snackbar/Snackbar.js';
 import '../../../node_modules/@mui/material/Snackbar/snackbarClasses.js';
 import '../../../node_modules/@mui/material/SnackbarContent/SnackbarContent.js';
@@ -305,7 +304,6 @@ import '../../../node_modules/yup/es/date.js';
 import { create } from '../../../node_modules/yup/es/object.js';
 import '../../../node_modules/yup/es/Reference.js';
 import 'property-expr';
-import { useAuth0 } from '../../../node_modules/@auth0/auth0-react/dist/auth0-react.esm.js';
 import '../../providers/DebugProvider.js';
 import '../../providers/ErrorProvider.js';
 import '../../providers/BillingProvider.js';
@@ -315,6 +313,7 @@ import '../../providers/CheckoutProvider.js';
 import '../../providers/PaymentProvider.js';
 import '../../providers/EventProvider.js';
 import '../../providers/SecurityOptionsProvider.js';
+import { useUserInfo } from '../../providers/UserInfoProvider.js';
 import Button from '../../components/Button.js';
 import '@mui/icons-material/ArrowBack';
 import '../../components/Stepper.js';
@@ -340,21 +339,20 @@ const schema = create().shape({
     lastName: create$1().min(2, 'Invalid last name').required('Please enter last name'),
 });
 const BillingView = ({ isEditing, onClickEdit, onClickContinue, pincodeError, billingInfo, paymentItem, onChangeValues, }) => {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10;
-    const { user } = useAuth0();
-    console.log('AUTH0', user);
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5, _6, _7;
+    const { email } = useUserInfo();
     const { values, errors, handleChange: onChange, isValid, handleSubmit } = useFormik({
         initialValues: {
-            email: (_b = (_a = user === null || user === void 0 ? void 0 : user.email) !== null && _a !== void 0 ? _a : billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.email) !== null && _b !== void 0 ? _b : (_c = paymentItem === null || paymentItem === void 0 ? void 0 : paymentItem.metadata) === null || _c === void 0 ? void 0 : _c.email,
-            country: (_d = billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.country) !== null && _d !== void 0 ? _d : (_e = paymentItem === null || paymentItem === void 0 ? void 0 : paymentItem.billingDetails) === null || _e === void 0 ? void 0 : _e.country,
-            state: (_f = billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.state) !== null && _f !== void 0 ? _f : (_g = paymentItem === null || paymentItem === void 0 ? void 0 : paymentItem.billingDetails) === null || _g === void 0 ? void 0 : _g.district,
-            city: (_h = billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.city) !== null && _h !== void 0 ? _h : (_j = paymentItem === null || paymentItem === void 0 ? void 0 : paymentItem.billingDetails) === null || _j === void 0 ? void 0 : _j.city,
-            postalCode: (_k = billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.postalCode) !== null && _k !== void 0 ? _k : (_l = paymentItem === null || paymentItem === void 0 ? void 0 : paymentItem.billingDetails) === null || _l === void 0 ? void 0 : _l.postalCode,
-            phoneNumber: (_m = billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.phoneNumber) !== null && _m !== void 0 ? _m : (_o = paymentItem === null || paymentItem === void 0 ? void 0 : paymentItem.metadata) === null || _o === void 0 ? void 0 : _o.phoneNumber,
-            street1: (_p = billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.street1) !== null && _p !== void 0 ? _p : (_q = paymentItem === null || paymentItem === void 0 ? void 0 : paymentItem.billingDetails) === null || _q === void 0 ? void 0 : _q.address1,
-            name: (_r = billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.name) !== null && _r !== void 0 ? _r : (_s = paymentItem === null || paymentItem === void 0 ? void 0 : paymentItem.billingDetails) === null || _s === void 0 ? void 0 : _s.name,
-            firstName: (_t = billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.firstName) !== null && _t !== void 0 ? _t : (_w = (_v = (_u = paymentItem === null || paymentItem === void 0 ? void 0 : paymentItem.billingDetails) === null || _u === void 0 ? void 0 : _u.name) === null || _v === void 0 ? void 0 : _v.split(' ')) === null || _w === void 0 ? void 0 : _w[0],
-            lastName: (_x = billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.lastName) !== null && _x !== void 0 ? _x : (_0 = (_z = (_y = paymentItem === null || paymentItem === void 0 ? void 0 : paymentItem.billingDetails) === null || _y === void 0 ? void 0 : _y.name) === null || _z === void 0 ? void 0 : _z.split(' ')) === null || _0 === void 0 ? void 0 : _0[1],
+            email,
+            country: (_a = billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.country) !== null && _a !== void 0 ? _a : (_b = paymentItem === null || paymentItem === void 0 ? void 0 : paymentItem.billingDetails) === null || _b === void 0 ? void 0 : _b.country,
+            state: (_c = billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.state) !== null && _c !== void 0 ? _c : (_d = paymentItem === null || paymentItem === void 0 ? void 0 : paymentItem.billingDetails) === null || _d === void 0 ? void 0 : _d.district,
+            city: (_e = billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.city) !== null && _e !== void 0 ? _e : (_f = paymentItem === null || paymentItem === void 0 ? void 0 : paymentItem.billingDetails) === null || _f === void 0 ? void 0 : _f.city,
+            postalCode: (_g = billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.postalCode) !== null && _g !== void 0 ? _g : (_h = paymentItem === null || paymentItem === void 0 ? void 0 : paymentItem.billingDetails) === null || _h === void 0 ? void 0 : _h.postalCode,
+            phoneNumber: (_j = billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.phoneNumber) !== null && _j !== void 0 ? _j : (_k = paymentItem === null || paymentItem === void 0 ? void 0 : paymentItem.metadata) === null || _k === void 0 ? void 0 : _k.phoneNumber,
+            street1: (_l = billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.street1) !== null && _l !== void 0 ? _l : (_m = paymentItem === null || paymentItem === void 0 ? void 0 : paymentItem.billingDetails) === null || _m === void 0 ? void 0 : _m.address1,
+            name: (_o = billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.name) !== null && _o !== void 0 ? _o : (_p = paymentItem === null || paymentItem === void 0 ? void 0 : paymentItem.billingDetails) === null || _p === void 0 ? void 0 : _p.name,
+            firstName: (_q = billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.firstName) !== null && _q !== void 0 ? _q : (_t = (_s = (_r = paymentItem === null || paymentItem === void 0 ? void 0 : paymentItem.billingDetails) === null || _r === void 0 ? void 0 : _r.name) === null || _s === void 0 ? void 0 : _s.split(' ')) === null || _t === void 0 ? void 0 : _t[0],
+            lastName: (_u = billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.lastName) !== null && _u !== void 0 ? _u : (_x = (_w = (_v = paymentItem === null || paymentItem === void 0 ? void 0 : paymentItem.billingDetails) === null || _v === void 0 ? void 0 : _v.name) === null || _w === void 0 ? void 0 : _w.split(' ')) === null || _x === void 0 ? void 0 : _x[1],
         },
         onSubmit: onClickContinue,
         validationSchema: schema,
@@ -374,15 +372,15 @@ const BillingView = ({ isEditing, onClickEdit, onClickContinue, pincodeError, bi
     const theme = useTheme();
     const uiConfiguration = useUIConfiguration();
     return (React__default.createElement(Box, { width: "100%" },
-        !((_1 = uiConfiguration === null || uiConfiguration === void 0 ? void 0 : uiConfiguration.billing) === null || _1 === void 0 ? void 0 : _1.isEnableExpressCheckout) && (React__default.createElement(ExpressCheckoutView, { config: uiConfiguration === null || uiConfiguration === void 0 ? void 0 : uiConfiguration.billing })),
+        !((_y = uiConfiguration === null || uiConfiguration === void 0 ? void 0 : uiConfiguration.billing) === null || _y === void 0 ? void 0 : _y.isEnableExpressCheckout) && (React__default.createElement(ExpressCheckoutView, { config: uiConfiguration === null || uiConfiguration === void 0 ? void 0 : uiConfiguration.billing })),
         React__default.createElement(Card, { sx: {
-                border: `1px solid ${(_2 = theme.global) === null || _2 === void 0 ? void 0 : _2.cardBorder}`,
-                backgroundColor: (_3 = theme.global) === null || _3 === void 0 ? void 0 : _3.cardBackground,
-                boxShadow: `0px 4px 16px ${(_4 = theme.global) === null || _4 === void 0 ? void 0 : _4.cardShadow}`,
+                border: `1px solid ${(_z = theme.global) === null || _z === void 0 ? void 0 : _z.cardBorder}`,
+                backgroundColor: (_0 = theme.global) === null || _0 === void 0 ? void 0 : _0.cardBackground,
+                boxShadow: `0px 4px 16px ${(_1 = theme.global) === null || _1 === void 0 ? void 0 : _1.cardShadow}`,
                 marginBottom: '24px',
                 padding: '24px',
             } },
-            React__default.createElement(Typography, { color: (_6 = (_5 = theme.palette) === null || _5 === void 0 ? void 0 : _5.text) === null || _6 === void 0 ? void 0 : _6.primary, fontWeight: "500", fontSize: "20px" }, "Contact info"),
+            React__default.createElement(Typography, { color: (_3 = (_2 = theme.palette) === null || _2 === void 0 ? void 0 : _2.text) === null || _3 === void 0 ? void 0 : _3.primary, fontWeight: "500", fontSize: "20px" }, "Contact info"),
             React__default.createElement(TextInput, { value: values === null || values === void 0 ? void 0 : values.email, onChange: onChange('email'), error: errors === null || errors === void 0 ? void 0 : errors.email, placeholder: "Email", inputProps: {
                     readOnly: true,
                 }, disabled: true, sx: {
@@ -390,7 +388,7 @@ const BillingView = ({ isEditing, onClickEdit, onClickContinue, pincodeError, bi
                 } })),
         isEditing ? (React__default.createElement(BillingForm, { values: values, errors: errors, onChange: onChange, isValid: isValidBillingForm })) : (React__default.createElement(BillingDetails, { values: values, onClickEdit: onClickEdit })),
         React__default.createElement(Box, { display: "flex", justifyContent: "flex-end" },
-            React__default.createElement(Button, { title: "Continue to Payment", backgroundColor: (_8 = (_7 = theme.global) === null || _7 === void 0 ? void 0 : _7.checkout) === null || _8 === void 0 ? void 0 : _8.continueButtonBackground, textColor: (_10 = (_9 = theme.global) === null || _9 === void 0 ? void 0 : _9.checkout) === null || _10 === void 0 ? void 0 : _10.continueButtonTextColor, onClick: handleSubmit, sx: {
+            React__default.createElement(Button, { title: "Continue to Payment", backgroundColor: (_5 = (_4 = theme.global) === null || _4 === void 0 ? void 0 : _4.checkout) === null || _5 === void 0 ? void 0 : _5.continueButtonBackground, textColor: (_7 = (_6 = theme.global) === null || _6 === void 0 ? void 0 : _6.checkout) === null || _7 === void 0 ? void 0 : _7.continueButtonTextColor, onClick: handleSubmit, sx: {
                     margin: '24px 0px',
                     '&: hover': {
                         backgroundColor: 'rgba(102, 99, 253, 0.8)',

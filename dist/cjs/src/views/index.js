@@ -228,7 +228,6 @@ require('../../node_modules/@mui/material/Skeleton/Skeleton.js');
 require('../../node_modules/@mui/material/Skeleton/skeletonClasses.js');
 require('../../node_modules/@mui/material/Slide/Slide.js');
 require('../../node_modules/@mui/material/Slider/Slider.js');
-require('../../node_modules/@mui/material/Slider/sliderClasses.js');
 require('../../node_modules/@mui/material/Snackbar/Snackbar.js');
 require('../../node_modules/@mui/material/Snackbar/snackbarClasses.js');
 require('../../node_modules/@mui/material/SnackbarContent/SnackbarContent.js');
@@ -316,6 +315,7 @@ require('../providers/CheckoutProvider.js');
 require('../providers/PaymentProvider.js');
 require('../providers/EventProvider.js');
 require('../providers/SecurityOptionsProvider.js');
+require('../providers/UserInfoProvider.js');
 var RootContainer = require('../interfaces/ContextInterface/RootContainer.js');
 var index$1 = require('./Loading/index.js');
 var index = require('./Error/index.js');
@@ -364,9 +364,8 @@ const MojitoCheckoutLayout = ({ sardineEnvironment, enableSardine, }) => {
             display: 'flex',
             width: '100%',
             flexDirection: 'row',
-            justifyContent: 'space-between',
         } },
-        React__default["default"].createElement(Box["default"], { width: "100%", padding: "40px" },
+        React__default["default"].createElement(Box["default"], { padding: "40px", width: "50%" },
             React__default["default"].createElement(Header["default"], { isPaymentConfirmation: containerState === RootContainer.ContainerTypes.CONFIRMATION }),
             containerState !== RootContainer.ContainerTypes.CONFIRMATION && (React__default["default"].createElement(Stepper["default"], { currentState: containerState })),
             containerState === RootContainer.ContainerTypes.CHECKOUT && React__default["default"].createElement(index$2["default"], null),

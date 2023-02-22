@@ -24,6 +24,7 @@ import { useCheckout } from '../../providers/CheckoutProvider.js';
 import { usePayment } from '../../providers/PaymentProvider.js';
 import '../../providers/EventProvider.js';
 import { useSecurityOptions } from '../../providers/SecurityOptionsProvider.js';
+import '../../providers/UserInfoProvider.js';
 import { formCardScreeningVariable } from '../Delivery/Delivery.service.js';
 import { cardScreeningQuery } from '../../queries/creditCard.js';
 import { meQuery } from '../../queries/me.js';

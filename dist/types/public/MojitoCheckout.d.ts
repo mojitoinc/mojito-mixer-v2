@@ -3,7 +3,7 @@ import { MojitoThemeConfiguration } from '../interfaces';
 import { EventConfig } from '../providers';
 import { SardineEnvironment } from '../config';
 import { ProvidersInjectorProps } from '../providers/ProvidersInjector';
-import { CheckoutOptions, MojitoUIConfiguration } from '../interfaces/ContextInterface';
+import { CheckoutOptions, MojitoUIConfiguration, UserInfo } from '../interfaces/ContextInterface';
 declare global {
     interface Window {
         _Sardine: any;
@@ -19,6 +19,7 @@ interface MojitoCheckoutProps {
     sardineEnvironment?: SardineEnvironment;
     enableSardine?: boolean;
     events?: EventConfig;
+    userInfo: UserInfo;
 }
 export type PUICheckoutProps = MojitoCheckoutProps & ProvidersInjectorProps;
 declare const PUIMojitoCheckout: React.FC<PUICheckoutProps>;

@@ -224,7 +224,6 @@ import '../../../node_modules/@mui/material/Skeleton/Skeleton.js';
 import '../../../node_modules/@mui/material/Skeleton/skeletonClasses.js';
 import '../../../node_modules/@mui/material/Slide/Slide.js';
 import '../../../node_modules/@mui/material/Slider/Slider.js';
-import '../../../node_modules/@mui/material/Slider/sliderClasses.js';
 import '../../../node_modules/@mui/material/Snackbar/Snackbar.js';
 import '../../../node_modules/@mui/material/Snackbar/snackbarClasses.js';
 import '../../../node_modules/@mui/material/SnackbarContent/SnackbarContent.js';
@@ -306,6 +305,7 @@ import '../../providers/CheckoutProvider.js';
 import '../../providers/PaymentProvider.js';
 import '../../providers/EventProvider.js';
 import '../../providers/SecurityOptionsProvider.js';
+import '../../providers/UserInfoProvider.js';
 import '../../components/Stepper.js';
 import TextInput from '../../components/TextInput.js';
 import { Icons } from '../../assets/index.js';
@@ -323,9 +323,11 @@ const CostBreakDown = ({ taxes, collectionData, quantity, vertexEnabled, taxable
             React__default.createElement(Typography, { variant: "body2", fontSize: "14px" }, text),
             React__default.createElement(Typography, { variant: "subtitle2", fontWeight: "700" }, value)));
     };
-    return (React__default.createElement(Box, { width: "100%", sx: {
+    return (React__default.createElement(Box, { sx: {
             backgroundImage: `url(${Icons.background})`,
             alignSelf: 'stretch',
+            backgroundSize: '100%',
+            width: '100%',
             padding: '40px',
         } },
         React__default.createElement(Box, { sx: {

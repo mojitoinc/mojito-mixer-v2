@@ -228,7 +228,6 @@ require('../../../node_modules/@mui/material/Skeleton/Skeleton.js');
 require('../../../node_modules/@mui/material/Skeleton/skeletonClasses.js');
 require('../../../node_modules/@mui/material/Slide/Slide.js');
 require('../../../node_modules/@mui/material/Slider/Slider.js');
-require('../../../node_modules/@mui/material/Slider/sliderClasses.js');
 require('../../../node_modules/@mui/material/Snackbar/Snackbar.js');
 require('../../../node_modules/@mui/material/Snackbar/snackbarClasses.js');
 require('../../../node_modules/@mui/material/SnackbarContent/SnackbarContent.js');
@@ -310,6 +309,7 @@ require('../../providers/CheckoutProvider.js');
 require('../../providers/PaymentProvider.js');
 require('../../providers/EventProvider.js');
 require('../../providers/SecurityOptionsProvider.js');
+require('../../providers/UserInfoProvider.js');
 require('../../components/Stepper.js');
 var TextInput = require('../../components/TextInput.js');
 var index = require('../../assets/index.js');
@@ -331,9 +331,11 @@ const CostBreakDown = ({ taxes, collectionData, quantity, vertexEnabled, taxable
             React__default["default"].createElement(Typography["default"], { variant: "body2", fontSize: "14px" }, text),
             React__default["default"].createElement(Typography["default"], { variant: "subtitle2", fontWeight: "700" }, value)));
     };
-    return (React__default["default"].createElement(Box["default"], { width: "100%", sx: {
+    return (React__default["default"].createElement(Box["default"], { sx: {
             backgroundImage: `url(${index.Icons.background})`,
             alignSelf: 'stretch',
+            backgroundSize: '100%',
+            width: '100%',
             padding: '40px',
         } },
         React__default["default"].createElement(Box["default"], { sx: {

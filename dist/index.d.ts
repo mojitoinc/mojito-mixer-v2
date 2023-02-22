@@ -301,6 +301,10 @@ interface UIConfiguration {
     };
 }
 
+interface UserInfo {
+    email: string;
+}
+
 interface PaymentData {
     creditCardData?: CreditCardFormType;
     wireData?: {
@@ -364,6 +368,7 @@ interface MojitoCheckoutProps {
     sardineEnvironment?: SardineEnvironment;
     enableSardine?: boolean;
     events?: EventConfig;
+    userInfo: UserInfo;
 }
 type PUICheckoutProps = MojitoCheckoutProps & ProvidersInjectorProps;
 declare const PUIMojitoCheckout: React.FC<PUICheckoutProps>;

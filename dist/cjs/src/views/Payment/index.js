@@ -28,6 +28,7 @@ var CheckoutProvider = require('../../providers/CheckoutProvider.js');
 var PaymentProvider = require('../../providers/PaymentProvider.js');
 require('../../providers/EventProvider.js');
 var SecurityOptionsProvider = require('../../providers/SecurityOptionsProvider.js');
+require('../../providers/UserInfoProvider.js');
 var Delivery_service = require('../Delivery/Delivery.service.js');
 var creditCard = require('../../queries/creditCard.js');
 var me = require('../../queries/me.js');

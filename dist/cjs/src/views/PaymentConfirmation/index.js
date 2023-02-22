@@ -24,6 +24,7 @@ var CheckoutProvider = require('../../providers/CheckoutProvider.js');
 var PaymentProvider = require('../../providers/PaymentProvider.js');
 require('../../providers/EventProvider.js');
 require('../../providers/SecurityOptionsProvider.js');
+require('../../providers/UserInfoProvider.js');
 var ConfirmationView = require('./ConfirmationView.js');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
