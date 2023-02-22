@@ -46,8 +46,7 @@
     "dist:uninstall": "rm -rf node_modules",
     "codegen": "graphql-codegen --config codegen.yml",
     "storybook": "yarn --cwd app storybook",
-    "build-storybook": "yarn --cwd app build-storybook",
-    "postinstall": "patch-package"
+    "build-storybook": "yarn --cwd app build-storybook"
   },
   "engines": {
     "node": ">=16.0.0"
