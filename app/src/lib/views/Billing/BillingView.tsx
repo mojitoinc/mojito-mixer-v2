@@ -2,8 +2,7 @@ import { Box, Card, Typography, useTheme } from '@mui/material';
 import React, { useEffect, useMemo } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useAuth0 } from '@auth0/auth0-react';
-import { useUIConfiguration, BillingFormData } from '../../providers';
+import { useUIConfiguration, BillingFormData, useUserInfo } from '../../providers';
 import { Button, TextInput } from '../../components';
 import { MixTheme } from '../../theme';
 import BillingForm from './BillingForm';
@@ -43,13 +42,11 @@ const BillingView = ({
   paymentItem,
   onChangeValues,
 }: BillingProps) => {
-  const { user } = useAuth0();
-
-  console.log('AUTH0', user);
+  const { email } = useUserInfo();
 
   const { values, errors, handleChange: onChange, isValid, handleSubmit } = useFormik({
     initialValues: {
-      email: user?.email ?? billingInfo?.email ?? paymentItem?.metadata?.email,
+      email,
       country: billingInfo?.country ?? paymentItem?.billingDetails?.country,
       state: billingInfo?.state ?? paymentItem?.billingDetails?.district,
       city: billingInfo?.city ?? paymentItem?.billingDetails?.city,
