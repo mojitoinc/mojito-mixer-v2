@@ -44,10 +44,11 @@ const CostBreakDown = ({ taxes, collectionData, quantity, vertexEnabled, taxable
 
   return (
     <Box
-      width="100%"
       sx={{
         backgroundImage: `url(${ Icons.background })`,
         alignSelf: 'stretch',
+        backgroundSize: '100%',
+        width: '100%',
         padding: '40px',
       }}>
 

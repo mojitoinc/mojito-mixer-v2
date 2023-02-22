@@ -68,6 +68,7 @@
     "@swyg/corre": "^1.0.4",
     "@types/react-modal": "^3.13.1",
     "@walletconnect/web3-provider": "^1.8.0",
+    "@mojitonft/mojito-mixers": "git+https://github.com/mojitoinc/mojito-mixer-v2.git#c541e208005e8eec98904ef5ef2549c1a787d30b",
     "atob": "^2.1.2",
     "btoa": "^1.2.1",
     "country-codes-list": "^1.6.10",

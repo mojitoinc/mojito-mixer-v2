@@ -20,6 +20,7 @@ import {
 import { FormikErrors } from 'formik';
 import { useRouter } from 'next/router';
 import { MojitoCheckout } from 'lib';
+import { useAuth0 } from '@auth0/auth0-react';
 import { RuntimeConfiguration } from '../constant/RuntimeConfiguration';
 
 export interface CheckboxOptions {
@@ -122,6 +123,8 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
   const onEvent = useCallback((e:string) => {
     console.log('EVENT', e);
   }, []);
+
+  const { user } = useAuth0();
 
   return (
     <>
@@ -241,6 +244,9 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
       </Box>
       { isAuthenticated && (
         <MojitoCheckout
+          userInfo={{
+            email: user?.email ?? '',
+          }}
           debug
           uri={ RuntimeConfiguration.API_HOST_URL ?? '' }
           getAuthenticationToken={ getAuthenticationToken }
