@@ -15,6 +15,7 @@ import {
   EventContext,
   EventConfig,
   SecurityContext,
+  UserInfoContext,
 } from '../providers';
 import { ConnectProvider } from '../providers/ConnectContext';
 import { SardineEnvironment } from '../config';
@@ -29,6 +30,7 @@ import {
 import {
   CheckoutOptions,
   MojitoUIConfiguration,
+  UserInfo,
 } from '../interfaces/ContextInterface';
 
 declare global {
@@ -46,7 +48,8 @@ interface MojitoCheckoutProps {
   debug?: boolean;
   sardineEnvironment?: SardineEnvironment;
   enableSardine?: boolean;
-  events?: EventConfig
+  events?: EventConfig;
+  userInfo: UserInfo;
 }
 const MojitoCheckout: React.FC<MojitoCheckoutProps> = ({
   uiConfiguration = DefaultUIConfiguration,
@@ -58,6 +61,7 @@ const MojitoCheckout: React.FC<MojitoCheckoutProps> = ({
   success,
   sardineEnvironment = 'production',
   events = {},
+  userInfo
 }: MojitoCheckoutProps) => {
   const themes = useMemo(() => makeTheme(theme), [theme]);
 
@@ -97,6 +101,7 @@ const MojitoCheckout: React.FC<MojitoCheckoutProps> = ({
       <DebugProvider debug={ debug }>
         <ThemeProvider theme={ themes }>
           <CheckoutContext.Provider value={ checkoutOptions }>
+            <UserInfoContext.Provider value={ userInfo } >
             <SecurityContext.Provider value={ securityParams }>
               <UIConfigurationContext.Provider value={ uiConfigurations }>
                 <EventContext.Provider value={ events }>
@@ -119,6 +124,7 @@ const MojitoCheckout: React.FC<MojitoCheckoutProps> = ({
                 </EventContext.Provider>
               </UIConfigurationContext.Provider>
             </SecurityContext.Provider>
+            </UserInfoContext.Provider>
           </CheckoutContext.Provider>
         </ThemeProvider>
       </DebugProvider>
