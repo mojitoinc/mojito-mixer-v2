@@ -10,6 +10,7 @@ import ExpressCheckoutView from './ExpressCheckout';
 import BillingDetails from './BillingDetails';
 import { DebugBox } from '../../components/shared/DebugBox';
 import { PaymentMethod } from '../../interfaces';
+import { useAuth0 } from '@auth0/auth0-react';
 
 interface BillingProps {
   isEditing: boolean;
@@ -28,7 +29,7 @@ const schema = Yup.object().shape({
   email: Yup.string()
     .email('Please enter valid email')
     .required('Please enter email'),
-  phoneNumber: Yup.string().required('Please enter a mobile number'),
+  phoneNumber: Yup.string().matches(/^\+[1-9]{1}[0-9]{3,14}$/,"Invalid mobile number" ).required('Please enter a mobile number'),
   street1: Yup.string().required('Please enter your address'),
   firstName: Yup.string().min(2, 'Invalid first name').required('Please enter first name'),
   lastName: Yup.string().min(2, 'Invalid last name').required('Please enter last name'),
@@ -42,9 +43,11 @@ const BillingView = ({
   paymentItem,
   onChangeValues,
 }: BillingProps) => {
+  const { user } = useAuth0();
+
   const { values, errors, handleChange: onChange, isValid, handleSubmit } = useFormik({
     initialValues: {
-      email: billingInfo?.email ?? paymentItem?.metadata?.email,
+      email: user?.email ?? billingInfo?.email ?? paymentItem?.metadata?.email,
       country: billingInfo?.country ?? paymentItem?.billingDetails?.country,
       state: billingInfo?.state ?? paymentItem?.billingDetails?.district,
       city: billingInfo?.city ?? paymentItem?.billingDetails?.city,
@@ -52,7 +55,7 @@ const BillingView = ({
       phoneNumber: billingInfo?.phoneNumber ?? paymentItem?.metadata?.phoneNumber,
       street1: billingInfo?.street1 ?? paymentItem?.billingDetails?.address1,
       name: billingInfo?.name ?? paymentItem?.billingDetails?.name,
-      firstName: billingInfo?.lastName ?? paymentItem?.billingDetails?.name?.split(' ')?.[0],
+      firstName: billingInfo?.firstName ?? paymentItem?.billingDetails?.name?.split(' ')?.[0],
       lastName: billingInfo?.lastName ?? paymentItem?.billingDetails?.name?.split(' ')?.[1],
     } as BillingFormData,
     onSubmit: onClickContinue,
@@ -102,6 +105,10 @@ const BillingView = ({
           onChange={ onChange('email') }
           error={ errors?.email }
           placeholder="Email"
+          inputProps={{
+            readOnly:true,
+          }}
+          disabled={true}
           sx={{
             marginTop: '16px',
           }} />

@@ -125,6 +125,7 @@ const PaymentContainer = ({
     } as WireTransferFormData,
     validationSchema,
     onSubmit: onSubmitWireTransfer,
+    validateOnChange: false
   });
 
   const {
@@ -143,11 +144,12 @@ const PaymentContainer = ({
       cardNumber: paymentInfo?.creditCardData?.cardNumber ?? '',
       cvv: paymentInfo?.creditCardData?.cvv ?? '',
       expiry: paymentInfo?.creditCardData?.expiry ?? '',
-      save: paymentInfo?.creditCardData?.save ?? false,
+      save: false,
     } as CreditCardFormType,
     validationSchema: creditCardSchema,
     onSubmit: onSubmitCreditCard,
     enableReinitialize: true,
+    validateOnChange: false
   });
 
 
@@ -159,16 +161,6 @@ const PaymentContainer = ({
       handleWireTransferSubmit();
     }
   }, [paymentType, handleCreditCardSubmit, handleWireTransferSubmit]);
-
-  const buttonDisabled = useMemo<boolean>(() => {
-    if (paymentType === PaymentTypes.CREDIT_CARD) {
-      return !creditHasDirty || !isValidCreditCardValues;
-    }
-    if (paymentType === PaymentTypes.WIRE_TRANSFER) {
-      return !wireHasDirty || !isValidWireTransfer;
-    }
-    return true;
-  }, [isValidCreditCardValues, isValidWireTransfer, paymentType, wireHasDirty, creditHasDirty]);
 
   return (
     <>
@@ -256,7 +248,6 @@ const PaymentContainer = ({
           backgroundColor={ theme.global?.checkout?.continueButtonBackground }
           textColor={ theme.global?.checkout?.continueButtonTextColor }
           onClick={ onClickDelivery }
-          disabled={ buttonDisabled }
           sx={{
             margin: '24px 0',
             '&: hover': {

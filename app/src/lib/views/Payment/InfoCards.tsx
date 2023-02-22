@@ -41,21 +41,6 @@ export const PaymentInfoCards = ({ billingInfo }: PaymentInfoCardsProps) => {
           </Typography>
           <Typography variant="body2">{ billingInfo?.email }</Typography>
         </Box>
-        <Box>
-          <Typography
-            variant="button"
-            sx={{
-              color: theme.global?.unHighlightedText,
-              textTransform: 'capitalize',
-              fontWeight: 700,
-              '&: hover': {
-                cursor: 'pointer',
-              },
-            }}
-            onClick={ handleEdit }>
-            Edit
-          </Typography>
-        </Box>
       </Box>
       <Divider />
       <Box
@@ -75,11 +60,17 @@ export const PaymentInfoCards = ({ billingInfo }: PaymentInfoCardsProps) => {
             Billing info
           </Typography>
           <Box>
+          <Typography variant="body2">
+              { billingInfo?.firstName } { billingInfo?.lastName }
+            </Typography>
             <Typography variant="body2">
               { billingInfo?.country }, { billingInfo?.state }
             </Typography>
             <Typography variant="body2">
               { billingInfo?.city }, { billingInfo?.postalCode }
+            </Typography>
+            <Typography variant="body2">
+              { billingInfo?.street1 }
             </Typography>
             <Typography variant="body2">{ billingInfo?.phoneNumber }</Typography>
           </Box>

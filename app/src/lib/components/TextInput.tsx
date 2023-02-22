@@ -20,6 +20,7 @@ interface TextInputProps {
   inputProps?: InputBaseProps['inputProps'];
   required?: boolean;
   type?: React.InputHTMLAttributes<unknown>['type'];
+  disabled?: boolean;
 }
 
 const TextInput = ({
@@ -32,6 +33,7 @@ const TextInput = ({
   required,
   type,
   inputProps,
+  disabled
 }: TextInputProps) => {
   const theme = useTheme<MixTheme>();
 
@@ -80,6 +82,7 @@ const TextInput = ({
         fullWidth
         inputProps={ inputProps }
         size="small"
+        disabled={disabled}
         helperText={ error }
         type={ type } />
     </Box>
