@@ -368,7 +368,9 @@ const ConfirmationView = ({ paymentStatus }) => {
                 borderRadius: '4px',
             } },
             React__default.createElement(Typography, { fontWeight: "500", fontSize: "20px", marginBottom: "8px" }, "You're all set! We've received your order."),
-            React__default.createElement(Typography, { fontSize: "16px", variant: "body1", color: (_a = theme.global) === null || _a === void 0 ? void 0 : _a.unHighlightedText }, "Order #: 1241359891385198375983798"),
+            React__default.createElement(Typography, { fontSize: "16px", variant: "body1", color: (_a = theme.global) === null || _a === void 0 ? void 0 : _a.unHighlightedText },
+                "Order #: ", paymentInfo === null || paymentInfo === void 0 ? void 0 :
+                paymentInfo.paymentId),
             (paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.paymentType) === PaymentTypes.WIRE_TRANSFER &&
                 (paymentConfiguration === null || paymentConfiguration === void 0 ? void 0 : paymentConfiguration.wireTransferInstructions),
             (paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.paymentType) === PaymentTypes.CREDIT_CARD &&
@@ -438,6 +440,8 @@ const ConfirmationView = ({ paymentStatus }) => {
                         billingInfo.postalCode,
                         ' ', billingInfo === null || billingInfo === void 0 ? void 0 :
                         billingInfo.country,
+                        React__default.createElement("br", null), billingInfo === null || billingInfo === void 0 ? void 0 :
+                        billingInfo.street1,
                         React__default.createElement("br", null), billingInfo === null || billingInfo === void 0 ? void 0 :
                         billingInfo.phoneNumber)))),
         React__default.createElement(Box, { display: "flex", flexDirection: "row", justifyContent: "flex-end" },

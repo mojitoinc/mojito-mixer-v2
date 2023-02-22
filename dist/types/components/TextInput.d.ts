@@ -10,6 +10,7 @@ interface TextInputProps {
     inputProps?: InputBaseProps['inputProps'];
     required?: boolean;
     type?: React.InputHTMLAttributes<unknown>['type'];
+    disabled?: boolean;
 }
-declare const TextInput: ({ value, title, onChange, placeholder, sx, error, required, type, inputProps, }: TextInputProps) => JSX.Element;
+declare const TextInput: ({ value, title, onChange, placeholder, sx, error, required, type, inputProps, disabled, }: TextInputProps) => JSX.Element;
 export default TextInput;

@@ -392,9 +392,9 @@ const creditCardSchema = object.create().shape({
     }),
 });
 const PaymentContainer = ({ paymentType, onChoosePaymentType, creditCardList, config, billingInfo, paymentMethodLimit, screeningError, paymentInfo, onSubmitCreditCard, onSubmitWireTransfer, }) => {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14;
     const theme = useTheme["default"]();
-    const { values: wireTransferFormValues, handleChange: onChangeWireTransferField, setFieldValue: onSetWireTransferField, errors: wireTransferFormErrors, isValid: isValidWireTransfer, handleSubmit: handleWireTransferSubmit, dirty: wireHasDirty, } = formik_esm.useFormik({
+    const { values: wireTransferFormValues, handleChange: onChangeWireTransferField, setFieldValue: onSetWireTransferField, errors: wireTransferFormErrors, handleSubmit: handleWireTransferSubmit, } = formik_esm.useFormik({
         initialValues: {
             accountNumber: (_b = (_a = paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.wireData) === null || _a === void 0 ? void 0 : _a.accountNumber) !== null && _b !== void 0 ? _b : '',
             aba: (_d = (_c = paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.wireData) === null || _c === void 0 ? void 0 : _c.routingNumber) !== null && _d !== void 0 ? _d : '',
@@ -406,8 +406,9 @@ const PaymentContainer = ({ paymentType, onChoosePaymentType, creditCardList, co
         },
         validationSchema,
         onSubmit: onSubmitWireTransfer,
+        validateOnChange: false,
     });
-    const { values: creditCardFormValues, handleChange: onChangeCreditCardField, setFieldValue: onSetCreditCardField, errors: creditCardFormErrors, isValid: isValidCreditCardValues, handleSubmit: handleCreditCardSubmit, dirty: creditHasDirty, } = formik_esm.useFormik({
+    const { values: creditCardFormValues, setFieldValue: onSetCreditCardField, errors: creditCardFormErrors, handleSubmit: handleCreditCardSubmit, } = formik_esm.useFormik({
         initialValues: {
             isNew: (_v = (_u = (_t = paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.creditCardData) === null || _t === void 0 ? void 0 : _t.isNew) !== null && _u !== void 0 ? _u : creditCardList.length === 0) !== null && _v !== void 0 ? _v : false,
             cardData: (_x = (_w = paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.creditCardData) === null || _w === void 0 ? void 0 : _w.cardData) !== null && _x !== void 0 ? _x : undefined,
@@ -415,11 +416,12 @@ const PaymentContainer = ({ paymentType, onChoosePaymentType, creditCardList, co
             cardNumber: (_3 = (_2 = paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.creditCardData) === null || _2 === void 0 ? void 0 : _2.cardNumber) !== null && _3 !== void 0 ? _3 : '',
             cvv: (_5 = (_4 = paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.creditCardData) === null || _4 === void 0 ? void 0 : _4.cvv) !== null && _5 !== void 0 ? _5 : '',
             expiry: (_7 = (_6 = paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.creditCardData) === null || _6 === void 0 ? void 0 : _6.expiry) !== null && _7 !== void 0 ? _7 : '',
-            save: (_9 = (_8 = paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.creditCardData) === null || _8 === void 0 ? void 0 : _8.save) !== null && _9 !== void 0 ? _9 : false,
+            save: false,
         },
         validationSchema: creditCardSchema,
         onSubmit: onSubmitCreditCard,
         enableReinitialize: true,
+        validateOnChange: false,
     });
     const onClickDelivery = React.useCallback(() => {
         if (paymentType === index.PaymentTypes.CREDIT_CARD) {
@@ -429,25 +431,16 @@ const PaymentContainer = ({ paymentType, onChoosePaymentType, creditCardList, co
             handleWireTransferSubmit();
         }
     }, [paymentType, handleCreditCardSubmit, handleWireTransferSubmit]);
-    const buttonDisabled = React.useMemo(() => {
-        if (paymentType === index.PaymentTypes.CREDIT_CARD) {
-            return !creditHasDirty || !isValidCreditCardValues;
-        }
-        if (paymentType === index.PaymentTypes.WIRE_TRANSFER) {
-            return !wireHasDirty || !isValidWireTransfer;
-        }
-        return true;
-    }, [isValidCreditCardValues, isValidWireTransfer, paymentType, wireHasDirty, creditHasDirty]);
     return (React__default["default"].createElement(React__default["default"].Fragment, null,
         React__default["default"].createElement(InfoCards.PaymentInfoCards, { billingInfo: billingInfo }),
         React__default["default"].createElement(Card["default"], { sx: {
-                border: `1px solid ${(_10 = theme.global) === null || _10 === void 0 ? void 0 : _10.cardBorder}`,
-                backgroundColor: (_11 = theme.global) === null || _11 === void 0 ? void 0 : _11.cardBackground,
-                boxShadow: `0px 4px 16px ${(_12 = theme.global) === null || _12 === void 0 ? void 0 : _12.cardShadow}`,
+                border: `1px solid ${(_8 = theme.global) === null || _8 === void 0 ? void 0 : _8.cardBorder}`,
+                backgroundColor: (_9 = theme.global) === null || _9 === void 0 ? void 0 : _9.cardBackground,
+                boxShadow: `0px 4px 16px ${(_10 = theme.global) === null || _10 === void 0 ? void 0 : _10.cardShadow}`,
                 padding: '24px',
             } },
             React__default["default"].createElement(Typography["default"], { sx: { fontSize: '20px', fontWeight: 500 } }, "Payment Method"),
-            (config === null || config === void 0 ? void 0 : config.creditCard) && (paymentMethodLimit === null || paymentMethodLimit === void 0 ? void 0 : paymentMethodLimit.exceedCreditCard) && (React__default["default"].createElement(PaymentMethodView.PaymentMethodView, { logo: index$1.Icons.creditCards, isSelected: paymentType, name: "Credit Card", type: index.PaymentTypes.CREDIT_CARD, bodyContent: (React__default["default"].createElement(CreditCardForm.CreditCardForm, { creditCardList: creditCardList, values: creditCardFormValues, handleChange: onChangeCreditCardField, setFieldValue: onSetCreditCardField, errors: creditCardFormErrors, screeningError: screeningError })), onChoosePaymentType: onChoosePaymentType })),
+            (config === null || config === void 0 ? void 0 : config.creditCard) && (paymentMethodLimit === null || paymentMethodLimit === void 0 ? void 0 : paymentMethodLimit.exceedCreditCard) && (React__default["default"].createElement(PaymentMethodView.PaymentMethodView, { logo: index$1.Icons.creditCards, isSelected: paymentType, name: "Credit Card", type: index.PaymentTypes.CREDIT_CARD, bodyContent: (React__default["default"].createElement(CreditCardForm.CreditCardForm, { creditCardList: creditCardList, values: creditCardFormValues, setFieldValue: onSetCreditCardField, errors: creditCardFormErrors, screeningError: screeningError })), onChoosePaymentType: onChoosePaymentType })),
             (config === null || config === void 0 ? void 0 : config.walletConnect) && (React__default["default"].createElement(PaymentMethodView.PaymentMethodView, { logo: index$1.Icons.walletConnect, isSelected: paymentType, name: "Walletconnect", type: index.PaymentTypes.WALLET_CONNECT, bodyContent: React__default["default"].createElement(React__default["default"].Fragment, null, "Test"), onChoosePaymentType: onChoosePaymentType })),
             (config === null || config === void 0 ? void 0 : config.applepay) && (React__default["default"].createElement(PaymentMethodView.PaymentMethodView, { logo: index$1.Icons.applepayDark, isSelected: paymentType, name: "Apple Pay", type: index.PaymentTypes.APPLE_PAY, bodyContent: React__default["default"].createElement(React__default["default"].Fragment, null, "Test"), onChoosePaymentType: onChoosePaymentType })),
             (config === null || config === void 0 ? void 0 : config.gpay) && (React__default["default"].createElement(PaymentMethodView.PaymentMethodView, { logo: index$1.Icons.gpayDark, isSelected: paymentType, name: "Google Pay", type: index.PaymentTypes.GOOGLE_PAY, bodyContent: React__default["default"].createElement(React__default["default"].Fragment, null, "Test"), onChoosePaymentType: onChoosePaymentType })),
@@ -456,7 +449,7 @@ const PaymentContainer = ({ paymentType, onChoosePaymentType, creditCardList, co
                 React__default["default"].createElement("img", { src: index$1.Icons.lock, height: 28, width: 28, alt: "lock-icon" }),
                 React__default["default"].createElement(Typography["default"], { variant: "body2", sx: { marginLeft: 1 } }, "We protect your payment information using encryption to provide bank-level security"))),
         React__default["default"].createElement(Box["default"], { display: "flex", justifyContent: "flex-end" },
-            React__default["default"].createElement(Button["default"], { title: "Continue to Delivery", backgroundColor: (_14 = (_13 = theme.global) === null || _13 === void 0 ? void 0 : _13.checkout) === null || _14 === void 0 ? void 0 : _14.continueButtonBackground, textColor: (_16 = (_15 = theme.global) === null || _15 === void 0 ? void 0 : _15.checkout) === null || _16 === void 0 ? void 0 : _16.continueButtonTextColor, onClick: onClickDelivery, disabled: buttonDisabled, sx: {
+            React__default["default"].createElement(Button["default"], { title: "Continue to Delivery", backgroundColor: (_12 = (_11 = theme.global) === null || _11 === void 0 ? void 0 : _11.checkout) === null || _12 === void 0 ? void 0 : _12.continueButtonBackground, textColor: (_14 = (_13 = theme.global) === null || _13 === void 0 ? void 0 : _13.checkout) === null || _14 === void 0 ? void 0 : _14.continueButtonTextColor, onClick: onClickDelivery, sx: {
                     margin: '24px 0',
                     '&: hover': {
                         backgroundColor: 'rgba(102, 99, 253, 0.8)',

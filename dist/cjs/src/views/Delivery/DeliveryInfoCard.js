@@ -321,7 +321,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 
 const DeliveryInfoCard = ({ billingInfo, paymentInfo, }) => {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x;
     const theme = useTheme["default"]();
     const { setContainerState } = ContainerStateProvider.useContainer();
     const getCreditCardType = React.useCallback((network) => {
@@ -350,24 +350,19 @@ const DeliveryInfoCard = ({ billingInfo, paymentInfo, }) => {
             boxShadow: `0px 4px 16px ${(_c = theme.global) === null || _c === void 0 ? void 0 : _c.cardShadow}`,
             margin: '24px 0px',
         } },
-        React__default["default"].createElement(Box["default"], { sx: { padding: '16px 24px' }, display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "flex-start" },
+        React__default["default"].createElement(Box["default"], { sx: { padding: '16px 24px' }, display: "flex", flexDirection: "row", alignItems: "flex-start" },
             React__default["default"].createElement(Box["default"], { width: "50%", display: "flex" },
-                React__default["default"].createElement(Typography["default"], { variant: "body2", sx: { color: (_d = theme.global) === null || _d === void 0 ? void 0 : _d.cardGrayedText, width: '135px' } }, "Contact info"),
-                React__default["default"].createElement(Typography["default"], { variant: "body2" }, billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.email)),
-            React__default["default"].createElement(Box["default"], null,
-                React__default["default"].createElement(Typography["default"], { variant: "button", sx: {
-                        color: (_e = theme.global) === null || _e === void 0 ? void 0 : _e.unHighlightedText,
-                        textTransform: 'capitalize',
-                        fontWeight: 700,
-                        '&: hover': {
-                            cursor: 'pointer',
-                        },
-                    }, onClick: () => handleEdit('billing') }, "Edit"))),
+                React__default["default"].createElement(Typography["default"], { variant: "body2", sx: { color: (_d = theme.global) === null || _d === void 0 ? void 0 : _d.cardGrayedText, width: '135px', marginRight: '32px' } }, "Contact info"),
+                React__default["default"].createElement(Typography["default"], { variant: "body2" }, billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.email))),
         React__default["default"].createElement(Divider["default"], null),
         React__default["default"].createElement(Box["default"], { sx: { padding: '16px 24px' }, display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "flex-start" },
             React__default["default"].createElement(Box["default"], { width: "50%", display: "flex" },
-                React__default["default"].createElement(Typography["default"], { variant: "body2", sx: { color: (_f = theme.global) === null || _f === void 0 ? void 0 : _f.cardGrayedText, width: '135px' } }, "Billing info"),
+                React__default["default"].createElement(Typography["default"], { variant: "body2", sx: { color: (_e = theme.global) === null || _e === void 0 ? void 0 : _e.cardGrayedText, width: '135px' } }, "Billing info"),
                 React__default["default"].createElement(Box["default"], null,
+                    React__default["default"].createElement(Typography["default"], { variant: "body2" }, billingInfo === null || billingInfo === void 0 ? void 0 :
+                        billingInfo.firstName,
+                        " ", billingInfo === null || billingInfo === void 0 ? void 0 :
+                        billingInfo.lastName),
                     React__default["default"].createElement(Typography["default"], { variant: "body2" }, billingInfo === null || billingInfo === void 0 ? void 0 :
                         billingInfo.country,
                         ", ", billingInfo === null || billingInfo === void 0 ? void 0 :
@@ -376,10 +371,11 @@ const DeliveryInfoCard = ({ billingInfo, paymentInfo, }) => {
                         billingInfo.city,
                         ", ", billingInfo === null || billingInfo === void 0 ? void 0 :
                         billingInfo.postalCode),
+                    React__default["default"].createElement(Typography["default"], { variant: "body2" }, billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.street1),
                     React__default["default"].createElement(Typography["default"], { variant: "body2" }, billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.phoneNumber))),
             React__default["default"].createElement(Box["default"], null,
                 React__default["default"].createElement(Typography["default"], { variant: "button", sx: {
-                        color: (_g = theme.global) === null || _g === void 0 ? void 0 : _g.unHighlightedText,
+                        color: (_f = theme.global) === null || _f === void 0 ? void 0 : _f.unHighlightedText,
                         textTransform: 'capitalize',
                         fontWeight: 700,
                         '&: hover': {
@@ -389,26 +385,25 @@ const DeliveryInfoCard = ({ billingInfo, paymentInfo, }) => {
         React__default["default"].createElement(Divider["default"], null),
         React__default["default"].createElement(Box["default"], { sx: { padding: '16px 24px' }, display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "flex-start" },
             React__default["default"].createElement(Box["default"], { width: "50%", display: "flex" },
-                React__default["default"].createElement(Typography["default"], { variant: "body2", sx: { color: (_h = theme.global) === null || _h === void 0 ? void 0 : _h.cardGrayedText, marginRight: 3 } }, "Payment Method"),
+                React__default["default"].createElement(Typography["default"], { variant: "body2", sx: { color: (_g = theme.global) === null || _g === void 0 ? void 0 : _g.cardGrayedText, marginRight: 3 } }, "Payment Method"),
                 (paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.paymentType) === index$1.PaymentTypes.WIRE_TRANSFER && (React__default["default"].createElement(Box["default"], null,
                     React__default["default"].createElement(Typography["default"], { variant: "body2" }, "Wire Transfer"),
                     React__default["default"].createElement(Stack["default"], { flexDirection: "row", alignItems: "center" },
                         React__default["default"].createElement(Typography["default"], { variant: "body2" },
-                            "*****", (_k = (_j = paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.wireData) === null || _j === void 0 ? void 0 : _j.accountNumber) === null || _k === void 0 ? void 0 :
-                            _k.substring((_o = (_m = (_l = paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.wireData) === null || _l === void 0 ? void 0 : _l.accountNumber) === null || _m === void 0 ? void 0 : _m.length) !== null && _o !== void 0 ? _o : 0 - 4)),
-                        React__default["default"].createElement(CopyButton["default"], { copyValue: (_q = (_p = paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.wireData) === null || _p === void 0 ? void 0 : _p.accountNumber) !== null && _q !== void 0 ? _q : '' })))),
+                            "*****", (_j = (_h = paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.wireData) === null || _h === void 0 ? void 0 : _h.accountNumber) === null || _j === void 0 ? void 0 :
+                            _j.substring((_m = (_l = (_k = paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.wireData) === null || _k === void 0 ? void 0 : _k.accountNumber) === null || _l === void 0 ? void 0 : _l.length) !== null && _m !== void 0 ? _m : 0 - 4)),
+                        React__default["default"].createElement(CopyButton["default"], { copyValue: (_p = (_o = paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.wireData) === null || _o === void 0 ? void 0 : _o.accountNumber) !== null && _p !== void 0 ? _p : '' })))),
                 (paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.paymentType) === index$1.PaymentTypes.CREDIT_CARD && (React__default["default"].createElement(Box["default"], null,
                     React__default["default"].createElement(Typography["default"], { variant: "body2", sx: { marginBottom: '4px' } }, "Credit Card"),
-                    React__default["default"].createElement(Typography["default"], { variant: "body2", sx: { marginBottom: '4px' } }, (_u = (_t = (_s = (_r = paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.creditCardData) === null || _r === void 0 ? void 0 : _r.cardData) === null || _s === void 0 ? void 0 : _s.billingDetails) === null || _t === void 0 ? void 0 : _t.name) !== null && _u !== void 0 ? _u : `${billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.firstName} ${billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.lastName}`),
                     React__default["default"].createElement(Stack["default"], { flexDirection: "row" },
-                        React__default["default"].createElement("img", { src: getCreditCardType((_x = (_w = (_v = paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.creditCardData) === null || _v === void 0 ? void 0 : _v.cardData) === null || _w === void 0 ? void 0 : _w.network) !== null && _x !== void 0 ? _x : ''), width: 40, height: 24, alt: "credit card" }),
+                        React__default["default"].createElement("img", { src: getCreditCardType((_s = (_r = (_q = paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.creditCardData) === null || _q === void 0 ? void 0 : _q.cardData) === null || _r === void 0 ? void 0 : _r.network) !== null && _s !== void 0 ? _s : ''), width: 40, height: 24, alt: "credit card" }),
                         React__default["default"].createElement(Typography["default"], { variant: "body2", sx: { margin: '0 8px' } },
-                            "****", (_z = (_y = paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.creditCardData) === null || _y === void 0 ? void 0 : _y.cardData) === null || _z === void 0 ? void 0 :
-                            _z.last4Digit),
-                        React__default["default"].createElement(Typography["default"], { variant: "body2", sx: { color: (_0 = theme.global) === null || _0 === void 0 ? void 0 : _0.unHighlightedText } }, (_1 = paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.creditCardData) === null || _1 === void 0 ? void 0 : _1.expiry))))),
+                            "****", (_u = (_t = paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.creditCardData) === null || _t === void 0 ? void 0 : _t.cardData) === null || _u === void 0 ? void 0 :
+                            _u.last4Digit),
+                        React__default["default"].createElement(Typography["default"], { variant: "body2", sx: { color: (_v = theme.global) === null || _v === void 0 ? void 0 : _v.unHighlightedText } }, (_w = paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.creditCardData) === null || _w === void 0 ? void 0 : _w.expiry))))),
             React__default["default"].createElement(Box["default"], null,
                 React__default["default"].createElement(Typography["default"], { variant: "button", sx: {
-                        color: (_2 = theme.global) === null || _2 === void 0 ? void 0 : _2.unHighlightedText,
+                        color: (_x = theme.global) === null || _x === void 0 ? void 0 : _x.unHighlightedText,
                         textTransform: 'capitalize',
                         fontWeight: 700,
                         '&: hover': {

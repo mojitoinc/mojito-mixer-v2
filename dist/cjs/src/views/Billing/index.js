@@ -97,19 +97,11 @@ const BillingContainer = () => {
         }
     }, [vertexEnabled, refetchTaxes]);
     const onClickContinue = React.useCallback((values) => tslib_es6.__awaiter(void 0, void 0, void 0, function* () {
-        var _a;
-        if (!isEditing) {
-            const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
-            const isValidEmail = emailRegex.test((_a = values === null || values === void 0 ? void 0 : values.email) !== null && _a !== void 0 ? _a : '');
-            if (!isValidEmail)
-                return;
-        }
         setBillingInfo(Object.assign(Object.assign({}, values), { name: `${values === null || values === void 0 ? void 0 : values.firstName} ${values === null || values === void 0 ? void 0 : values.lastName}` }));
         setPaymentInfo(Object.assign({ sessionKey: uuidv4.uuid() }, paymentInfo));
         setContainerState(RootContainer.ContainerTypes.PAYMENT);
     }), [
         setBillingInfo,
-        isEditing,
         setContainerState,
         paymentInfo,
         setPaymentInfo,

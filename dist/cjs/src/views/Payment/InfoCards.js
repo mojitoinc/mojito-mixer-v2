@@ -315,7 +315,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 
 const PaymentInfoCards = ({ billingInfo }) => {
-    var _a, _b, _c, _d, _e, _f, _g;
+    var _a, _b, _c, _d, _e, _f;
     const theme = useTheme["default"]();
     const { setContainerState } = ContainerStateProvider.useContainer();
     const handleEdit = React.useCallback(() => {
@@ -334,25 +334,20 @@ const PaymentInfoCards = ({ billingInfo }) => {
                         marginRight: 3,
                         width: '80px',
                     } }, "Contact info"),
-                React__default["default"].createElement(Typography["default"], { variant: "body2" }, billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.email)),
-            React__default["default"].createElement(Box["default"], null,
-                React__default["default"].createElement(Typography["default"], { variant: "button", sx: {
-                        color: (_e = theme.global) === null || _e === void 0 ? void 0 : _e.unHighlightedText,
-                        textTransform: 'capitalize',
-                        fontWeight: 700,
-                        '&: hover': {
-                            cursor: 'pointer',
-                        },
-                    }, onClick: handleEdit }, "Edit"))),
+                React__default["default"].createElement(Typography["default"], { variant: "body2" }, billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.email))),
         React__default["default"].createElement(Divider["default"], null),
         React__default["default"].createElement(Box["default"], { sx: { padding: '16px 24px' }, display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
             React__default["default"].createElement(Box["default"], { width: "50%", display: "flex" },
                 React__default["default"].createElement(Typography["default"], { variant: "body2", sx: {
-                        color: (_f = theme.global) === null || _f === void 0 ? void 0 : _f.cardGrayedText,
+                        color: (_e = theme.global) === null || _e === void 0 ? void 0 : _e.cardGrayedText,
                         marginRight: 3,
                         width: '80px',
                     } }, "Billing info"),
                 React__default["default"].createElement(Box["default"], null,
+                    React__default["default"].createElement(Typography["default"], { variant: "body2" }, billingInfo === null || billingInfo === void 0 ? void 0 :
+                        billingInfo.firstName,
+                        " ", billingInfo === null || billingInfo === void 0 ? void 0 :
+                        billingInfo.lastName),
                     React__default["default"].createElement(Typography["default"], { variant: "body2" }, billingInfo === null || billingInfo === void 0 ? void 0 :
                         billingInfo.country,
                         ", ", billingInfo === null || billingInfo === void 0 ? void 0 :
@@ -361,10 +356,11 @@ const PaymentInfoCards = ({ billingInfo }) => {
                         billingInfo.city,
                         ", ", billingInfo === null || billingInfo === void 0 ? void 0 :
                         billingInfo.postalCode),
+                    React__default["default"].createElement(Typography["default"], { variant: "body2" }, billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.street1),
                     React__default["default"].createElement(Typography["default"], { variant: "body2" }, billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.phoneNumber))),
             React__default["default"].createElement(Box["default"], null,
                 React__default["default"].createElement(Typography["default"], { variant: "button", sx: {
-                        color: (_g = theme.global) === null || _g === void 0 ? void 0 : _g.unHighlightedText,
+                        color: (_f = theme.global) === null || _f === void 0 ? void 0 : _f.unHighlightedText,
                         textTransform: 'capitalize',
                         fontWeight: 700,
                         '&: hover': {

@@ -296,7 +296,7 @@ import '../../node_modules/@mui/material/Zoom/Zoom.js';
 import '../../node_modules/@mui/material/GlobalStyles/GlobalStyles.js';
 import '../../node_modules/@mui/base/FocusTrap/FocusTrap.js';
 
-const TextInput = ({ value, title, onChange, placeholder, sx, error, required, type, inputProps, }) => {
+const TextInput = ({ value, title, onChange, placeholder, sx, error, required, type, inputProps, disabled, }) => {
     var _a, _b, _c;
     const theme = useTheme();
     const onChangeText = useCallback((e) => {
@@ -308,7 +308,7 @@ const TextInput = ({ value, title, onChange, placeholder, sx, error, required, t
             } },
             React__default.createElement(Typography, { variant: "body1", color: (_b = (_a = theme.palette) === null || _a === void 0 ? void 0 : _a.text) === null || _b === void 0 ? void 0 : _b.primary, fontSize: "16px" }, title),
             required && (React__default.createElement(Typography, { color: (_c = theme.global) === null || _c === void 0 ? void 0 : _c.required, fontSize: "16px", marginLeft: "4px" }, "*")))),
-        React__default.createElement(TextField, { value: value, error: Boolean(error), placeholder: placeholder, onChange: onChangeText, fullWidth: true, inputProps: inputProps, size: "small", helperText: error, type: type })));
+        React__default.createElement(TextField, { value: value, error: Boolean(error), placeholder: placeholder, onChange: onChangeText, fullWidth: true, inputProps: inputProps, size: "small", disabled: disabled, helperText: error, type: type })));
 };
 
 export { TextInput as default };

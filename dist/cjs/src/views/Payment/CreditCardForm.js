@@ -104,7 +104,7 @@ require('../../../node_modules/@mui/material/CardHeader/CardHeader.js');
 require('../../../node_modules/@mui/material/CardHeader/cardHeaderClasses.js');
 require('../../../node_modules/@mui/material/CardMedia/CardMedia.js');
 require('../../../node_modules/@mui/material/CardMedia/cardMediaClasses.js');
-var Checkbox = require('../../../node_modules/@mui/material/Checkbox/Checkbox.js');
+require('../../../node_modules/@mui/material/Checkbox/Checkbox.js');
 require('../../../node_modules/@mui/material/Checkbox/checkboxClasses.js');
 require('../../../node_modules/@mui/material/Chip/Chip.js');
 require('../../../node_modules/@mui/material/Chip/chipClasses.js');
@@ -322,7 +322,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 var ErrorIcon__default = /*#__PURE__*/_interopDefaultLegacy(ErrorIcon);
 
-const CreditCardForm = ({ creditCardList, values, setFieldValue, errors, handleChange, screeningError, }) => {
+const CreditCardForm = ({ creditCardList, values, setFieldValue, errors, screeningError, }) => {
     var _a, _b, _c, _d;
     const theme = useTheme["default"]();
     const { billingInfo } = BillingProvider.useBilling();
@@ -401,10 +401,7 @@ const CreditCardForm = ({ creditCardList, values, setFieldValue, errors, handleC
                 marginTop: 2,
                 backgroundColor: (_d = theme.global) === null || _d === void 0 ? void 0 : _d.grayBackground,
                 borderRadius: '4px',
-            } }, "NFTs purchased by credit card can only be transferred to your multi-sig wallet and cannot be transferred out for 14 days."),
-        (values === null || values === void 0 ? void 0 : values.isNew) && (React__default["default"].createElement(Box["default"], { display: "flex", alignItems: "center", marginTop: 2 },
-            React__default["default"].createElement(Checkbox["default"], { sx: { padding: 0 }, checked: values === null || values === void 0 ? void 0 : values.save, onChange: handleChange('save') }),
-            React__default["default"].createElement(Typography["default"], { variant: "body1", sx: { marginLeft: 1 } }, "Save my credit card info for faster checkout")))));
+            } }, "NFTs purchased by credit card can only be transferred to your multi-sig wallet and cannot be transferred out for 14 days.")));
 };
 
 exports.CreditCardForm = CreditCardForm;

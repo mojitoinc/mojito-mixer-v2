@@ -323,16 +323,14 @@ const CostBreakDown = ({ taxes, collectionData, quantity, vertexEnabled, taxable
             React__default.createElement(Typography, { variant: "body2", fontSize: "14px" }, text),
             React__default.createElement(Typography, { variant: "subtitle2", fontWeight: "700" }, value)));
     };
-    return (React__default.createElement(Box, { width: "calc(50% - 80px)", height: "100%", sx: {
+    return (React__default.createElement(Box, { width: "100%", sx: {
             backgroundImage: `url(${Icons.background})`,
-            backgroundSize: '100%',
             alignSelf: 'stretch',
             padding: '40px',
         } },
         React__default.createElement(Box, { sx: {
                 padding: '24px',
                 backgroundColor: 'rgba(255, 255, 255, 0.4)',
-                backdropFilter: 'blur(20px)',
                 borderRadius: '4px',
             } },
             React__default.createElement(Box, { display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between" },

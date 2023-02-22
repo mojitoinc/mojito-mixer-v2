@@ -317,9 +317,13 @@ const BillingDetails = ({ values, onClickEdit }) => {
             React__default["default"].createElement(Box["default"], null,
                 React__default["default"].createElement(Typography["default"], { color: (_e = (_d = theme.palette) === null || _d === void 0 ? void 0 : _d.text) === null || _e === void 0 ? void 0 : _e.primary, fontWeight: "500", fontSize: "20px" }, "Billing Info"),
                 React__default["default"].createElement(Typography["default"], { color: (_g = (_f = theme.palette) === null || _f === void 0 ? void 0 : _f.text) === null || _g === void 0 ? void 0 : _g.primary, fontWeight: "500", fontSize: "16px", marginTop: "16px" },
+                    `${values === null || values === void 0 ? void 0 : values.firstName} ${values === null || values === void 0 ? void 0 : values.lastName}\n`,
+                    React__default["default"].createElement("br", null),
                     `${values === null || values === void 0 ? void 0 : values.country},${values === null || values === void 0 ? void 0 : values.state}\n`,
                     React__default["default"].createElement("br", null),
                     `${values === null || values === void 0 ? void 0 : values.city},${values === null || values === void 0 ? void 0 : values.postalCode}\n`,
+                    React__default["default"].createElement("br", null), values === null || values === void 0 ? void 0 :
+                    values.street1,
                     React__default["default"].createElement("br", null), values === null || values === void 0 ? void 0 :
                     values.phoneNumber)),
             React__default["default"].createElement(Box["default"], { padding: "5px", sx: {

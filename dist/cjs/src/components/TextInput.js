@@ -304,7 +304,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 
-const TextInput = ({ value, title, onChange, placeholder, sx, error, required, type, inputProps, }) => {
+const TextInput = ({ value, title, onChange, placeholder, sx, error, required, type, inputProps, disabled, }) => {
     var _a, _b, _c;
     const theme = useTheme["default"]();
     const onChangeText = React.useCallback((e) => {
@@ -316,7 +316,7 @@ const TextInput = ({ value, title, onChange, placeholder, sx, error, required, t
             } },
             React__default["default"].createElement(Typography["default"], { variant: "body1", color: (_b = (_a = theme.palette) === null || _a === void 0 ? void 0 : _a.text) === null || _b === void 0 ? void 0 : _b.primary, fontSize: "16px" }, title),
             required && (React__default["default"].createElement(Typography["default"], { color: (_c = theme.global) === null || _c === void 0 ? void 0 : _c.required, fontSize: "16px", marginLeft: "4px" }, "*")))),
-        React__default["default"].createElement(TextField["default"], { value: value, error: Boolean(error), placeholder: placeholder, onChange: onChangeText, fullWidth: true, inputProps: inputProps, size: "small", helperText: error, type: type })));
+        React__default["default"].createElement(TextField["default"], { value: value, error: Boolean(error), placeholder: placeholder, onChange: onChangeText, fullWidth: true, inputProps: inputProps, size: "small", disabled: disabled, helperText: error, type: type })));
 };
 
 exports["default"] = TextInput;

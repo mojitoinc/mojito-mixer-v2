@@ -393,6 +393,8 @@ const WireTransferForm = ({ values, handleChange, setFieldValue, errors, }) => {
                         }, placeholder: "Enter account number", type: "text", error: errors.accountNumber }),
                     React__default["default"].createElement(TextInput["default"], { value: values.aba, title: "Routing Number (ABA)", onChange: formatRouterNumber, sx: {
                             marginTop: '16px',
+                        }, inputProps: {
+                            maxLength: 10,
                         }, placeholder: "Enter routing number", type: "text", error: errors.aba })))
                 : (React__default["default"].createElement(React__default["default"].Fragment, null,
                     React__default["default"].createElement(TextInput["default"], { value: values.iban, title: "Internation Bank Account Number", onChange: handleChange('iban'), sx: {

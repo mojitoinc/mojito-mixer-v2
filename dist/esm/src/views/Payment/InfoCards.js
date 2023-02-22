@@ -307,7 +307,7 @@ import '../../providers/SecurityOptionsProvider.js';
 import { ContainerTypes } from '../../interfaces/ContextInterface/RootContainer.js';
 
 const PaymentInfoCards = ({ billingInfo }) => {
-    var _a, _b, _c, _d, _e, _f, _g;
+    var _a, _b, _c, _d, _e, _f;
     const theme = useTheme();
     const { setContainerState } = useContainer();
     const handleEdit = useCallback(() => {
@@ -326,25 +326,20 @@ const PaymentInfoCards = ({ billingInfo }) => {
                         marginRight: 3,
                         width: '80px',
                     } }, "Contact info"),
-                React__default.createElement(Typography, { variant: "body2" }, billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.email)),
-            React__default.createElement(Box, null,
-                React__default.createElement(Typography, { variant: "button", sx: {
-                        color: (_e = theme.global) === null || _e === void 0 ? void 0 : _e.unHighlightedText,
-                        textTransform: 'capitalize',
-                        fontWeight: 700,
-                        '&: hover': {
-                            cursor: 'pointer',
-                        },
-                    }, onClick: handleEdit }, "Edit"))),
+                React__default.createElement(Typography, { variant: "body2" }, billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.email))),
         React__default.createElement(Divider, null),
         React__default.createElement(Box, { sx: { padding: '16px 24px' }, display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
             React__default.createElement(Box, { width: "50%", display: "flex" },
                 React__default.createElement(Typography, { variant: "body2", sx: {
-                        color: (_f = theme.global) === null || _f === void 0 ? void 0 : _f.cardGrayedText,
+                        color: (_e = theme.global) === null || _e === void 0 ? void 0 : _e.cardGrayedText,
                         marginRight: 3,
                         width: '80px',
                     } }, "Billing info"),
                 React__default.createElement(Box, null,
+                    React__default.createElement(Typography, { variant: "body2" }, billingInfo === null || billingInfo === void 0 ? void 0 :
+                        billingInfo.firstName,
+                        " ", billingInfo === null || billingInfo === void 0 ? void 0 :
+                        billingInfo.lastName),
                     React__default.createElement(Typography, { variant: "body2" }, billingInfo === null || billingInfo === void 0 ? void 0 :
                         billingInfo.country,
                         ", ", billingInfo === null || billingInfo === void 0 ? void 0 :
@@ -353,10 +348,11 @@ const PaymentInfoCards = ({ billingInfo }) => {
                         billingInfo.city,
                         ", ", billingInfo === null || billingInfo === void 0 ? void 0 :
                         billingInfo.postalCode),
+                    React__default.createElement(Typography, { variant: "body2" }, billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.street1),
                     React__default.createElement(Typography, { variant: "body2" }, billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.phoneNumber))),
             React__default.createElement(Box, null,
                 React__default.createElement(Typography, { variant: "button", sx: {
-                        color: (_g = theme.global) === null || _g === void 0 ? void 0 : _g.unHighlightedText,
+                        color: (_f = theme.global) === null || _f === void 0 ? void 0 : _f.unHighlightedText,
                         textTransform: 'capitalize',
                         fontWeight: 700,
                         '&: hover': {
