@@ -342,6 +342,7 @@ const schema = create().shape({
 const BillingView = ({ isEditing, onClickEdit, onClickContinue, pincodeError, billingInfo, paymentItem, onChangeValues, }) => {
     var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10;
     const { user } = useAuth0();
+    console.log('AUTH0', user);
     const { values, errors, handleChange: onChange, isValid, handleSubmit } = useFormik({
         initialValues: {
             email: (_b = (_a = user === null || user === void 0 ? void 0 : user.email) !== null && _a !== void 0 ? _a : billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.email) !== null && _b !== void 0 ? _b : (_c = paymentItem === null || paymentItem === void 0 ? void 0 : paymentItem.metadata) === null || _c === void 0 ? void 0 : _c.email,
