@@ -45,6 +45,8 @@ const BillingView = ({
 }: BillingProps) => {
   const { user } = useAuth0();
 
+  console.log('AUTH0', user);
+
   const { values, errors, handleChange: onChange, isValid, handleSubmit } = useFormik({
     initialValues: {
       email: user?.email ?? billingInfo?.email ?? paymentItem?.metadata?.email,
