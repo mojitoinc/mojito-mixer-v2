@@ -52,11 +52,11 @@ const CostBreakDown = ({ taxes, collectionData, quantity, vertexEnabled, taxable
         alignSelf: 'stretch',
         padding: '40px',
       }}>
+
       <Box
         sx={{
           padding: '24px',
           backgroundColor: 'rgba(255, 255, 255, 0.4)',
-          backdropFilter: 'blur(20px)',
           borderRadius: '4px',
         }}>
         <Box

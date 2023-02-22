@@ -120,6 +120,9 @@ export const WireTransferForm = ({
                   sx={{
                     marginTop: '16px',
                   }}
+                  inputProps={{
+                    maxLength: 10,
+                  }}
                   placeholder="Enter routing number"
                   type="text"
                   error={ errors.aba } />

@@ -1,5 +1,5 @@
 import { Box, Card, Typography, useTheme } from '@mui/material';
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import moment from 'moment';
@@ -110,9 +110,7 @@ const PaymentContainer = ({
     handleChange: onChangeWireTransferField,
     setFieldValue: onSetWireTransferField,
     errors: wireTransferFormErrors,
-    isValid: isValidWireTransfer,
     handleSubmit: handleWireTransferSubmit,
-    dirty: wireHasDirty,
   } = useFormik({
     initialValues: {
       accountNumber: paymentInfo?.wireData?.accountNumber ?? '',
@@ -125,16 +123,14 @@ const PaymentContainer = ({
     } as WireTransferFormData,
     validationSchema,
     onSubmit: onSubmitWireTransfer,
+    validateOnChange: false,
   });
 
   const {
     values: creditCardFormValues,
-    handleChange: onChangeCreditCardField,
     setFieldValue: onSetCreditCardField,
     errors: creditCardFormErrors,
-    isValid: isValidCreditCardValues,
     handleSubmit: handleCreditCardSubmit,
-    dirty: creditHasDirty,
   } = useFormik({
     initialValues: {
       isNew: paymentInfo?.creditCardData?.isNew ?? creditCardList.length === 0 ?? false,
@@ -143,11 +139,12 @@ const PaymentContainer = ({
       cardNumber: paymentInfo?.creditCardData?.cardNumber ?? '',
       cvv: paymentInfo?.creditCardData?.cvv ?? '',
       expiry: paymentInfo?.creditCardData?.expiry ?? '',
-      save: paymentInfo?.creditCardData?.save ?? false,
+      save: false,
     } as CreditCardFormType,
     validationSchema: creditCardSchema,
     onSubmit: onSubmitCreditCard,
     enableReinitialize: true,
+    validateOnChange: false,
   });
 
 
@@ -159,16 +156,6 @@ const PaymentContainer = ({
       handleWireTransferSubmit();
     }
   }, [paymentType, handleCreditCardSubmit, handleWireTransferSubmit]);
-
-  const buttonDisabled = useMemo<boolean>(() => {
-    if (paymentType === PaymentTypes.CREDIT_CARD) {
-      return !creditHasDirty || !isValidCreditCardValues;
-    }
-    if (paymentType === PaymentTypes.WIRE_TRANSFER) {
-      return !wireHasDirty || !isValidWireTransfer;
-    }
-    return true;
-  }, [isValidCreditCardValues, isValidWireTransfer, paymentType, wireHasDirty, creditHasDirty]);
 
   return (
     <>
@@ -193,7 +180,6 @@ const PaymentContainer = ({
               <CreditCardForm
                 creditCardList={ creditCardList }
                 values={ creditCardFormValues }
-                handleChange={ onChangeCreditCardField }
                 setFieldValue={ onSetCreditCardField }
                 errors={ creditCardFormErrors }
                 screeningError={ screeningError } />
@@ -256,7 +242,6 @@ const PaymentContainer = ({
           backgroundColor={ theme.global?.checkout?.continueButtonBackground }
           textColor={ theme.global?.checkout?.continueButtonTextColor }
           onClick={ onClickDelivery }
-          disabled={ buttonDisabled }
           sx={{
             margin: '24px 0',
             '&: hover': {

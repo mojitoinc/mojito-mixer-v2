@@ -95,11 +95,6 @@ const BillingContainer = () => {
   }, [vertexEnabled, refetchTaxes]);
 
   const onClickContinue = useCallback(async (values:BillingFormData) => {
-    if (!isEditing) {
-      const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
-      const isValidEmail = emailRegex.test(values?.email ?? '');
-      if (!isValidEmail) return;
-    }
     setBillingInfo({
       ...values,
       name: `${ values?.firstName } ${ values?.lastName }`,
@@ -112,7 +107,6 @@ const BillingContainer = () => {
     setContainerState(ContainerTypes.PAYMENT);
   }, [
     setBillingInfo,
-    isEditing,
     setContainerState,
     paymentInfo,
     setPaymentInfo,

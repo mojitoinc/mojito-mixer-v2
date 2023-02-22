@@ -37,9 +37,13 @@ const BillingDetails = ({ values, onClickEdit }: BillingFormProps) => {
             fontWeight="500"
             fontSize="16px"
             marginTop="16px">
+            { `${ values?.firstName } ${ values?.lastName }\n` }
+            <br />
             { `${ values?.country },${ values?.state }\n` }
             <br />
             { `${ values?.city },${ values?.postalCode }\n` }
+            <br />
+            { values?.street1 }
             <br />
             { values?.phoneNumber }
           </Typography>
