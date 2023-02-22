@@ -42,12 +42,11 @@ const BillingView = ({
   paymentItem,
   onChangeValues,
 }: BillingProps) => {
-
   const { email } = useUserInfo();
 
   const { values, errors, handleChange: onChange, isValid, handleSubmit } = useFormik({
     initialValues: {
-      email: email,
+      email,
       country: billingInfo?.country ?? paymentItem?.billingDetails?.country,
       state: billingInfo?.state ?? paymentItem?.billingDetails?.district,
       city: billingInfo?.city ?? paymentItem?.billingDetails?.city,
