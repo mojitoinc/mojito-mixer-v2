@@ -63,7 +63,7 @@ export const DeliveryInfoCard = ({
         <Box width="50%" display="flex">
           <Typography
             variant="body2"
-            sx={{ color: theme.global?.cardGrayedText, width: '135px',marginRight:'32px' }}>
+            sx={{ color: theme.global?.cardGrayedText, width: '135px', marginRight: '32px' }}>
             Contact info
           </Typography>
           <Typography variant="body2">{ billingInfo?.email }</Typography>

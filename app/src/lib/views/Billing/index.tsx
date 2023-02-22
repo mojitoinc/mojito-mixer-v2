@@ -107,7 +107,6 @@ const BillingContainer = () => {
     setContainerState(ContainerTypes.PAYMENT);
   }, [
     setBillingInfo,
-    isEditing,
     setContainerState,
     paymentInfo,
     setPaymentInfo,

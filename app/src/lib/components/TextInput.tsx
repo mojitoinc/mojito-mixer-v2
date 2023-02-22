@@ -33,7 +33,7 @@ const TextInput = ({
   required,
   type,
   inputProps,
-  disabled
+  disabled,
 }: TextInputProps) => {
   const theme = useTheme<MixTheme>();
 
@@ -82,7 +82,7 @@ const TextInput = ({
         fullWidth
         inputProps={ inputProps }
         size="small"
-        disabled={disabled}
+        disabled={ disabled }
         helperText={ error }
         type={ type } />
     </Box>

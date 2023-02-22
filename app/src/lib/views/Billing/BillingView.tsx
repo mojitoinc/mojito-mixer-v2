@@ -2,6 +2,7 @@ import { Box, Card, Typography, useTheme } from '@mui/material';
 import React, { useEffect, useMemo } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { useAuth0 } from '@auth0/auth0-react';
 import { useUIConfiguration, BillingFormData } from '../../providers';
 import { Button, TextInput } from '../../components';
 import { MixTheme } from '../../theme';
@@ -10,7 +11,6 @@ import ExpressCheckoutView from './ExpressCheckout';
 import BillingDetails from './BillingDetails';
 import { DebugBox } from '../../components/shared/DebugBox';
 import { PaymentMethod } from '../../interfaces';
-import { useAuth0 } from '@auth0/auth0-react';
 
 interface BillingProps {
   isEditing: boolean;
@@ -29,7 +29,7 @@ const schema = Yup.object().shape({
   email: Yup.string()
     .email('Please enter valid email')
     .required('Please enter email'),
-  phoneNumber: Yup.string().matches(/^\+[1-9]{1}[0-9]{3,14}$/,"Invalid mobile number" ).required('Please enter a mobile number'),
+  phoneNumber: Yup.string().matches(/^\+[1-9]{1}[0-9]{3,14}$/, 'Invalid mobile number').required('Please enter a mobile number'),
   street1: Yup.string().required('Please enter your address'),
   firstName: Yup.string().min(2, 'Invalid first name').required('Please enter first name'),
   lastName: Yup.string().min(2, 'Invalid last name').required('Please enter last name'),
@@ -106,9 +106,9 @@ const BillingView = ({
           error={ errors?.email }
           placeholder="Email"
           inputProps={{
-            readOnly:true,
+            readOnly: true,
           }}
-          disabled={true}
+          disabled
           sx={{
             marginTop: '16px',
           }} />

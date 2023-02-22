@@ -1,6 +1,5 @@
 import {
   Box,
-  Checkbox,
   FormHelperText,
   Typography,
   useTheme,
@@ -16,7 +15,6 @@ import { MixTheme } from '../../theme';
 interface CreditCardProps {
   creditCardList: PaymentMethod[];
   values: CreditCardFormType;
-  handleChange: any;
   setFieldValue: (
     field: string,
     value: any,
@@ -31,7 +29,6 @@ export const CreditCardForm = ({
   values,
   setFieldValue,
   errors,
-  handleChange,
   screeningError,
 }: CreditCardProps) => {
   const theme = useTheme<MixTheme>();

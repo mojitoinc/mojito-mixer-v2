@@ -241,7 +241,7 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
       </Box>
       { isAuthenticated && (
         <MojitoCheckout
-          debug={false}
+          debug={ false }
           uri={ RuntimeConfiguration.API_HOST_URL ?? '' }
           getAuthenticationToken={ getAuthenticationToken }
           checkoutOptions={{

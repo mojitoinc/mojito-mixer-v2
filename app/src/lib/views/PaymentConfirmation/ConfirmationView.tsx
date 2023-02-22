@@ -57,7 +57,7 @@ const ConfirmationView = ({ paymentStatus }: ConfirmationViewProps) => {
           fontSize="16px"
           variant="body1"
           color={ theme.global?.unHighlightedText }>
-          Order #: {paymentInfo?.paymentId}
+          Order #: { paymentInfo?.paymentId }
         </Typography>
         { paymentInfo?.paymentType === PaymentTypes.WIRE_TRANSFER &&
           paymentConfiguration?.wireTransferInstructions }

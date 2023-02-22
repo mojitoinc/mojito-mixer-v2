@@ -60,7 +60,7 @@ export const PaymentInfoCards = ({ billingInfo }: PaymentInfoCardsProps) => {
             Billing info
           </Typography>
           <Box>
-          <Typography variant="body2">
+            <Typography variant="body2">
               { billingInfo?.firstName } { billingInfo?.lastName }
             </Typography>
             <Typography variant="body2">
