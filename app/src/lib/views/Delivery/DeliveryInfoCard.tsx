@@ -59,30 +59,14 @@ export const DeliveryInfoCard = ({
         sx={{ padding: '16px 24px' }}
         display="flex"
         flexDirection="row"
-        justifyContent="space-between"
         alignItems="flex-start">
         <Box width="50%" display="flex">
           <Typography
             variant="body2"
-            sx={{ color: theme.global?.cardGrayedText, width: '135px' }}>
+            sx={{ color: theme.global?.cardGrayedText, width: '135px', marginRight: '32px' }}>
             Contact info
           </Typography>
           <Typography variant="body2">{ billingInfo?.email }</Typography>
-        </Box>
-        <Box>
-          <Typography
-            variant="button"
-            sx={{
-              color: theme.global?.unHighlightedText,
-              textTransform: 'capitalize',
-              fontWeight: 700,
-              '&: hover': {
-                cursor: 'pointer',
-              },
-            }}
-            onClick={ () => handleEdit('billing') }>
-            Edit
-          </Typography>
         </Box>
       </Box>
       <Divider />
@@ -100,11 +84,15 @@ export const DeliveryInfoCard = ({
           </Typography>
           <Box>
             <Typography variant="body2">
+              { billingInfo?.firstName } { billingInfo?.lastName }
+            </Typography>
+            <Typography variant="body2">
               { billingInfo?.country }, { billingInfo?.state }
             </Typography>
             <Typography variant="body2">
               { billingInfo?.city }, { billingInfo?.postalCode }
             </Typography>
+            <Typography variant="body2">{ billingInfo?.street1 }</Typography>
             <Typography variant="body2">{ billingInfo?.phoneNumber }</Typography>
           </Box>
         </Box>
@@ -156,10 +144,6 @@ export const DeliveryInfoCard = ({
             <Box>
               <Typography variant="body2" sx={{ marginBottom: '4px' }}>
                 Credit Card
-              </Typography>
-              <Typography variant="body2" sx={{ marginBottom: '4px' }}>
-                { paymentInfo?.creditCardData?.cardData?.billingDetails?.name ??
-                  `${ billingInfo?.firstName } ${ billingInfo?.lastName }` }
               </Typography>
               <Stack flexDirection="row">
                 <img

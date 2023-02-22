@@ -57,7 +57,7 @@ const ConfirmationView = ({ paymentStatus }: ConfirmationViewProps) => {
           fontSize="16px"
           variant="body1"
           color={ theme.global?.unHighlightedText }>
-          Order #: 1241359891385198375983798
+          Order #: { paymentInfo?.paymentId }
         </Typography>
         { paymentInfo?.paymentType === PaymentTypes.WIRE_TRANSFER &&
           paymentConfiguration?.wireTransferInstructions }
@@ -198,6 +198,8 @@ const ConfirmationView = ({ paymentStatus }: ConfirmationViewProps) => {
               <br />
               { billingInfo?.state }, { billingInfo?.postalCode }{ ' ' }
               { billingInfo?.country }
+              <br />
+              { billingInfo?.street1 }
               <br />
               { billingInfo?.phoneNumber }
             </Typography>

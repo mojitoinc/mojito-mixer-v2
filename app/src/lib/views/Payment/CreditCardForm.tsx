@@ -1,6 +1,5 @@
 import {
   Box,
-  Checkbox,
   FormHelperText,
   Typography,
   useTheme,
@@ -16,7 +15,6 @@ import { MixTheme } from '../../theme';
 interface CreditCardProps {
   creditCardList: PaymentMethod[];
   values: CreditCardFormType;
-  handleChange: any;
   setFieldValue: (
     field: string,
     value: any,
@@ -31,7 +29,6 @@ export const CreditCardForm = ({
   values,
   setFieldValue,
   errors,
-  handleChange,
   screeningError,
 }: CreditCardProps) => {
   const theme = useTheme<MixTheme>();
@@ -186,17 +183,6 @@ export const CreditCardForm = ({
         NFTs purchased by credit card can only be transferred to your multi-sig
         wallet and cannot be transferred out for 14 days.
       </Typography>
-      { values?.isNew && (
-        <Box display="flex" alignItems="center" marginTop={ 2 }>
-          <Checkbox
-            sx={{ padding: 0 }}
-            checked={ values?.save }
-            onChange={ handleChange('save') } />
-          <Typography variant="body1" sx={{ marginLeft: 1 }}>
-            Save my credit card info for faster checkout
-          </Typography>
-        </Box>
-      ) }
     </>
   );
 };
