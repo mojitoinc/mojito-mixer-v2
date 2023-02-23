@@ -85,7 +85,7 @@ const Delivery = ({
             <Dropdown
               value={ selectedDeliveryAddress }
               onChange={ onWalletChange }
-              placeholder="Select or Enter Wallet Address"
+              placeholder="Select Wallet Address"
               sx={{ marginRight: '8px' }}
               options={ walletOptions } />
             { selectedDeliveryAddress === NEW_MULTI_SIG && (
