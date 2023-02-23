@@ -22,6 +22,9 @@ stories.add('SHOW Express checkout', () => {
 stories.add('Hide Express checkout', () => {
   return (
     <MojitoCheckout
+      userInfo={{
+        email: 'Showri.srinivas@ionixxtech.com',
+      }}
       show
       debug
       uiConfiguration={{
@@ -40,6 +43,9 @@ stories.add('Hide Express checkout', () => {
 stories.add('Hide GooglePay', () => {
   return (
     <MojitoCheckout
+      userInfo={{
+        email: 'Showri.srinivas@ionixxtech.com',
+      }}
       show
       debug
       uri=""

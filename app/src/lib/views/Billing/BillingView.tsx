@@ -44,7 +44,7 @@ const BillingView = ({
 }: BillingProps) => {
   const { email } = useUserInfo();
 
-  const { values, errors, handleChange: onChange, isValid, handleSubmit } = useFormik({
+  const { values, errors, handleChange: onChange, isValid, handleSubmit, setFieldValue } = useFormik({
     initialValues: {
       email,
       country: billingInfo?.country ?? paymentItem?.billingDetails?.country,
@@ -115,6 +115,7 @@ const BillingView = ({
       { isEditing ? (
         <BillingForm
           values={ values }
+          setFieldValue={ setFieldValue }
           errors={ errors }
           onChange={ onChange }
           isValid={ isValidBillingForm } />
