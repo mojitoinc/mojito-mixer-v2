@@ -2,13 +2,16 @@ import { useState, useEffect } from 'react';
 import { CookieService } from '../service/CookieService.js';
 
 const getObject = (value) => {
-    if (!value || value === 'undefined')
+    if (value === 'undefined')
+        return undefined;
+    if (typeof value !== 'string')
         return value;
-    if (typeof value === 'object')
-        return value;
-    if (typeof value === 'string')
+    try {
         return JSON.parse(value);
-    return value;
+    }
+    catch (e) {
+        return value;
+    }
 };
 const usePaymentInfo = () => {
     const [paymentData, setPaymentData] = useState();

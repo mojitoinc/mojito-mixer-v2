@@ -2,26 +2,28 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-var Cookies = require('../../node_modules/universal-cookie/es6/Cookies.js');
-
+const getCookies = () => {
+    if (typeof document === 'undefined')
+        return {};
+    return Object.fromEntries(document.cookie.split('; ').map((cookie) => {
+        return cookie.split('=');
+    }));
+};
 class CookieStorage {
     constructor(key) {
         this.setValue = (value) => {
-            this.cookies.set(this.key, value, {
-                maxAge: 5 * 60,
-            });
+            const date = new Date();
+            date.setTime(date.getTime() + (60 * 15 * 1000));
+            document.cookie = `${this.key} = ${value}; expires = ${date.toUTCString()}`;
         };
         this.getValue = () => {
-            if (typeof window !== 'undefined') {
-                return this.cookies.get(this.key);
-            }
-            return undefined;
+            const cookies = getCookies();
+            return cookies[this.key];
         };
         this.remove = () => {
-            this.cookies.remove(this.key, { path: '/' });
+            document.cookie = `${this.key} =  ; expires = Thu, 01 Jan 1970 00:00:00 UTC`;
         };
         this.key = key;
-        this.cookies = new Cookies["default"]();
     }
 }
 const CookieService = {

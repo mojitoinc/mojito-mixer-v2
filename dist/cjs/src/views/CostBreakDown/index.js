@@ -46,10 +46,26 @@ const CostBreakdownContainer = () => {
     const { taxablePrice } = BillingProvider.useBilling();
     const { taxData, collection, vertexEnabled: vertex, taxablePrice: price, quantity: totalQuanity } = usePaymentInfo["default"]();
     const { containerState } = ContainerStateProvider.useContainer();
-    const isConfirmation = React.useMemo(() => {
-        return containerState === RootContainer.ContainerTypes.CONFIRMATION;
-    }, [containerState]);
-    return (React__default["default"].createElement(CostBreakDown["default"], { taxes: isConfirmation ? taxData : taxes, collectionData: isConfirmation ? collection : collectionData, quantity: isConfirmation ? totalQuanity : quantity, taxablePrice: isConfirmation ? price : taxablePrice, vertexEnabled: isConfirmation ? vertex : vertexEnabled }));
+    const props = React.useMemo(() => {
+        const isConfirmation = containerState === RootContainer.ContainerTypes.CONFIRMATION;
+        if (isConfirmation) {
+            return {
+                taxes: taxData,
+                collectionData: collection,
+                quantity: totalQuanity,
+                taxablePrice: price,
+                vertexEnabled: vertex,
+            };
+        }
+        return {
+            taxes,
+            collectionData,
+            quantity,
+            taxablePrice,
+            vertexEnabled,
+        };
+    }, [containerState, taxData, taxes, collection, collectionData, totalQuanity, quantity, price, taxablePrice, vertex, vertexEnabled]);
+    return (React__default["default"].createElement(CostBreakDown["default"], Object.assign({}, props)));
 };
 
 exports["default"] = CostBreakdownContainer;

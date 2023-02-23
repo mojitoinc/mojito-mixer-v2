@@ -338,9 +338,9 @@ const Delivery = ({ onWalletChange, walletOptions, selectedDeliveryAddress, onCl
                   out for 14 days.`
                 : `All related NFT purchase and delivery fees will be covered by ${organizationName}.`),
             !(connect === null || connect === void 0 ? void 0 : connect.connected) ? (React__default.createElement(React__default.Fragment, null,
-                React__default.createElement(Dropdown, { value: selectedDeliveryAddress, onChange: onWalletChange, placeholder: "Select or Enter Wallet Address", sx: { marginRight: '8px' }, options: walletOptions }),
+                React__default.createElement(Dropdown, { value: selectedDeliveryAddress, onChange: onWalletChange, placeholder: "Select Wallet Address", sx: { marginRight: '8px' }, options: walletOptions }),
                 selectedDeliveryAddress === NEW_MULTI_SIG && (React__default.createElement(Typography, { variant: "body2", sx: { marginTop: '6px', color: (_d = theme.global) === null || _d === void 0 ? void 0 : _d.cardGrayedText } }, "A new multi-sig wallet will be created for you when purchase is complete")),
-                (delivery === null || delivery === void 0 ? void 0 : delivery.showConnectWallet) && (React__default.createElement(Stack, { flexDirection: "row", alignItems: "flex-end", justifyContent: "flex-end" },
+                ((delivery === null || delivery === void 0 ? void 0 : delivery.showConnectWallet) && !isCreditCard) && (React__default.createElement(Stack, { flexDirection: "row", alignItems: "flex-end", justifyContent: "flex-end" },
                     React__default.createElement(Button, { title: "Connect Wallet", textColor: (_e = theme.global) === null || _e === void 0 ? void 0 : _e.highlightedText, backgroundColor: (_f = theme.global) === null || _f === void 0 ? void 0 : _f.white, variant: "outlined", sx: { marginTop: 2 }, onClick: onClickConnectWallet }))))) : (React__default.createElement(Box, { display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between", border: `1px solid ${(_g = theme.global) === null || _g === void 0 ? void 0 : _g.cardBorder}`, padding: "16px", sx: {
                     background: (_h = theme.global) === null || _h === void 0 ? void 0 : _h.background,
                 } },

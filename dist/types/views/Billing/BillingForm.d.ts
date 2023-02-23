@@ -6,6 +6,7 @@ interface BillingFormProps {
     errors: FormikErrors<BillingFormData>;
     onChange: any;
     isValid: boolean;
+    setFieldValue?: (field: string, value: any, shouldValidate?: boolean | undefined) => Promise<void> | Promise<FormikErrors<BillingFormData>>;
 }
-declare const BillingForm: ({ values, errors, onChange, isValid, }: BillingFormProps) => JSX.Element;
+declare const BillingForm: ({ values, errors, onChange, isValid, setFieldValue, }: BillingFormProps) => JSX.Element;
 export default BillingForm;

@@ -1,9 +1,10 @@
+import { __awaiter } from '../../../node_modules/tslib/tslib.es6.js';
 import '../../../node_modules/@mui/utils/esm/elementAcceptingRef.js';
 import '../../../node_modules/@mui/utils/esm/elementTypeAcceptingRef.js';
 import 'react-is';
 import '../../../node_modules/@mui/utils/esm/ponyfillGlobal.js';
 import '../../../node_modules/@mui/utils/esm/refType.js';
-import React__default from 'react';
+import React__default, { useCallback } from 'react';
 import '../../../node_modules/@mui/utils/esm/integerPropType.js';
 import '@emotion/styled';
 import '@emotion/react';
@@ -333,12 +334,27 @@ import '../../config/paymentConfiguration.js';
 import '../../queries/invoiceDetails.js';
 import '../../queries/Payment.js';
 
-const BillingForm = ({ values, errors, onChange, isValid, }) => {
+const BillingForm = ({ values, errors, onChange, isValid, setFieldValue, }) => {
     var _a, _b, _c, _d, _e, _f, _g;
     const countries = useCountryOptions();
     const states = useStateOptions(values === null || values === void 0 ? void 0 : values.country);
     const cities = useCityOptions(values === null || values === void 0 ? void 0 : values.country, values === null || values === void 0 ? void 0 : values.state);
     const theme = useTheme();
+    const onChangePhoneNumber = useCallback((value) => __awaiter(void 0, void 0, void 0, function* () {
+        var _h;
+        const phoneNumberLength = (values === null || values === void 0 ? void 0 : values.phoneNumber)
+            ? (_h = values === null || values === void 0 ? void 0 : values.phoneNumber) === null || _h === void 0 ? void 0 : _h.length
+            : 0;
+        if (phoneNumberLength > value.length) {
+            yield (setFieldValue === null || setFieldValue === void 0 ? void 0 : setFieldValue('phoneNumber', value));
+            return;
+        }
+        const isValidPhoneNumber = value.match(/^[\d\s]+$/);
+        if (isValidPhoneNumber) {
+            const phoneNumber = value.split(' ').join('');
+            yield (setFieldValue === null || setFieldValue === void 0 ? void 0 : setFieldValue('phoneNumber', phoneNumber));
+        }
+    }), [setFieldValue, values]);
     return (React__default.createElement(Card, { sx: {
             border: `1px solid ${(_a = theme.global) === null || _a === void 0 ? void 0 : _a.cardBorder}`,
             backgroundColor: (_b = theme.global) === null || _b === void 0 ? void 0 : _b.cardBackground,
@@ -380,7 +396,7 @@ const BillingForm = ({ values, errors, onChange, isValid, }) => {
             React__default.createElement(TextInput, { value: values === null || values === void 0 ? void 0 : values.street1, onChange: onChange('street1'), title: "Address", sx: {
                     marginTop: '16px',
                 }, required: true, error: errors === null || errors === void 0 ? void 0 : errors.street1, placeholder: "" }),
-            React__default.createElement(TextInput, { value: values === null || values === void 0 ? void 0 : values.phoneNumber, onChange: onChange('phoneNumber'), title: "Phone number", sx: {
+            React__default.createElement(TextInput, { value: values === null || values === void 0 ? void 0 : values.phoneNumber, onChange: onChangePhoneNumber, title: "Phone number", sx: {
                     marginTop: '16px',
                 }, required: true, error: errors === null || errors === void 0 ? void 0 : errors.phoneNumber, placeholder: "(___) ___-____", type: "tel" }))));
 };

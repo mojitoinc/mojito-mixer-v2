@@ -349,7 +349,7 @@ const schema = object.create().shape({
 const BillingView = ({ isEditing, onClickEdit, onClickContinue, pincodeError, billingInfo, paymentItem, onChangeValues, }) => {
     var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5, _6, _7;
     const { email } = UserInfoProvider.useUserInfo();
-    const { values, errors, handleChange: onChange, isValid, handleSubmit } = formik_esm.useFormik({
+    const { values, errors, handleChange: onChange, isValid, handleSubmit, setFieldValue } = formik_esm.useFormik({
         initialValues: {
             email,
             country: (_a = billingInfo === null || billingInfo === void 0 ? void 0 : billingInfo.country) !== null && _a !== void 0 ? _a : (_b = paymentItem === null || paymentItem === void 0 ? void 0 : paymentItem.billingDetails) === null || _b === void 0 ? void 0 : _b.country,
@@ -394,7 +394,7 @@ const BillingView = ({ isEditing, onClickEdit, onClickContinue, pincodeError, bi
                 }, disabled: true, sx: {
                     marginTop: '16px',
                 } })),
-        isEditing ? (React__default["default"].createElement(BillingForm["default"], { values: values, errors: errors, onChange: onChange, isValid: isValidBillingForm })) : (React__default["default"].createElement(BillingDetails["default"], { values: values, onClickEdit: onClickEdit })),
+        isEditing ? (React__default["default"].createElement(BillingForm["default"], { values: values, setFieldValue: setFieldValue, errors: errors, onChange: onChange, isValid: isValidBillingForm })) : (React__default["default"].createElement(BillingDetails["default"], { values: values, onClickEdit: onClickEdit })),
         React__default["default"].createElement(Box["default"], { display: "flex", justifyContent: "flex-end" },
             React__default["default"].createElement(Button["default"], { title: "Continue to Payment", backgroundColor: (_5 = (_4 = theme.global) === null || _4 === void 0 ? void 0 : _4.checkout) === null || _5 === void 0 ? void 0 : _5.continueButtonBackground, textColor: (_7 = (_6 = theme.global) === null || _6 === void 0 ? void 0 : _6.checkout) === null || _7 === void 0 ? void 0 : _7.continueButtonTextColor, onClick: handleSubmit, sx: {
                     margin: '24px 0px',
