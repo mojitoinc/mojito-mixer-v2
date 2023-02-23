@@ -27,6 +27,9 @@ const SuccessPage: NextPage = () => {
   return paymentId ? (
 
     <MojitoCheckout
+      userInfo={{
+        email: 'Showrisrinivas@ionixxtech.com',
+      }}
       checkoutOptions={{
         paymentId,
       }}

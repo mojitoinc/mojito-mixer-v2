@@ -15,10 +15,13 @@ interface PaymentInfo {
   quantity?: number;
 }
 const getObject = (value:any) => {
-  if (!value || value === 'undefined') return value;
-  if (typeof value === 'object') return value;
-  if (typeof value === 'string') return JSON.parse(value);
-  return value;
+  if (value === 'undefined') return undefined;
+  if (typeof value !== 'string') return value;
+  try {
+    return JSON.parse(value);
+  } catch (e) {
+    return value;
+  }
 };
 
 const usePaymentInfo = (): PaymentInfo => {

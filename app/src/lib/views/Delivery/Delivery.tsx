@@ -97,7 +97,7 @@ const Delivery = ({
               </Typography>
             ) }
             {
-              delivery?.showConnectWallet && (
+              (delivery?.showConnectWallet && !isCreditCard) && (
               <Stack
                 flexDirection="row"
                 alignItems="flex-end"
