@@ -349,7 +349,7 @@ const BillingForm = ({ values, errors, onChange, isValid, setFieldValue, }) => {
             yield (setFieldValue === null || setFieldValue === void 0 ? void 0 : setFieldValue('phoneNumber', value));
             return;
         }
-        const isValidPhoneNumber = value.match(/^\+[\d\s]+$/);
+        const isValidPhoneNumber = value.match(/^\+[\d\s]*$/);
         if (isValidPhoneNumber) {
             const phoneNumber = value.split(' ').join('');
             yield (setFieldValue === null || setFieldValue === void 0 ? void 0 : setFieldValue('phoneNumber', phoneNumber));
