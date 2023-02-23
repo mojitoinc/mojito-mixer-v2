@@ -45,7 +45,7 @@ const BillingForm = ({
         await setFieldValue?.('phoneNumber', value);
         return;
       }
-      const isValidPhoneNumber = value.match(/^[\d\s]+$/);
+      const isValidPhoneNumber = value.match(/^\+[\d\s]+$/);
       if (isValidPhoneNumber) {
         const phoneNumber = value.split(' ').join('');
         await setFieldValue?.(
