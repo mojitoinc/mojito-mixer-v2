@@ -247,7 +247,7 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
           userInfo={{
             email: user?.email ?? '',
           }}
-          debug
+          debug={ false }
           uri={ RuntimeConfiguration.API_HOST_URL ?? '' }
           getAuthenticationToken={ getAuthenticationToken }
           checkoutOptions={{
@@ -256,7 +256,6 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
             quantity: parseInt(values.lotUnits ?? '1', 10),
             collectionItemId: values.itemId ?? '',
             invoiceId: values?.invoiceId,
-            vertexEnabled: false,
           }}
           enableSardine={ false }
           uiConfiguration={{

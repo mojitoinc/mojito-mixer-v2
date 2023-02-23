@@ -1,7 +1,7 @@
 import { Card, Typography, useTheme } from '@mui/material';
 import { Box } from '@mui/system';
 import { FormikErrors } from 'formik';
-import React from 'react';
+import React, { useCallback } from 'react';
 import ErrorIcon from '@mui/icons-material/Error';
 import { TextInput, Dropdown } from '../../components';
 import { MixTheme } from '../../theme';
@@ -17,6 +17,11 @@ interface BillingFormProps {
   errors: FormikErrors<BillingFormData>;
   onChange: any;
   isValid: boolean;
+  setFieldValue?: (
+    field: string,
+    value: any,
+    shouldValidate?: boolean | undefined
+  ) => Promise<void> | Promise<FormikErrors<BillingFormData>>;
 }
 
 const BillingForm = ({
@@ -24,12 +29,33 @@ const BillingForm = ({
   errors,
   onChange,
   isValid,
+  setFieldValue,
 }: BillingFormProps) => {
   const countries = useCountryOptions();
   const states = useStateOptions(values?.country);
   const cities = useCityOptions(values?.country, values?.state);
 
   const theme = useTheme<MixTheme>();
+  const onChangePhoneNumber = useCallback(
+    async (value: string) => {
+      const phoneNumberLength = values?.phoneNumber
+        ? values?.phoneNumber?.length
+        : 0;
+      if (phoneNumberLength > value.length) {
+        await setFieldValue?.('phoneNumber', value);
+        return;
+      }
+      const isValidPhoneNumber = value.match(/^[\d\s]+$/);
+      if (isValidPhoneNumber) {
+        const phoneNumber = value.split(' ').join('');
+        await setFieldValue?.(
+          'phoneNumber',
+          phoneNumber,
+        );
+      }
+    },
+    [setFieldValue, values],
+  );
   return (
     <Card
       sx={{
@@ -152,7 +178,7 @@ const BillingForm = ({
           placeholder="" />
         <TextInput
           value={ values?.phoneNumber }
-          onChange={ onChange('phoneNumber') }
+          onChange={ onChangePhoneNumber }
           title="Phone number"
           sx={{
             marginTop: '16px',

@@ -1,30 +1,34 @@
-import Cookies from 'universal-cookie';
+const getCookies = (): Record<string, string> => {
+  if (typeof document === 'undefined') return {};
+
+  return Object.fromEntries(
+    document.cookie.split('; ').map((cookie) => {
+      return cookie.split('=');
+    }),
+  );
+};
 
 class CookieStorage {
   key: string;
 
-  cookies:Cookies;
 
   constructor(key: string) {
     this.key = key;
-    this.cookies = new Cookies();
   }
 
   setValue = (value: any) => {
-    this.cookies.set(this.key, value, {
-      maxAge: 5 * 60,
-    });
+    const date = new Date();
+    date.setTime(date.getTime() + (60 * 15 * 1000));
+    document.cookie = `${ this.key } = ${ value }; expires = ${ date.toUTCString() }`;
   };
 
   getValue = () => {
-    if (typeof window !== 'undefined') {
-      return this.cookies.get(this.key);
-    }
-    return undefined;
+    const cookies = getCookies();
+    return cookies[this.key];
   };
 
   remove = () => {
-    this.cookies.remove(this.key, { path: '/' });
+    document.cookie = `${ this.key } =  ; expires = Thu, 01 Jan 1970 00:00:00 UTC`;
   };
 }
 
