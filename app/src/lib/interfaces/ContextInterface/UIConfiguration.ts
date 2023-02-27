@@ -17,6 +17,7 @@ export interface MojitoUIConfiguration {
       walletConnect?: boolean;
       wire?: boolean;
       creditCard?: boolean;
+      coinbase?: boolean;
     };
     costBreakdown?: {
       showDiscountCode?: boolean;
@@ -49,6 +50,7 @@ export interface UIConfiguration {
     walletConnect: boolean;
     wire: boolean;
     creditCard: boolean;
+    coinbase: boolean;
   };
   costBreakdown: {
     showDiscountCode: boolean;

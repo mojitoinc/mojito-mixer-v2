@@ -14,7 +14,7 @@ import { MixTheme } from '../../theme';
 interface PaymentMethodProps {
   isSelected: string;
   name: string;
-  logo: string | null;
+  logo: string | JSX.Element |null;
   bodyContent: JSX.Element;
   onChoosePaymentType: (name: PaymentTypes, value: boolean) => void;
   type: PaymentTypes;
@@ -57,7 +57,16 @@ export const PaymentMethodView = ({
               height="24px"
               display="flex"
               justifyContent="center">
-              <img src={ logo ?? Icons.item } width={ 32 } alt="logo" />
+                {
+                  typeof logo === 'string' &&
+                  <img src={ logo ?? Icons.item } width={ 32 } alt="logo" />
+                }
+                {
+                  logo && typeof logo !=='string' &&
+                  <>
+                  {logo}
+                  </>
+                }
             </Box>
           ) }
           <Typography

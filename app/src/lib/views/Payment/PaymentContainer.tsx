@@ -14,6 +14,8 @@ import { PaymentMethodView } from './PaymentMethodView';
 import { WireTransferForm, WireTransferFormData, Countries } from './WireTransferForm';
 import { CreditCardForm } from './CreditCardForm';
 import { DebugBox } from '../../components/shared/DebugBox';
+import { mdiEthereum } from "@mdi/js";
+import Icon from "@mdi/react";
 
 interface PaymentContainerProps {
   paymentType: string;
@@ -25,13 +27,15 @@ interface PaymentContainerProps {
     walletConnect?: boolean;
     wire?: boolean;
     creditCard?: boolean;
+    coinbase?: boolean;
   };
   billingInfo: BillingFormData | undefined;
   paymentMethodLimit: PaymentMethodLimit | undefined;
   screeningError?: string;
   paymentInfo?: PaymentData;
   onSubmitWireTransfer: (values: WireTransferFormData) => void;
-  onSubmitCreditCard: (values: CreditCardFormType) => void
+  onSubmitCreditCard: (values: CreditCardFormType) => void;
+  onSubmitCoinBase: ()=>void;
 }
 
 const validationSchema = Yup.object().shape({
@@ -102,6 +106,7 @@ const PaymentContainer = ({
   paymentInfo,
   onSubmitCreditCard,
   onSubmitWireTransfer,
+  onSubmitCoinBase
 }: PaymentContainerProps) => {
   const theme = useTheme<MixTheme>();
 
@@ -154,6 +159,9 @@ const PaymentContainer = ({
     }
     if (paymentType === PaymentTypes.WIRE_TRANSFER) {
       handleWireTransferSubmit();
+    }
+    if(paymentType === PaymentTypes.COIN_BASE) {
+      onSubmitCoinBase()
     }
   }, [paymentType, handleCreditCardSubmit, handleWireTransferSubmit]);
 
@@ -228,6 +236,23 @@ const PaymentContainer = ({
             ) }
             onChoosePaymentType={ onChoosePaymentType } />
         ) }
+        { config?.coinbase && (
+
+          <PaymentMethodView
+            logo={(
+              <Icon path={ mdiEthereum } size="20px" />
+            ) }
+            isSelected={ paymentType }
+            name="Coinbase"
+            type={ PaymentTypes.COIN_BASE }
+            bodyContent={ (
+              <Typography>
+
+              </Typography>
+            ) }
+            onChoosePaymentType={ onChoosePaymentType } />
+        ) }
+          
         <Box display="flex" marginTop={ 2 } alignItems="center">
           <img src={ Icons.lock } height={ 28 } width={ 28 } alt="lock-icon" />
           <Typography variant="body2" sx={{ marginLeft: 1 }}>

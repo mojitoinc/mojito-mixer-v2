@@ -164,6 +164,13 @@ export const DeliveryInfoCard = ({
               </Stack>
             </Box>
           ) }
+          { paymentInfo?.paymentType === PaymentTypes.COIN_BASE && (
+            <Box>
+              <Typography variant="body2" sx={{ marginBottom: '4px' }}>
+                Coinbase
+              </Typography>
+            </Box>
+          )}
         </Box>
         <Box>
           <Typography

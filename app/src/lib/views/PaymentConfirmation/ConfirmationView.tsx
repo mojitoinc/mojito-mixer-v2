@@ -144,20 +144,13 @@ const ConfirmationView = ({ paymentStatus }: ConfirmationViewProps) => {
             any time.
           </Typography>
         ) }
-        { paymentInfo?.paymentType === PaymentTypes.WALLET_CONNECT && (
-          <RowItem
-            title="Transaction Hash"
-            value="0x09750ad...360fdb7"
-            copyValue="0x09750"
-            showCopy />
-        ) }
-        { paymentInfo?.paymentType === PaymentTypes.WALLET_CONNECT && (
+        { paymentInfo?.paymentType === PaymentTypes.COIN_BASE && (
           <RowItem
             title="Payment Method"
             copyValue={ paymentInfo?.paymentId }
             showCopy>
             <Typography fontSize="16px">
-              Wallet Connect
+              Coinbase
               <br />
               { paymentInfo?.paymentId }
             </Typography>

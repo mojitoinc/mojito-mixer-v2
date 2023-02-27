@@ -19,7 +19,7 @@ export const Delivery = () => {
   const [walletOptions, setWalletOptions] = useState<DropdownOptions[]>([]);
   const { billingInfo } = useBilling();
   const { orgId } = useCheckout();
-  const { paymentInfo, onConfirmCreditCardPurchase, onConfirmWireTransferPurchase } = usePayment();
+  const { paymentInfo, onConfirmCreditCardPurchase, onConfirmWireTransferPurchase,onConfirmCoinbasePurchase } = usePayment();
   const { data: meData } = useQuery(meQuery);
   const [addressScreening, { loading: isLoading }] = useMutation(addressScreeningQuery);
   const [error, setError] = useState<string>();
@@ -84,6 +84,9 @@ export const Delivery = () => {
       }
       if (paymentInfo?.paymentType === PaymentTypes.CREDIT_CARD) {
         onConfirmCreditCardPurchase(deliveryAddress);
+      }
+      if (paymentInfo?.paymentType === PaymentTypes.COIN_BASE) {
+        onConfirmCoinbasePurchase(deliveryAddress);
       }
     } catch (e) {
       debug.error('onConfirm-start', { e });

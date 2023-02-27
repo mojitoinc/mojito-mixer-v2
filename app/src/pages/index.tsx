@@ -33,6 +33,7 @@ export interface PaymentMethodTypes {
   applepay?: boolean;
   walletconnect?: boolean;
   wire?: boolean;
+  coinbase?: boolean;
 }
 
 // const validationSchema = Yup.object().shape({
@@ -95,6 +96,7 @@ const HomePage: React.FC = () => {
       walletconnect: true,
       creditcard: true,
       wire: true,
+      coinbase:true,
     } as ConfigurationValues & ExpressCheckoutPayment & PaymentMethodTypes,
     onSubmit: () => undefined,
   });
