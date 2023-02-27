@@ -164,7 +164,7 @@ export const PaymentProvider = ({
       saveToCookies,
       makeWireTransferPurchase,
     ],
-  );  
+  );
   const onConfirmCoinbasePurchase = useCallback(
     async (deliveryAddress = '') => {
       setContainerState(ContainerTypes.LOADING);
@@ -187,10 +187,7 @@ export const PaymentProvider = ({
 
         setPaymentInfo(paymentReceipt.paymentData);
 
-        if(paymentReceipt.paymentResult?.details?.hostedURL) 
-          window.location.href = paymentReceipt.paymentResult?.details?.hostedURL ?? '';
-        else
-          setContainerState(ContainerTypes.CONFIRMATION);
+        if (paymentReceipt.paymentResult?.details?.hostedURL) { window.location.href = paymentReceipt.paymentResult?.details?.hostedURL ?? ''; } else setContainerState(ContainerTypes.CONFIRMATION);
       } catch (e: any) {
         const message = e.message ?? '';
         debug.error('confirm', { message });
@@ -226,6 +223,7 @@ export const PaymentProvider = ({
     setPaymentInfo,
     onConfirmCreditCardPurchase,
     onConfirmWireTransferPurchase,
+    onConfirmCoinbasePurchase,
     setPaymentMethods,
     paymentMethods,
   ]);

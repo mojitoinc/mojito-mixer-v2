@@ -274,9 +274,9 @@ export const useCreatePayment = (paymentInfo: PaymentData | undefined, orgId: st
 
   const makeCoinbasePurchase = useCallback(async (options: PaymentOptions):Promise<PaymentReceiptData> => {
     const inputData: any = {
-      paymentType: 'Crypto'
+      paymentType: 'Crypto',
     };
-    
+
     const result = await createPaymentMethod({
       variables: {
         orgID: orgId,
@@ -302,21 +302,21 @@ export const useCreatePayment = (paymentInfo: PaymentData | undefined, orgId: st
             destinationAddress: options.deliveryAddress,
             cryptoData: {
               name: options.billingInfo?.name,
-              description: "",
+              description: '',
               billingDetails: {
                 city: options.billingInfo?.city,
                 country: options.billingInfo?.country,
                 address1: options.billingInfo?.street1,
-                address2: "",
+                address2: '',
                 district: options.billingInfo?.state,
                 postalCode: options.billingInfo?.postalCode,
               },
               redirectURL:
-                "http://localhost:3000/payments/success/?from=coinbase",
-              cancelURL: "http://localhost:3000/payments/error/?from=coinbase",
+                'http://localhost:3000/payments/success/?from=coinbase',
+              cancelURL: 'http://localhost:3000/payments/error/?from=coinbase',
             },
           },
-          
+
         },
       });
       const paymentResult : CreatePaymentResult = paymentResponse?.data?.createPayment;
@@ -339,14 +339,13 @@ export const useCreatePayment = (paymentInfo: PaymentData | undefined, orgId: st
   ]);
 
 
-
   const values = useMemo<UseCreatePaymentData>(() => {
     return {
       makeCreditCardPurchase,
       makeWireTransferPurchase,
-      makeCoinbasePurchase
+      makeCoinbasePurchase,
     };
-  }, [makeCreditCardPurchase, makeWireTransferPurchase]);
+  }, [makeCreditCardPurchase, makeWireTransferPurchase, makeCoinbasePurchase]);
 
   return values;
 };

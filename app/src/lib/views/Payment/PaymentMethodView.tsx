@@ -62,11 +62,12 @@ export const PaymentMethodView = ({
                   <img src={ logo ?? Icons.item } width={ 32 } alt="logo" />
                 }
                 {
-                  logo && typeof logo !=='string' &&
+                  logo && typeof logo !== 'string' && (
                   <>
-                  {logo}
+                    { logo }
                   </>
-                }
+                  )
+}
             </Box>
           ) }
           <Typography
@@ -75,7 +76,7 @@ export const PaymentMethodView = ({
             { name }
           </Typography>
         </Box>
-        { Boolean(isCreditCard) && <img src={ logo ?? Icons.item } alt="logo" /> }
+        { Boolean(isCreditCard) && logo === 'string' && <img src={ logo ?? Icons.item } alt="logo" /> }
       </Box>
       { isSelected === type && (
         <CardContent sx={{ padding: 0 }}>{ bodyContent }</CardContent>

@@ -19,7 +19,7 @@ export const Delivery = () => {
   const [walletOptions, setWalletOptions] = useState<DropdownOptions[]>([]);
   const { billingInfo } = useBilling();
   const { orgId } = useCheckout();
-  const { paymentInfo, onConfirmCreditCardPurchase, onConfirmWireTransferPurchase,onConfirmCoinbasePurchase } = usePayment();
+  const { paymentInfo, onConfirmCreditCardPurchase, onConfirmWireTransferPurchase, onConfirmCoinbasePurchase } = usePayment();
   const { data: meData } = useQuery(meQuery);
   const [addressScreening, { loading: isLoading }] = useMutation(addressScreeningQuery);
   const [error, setError] = useState<string>();
@@ -95,6 +95,7 @@ export const Delivery = () => {
     debug,
     onConfirmCreditCardPurchase,
     onConfirmWireTransferPurchase,
+    onConfirmCoinbasePurchase,
     paymentInfo,
     orgId,
     selectedDeliveryAddress,

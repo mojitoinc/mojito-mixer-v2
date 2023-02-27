@@ -96,7 +96,7 @@ const HomePage: React.FC = () => {
       walletconnect: true,
       creditcard: true,
       wire: true,
-      coinbase:true,
+      coinbase: true,
     } as ConfigurationValues & ExpressCheckoutPayment & PaymentMethodTypes,
     onSubmit: () => undefined,
   });

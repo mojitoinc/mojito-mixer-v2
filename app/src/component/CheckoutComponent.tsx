@@ -19,6 +19,9 @@ export const CheckoutComponent: React.FC<CheckoutProps> = ({
 
   return (
     <MojitoCheckout
+      userInfo={{
+        email: 'showri.srinivas@ionixxtech.com',
+      }}
       debug
       checkoutOptions={{
         orgId: 'd086ea16-d40d-454c-84a4-64b5e940670a',

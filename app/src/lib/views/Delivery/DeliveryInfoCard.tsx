@@ -170,7 +170,7 @@ export const DeliveryInfoCard = ({
                 Coinbase
               </Typography>
             </Box>
-          )}
+          ) }
         </Box>
         <Box>
           <Typography

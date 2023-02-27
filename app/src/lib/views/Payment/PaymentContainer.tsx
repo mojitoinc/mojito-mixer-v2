@@ -3,6 +3,8 @@ import React, { useCallback } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import moment from 'moment';
+import { mdiEthereum } from '@mdi/js';
+import Icon from '@mdi/react';
 import { MixTheme } from '../../theme';
 import { PaymentTypes } from '../../constants';
 import { Icons } from '../../assets';
@@ -14,8 +16,6 @@ import { PaymentMethodView } from './PaymentMethodView';
 import { WireTransferForm, WireTransferFormData, Countries } from './WireTransferForm';
 import { CreditCardForm } from './CreditCardForm';
 import { DebugBox } from '../../components/shared/DebugBox';
-import { mdiEthereum } from "@mdi/js";
-import Icon from "@mdi/react";
 
 interface PaymentContainerProps {
   paymentType: string;
@@ -106,7 +106,7 @@ const PaymentContainer = ({
   paymentInfo,
   onSubmitCreditCard,
   onSubmitWireTransfer,
-  onSubmitCoinBase
+  onSubmitCoinBase,
 }: PaymentContainerProps) => {
   const theme = useTheme<MixTheme>();
 
@@ -160,10 +160,10 @@ const PaymentContainer = ({
     if (paymentType === PaymentTypes.WIRE_TRANSFER) {
       handleWireTransferSubmit();
     }
-    if(paymentType === PaymentTypes.COIN_BASE) {
-      onSubmitCoinBase()
+    if (paymentType === PaymentTypes.COIN_BASE) {
+      onSubmitCoinBase();
     }
-  }, [paymentType, handleCreditCardSubmit, handleWireTransferSubmit]);
+  }, [paymentType, handleCreditCardSubmit, handleWireTransferSubmit, onSubmitCoinBase]);
 
   return (
     <>
@@ -239,20 +239,18 @@ const PaymentContainer = ({
         { config?.coinbase && (
 
           <PaymentMethodView
-            logo={(
+            logo={ (
               <Icon path={ mdiEthereum } size="20px" />
             ) }
             isSelected={ paymentType }
             name="Coinbase"
             type={ PaymentTypes.COIN_BASE }
             bodyContent={ (
-              <Typography>
-
-              </Typography>
+              <Typography />
             ) }
             onChoosePaymentType={ onChoosePaymentType } />
         ) }
-          
+
         <Box display="flex" marginTop={ 2 } alignItems="center">
           <img src={ Icons.lock } height={ 28 } width={ 28 } alt="lock-icon" />
           <Typography variant="body2" sx={{ marginLeft: 1 }}>

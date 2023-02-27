@@ -26,7 +26,7 @@ export interface WireInstructions {
 
 export interface Details {
     WireInstructions?: WireInstructions;
-    hostedURL: string;
+    hostedURL?: string;
     __typename: string;
 }
 
