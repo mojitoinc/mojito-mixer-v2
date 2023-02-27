@@ -17,7 +17,7 @@ export const CheckoutComponent: React.FC<CheckoutProps> = ({
     router.replace('/');
   }, [router]);
 
-  const { user } = useAuth0()
+  const { user } = useAuth0();
 
   return (
     <MojitoCheckout

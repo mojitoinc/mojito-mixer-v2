@@ -258,6 +258,8 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
             collectionItemId: values.itemId ?? '',
             invoiceId: values?.invoiceId,
             vertexEnabled: true,
+            successURL: 'http://localhost:3000/payments/success/?from=coinbase',
+            errorURL: 'http://localhost:3000/payments/error/?from=coinbase',
           }}
           enableSardine={ false }
           uiConfiguration={{

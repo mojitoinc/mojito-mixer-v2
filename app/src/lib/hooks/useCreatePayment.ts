@@ -5,7 +5,7 @@ import { useEncryptCardData } from './useEncryptCard';
 import { CreditCardFormType, ReserveNow, CreatePaymentResult } from '../interfaces';
 import { reserveNowBuyLotQuery } from '../queries/invoiceDetails';
 import { createPaymentMethodQuery, createPaymentQuery, getPaymentMethodStatus } from '../queries/Payment';
-import { BillingFormData, useDebug } from '../providers';
+import { BillingFormData, useCheckout, useDebug } from '../providers';
 import { useAPIService } from './useAPIService';
 
 
@@ -61,6 +61,7 @@ export const useCreatePayment = (paymentInfo: PaymentData | undefined, orgId: st
   const [encryptCardData] = useEncryptCardData({ orgID: orgId ?? '' });
   const [paymentMethodStatus] = useLazyQuery(getPaymentMethodStatus);
   const [reserveNow] = useMutation(reserveNowBuyLotQuery);
+  const { successURL, errorURL } = useCheckout();
 
   const getInvoiceData = useCallback(async (invoiceId: string | undefined, lotId: string | undefined, quantity: number) => {
     if (invoiceId) {
@@ -311,9 +312,8 @@ export const useCreatePayment = (paymentInfo: PaymentData | undefined, orgId: st
                 district: options.billingInfo?.state,
                 postalCode: options.billingInfo?.postalCode,
               },
-              redirectURL:
-                'http://localhost:3000/payments/success/?from=coinbase',
-              cancelURL: 'http://localhost:3000/payments/error/?from=coinbase',
+              redirectURL: successURL,
+              cancelURL: errorURL,
             },
           },
 
@@ -336,6 +336,8 @@ export const useCreatePayment = (paymentInfo: PaymentData | undefined, orgId: st
     createPaymentMethod,
     createPayment,
     getInvoiceData,
+    successURL,
+    errorURL,
   ]);
 
 
