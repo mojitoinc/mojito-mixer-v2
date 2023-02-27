@@ -4,6 +4,9 @@ import { MojitoCheckout } from 'lib';
 export const HidePaymentsStories = () => {
   return (
     <MojitoCheckout
+      userInfo={{
+        email: 'Showri.srinivas@ionixxtech.com',
+      }}
       show
       debug
       uiConfiguration={{

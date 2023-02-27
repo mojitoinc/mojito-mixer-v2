@@ -151,6 +151,19 @@ export const PaymentContainer = () => {
     setContainerState,
   ]);
 
+  const onSubmitCoinBase = useCallback(() => {
+    setPaymentInfo({
+      ...paymentInfo,
+      paymentType,
+    });
+    setContainerState(ContainerTypes.DELIVERY);
+  }, [
+    setPaymentInfo,
+    paymentType,
+    setContainerState,
+    paymentInfo,
+  ]);
+
 
   return (
     <PaymentContainerView
@@ -163,6 +176,7 @@ export const PaymentContainer = () => {
       screeningError={ screeningError }
       paymentInfo={ paymentInfo }
       onSubmitWireTransfer={ onSubmitWireTransfer }
-      onSubmitCreditCard={ onSubmitCreditCard } />
+      onSubmitCreditCard={ onSubmitCreditCard }
+      onSubmitCoinBase={ onSubmitCoinBase } />
   );
 };

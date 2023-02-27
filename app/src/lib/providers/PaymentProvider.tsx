@@ -45,6 +45,7 @@ export interface Payment {
   setPaymentInfo: React.Dispatch<React.SetStateAction<PaymentData | undefined>>;
   onConfirmCreditCardPurchase: (deliveryAddress: string) => void;
   onConfirmWireTransferPurchase: (deliveryAddress: string) => void;
+  onConfirmCoinbasePurchase: (deliveryAddress: string) => void;
   paymentMethods?: PaymentMethodLimit;
   setPaymentMethods: React.Dispatch<
     React.SetStateAction<PaymentMethodLimit | undefined>
@@ -64,7 +65,7 @@ export const PaymentProvider = ({
   const { billingInfo, collectionData, taxes, taxablePrice } = useBilling();
   const { orgId, lotId, quantity, invoiceId, vertexEnabled } = useCheckout();
   const { setContainerState } = useContainer();
-  const { makeCreditCardPurchase, makeWireTransferPurchase } = useCreatePayment(
+  const { makeCreditCardPurchase, makeWireTransferPurchase, makeCoinbasePurchase } = useCreatePayment(
     paymentInfo,
     orgId,
   );
@@ -164,6 +165,48 @@ export const PaymentProvider = ({
       makeWireTransferPurchase,
     ],
   );
+  const onConfirmCoinbasePurchase = useCallback(
+    async (deliveryAddress = '') => {
+      setContainerState(ContainerTypes.LOADING);
+      try {
+        const paymentReceipt = await makeCoinbasePurchase({
+          deliveryAddress,
+          lotId,
+          quantity: quantity ?? 1,
+          invoiceId,
+          billingInfo,
+        });
+
+        debug.success('paymentData-coinbase', { paymentReceipt });
+
+        saveToCookies(
+          paymentReceipt.paymentData,
+          paymentReceipt.reserveLotData,
+          paymentReceipt.paymentResult,
+        );
+
+        setPaymentInfo(paymentReceipt.paymentData);
+
+        if (paymentReceipt.paymentResult?.details?.hostedURL) { window.location.href = paymentReceipt.paymentResult?.details?.hostedURL ?? ''; } else setContainerState(ContainerTypes.CONFIRMATION);
+      } catch (e: any) {
+        const message = e.message ?? '';
+        debug.error('confirm', { message });
+        setError(message);
+      }
+    },
+    [
+      debug,
+      billingInfo,
+      invoiceId,
+      lotId,
+      quantity,
+      setError,
+      setContainerState,
+      setPaymentInfo,
+      saveToCookies,
+      makeCoinbasePurchase,
+    ],
+  );
 
   const values = useMemo<Payment>(() => {
     return {
@@ -171,6 +214,7 @@ export const PaymentProvider = ({
       setPaymentInfo,
       onConfirmCreditCardPurchase,
       onConfirmWireTransferPurchase,
+      onConfirmCoinbasePurchase,
       setPaymentMethods,
       paymentMethods,
     };
@@ -179,6 +223,7 @@ export const PaymentProvider = ({
     setPaymentInfo,
     onConfirmCreditCardPurchase,
     onConfirmWireTransferPurchase,
+    onConfirmCoinbasePurchase,
     setPaymentMethods,
     paymentMethods,
   ]);

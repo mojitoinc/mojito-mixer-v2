@@ -62,6 +62,7 @@ const paymentOptions: CheckboxOptions[] = [
   { field: 'walletconnect', label: 'Wallet Connect', checked: true },
   { field: 'wire', label: 'Wire Transfer', checked: true },
   { field: 'creditcard', label: 'Credit Card', checked: true },
+  { field: 'coinbase', label: 'Coinbase', checked: true },
 ];
 const PaymentType: DropdownOptions[] = [
   {
@@ -256,6 +257,7 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
             quantity: parseInt(values.lotUnits ?? '1', 10),
             collectionItemId: values.itemId ?? '',
             invoiceId: values?.invoiceId,
+            vertexEnabled: true,
           }}
           enableSardine={ false }
           uiConfiguration={{
@@ -273,6 +275,7 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
               applepay: Boolean(values.applepay ?? true),
               walletConnect: Boolean(values.walletconnect ?? true),
               wire: Boolean(values.wire ?? true),
+              coinbase: Boolean(values.coinbase ?? true),
             },
 
             costBreakdown: { showDiscountCode: Boolean(values.discountCode ?? true) },

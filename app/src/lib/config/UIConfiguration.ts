@@ -21,6 +21,7 @@ export const DefaultUIConfiguration: UIConfiguration = {
     walletConnect: true,
     wire: true,
     creditCard: true,
+    coinbase: true,
   },
   costBreakdown: {
     showDiscountCode: true,
