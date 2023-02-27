@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { MojitoCheckout } from 'lib';
+import { useAuth0 } from '@auth0/auth0-react';
 
 interface CheckoutProps {
   show: boolean;
@@ -16,11 +17,12 @@ export const CheckoutComponent: React.FC<CheckoutProps> = ({
     router.replace('/');
   }, [router]);
 
+  const { user } = useAuth0()
 
   return (
     <MojitoCheckout
       userInfo={{
-        email: 'showri.srinivas@ionixxtech.com',
+        email: user?.email ?? '',
       }}
       debug
       checkoutOptions={{
