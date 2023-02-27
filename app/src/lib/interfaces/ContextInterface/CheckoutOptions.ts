@@ -7,4 +7,6 @@ export interface CheckoutOptions {
     invoiceId?: string;
     discountCode?: string;
     vertexEnabled?: boolean;
+    successURL?: string;
+    errorURL?: string;
   }
