@@ -1,3 +1,8 @@
+export interface MojitoDeliveryType {
+  personalWallet?:boolean;
+  multiSig?:boolean;
+}
+
 export interface MojitoUIConfiguration {
     global?: {
       logoSrc?: string;
@@ -28,9 +33,20 @@ export interface MojitoUIConfiguration {
       onGoTo?: () => void;
     };
     delivery?: {
-      showConnectWallet?: boolean;
+      gpay?: MojitoDeliveryType;
+      applepay?: MojitoDeliveryType;
+      walletConnect?: MojitoDeliveryType;
+      wire?: MojitoDeliveryType;
+      creditCard?: MojitoDeliveryType;
+      coinbase?: MojitoDeliveryType;
     }
 }
+
+export interface DeliveryType {
+  personalWallet:boolean;
+  multiSig:boolean;
+}
+
 export interface UIConfiguration {
   global: {
     logoSrc: string;
@@ -61,6 +77,11 @@ export interface UIConfiguration {
     onGoTo: () => void;
   };
   delivery: {
-    showConnectWallet: boolean;
+    gpay: MojitoDeliveryType;
+    applepay: MojitoDeliveryType;
+    walletConnect: MojitoDeliveryType;
+    wire: MojitoDeliveryType;
+    creditCard: MojitoDeliveryType;
+    coinbase: MojitoDeliveryType;
   }
 }

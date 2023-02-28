@@ -18,6 +18,7 @@ interface PaymentMethodProps {
   bodyContent: JSX.Element;
   onChoosePaymentType: (name: PaymentTypes, value: boolean) => void;
   type: PaymentTypes;
+  endAdornment?:JSX.Element
 }
 
 export const PaymentMethodView = ({
@@ -27,6 +28,7 @@ export const PaymentMethodView = ({
   bodyContent,
   onChoosePaymentType,
   type,
+  endAdornment,
 }: PaymentMethodProps) => {
   const isCreditCard = useMemo(() => type === PaymentTypes.CREDIT_CARD, [type]);
   const theme = useTheme<MixTheme>();
@@ -76,7 +78,7 @@ export const PaymentMethodView = ({
             { name }
           </Typography>
         </Box>
-        { Boolean(isCreditCard) && logo === 'string' && <img src={ logo ?? Icons.item } alt="logo" /> }
+        { endAdornment }
       </Box>
       { isSelected === type && (
         <CardContent sx={{ padding: 0 }}>{ bodyContent }</CardContent>

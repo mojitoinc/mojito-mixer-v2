@@ -11,6 +11,7 @@ import { TextInput, CreditCardDropdown } from '../../components';
 import { CreditCardFormType, PaymentMethod } from '../../interfaces';
 import { useBilling } from '../../providers';
 import { MixTheme } from '../../theme';
+import { Icons } from '../../assets';
 
 interface CreditCardProps {
   creditCardList: PaymentMethod[];
@@ -183,6 +184,26 @@ export const CreditCardForm = ({
         NFTs purchased by credit card can only be transferred to your multi-sig
         wallet and cannot be transferred out for 14 days.
       </Typography>
+      <Box
+        display="flex"
+        flexDirection="row"
+        alignItems="center"
+        justifyContent="center"
+        margin="20px 0px">
+        <Typography>
+          Payments powered by
+        </Typography>
+        <a href="https://www.circle.com/en/" target="_blank" rel="noreferrer">
+          <img
+            src={ Icons.circle }
+            alt={'circle'}
+            style={{
+              width: 100,
+              height: 20,
+              marginLeft: '8px',
+            }} />
+        </a>
+      </Box>
     </>
   );
 };

@@ -21,6 +21,7 @@ const walletAddress = `${ BASE_URL }walletAddress.svg`;
 
 
 export const DEFAULT_ERROR_IMAGE_SRC = 'https://raw.githubusercontent.com/mojitoinc/mojito-mixers/main/app/src/lib/assets/mojito-error-loader.gif';
+const circle = 'https://raw.githubusercontent.com/mojitoinc/mojito-mixers/main/app/src/lib/assets/circle.png';
 
 export const Icons = {
   logo,
@@ -42,4 +43,5 @@ export const Icons = {
   loading,
   ErrorLoader: DEFAULT_ERROR_IMAGE_SRC,
   walletAddress,
+  circle,
 };

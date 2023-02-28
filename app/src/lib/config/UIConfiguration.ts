@@ -32,7 +32,30 @@ export const DefaultUIConfiguration: UIConfiguration = {
     onGoTo: () => undefined,
   },
   delivery: {
-    showConnectWallet: true,
+    gpay: {
+      multiSig: false,
+      personalWallet: true,
+    },
+    applepay: {
+      multiSig: false,
+      personalWallet: true,
+    },
+    coinbase: {
+      multiSig: false,
+      personalWallet: true,
+    },
+    creditCard: {
+      multiSig: false,
+      personalWallet: true,
+    },
+    walletConnect: {
+      multiSig: false,
+      personalWallet: true,
+    },
+    wire: {
+      multiSig: false,
+      personalWallet: true,
+    },
   },
 };
 
