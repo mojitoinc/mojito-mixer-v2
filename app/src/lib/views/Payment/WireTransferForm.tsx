@@ -1,3 +1,4 @@
+import { CIRCLE_URL } from '../../constants';
 import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Typography, useTheme, Box } from '@mui/material';
 import { FormikErrors } from 'formik';
 import React, { useCallback } from 'react';
@@ -195,7 +196,7 @@ export const WireTransferForm = ({
         <Typography>
           Payments powered by
         </Typography>
-        <a href="https://www.circle.com/en/" target="_blank" rel="noreferrer">
+        <a href={CIRCLE_URL} target="_blank" rel="noreferrer">
           <img
             src={ Icons.circle }
             alt={'visa'}

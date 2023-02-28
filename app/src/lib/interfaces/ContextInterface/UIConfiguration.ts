@@ -1,47 +1,3 @@
-export interface MojitoDeliveryType {
-  personalWallet?:boolean;
-  multiSig?:boolean;
-}
-
-export interface MojitoUIConfiguration {
-    global?: {
-      logoSrc?: string;
-      loaderImageSrc?: string;
-      errorImageSrc?: string;
-    };
-    billing?: {
-      isEnableExpressCheckout?: boolean;
-      gpay?: boolean;
-      applepay?: boolean;
-      walletConnect?: boolean;
-      metaMask?: boolean;
-    };
-    payment?: {
-      gpay?: boolean;
-      applepay?: boolean;
-      walletConnect?: boolean;
-      wire?: boolean;
-      creditCard?: boolean;
-      coinbase?: boolean;
-    };
-    costBreakdown?: {
-      showDiscountCode?: boolean;
-    },
-    paymentConfirmation?: {
-      wireTransferInstructions?: JSX.Element;
-      creditCardInstructions?: JSX.Element;
-      onGoTo?: () => void;
-    };
-    delivery?: {
-      gpay?: MojitoDeliveryType;
-      applepay?: MojitoDeliveryType;
-      walletConnect?: MojitoDeliveryType;
-      wire?: MojitoDeliveryType;
-      creditCard?: MojitoDeliveryType;
-      coinbase?: MojitoDeliveryType;
-    }
-}
-
 export interface DeliveryType {
   personalWallet:boolean;
   multiSig:boolean;
@@ -77,11 +33,11 @@ export interface UIConfiguration {
     onGoTo: () => void;
   };
   delivery: {
-    gpay: MojitoDeliveryType;
-    applepay: MojitoDeliveryType;
-    walletConnect: MojitoDeliveryType;
-    wire: MojitoDeliveryType;
-    creditCard: MojitoDeliveryType;
-    coinbase: MojitoDeliveryType;
+    gpay: DeliveryType;
+    applepay: DeliveryType;
+    walletConnect: DeliveryType;
+    wire: DeliveryType;
+    creditCard: DeliveryType;
+    coinbase: DeliveryType;
   }
 }

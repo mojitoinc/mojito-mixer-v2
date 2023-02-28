@@ -28,3 +28,4 @@ export function isLocalhost() {
 
   return window.location.hostname === 'localhost';
 }
+export const CIRCLE_URL = 'https://www.circle.com/en/'
