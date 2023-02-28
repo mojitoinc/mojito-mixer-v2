@@ -184,6 +184,15 @@ const PaymentContainer = ({
             isSelected={ paymentType }
             name="Credit Card"
             type={ PaymentTypes.CREDIT_CARD }
+            endAdornment={ (
+              <Box
+                display="flex"
+                flexDirection="row"
+                alignItems="center">
+                <img src={ Icons.visaCard } style={{ width: '48px', height: '24px' }} alt={'visa'}/>
+                <img src={ Icons.masterCard } style={{ width: '48px', height: '24px', marginLeft: '4px' }} alt={'mastercard'}/>
+              </Box>
+            ) }
             bodyContent={ (
               <CreditCardForm
                 creditCardList={ creditCardList }

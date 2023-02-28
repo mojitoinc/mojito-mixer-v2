@@ -59,6 +59,36 @@ const Delivery = ({
     () => paymentInfo?.paymentType === PaymentTypes.CREDIT_CARD,
     [paymentInfo],
   );
+
+
+  const showConnectWallet = useMemo(() => {
+    if (paymentInfo?.paymentType === PaymentTypes.CREDIT_CARD) return delivery.creditCard.multiSig;
+
+    if (paymentInfo?.paymentType === PaymentTypes.WIRE_TRANSFER) return delivery.wire.multiSig;
+
+    if (paymentInfo?.paymentType === PaymentTypes.COIN_BASE) return delivery.coinbase.multiSig;
+
+    if (paymentInfo?.paymentType === PaymentTypes.GOOGLE_PAY) return delivery.gpay.multiSig;
+
+    if (paymentInfo?.paymentType === PaymentTypes.APPLE_PAY) return delivery.applepay.multiSig;
+    if (paymentInfo?.paymentType === PaymentTypes.WALLET_CONNECT) return delivery.walletConnect.multiSig;
+    return false;
+  }, [delivery, paymentInfo]);
+
+  const showPersonalWallet = useMemo(() => {
+    if (paymentInfo?.paymentType === PaymentTypes.CREDIT_CARD) return delivery.creditCard.personalWallet;
+
+    if (paymentInfo?.paymentType === PaymentTypes.WIRE_TRANSFER) return delivery.wire.personalWallet;
+
+    if (paymentInfo?.paymentType === PaymentTypes.COIN_BASE) return delivery.coinbase.personalWallet;
+
+    if (paymentInfo?.paymentType === PaymentTypes.GOOGLE_PAY) return delivery.gpay.personalWallet;
+
+    if (paymentInfo?.paymentType === PaymentTypes.APPLE_PAY) return delivery.applepay.personalWallet;
+    if (paymentInfo?.paymentType === PaymentTypes.WALLET_CONNECT) return delivery.walletConnect.personalWallet;
+    return true;
+  }, [delivery, paymentInfo]);
+
   return (
     <>
       <DeliveryInfoCard billingInfo={ billingInfo } paymentInfo={ paymentInfo } />
@@ -82,22 +112,28 @@ const Delivery = ({
         </Typography>
         { !connect?.connected ? (
           <>
-            <Dropdown
-              value={ selectedDeliveryAddress }
-              onChange={ onWalletChange }
-              placeholder="Select Wallet Address"
-              sx={{ marginRight: '8px' }}
-              options={ walletOptions } />
-            { selectedDeliveryAddress === NEW_MULTI_SIG && (
+            {
+            showPersonalWallet && (
+            <>
+              <Dropdown
+                value={ selectedDeliveryAddress }
+                onChange={ onWalletChange }
+                placeholder="Select Wallet Address"
+                sx={{ marginRight: '8px' }}
+                options={ walletOptions } />
+              { selectedDeliveryAddress === NEW_MULTI_SIG && (
               <Typography
                 variant="body2"
                 sx={{ marginTop: '6px', color: theme.global?.cardGrayedText }}>
                 A new multi-sig wallet will be created for you when purchase is
                 complete
               </Typography>
-            ) }
+              ) }
+            </>
+            )
+}
             {
-              (delivery?.showConnectWallet && !isCreditCard) && (
+              showConnectWallet && (
               <Stack
                 flexDirection="row"
                 alignItems="flex-end"
@@ -111,7 +147,7 @@ const Delivery = ({
                   onClick={ onClickConnectWallet } />
               </Stack>
               )
-}
+            }
           </>
         ) : (
           <Box
