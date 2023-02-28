@@ -5,7 +5,7 @@ import PaymentContainer from '@views/Payment/PaymentContainer';
 export const WireTransferStories = () => {
   return (
     <PaymentContainer
-      onSubmitCoinBase={ () => undefined }
+      onContinueToDelivery={ () => undefined }
       billingInfo={{}}
       creditCardList={ [] }
       onChoosePaymentType={ () => undefined }

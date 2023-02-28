@@ -196,7 +196,7 @@ export const CreditCardForm = ({
         <a href="https://www.circle.com/en/" target="_blank" rel="noreferrer">
           <img
             src={ Icons.circle }
-            alt={'circle'}
+            alt="circle"
             style={{
               width: 100,
               height: 20,

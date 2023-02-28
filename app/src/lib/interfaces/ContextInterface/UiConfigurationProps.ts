@@ -1,6 +1,6 @@
 export interface MojitoDeliveryType {
-  personalWallet?: boolean;
-  multiSig?: boolean;
+  enableConnectWallet?: boolean;
+  enableMultiSig?: boolean;
 }
 
 export interface MojitoUIConfiguration {
@@ -23,6 +23,7 @@ export interface MojitoUIConfiguration {
     wire?: boolean;
     creditCard?: boolean;
     coinbase?: boolean;
+    onChain?: boolean;
   };
   costBreakdown?: {
     showDiscountCode?: boolean;
@@ -39,5 +40,6 @@ export interface MojitoUIConfiguration {
     wire?: MojitoDeliveryType;
     creditCard?: MojitoDeliveryType;
     coinbase?: MojitoDeliveryType;
+    onChain?: MojitoDeliveryType;
   };
 }

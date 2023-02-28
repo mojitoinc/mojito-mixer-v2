@@ -23,3 +23,25 @@ export interface Invoice {
     totalPrice: number;
     __typename: string;
 }
+
+
+export interface ChainPaymentInfo {
+    networkID: string;
+    ownerWalletAddress: string;
+    onchainPaymentAddress: string;
+    tokenContractAddress: string;
+    onChainID: string;
+    tokenType: string;
+}
+
+export interface InterfaceDetailsItem {
+    invoiceItemID: string;
+    isOnchainPaymentAvailable: boolean;
+    onChainPaymentInfo: ChainPaymentInfo;
+}
+
+export interface InvoiceDetails {
+    status: string;
+    items: InterfaceDetailsItem[];
+    __typename: string;
+}

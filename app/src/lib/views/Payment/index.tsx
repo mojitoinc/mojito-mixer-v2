@@ -151,7 +151,7 @@ export const PaymentContainer = () => {
     setContainerState,
   ]);
 
-  const onSubmitCoinBase = useCallback(() => {
+  const onContinueToDelivery = useCallback(() => {
     setPaymentInfo({
       ...paymentInfo,
       paymentType,
@@ -177,6 +177,6 @@ export const PaymentContainer = () => {
       paymentInfo={ paymentInfo }
       onSubmitWireTransfer={ onSubmitWireTransfer }
       onSubmitCreditCard={ onSubmitCreditCard }
-      onSubmitCoinBase={ onSubmitCoinBase } />
+      onContinueToDelivery={ onContinueToDelivery } />
   );
 };
