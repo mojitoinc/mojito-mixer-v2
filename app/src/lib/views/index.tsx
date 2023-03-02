@@ -46,7 +46,7 @@ const MojitoCheckoutLayout = ({
         display: 'flex',
         justifyContent: { sx: 'center', lg: 'space-between' },
       }}>
-      <Box padding="40px" width={{lg:'100%'}}>
+      <Box padding="40px" width={{ lg: '100%' }}>
         <Header
           isPaymentConfirmation={ containerState === ContainerTypes.CONFIRMATION } />
         { containerState !== ContainerTypes.CONFIRMATION && (

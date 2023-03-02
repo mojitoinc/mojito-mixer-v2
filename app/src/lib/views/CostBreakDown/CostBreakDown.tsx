@@ -49,8 +49,8 @@ const CostBreakDown = ({ taxes, collectionData, quantity, vertexEnabled, taxable
         alignSelf: 'stretch',
         backgroundSize: '100%',
         padding: '40px',
-        width: {lg:'100%'},
-        minHeight: {lg:'100vh'},
+        width: { lg: '100%' },
+        minHeight: { lg: '100vh' },
       }}>
 
       <Box

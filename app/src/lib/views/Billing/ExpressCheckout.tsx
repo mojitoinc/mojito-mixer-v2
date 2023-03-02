@@ -18,47 +18,49 @@ const ExpressCheckoutView = ({ config }: ExpressCheckoutViewProps) => {
   return (
     <Box marginBottom="24px">
       <LinedText text="Express Checkout" />
-      <Grid sx={{
+      <Grid
+        sx={{
           margin: '24px 0px',
-      }} container spacing={2}>
+        }}
+        container
+        spacing={ 2 }>
 
-      { config?.gpay && (
-        <Grid xs={6}  lg={2} item>
+        { config?.gpay && (
+        <Grid xs={ 6 } lg={ 2 } item>
           <Button
             sx={{
-              width:{xs:'100%',lg:'90px'},
+              width: { xs: '100%', lg: '90px' },
             }}
             backgroundColor={ theme.global?.black }>
             <img src={ Icons.gpay } width="50px" height="20px" alt="Google pay" />
           </Button>
-          </Grid>
+        </Grid>
         ) }
 
-      { config?.applepay && (
-        <Grid xs={6} lg={2} item>
+        { config?.applepay && (
+        <Grid xs={ 6 } lg={ 2 } item>
           <Button
             backgroundColor={ theme.global?.black }
             sx={{
-              width:{xs:'100%',lg:'90px'},
-            }}
-            >
+              width: { xs: '100%', lg: '90px' },
+            }}>
             <img
               src={ Icons.applepay }
               width="50px"
               height="20px"
               alt="Apple pay" />
           </Button>
-          </Grid>
+        </Grid>
         ) }
 
-{ config?.walletConnect && (
-        <Grid xs={12} lg={3} md={6} item>
+        { config?.walletConnect && (
+        <Grid xs={ 12 } lg={ 3 } md={ 6 } item>
 
           <Button
             backgroundColor={ theme.global?.white }
             textColor={ theme.global?.black }
             sx={{
-              width: {xs:'100%',lg:'180px'},
+              width: { xs: '100%', lg: '180px' },
               border: `1px solid ${ theme.global?.black }`,
             }}
             title="Walletconnect">
@@ -71,17 +73,17 @@ const ExpressCheckoutView = ({ config }: ExpressCheckoutViewProps) => {
               }}
               alt="Walletconnect" />
           </Button>
-          </Grid>
+        </Grid>
         ) }
 
-{ config?.metaMask && (
-        <Grid xs={12} lg={3}  md={6} item>
+        { config?.metaMask && (
+        <Grid xs={ 12 } lg={ 3 } md={ 6 } item>
 
           <Button
             backgroundColor={ theme.global?.white }
             textColor={ theme.global?.black }
             sx={{
-              width: {xs:'100%',lg:'180px'},
+              width: { xs: '100%', lg: '180px' },
               height: '40px',
               border: `1px solid ${ theme.global?.black }`,
             }}
@@ -95,7 +97,7 @@ const ExpressCheckoutView = ({ config }: ExpressCheckoutViewProps) => {
                 marginRight: '8px',
               }} />
           </Button>
-          </Grid>
+        </Grid>
         ) }
       </Grid>
       <LinedText text="OR" />

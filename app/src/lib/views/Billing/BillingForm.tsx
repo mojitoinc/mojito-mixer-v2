@@ -91,91 +91,91 @@ const BillingForm = ({
             </Typography>
           </Box>
         ) }
-        <Grid container spacing={2}>
-        <Grid xs={12} lg={6} item>
-          <TextInput
-            value={ values?.firstName }
-            onChange={ onChange('firstName') }
-            error={ errors?.firstName }
-            title="First name"
-            required
-            placeholder="First name"
-            type="text" />
-        </Grid>
-        <Grid xs={12} lg={6} item>
-
-          <TextInput
-            value={ values?.lastName }
-            onChange={ onChange('lastName') }
-            error={ errors?.lastName }
-            title="Last name"
-            required
-            placeholder="Last name"
-            type="text" />
-            </Grid>
-            <Grid xs={12} lg={6} item>
-          <Dropdown
-            value={ values?.country }
-            onChange={ onChange('country') }
-            title="Country/Region"
-            required
-            error={ errors?.country }
-            placeholder="Select one..."
-            options={ countries } />
-            </Grid>
-        <Grid xs={12} lg={6} item>
-
-          <Dropdown
-            value={ values?.state }
-            onChange={ onChange('state') }
-            title="State"
-            placeholder="Select one..."
-            options={ states }
-            error={ errors?.state }
-            required />
-        </Grid>
-        <Grid xs={12} lg={6} item>
-
-          <Dropdown
-            value={ values?.city }
-            onChange={ onChange('city') }
-            title="City"
-            required
-            placeholder="Select one..."
-            sx={{ marginRight: '8px' }}
-            error={ errors?.city }
-            options={ cities } />
-            </Grid>
-        <Grid xs={12} lg={6} item>
-
-          <TextInput
-            value={ values?.postalCode }
-            onChange={ onChange('postalCode') }
-            title="Zip code"
-            required
-            error={ errors?.postalCode }
-            placeholder="e.g. 10005" />
-        </Grid>
-        <Grid xs={12} item>
-
-        <TextInput
-          value={ values?.street1 }
-          onChange={ onChange('street1') }
-          title="Address"
-          required
-          error={ errors?.street1 }
-          placeholder="" />
+        <Grid container spacing={ 2 }>
+          <Grid xs={ 12 } lg={ 6 } item>
+            <TextInput
+              value={ values?.firstName }
+              onChange={ onChange('firstName') }
+              error={ errors?.firstName }
+              title="First name"
+              required
+              placeholder="First name"
+              type="text" />
           </Grid>
-        <Grid xs={12} item>
+          <Grid xs={ 12 } lg={ 6 } item>
 
-        <TextInput
-          value={ values?.phoneNumber }
-          onChange={ onChangePhoneNumber }
-          title="Phone number"
-          required
-          error={ errors?.phoneNumber }
-          placeholder="(___) ___-____"
-          type="tel" />
+            <TextInput
+              value={ values?.lastName }
+              onChange={ onChange('lastName') }
+              error={ errors?.lastName }
+              title="Last name"
+              required
+              placeholder="Last name"
+              type="text" />
+          </Grid>
+          <Grid xs={ 12 } lg={ 6 } item>
+            <Dropdown
+              value={ values?.country }
+              onChange={ onChange('country') }
+              title="Country/Region"
+              required
+              error={ errors?.country }
+              placeholder="Select one..."
+              options={ countries } />
+          </Grid>
+          <Grid xs={ 12 } lg={ 6 } item>
+
+            <Dropdown
+              value={ values?.state }
+              onChange={ onChange('state') }
+              title="State"
+              placeholder="Select one..."
+              options={ states }
+              error={ errors?.state }
+              required />
+          </Grid>
+          <Grid xs={ 12 } lg={ 6 } item>
+
+            <Dropdown
+              value={ values?.city }
+              onChange={ onChange('city') }
+              title="City"
+              required
+              placeholder="Select one..."
+              sx={{ marginRight: '8px' }}
+              error={ errors?.city }
+              options={ cities } />
+          </Grid>
+          <Grid xs={ 12 } lg={ 6 } item>
+
+            <TextInput
+              value={ values?.postalCode }
+              onChange={ onChange('postalCode') }
+              title="Zip code"
+              required
+              error={ errors?.postalCode }
+              placeholder="e.g. 10005" />
+          </Grid>
+          <Grid xs={ 12 } item>
+
+            <TextInput
+              value={ values?.street1 }
+              onChange={ onChange('street1') }
+              title="Address"
+              required
+              error={ errors?.street1 }
+              placeholder="" />
+          </Grid>
+          <Grid xs={ 12 } item>
+
+            <TextInput
+              value={ values?.phoneNumber }
+              onChange={ onChangePhoneNumber }
+              title="Phone number"
+              required
+              error={ errors?.phoneNumber }
+              placeholder="(___) ___-____"
+              type="tel" />
           </Grid>
         </Grid>
 
