@@ -1,6 +1,6 @@
 export interface DeliveryType {
-  personalWallet:boolean;
-  multiSig:boolean;
+  enableConnectWallet:boolean;
+  enableMultiSig:boolean;
 }
 
 export interface UIConfiguration {
@@ -23,6 +23,7 @@ export interface UIConfiguration {
     wire: boolean;
     creditCard: boolean;
     coinbase: boolean;
+    onChain: boolean;
   };
   costBreakdown: {
     showDiscountCode: boolean;
@@ -39,5 +40,6 @@ export interface UIConfiguration {
     wire: DeliveryType;
     creditCard: DeliveryType;
     coinbase: DeliveryType;
+    onChain: DeliveryType;
   }
 }

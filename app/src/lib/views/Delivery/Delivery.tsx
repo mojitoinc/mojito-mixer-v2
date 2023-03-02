@@ -61,32 +61,26 @@ const Delivery = ({
   );
 
 
-  const showConnectWallet = useMemo(() => {
-    if (paymentInfo?.paymentType === PaymentTypes.CREDIT_CARD) return delivery.creditCard.multiSig;
-
-    if (paymentInfo?.paymentType === PaymentTypes.WIRE_TRANSFER) return delivery.wire.multiSig;
-
-    if (paymentInfo?.paymentType === PaymentTypes.COIN_BASE) return delivery.coinbase.multiSig;
-
-    if (paymentInfo?.paymentType === PaymentTypes.GOOGLE_PAY) return delivery.gpay.multiSig;
-
-    if (paymentInfo?.paymentType === PaymentTypes.APPLE_PAY) return delivery.applepay.multiSig;
-    if (paymentInfo?.paymentType === PaymentTypes.WALLET_CONNECT) return delivery.walletConnect.multiSig;
-    return false;
+  const showMultiSig = useMemo(() => {
+    if (paymentInfo?.paymentType === PaymentTypes.CREDIT_CARD) return delivery.creditCard.enableMultiSig;
+    if (paymentInfo?.paymentType === PaymentTypes.WIRE_TRANSFER) return delivery.wire.enableMultiSig;
+    if (paymentInfo?.paymentType === PaymentTypes.COIN_BASE) return delivery.coinbase.enableMultiSig;
+    if (paymentInfo?.paymentType === PaymentTypes.GOOGLE_PAY) return delivery.gpay.enableMultiSig;
+    if (paymentInfo?.paymentType === PaymentTypes.APPLE_PAY) return delivery.applepay.enableMultiSig;
+    if (paymentInfo?.paymentType === PaymentTypes.WALLET_CONNECT) return delivery.walletConnect.enableMultiSig;
+    if (paymentInfo?.paymentType === PaymentTypes.ON_CHAIN_PAYMENT) return delivery.onChain.enableMultiSig;
+    return true;
   }, [delivery, paymentInfo]);
 
-  const showPersonalWallet = useMemo(() => {
-    if (paymentInfo?.paymentType === PaymentTypes.CREDIT_CARD) return delivery.creditCard.personalWallet;
-
-    if (paymentInfo?.paymentType === PaymentTypes.WIRE_TRANSFER) return delivery.wire.personalWallet;
-
-    if (paymentInfo?.paymentType === PaymentTypes.COIN_BASE) return delivery.coinbase.personalWallet;
-
-    if (paymentInfo?.paymentType === PaymentTypes.GOOGLE_PAY) return delivery.gpay.personalWallet;
-
-    if (paymentInfo?.paymentType === PaymentTypes.APPLE_PAY) return delivery.applepay.personalWallet;
-    if (paymentInfo?.paymentType === PaymentTypes.WALLET_CONNECT) return delivery.walletConnect.personalWallet;
-    return true;
+  const showConnectWallet = useMemo(() => {
+    if (paymentInfo?.paymentType === PaymentTypes.CREDIT_CARD) return delivery.creditCard.enableConnectWallet;
+    if (paymentInfo?.paymentType === PaymentTypes.WIRE_TRANSFER) return delivery.wire.enableConnectWallet;
+    if (paymentInfo?.paymentType === PaymentTypes.COIN_BASE) return delivery.coinbase.enableConnectWallet;
+    if (paymentInfo?.paymentType === PaymentTypes.GOOGLE_PAY) return delivery.gpay.enableConnectWallet;
+    if (paymentInfo?.paymentType === PaymentTypes.APPLE_PAY) return delivery.applepay.enableConnectWallet;
+    if (paymentInfo?.paymentType === PaymentTypes.WALLET_CONNECT) return delivery.walletConnect.enableConnectWallet;
+    if (paymentInfo?.paymentType === PaymentTypes.ON_CHAIN_PAYMENT) return delivery.onChain.enableConnectWallet;
+    return false;
   }, [delivery, paymentInfo]);
 
   return (
@@ -113,7 +107,7 @@ const Delivery = ({
         { !connect?.connected ? (
           <>
             {
-            showPersonalWallet && (
+            showMultiSig && (
             <>
               <Dropdown
                 value={ selectedDeliveryAddress }
@@ -131,7 +125,7 @@ const Delivery = ({
               ) }
             </>
             )
-}
+            }
             {
               showConnectWallet && (
               <Stack

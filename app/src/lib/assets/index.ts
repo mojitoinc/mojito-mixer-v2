@@ -1,3 +1,5 @@
+import abi from './buy.json';
+
 const BASE_URL = 'https://raw.githubusercontent.com/mojitoinc/mojito-mixer-v2/develop/app/src/lib/assets/';
 
 const logo = `${ BASE_URL }logo.svg`;
@@ -44,4 +46,8 @@ export const Icons = {
   ErrorLoader: DEFAULT_ERROR_IMAGE_SRC,
   walletAddress,
   circle,
+};
+
+export const Assets = {
+  abi,
 };

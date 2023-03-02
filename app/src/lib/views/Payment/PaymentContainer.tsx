@@ -28,6 +28,7 @@ interface PaymentContainerProps {
     wire?: boolean;
     creditCard?: boolean;
     coinbase?: boolean;
+    onChain?:boolean;
   };
   billingInfo: BillingFormData | undefined;
   paymentMethodLimit: PaymentMethodLimit | undefined;
@@ -35,7 +36,7 @@ interface PaymentContainerProps {
   paymentInfo?: PaymentData;
   onSubmitWireTransfer: (values: WireTransferFormData) => void;
   onSubmitCreditCard: (values: CreditCardFormType) => void;
-  onSubmitCoinBase: ()=>void;
+  onContinueToDelivery: ()=>void;
 }
 
 const validationSchema = Yup.object().shape({
@@ -106,7 +107,7 @@ const PaymentContainer = ({
   paymentInfo,
   onSubmitCreditCard,
   onSubmitWireTransfer,
-  onSubmitCoinBase,
+  onContinueToDelivery,
 }: PaymentContainerProps) => {
   const theme = useTheme<MixTheme>();
 
@@ -160,10 +161,10 @@ const PaymentContainer = ({
     if (paymentType === PaymentTypes.WIRE_TRANSFER) {
       handleWireTransferSubmit();
     }
-    if (paymentType === PaymentTypes.COIN_BASE) {
-      onSubmitCoinBase();
+    if (paymentType === PaymentTypes.COIN_BASE || paymentType === PaymentTypes.ON_CHAIN_PAYMENT) {
+      onContinueToDelivery();
     }
-  }, [paymentType, handleCreditCardSubmit, handleWireTransferSubmit, onSubmitCoinBase]);
+  }, [paymentType, handleCreditCardSubmit, handleWireTransferSubmit, onContinueToDelivery]);
 
   return (
     <>
@@ -189,8 +190,8 @@ const PaymentContainer = ({
                 display="flex"
                 flexDirection="row"
                 alignItems="center">
-                <img src={ Icons.visaCard } style={{ width: '48px', height: '24px' }} alt={'visa'}/>
-                <img src={ Icons.masterCard } style={{ width: '48px', height: '24px', marginLeft: '4px' }} alt={'mastercard'}/>
+                <img src={ Icons.visaCard } style={{ width: '48px', height: '24px' }} alt="visa" />
+                <img src={ Icons.masterCard } style={{ width: '48px', height: '24px', marginLeft: '4px' }} alt="mastercard" />
               </Box>
             ) }
             bodyContent={ (
@@ -254,6 +255,19 @@ const PaymentContainer = ({
             isSelected={ paymentType }
             name="Coinbase"
             type={ PaymentTypes.COIN_BASE }
+            bodyContent={ (
+              <Typography />
+            ) }
+            onChoosePaymentType={ onChoosePaymentType } />
+        ) }
+        { config?.onChain && (
+          <PaymentMethodView
+            logo={ (
+              <Icon path={ mdiEthereum } size="20px" />
+            ) }
+            isSelected={ paymentType }
+            name="On Chain Payment"
+            type={ PaymentTypes.ON_CHAIN_PAYMENT }
             bodyContent={ (
               <Typography />
             ) }

@@ -5,6 +5,7 @@ import React, {
   useMemo,
   useCallback,
 } from 'react';
+import { ethers } from 'ethers';
 import { useCreatePayment } from '../hooks';
 import { CreditCardFormType, ReserveNow, CreatePaymentResult } from '../interfaces';
 import { CookieService } from '../service/CookieService';
@@ -14,6 +15,8 @@ import { ContainerTypes } from '../interfaces/ContextInterface';
 
 import { useBilling } from './BillingProvider';
 import { useCheckout } from './CheckoutProvider';
+import { Assets } from '../assets';
+import { computeValue } from '../utils/ethUtils';
 
 export interface PaymentData {
   creditCardData?: CreditCardFormType;
@@ -46,6 +49,7 @@ export interface Payment {
   onConfirmCreditCardPurchase: (deliveryAddress: string) => void;
   onConfirmWireTransferPurchase: (deliveryAddress: string) => void;
   onConfirmCoinbasePurchase: (deliveryAddress: string) => void;
+  onConfirmOnChainPurchase: (deliveryAddress: string) => void;
   paymentMethods?: PaymentMethodLimit;
   setPaymentMethods: React.Dispatch<
     React.SetStateAction<PaymentMethodLimit | undefined>
@@ -65,7 +69,7 @@ export const PaymentProvider = ({
   const { billingInfo, collectionData, taxes, taxablePrice } = useBilling();
   const { orgId, lotId, quantity, invoiceId, vertexEnabled } = useCheckout();
   const { setContainerState } = useContainer();
-  const { makeCreditCardPurchase, makeWireTransferPurchase, makeCoinbasePurchase } = useCreatePayment(
+  const { makeCreditCardPurchase, makeWireTransferPurchase, makeCoinbasePurchase, makeOnChainPurchase, completeOnChainPayment } = useCreatePayment(
     paymentInfo,
     orgId,
   );
@@ -208,6 +212,100 @@ export const PaymentProvider = ({
     ],
   );
 
+  const onConfirmOnChainPurchase = useCallback(async (deliveryAddress = '') => {
+    setContainerState(ContainerTypes.LOADING);
+    try {
+      const options = {
+        deliveryAddress,
+        lotId,
+        quantity: quantity ?? 1,
+        invoiceId,
+        billingInfo,
+      };
+      const paymentReceipt = await makeOnChainPurchase(options);
+
+      debug.success('paymentData-coinbase', { paymentReceipt });
+
+      saveToCookies(
+        paymentReceipt.paymentData,
+        paymentReceipt.reserveLotData,
+        paymentReceipt.paymentResult,
+      );
+
+      setPaymentInfo(paymentReceipt.paymentData);
+
+      const { ethereum } = window;
+      const provider = new ethers.providers.Web3Provider(ethereum);
+      const signer = provider.getSigner();
+      await signer.getAddress();
+      const onChainPaymentAddress = paymentReceipt.invoiceDetails?.items[0]?.onChainPaymentInfo?.onchainPaymentAddress ?? '';
+      const contract = new ethers.Contract(
+        onChainPaymentAddress,
+        Assets.abi.abi,
+        signer,
+      );
+      const price = vertexEnabled ? (taxes?.taxablePrice ?? 0) : taxablePrice;
+      const value = await computeValue(price ?? 0);
+
+      const nftDetails = [
+        collectionData.collectionId,
+        paymentReceipt.invoiceDetails?.items[0]?.onChainPaymentInfo?.ownerWalletAddress,
+        Number(paymentReceipt.invoiceDetails?.items[0]?.onChainPaymentInfo?.onChainID ?? 1),
+        1,
+        deliveryAddress,
+        quantity,
+        ethers.constants.AddressZero,
+        value,
+      ];
+      const tax = taxes?.totalTaxAmount;
+      let hash = '';
+      try {
+        await contract.estimateGas.buy(nftDetails, tax, {
+          value,
+        });
+        const tx = await contract.buy(nftDetails, tax, {
+          value,
+          gasLimit: 250000,
+        });
+        hash = tx.hash;
+        await provider.waitForTransaction(tx.hash, 4);
+      } catch (e: any) {
+        const message = e.message ?? '';
+        debug.error('confirm', { message });
+      } finally {
+        try {
+          await completeOnChainPayment(options, paymentReceipt, hash);
+          setPaymentInfo(paymentReceipt.paymentData);
+          setContainerState(ContainerTypes.CONFIRMATION);
+        } catch (e) {
+          const message = e.message ?? '';
+          debug.error('confirm', { message });
+          setError(message);
+        }
+      }
+    } catch (e: any) {
+      const message = e.message ?? '';
+      debug.error('confirm', { message });
+      setError(message);
+    }
+  }, [
+    debug,
+    billingInfo,
+    invoiceId,
+    lotId,
+    quantity,
+    setError,
+    setContainerState,
+    setPaymentInfo,
+    saveToCookies,
+    makeOnChainPurchase,
+    collectionData,
+    completeOnChainPayment,
+    taxablePrice,
+    taxes,
+    vertexEnabled,
+  ]);
+
   const values = useMemo<Payment>(() => {
     return {
       paymentInfo,
@@ -217,6 +315,7 @@ export const PaymentProvider = ({
       onConfirmCoinbasePurchase,
       setPaymentMethods,
       paymentMethods,
+      onConfirmOnChainPurchase,
     };
   }, [
     paymentInfo,
@@ -224,6 +323,7 @@ export const PaymentProvider = ({
     onConfirmCreditCardPurchase,
     onConfirmWireTransferPurchase,
     onConfirmCoinbasePurchase,
+    onConfirmOnChainPurchase,
     setPaymentMethods,
     paymentMethods,
   ]);
