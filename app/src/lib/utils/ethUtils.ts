@@ -14,10 +14,8 @@ export async function convertUsdToEth(price: number, toFixedValue = 4) {
   return ethValue ?? 0;
 }
 
-export const computeValue = async (tokenType: string, qty: number) => {
-  const quantity = tokenType === 'ERC1155' ? qty : 1;
-  const value = 1 * quantity;
-  const ethValue = await convertUsdToEth(value, 18);
+export const computeValue = async (price: number) => {
+  const ethValue = await convertUsdToEth(price, 18);
   const pricePercentage = (ethValue * 1) / 100;
   const finalValue = ethers.utils.parseEther(
     (ethValue + pricePercentage).toFixed(18).toString(),

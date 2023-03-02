@@ -34,32 +34,32 @@ export const DefaultUIConfiguration: UIConfiguration = {
   },
   delivery: {
     gpay: {
-      enableMultiSig: false,
-      enableConnectWallet: true,
+      enableMultiSig: true,
+      enableConnectWallet: false,
     },
     applepay: {
-      enableMultiSig: false,
-      enableConnectWallet: true,
+      enableMultiSig: true,
+      enableConnectWallet: false,
     },
     coinbase: {
-      enableMultiSig: false,
-      enableConnectWallet: true,
+      enableMultiSig: true,
+      enableConnectWallet: false,
     },
     creditCard: {
-      enableMultiSig: false,
-      enableConnectWallet: true,
+      enableMultiSig: true,
+      enableConnectWallet: false,
     },
     walletConnect: {
-      enableMultiSig: false,
-      enableConnectWallet: true,
+      enableMultiSig: true,
+      enableConnectWallet: false,
     },
     wire: {
-      enableMultiSig: false,
-      enableConnectWallet: true,
+      enableMultiSig: true,
+      enableConnectWallet: false,
     },
     onChain: {
-      enableMultiSig: false,
-      enableConnectWallet: true,
+      enableMultiSig: true,
+      enableConnectWallet: false,
     },
   },
 };

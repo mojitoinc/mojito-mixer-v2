@@ -44,8 +44,8 @@ const MojitoCheckoutLayout = ({
         backgroundColor: theme.global?.background,
         display: 'flex',
         width: '100%',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
+        flexDirection: { sx: 'column-reverse', lg: 'row' },
+        justifyContent: { sx: 'center', lg: 'space-between' },
       }}>
       <Box padding="40px" width="100%">
         <Header

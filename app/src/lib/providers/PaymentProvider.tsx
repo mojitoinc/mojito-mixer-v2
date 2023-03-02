@@ -69,7 +69,7 @@ export const PaymentProvider = ({
   const { billingInfo, collectionData, taxes, taxablePrice } = useBilling();
   const { orgId, lotId, quantity, invoiceId, vertexEnabled } = useCheckout();
   const { setContainerState } = useContainer();
-  const { makeCreditCardPurchase, makeWireTransferPurchase, makeCoinbasePurchase, makeOnChainPurchase } = useCreatePayment(
+  const { makeCreditCardPurchase, makeWireTransferPurchase, makeCoinbasePurchase, makeOnChainPurchase, completeOnChainPayment } = useCreatePayment(
     paymentInfo,
     orgId,
   );
@@ -215,13 +215,14 @@ export const PaymentProvider = ({
   const onConfirmOnChainPurchase = useCallback(async (deliveryAddress = '') => {
     setContainerState(ContainerTypes.LOADING);
     try {
-      const paymentReceipt = await makeOnChainPurchase({
+      const options = {
         deliveryAddress,
         lotId,
         quantity: quantity ?? 1,
         invoiceId,
         billingInfo,
-      });
+      };
+      const paymentReceipt = await makeOnChainPurchase(options);
 
       debug.success('paymentData-coinbase', { paymentReceipt });
 
@@ -237,39 +238,55 @@ export const PaymentProvider = ({
       const provider = new ethers.providers.Web3Provider(ethereum);
       const signer = provider.getSigner();
       await signer.getAddress();
-      const onChainPaymentAddress = process.env
-        .NEXT_PUBLIC_ON_CHAIN_GOERLI_ADDRESS as string;
+      const onChainPaymentAddress = paymentReceipt.invoiceDetails?.items[0]?.onChainPaymentInfo?.onchainPaymentAddress ?? '';
       const contract = new ethers.Contract(
         onChainPaymentAddress,
         Assets.abi.abi,
         signer,
       );
-      const tokenType = paymentReceipt.invoiceDetails?.items[0]?.onChainPaymentInfo?.tokenType;
-      const value = await computeValue(tokenType ?? '', quantity ?? 1);
+      const price = vertexEnabled ? (taxes?.taxablePrice ?? 0) : taxablePrice;
+      const value = await computeValue(price ?? 0);
 
       const nftDetails = [
         collectionData.collectionId,
         paymentReceipt.invoiceDetails?.items[0]?.onChainPaymentInfo?.ownerWalletAddress,
-        Number(collectionData.marketplaceTokenId ?? 1),
+        Number(paymentReceipt.invoiceDetails?.items[0]?.onChainPaymentInfo?.onChainID ?? 1),
         1,
         deliveryAddress,
-        paymentReceipt.invoiceDetails?.items[0]?.onChainPaymentInfo?.tokenType === 'ERC1155' ? quantity : 1,
+        quantity,
         ethers.constants.AddressZero,
+        value,
       ];
-      const tax = 0;
-      await contract.estimateGas.buy(nftDetails, tax, {
-        value,
-      });
-      const tx = await contract.buy(nftDetails, tax, {
-        value,
-        gasLimit: 250000,
-      });
-      await provider.waitForTransaction(tx.hash, 4);
+      const tax = taxes?.totalTaxAmount;
+      let hash = '';
+      try {
+        await contract.estimateGas.buy(nftDetails, tax, {
+          value,
+        });
+        const tx = await contract.buy(nftDetails, tax, {
+          value,
+          gasLimit: 250000,
+        });
+        hash = tx.hash;
+        await provider.waitForTransaction(tx.hash, 4);
+      } catch (e: any) {
+        const message = e.message ?? '';
+        debug.error('confirm', { message });
+      } finally {
+        try {
+          await completeOnChainPayment(options, paymentReceipt, hash);
+          setPaymentInfo(paymentReceipt.paymentData);
+          setContainerState(ContainerTypes.CONFIRMATION);
+        } catch (e) {
+          const message = e.message ?? '';
+          debug.error('confirm', { message });
+          setError(message);
+        }
+      }
     } catch (e: any) {
       const message = e.message ?? '';
       debug.error('confirm', { message });
       setError(message);
-      throw e;
     }
   }, [
     debug,
@@ -283,6 +300,10 @@ export const PaymentProvider = ({
     saveToCookies,
     makeOnChainPurchase,
     collectionData,
+    completeOnChainPayment,
+    taxablePrice,
+    taxes,
+    vertexEnabled,
   ]);
 
   const values = useMemo<Payment>(() => {

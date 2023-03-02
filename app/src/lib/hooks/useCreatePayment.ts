@@ -4,7 +4,7 @@ import { useMemo, useCallback } from 'react';
 import { useEncryptCardData } from './useEncryptCard';
 import { CreditCardFormType, ReserveNow, CreatePaymentResult, InvoiceDetails } from '../interfaces';
 import { invoiceDetailsQuery, reserveNowBuyLotQuery } from '../queries/invoiceDetails';
-import { createPaymentMethodQuery, createPaymentQuery, getPaymentMethodStatus } from '../queries/Payment';
+import { completeOnChainPaymentQuery, createPaymentMethodQuery, createPaymentQuery, getPaymentMethodStatus } from '../queries/Payment';
 import { BillingFormData, useCheckout, useDebug } from '../providers';
 import { useAPIService } from './useAPIService';
 
@@ -53,6 +53,7 @@ export interface UseCreatePaymentData {
   makeWireTransferPurchase:(options: PaymentOptions)=>Promise<PaymentReceiptData>;
   makeCoinbasePurchase:(options: PaymentOptions)=>Promise<PaymentReceiptData>;
   makeOnChainPurchase:(options: PaymentOptions)=>Promise<PaymentReceiptData>;
+  completeOnChainPayment:(options:PaymentOptions, receipt:PaymentReceiptData, txHash:string)=>Promise<void>;
 }
 
 export const useCreatePayment = (paymentInfo: PaymentData | undefined, orgId: string | undefined): UseCreatePaymentData => {
@@ -65,6 +66,8 @@ export const useCreatePayment = (paymentInfo: PaymentData | undefined, orgId: st
   const [reserveNow] = useMutation(reserveNowBuyLotQuery);
   const { successURL, errorURL } = useCheckout();
   const [getInvoiceDetails] = useLazyQuery(invoiceDetailsQuery);
+  const [onCompleteChain] = useMutation(completeOnChainPaymentQuery);
+
 
   const getInvoiceData = useCallback(async (invoiceId: string | undefined, lotId: string | undefined, quantity: number) => {
     if (invoiceId) {
@@ -357,7 +360,9 @@ export const useCreatePayment = (paymentInfo: PaymentData | undefined, orgId: st
       },
     });
     const invoiceDetails:InvoiceDetails = invoiceDetailsResult.data?.getInvoiceDetails;
-    if (invoiceDetails.items?.length === 0 || !invoiceDetails.items[0].isOnchainPaymentAvailable) throw new Error('On Chain payment is not available for this item');
+    if (invoiceDetails.items?.length === 0 || !invoiceDetails.items[0].isOnchainPaymentAvailable) {
+      throw new Error('On Chain payment is not available for this item');
+    }
 
     const result = await createPaymentMethod({
       variables: {
@@ -416,14 +421,35 @@ export const useCreatePayment = (paymentInfo: PaymentData | undefined, orgId: st
     getInvoiceDetails,
   ]);
 
+  const completeOnChainPayment = useCallback(async (options:PaymentOptions, receipt:PaymentReceiptData, txHash = '') => {
+    await onCompleteChain({
+      variables: {
+        invoiceId: receipt.reserveLotData.invoiceID,
+        networkId: receipt.invoiceDetails?.items[0]?.onChainPaymentInfo?.networkID,
+        txHash,
+        billingDetails: {
+          city: options.billingInfo?.city,
+          country: options.billingInfo?.country,
+          address1: options.billingInfo?.street1,
+          address2: '',
+          district: options.billingInfo?.state,
+          postalCode: options.billingInfo?.postalCode,
+        },
+      },
+    });
+  }, [
+    onCompleteChain,
+  ]);
+
   const values = useMemo<UseCreatePaymentData>(() => {
     return {
       makeCreditCardPurchase,
       makeWireTransferPurchase,
       makeCoinbasePurchase,
       makeOnChainPurchase,
+      completeOnChainPayment,
     };
-  }, [makeCreditCardPurchase, makeWireTransferPurchase, makeCoinbasePurchase, makeOnChainPurchase]);
+  }, [makeCreditCardPurchase, makeWireTransferPurchase, makeCoinbasePurchase, makeOnChainPurchase, completeOnChainPayment]);
 
   return values;
 };

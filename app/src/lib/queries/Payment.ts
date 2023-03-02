@@ -23,6 +23,11 @@ export const createPaymentMethodQuery = gql`
             status
             __typename
         }
+        ... on OnchainPaymentMethodOutput {
+            id
+            status
+            __typename
+        }
         __typename
         }
     }
@@ -104,10 +109,22 @@ export const getPaymentMethodStatus = gql`
     }
 `;
 export const addressScreeningQuery = gql`
-    mutation GetPaymentMethodStatus($input: AddressScreeningInput!,$orgID: UUID1!) {
+    mutation AddressScreening($input: AddressScreeningInput!,$orgID: UUID1!) {
         addressScreening(
             input: $input
             orgID: $orgID
         )
     }
+`;
+
+export const completeOnChainPaymentQuery = gql`
+    mutation completeOnchainPayment($invoiceId : UUID1!,$networkId:UUID1!,$txHash:String!,$billingDetails:CryptoBillingDetails!) {
+        completeOnchainPayment(
+            invoiceId:$invoiceId
+            networkId:$networkId
+            txHash:$txHash
+            billingDetails:$billingDetails
+        )
+    }
+
 `;
