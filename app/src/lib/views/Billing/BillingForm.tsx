@@ -1,4 +1,4 @@
-import { Card, Typography, useTheme } from '@mui/material';
+import { Card, Grid, Typography, useTheme } from '@mui/material';
 import { Box } from '@mui/system';
 import { FormikErrors } from 'formik';
 import React, { useCallback } from 'react';
@@ -91,60 +91,51 @@ const BillingForm = ({
             </Typography>
           </Box>
         ) }
-        <Box display="flex" justifyContent="space-between">
+        <Grid container spacing={2}>
+        <Grid xs={12} lg={6} item>
           <TextInput
             value={ values?.firstName }
             onChange={ onChange('firstName') }
             error={ errors?.firstName }
             title="First name"
-            sx={{
-              marginTop: '16px',
-              width: '48%',
-            }}
             required
             placeholder="First name"
             type="text" />
+        </Grid>
+        <Grid xs={12} lg={6} item>
+
           <TextInput
             value={ values?.lastName }
             onChange={ onChange('lastName') }
             error={ errors?.lastName }
             title="Last name"
-            sx={{
-              marginTop: '16px',
-              width: '48%',
-            }}
             required
             placeholder="Last name"
             type="text" />
-        </Box>
-        <Box display="flex" flexDirection="row" marginTop="16px">
+            </Grid>
+            <Grid xs={12} lg={6} item>
           <Dropdown
             value={ values?.country }
             onChange={ onChange('country') }
             title="Country/Region"
             required
-            sx={{ marginRight: '8px' }}
             error={ errors?.country }
             placeholder="Select one..."
             options={ countries } />
+            </Grid>
+        <Grid xs={12} lg={6} item>
+
           <Dropdown
             value={ values?.state }
             onChange={ onChange('state') }
             title="State"
-            sx={{
-              marginLeft: '8px',
-            }}
             placeholder="Select one..."
             options={ states }
             error={ errors?.state }
             required />
-        </Box>
-        <Box
-          display="flex"
-          flexDirection="row"
-          sx={{
-            marginTop: '16px',
-          }}>
+        </Grid>
+        <Grid xs={12} lg={6} item>
+
           <Dropdown
             value={ values?.city }
             onChange={ onChange('city') }
@@ -154,39 +145,40 @@ const BillingForm = ({
             sx={{ marginRight: '8px' }}
             error={ errors?.city }
             options={ cities } />
+            </Grid>
+        <Grid xs={12} lg={6} item>
+
           <TextInput
             value={ values?.postalCode }
             onChange={ onChange('postalCode') }
             title="Zip code"
-            sx={{
-              marginLeft: '8px',
-            }}
             required
             error={ errors?.postalCode }
             placeholder="e.g. 10005" />
-        </Box>
+        </Grid>
+        <Grid xs={12} item>
 
         <TextInput
           value={ values?.street1 }
           onChange={ onChange('street1') }
           title="Address"
-          sx={{
-            marginTop: '16px',
-          }}
           required
           error={ errors?.street1 }
           placeholder="" />
+          </Grid>
+        <Grid xs={12} item>
+
         <TextInput
           value={ values?.phoneNumber }
           onChange={ onChangePhoneNumber }
           title="Phone number"
-          sx={{
-            marginTop: '16px',
-          }}
           required
           error={ errors?.phoneNumber }
           placeholder="(___) ___-____"
           type="tel" />
+          </Grid>
+        </Grid>
+
       </Box>
     </Card>
   );
