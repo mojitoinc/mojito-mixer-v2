@@ -1,4 +1,4 @@
-import { Box, useTheme } from '@mui/material';
+import { Box, Grid, useTheme } from '@mui/material';
 import React from 'react';
 import { Button, LinedText } from '../../components';
 import { MixTheme } from '../../theme';
@@ -18,30 +18,31 @@ const ExpressCheckoutView = ({ config }: ExpressCheckoutViewProps) => {
   return (
     <Box marginBottom="24px">
       <LinedText text="Express Checkout" />
-      <Box
-        display="flex"
-        flexDirection="row"
-        alignItems="center"
-        justifyContent="center"
+      <Grid
         sx={{
           margin: '24px 0px',
-        }}>
+        }}
+        container
+        spacing={ 2 }>
+
         { config?.gpay && (
+        <Grid xs={ 6 } lg={ 2 } item>
           <Button
-            backgroundColor={ theme.global?.black }
             sx={{
-              width: '90px',
-              margin: '0px 8px',
-            }}>
+              width: { xs: '100%', lg: '90px' },
+            }}
+            backgroundColor={ theme.global?.black }>
             <img src={ Icons.gpay } width="50px" height="20px" alt="Google pay" />
           </Button>
+        </Grid>
         ) }
+
         { config?.applepay && (
+        <Grid xs={ 6 } lg={ 2 } item>
           <Button
             backgroundColor={ theme.global?.black }
             sx={{
-              width: '90px',
-              margin: '0px 8px',
+              width: { xs: '100%', lg: '90px' },
             }}>
             <img
               src={ Icons.applepay }
@@ -49,14 +50,17 @@ const ExpressCheckoutView = ({ config }: ExpressCheckoutViewProps) => {
               height="20px"
               alt="Apple pay" />
           </Button>
+        </Grid>
         ) }
+
         { config?.walletConnect && (
+        <Grid xs={ 12 } lg={ 3 } md={ 6 } item>
+
           <Button
             backgroundColor={ theme.global?.white }
             textColor={ theme.global?.black }
             sx={{
-              width: '180px',
-              margin: '0px 8px',
+              width: { xs: '100%', lg: '180px' },
               border: `1px solid ${ theme.global?.black }`,
             }}
             title="Walletconnect">
@@ -69,15 +73,18 @@ const ExpressCheckoutView = ({ config }: ExpressCheckoutViewProps) => {
               }}
               alt="Walletconnect" />
           </Button>
+        </Grid>
         ) }
+
         { config?.metaMask && (
+        <Grid xs={ 12 } lg={ 3 } md={ 6 } item>
+
           <Button
             backgroundColor={ theme.global?.white }
             textColor={ theme.global?.black }
             sx={{
-              width: '180px',
+              width: { xs: '100%', lg: '180px' },
               height: '40px',
-              margin: '0px 8px',
               border: `1px solid ${ theme.global?.black }`,
             }}
             title="Metamask">
@@ -90,8 +97,9 @@ const ExpressCheckoutView = ({ config }: ExpressCheckoutViewProps) => {
                 marginRight: '8px',
               }} />
           </Button>
+        </Grid>
         ) }
-      </Box>
+      </Grid>
       <LinedText text="OR" />
     </Box>
   );

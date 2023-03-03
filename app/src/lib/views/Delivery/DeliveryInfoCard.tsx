@@ -171,6 +171,13 @@ export const DeliveryInfoCard = ({
               </Typography>
             </Box>
           ) }
+          { paymentInfo?.paymentType === PaymentTypes.ON_CHAIN_PAYMENT && (
+            <Box>
+              <Typography variant="body2" sx={{ marginBottom: '4px' }}>
+                On Chain
+              </Typography>
+            </Box>
+          ) }
         </Box>
         <Box>
           <Typography

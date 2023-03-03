@@ -277,7 +277,7 @@ export const PaymentProvider = ({
           await completeOnChainPayment(options, paymentReceipt, hash);
           setPaymentInfo(paymentReceipt.paymentData);
           setContainerState(ContainerTypes.CONFIRMATION);
-        } catch (e) {
+        } catch (e: any) {
           const message = e.message ?? '';
           debug.error('confirm', { message });
           setError(message);
