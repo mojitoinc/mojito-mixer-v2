@@ -17,7 +17,6 @@ import {
 } from '../../components';
 import { BillingFormData, PaymentData, useUIConfiguration } from '../../providers';
 import { PaymentTypes } from '../../constants';
-import { ConnectType } from '../../providers/ConnectContext';
 import { Icons } from '../../assets';
 import { DeliveryInfoCard } from './DeliveryInfoCard';
 import { NEW_MULTI_SIG } from './index';
@@ -32,10 +31,10 @@ interface DeliveryProps {
   billingInfo: BillingFormData | undefined;
   paymentInfo: PaymentData | undefined;
   onClickConnectWallet: () => void;
-  connect: ConnectType;
   onDisconnect: () => void;
   error?: string;
   isLoading: boolean;
+  connectedWalletAddress?:string;
 }
 
 const Delivery = ({
@@ -47,10 +46,10 @@ const Delivery = ({
   billingInfo,
   paymentInfo,
   onClickConnectWallet,
-  connect,
   onDisconnect,
   error,
   isLoading,
+  connectedWalletAddress,
 }: DeliveryProps) => {
   const theme = useTheme<MixTheme>();
   const { delivery } = useUIConfiguration();
@@ -104,7 +103,7 @@ const Delivery = ({
                   out for 14 days.`
             : `All related NFT purchase and delivery fees will be covered by ${ organizationName }.` }
         </Typography>
-        { !connect?.connected ? (
+        { !connectedWalletAddress ? (
           <>
             {
             showMultiSig && (
@@ -164,23 +163,27 @@ const Delivery = ({
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',
                 }}>
-                { connect?.account }
+                { connectedWalletAddress }
               </Typography>
               <CopyButton
-                copyValue={ connect?.account }
+                copyValue={ connectedWalletAddress }
                 sx={{
                   alignSelf: 'center',
                 }} />
             </Box>
-            <Button
-              title="Disconnect"
-              textColor={ theme.global?.highlightedText }
-              backgroundColor={ theme.global?.white }
-              variant="outlined"
-              sx={{
-                justifySelf: 'flex-end',
-              }}
-              onClick={ onDisconnect } />
+            {
+              paymentInfo?.paymentType !== PaymentTypes.ON_CHAIN_PAYMENT && (
+              <Button
+                title="Disconnect"
+                textColor={ theme.global?.highlightedText }
+                backgroundColor={ theme.global?.white }
+                variant="outlined"
+                sx={{
+                  justifySelf: 'flex-end',
+                }}
+                onClick={ onDisconnect } />
+              )
+}
           </Box>
         ) }
       </Card>
@@ -190,7 +193,7 @@ const Delivery = ({
           title="Confirm purchase"
           backgroundColor={ theme.global?.checkout?.continueButtonBackground }
           textColor={ theme.global?.checkout?.continueButtonTextColor }
-          disabled={ !(connect?.connected || selectedDeliveryAddress) }
+          disabled={ !(connectedWalletAddress || selectedDeliveryAddress) }
           onClick={ onClickConfirmPurchase }
           sx={{
             '&: hover': {

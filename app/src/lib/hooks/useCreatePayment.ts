@@ -22,6 +22,9 @@ export interface PaymentData {
     };
     country: string;
   };
+  onChainPayment?:{
+    walletAddress: string;
+  };
   paymentId?: string;
   paymentType?: string;
   destinationAddress?: string;

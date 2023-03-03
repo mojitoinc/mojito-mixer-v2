@@ -15,13 +15,13 @@ interface ConfirmationViewProps {
 
 const ConfirmationView = ({ paymentStatus }: ConfirmationViewProps) => {
   const theme = useTheme<MixTheme>();
-  const { paymentInfo, billingInfo } = usePaymentInfo();
+  const { paymentInfo, billingInfo, txHash } = usePaymentInfo();
   const { paymentConfirmation: paymentConfiguration } = useUIConfiguration();
 
   const backgroundColor = useMemo(() => {
     return paymentStatus === PaymentStatus.PENDING
       ? theme.global?.paymentConfirmation?.awaitingPaymentBackground
-      : paymentStatus === PaymentStatus.COMPLETED
+      : (paymentStatus === PaymentStatus.COMPLETED || paymentStatus === PaymentStatus.PAID)
         ? theme.global?.paymentConfirmation?.processedBackground
         : theme.global?.paymentConfirmation?.awaitingPaymentBackground;
   }, [paymentStatus, theme]);
@@ -29,7 +29,7 @@ const ConfirmationView = ({ paymentStatus }: ConfirmationViewProps) => {
   const textColor = useMemo(
     () => (paymentStatus === PaymentStatus.PENDING
       ? theme.global?.paymentConfirmation?.awaitingPaymentTextColor
-      : paymentStatus === PaymentStatus.COMPLETED
+      : (paymentStatus === PaymentStatus.COMPLETED || paymentStatus === PaymentStatus.PAID)
         ? theme.global?.paymentConfirmation?.processedTextColor
         : theme.global?.paymentConfirmation?.awaitingPaymentTextColor),
     [paymentStatus, theme],
@@ -38,7 +38,7 @@ const ConfirmationView = ({ paymentStatus }: ConfirmationViewProps) => {
   const status = useMemo(() => {
     return paymentStatus === PaymentStatus.PENDING
       ? 'Awaiting Payment'
-      : paymentStatus === PaymentStatus.COMPLETED
+      : (paymentStatus === PaymentStatus.COMPLETED || paymentStatus === PaymentStatus.PAID)
         ? 'Processed'
         : 'Inprogress';
   }, [paymentStatus]);
@@ -151,6 +151,29 @@ const ConfirmationView = ({ paymentStatus }: ConfirmationViewProps) => {
             showCopy>
             <Typography fontSize="16px">
               Coinbase
+              <br />
+              { paymentInfo?.paymentId }
+            </Typography>
+          </RowItem>
+        ) }
+
+        { paymentInfo?.paymentType === PaymentTypes.ON_CHAIN_PAYMENT && (
+        <RowItem
+          title="Transaction Hash"
+          copyValue={ txHash ?? '' }
+          showCopy>
+          <Typography fontSize="16px">
+            { txHash }
+          </Typography>
+        </RowItem>
+        ) }
+        { paymentInfo?.paymentType === PaymentTypes.ON_CHAIN_PAYMENT && (
+          <RowItem
+            title="Payment Method"
+            copyValue={ paymentInfo?.paymentId }
+            showCopy>
+            <Typography fontSize="16px">
+              On Chain Payment
               <br />
               { paymentInfo?.paymentId }
             </Typography>

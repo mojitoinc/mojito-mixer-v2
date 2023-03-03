@@ -18,6 +18,7 @@ export const BanksList = ['Bank of America', 'Capitol One', 'Chase', 'Citi Bank'
 export enum PaymentStatus {
   PENDING = 'pending',
   COMPLETED = 'completed',
+  PAID = 'Paid',
   ACTIVE = 'active'
 }
 

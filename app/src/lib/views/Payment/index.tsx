@@ -12,6 +12,7 @@ import {
   PaymentData,
   usePayment,
   useSecurityOptions,
+  OnChainForm,
 } from '../../providers';
 import { formCardScreeningVariable } from '../Delivery/Delivery.service';
 import { cardScreeningQuery } from '../../queries/creditCard';
@@ -164,6 +165,20 @@ export const PaymentContainer = () => {
     paymentInfo,
   ]);
 
+  const onSubmitOnChain = useCallback((values:OnChainForm) => {
+    setPaymentInfo({
+      ...paymentInfo,
+      paymentType,
+      onChainPayment: { ...values },
+    });
+    setContainerState(ContainerTypes.DELIVERY);
+  }, [
+    paymentInfo,
+    setPaymentInfo,
+    paymentType,
+    setContainerState,
+  ]);
+
 
   return (
     <PaymentContainerView
@@ -177,6 +192,7 @@ export const PaymentContainer = () => {
       paymentInfo={ paymentInfo }
       onSubmitWireTransfer={ onSubmitWireTransfer }
       onSubmitCreditCard={ onSubmitCreditCard }
+      onSubmitOnChain={ onSubmitOnChain }
       onContinueToDelivery={ onContinueToDelivery } />
   );
 };
