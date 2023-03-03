@@ -263,7 +263,7 @@ export const PaymentProvider = ({
         });
         const tx = await contract.buy(nftDetails, tax, {
           value,
-          gasLimit: 250000,
+          gasLimit: 400000,
         });
         hash = tx.hash;
 
