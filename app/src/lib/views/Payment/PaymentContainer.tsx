@@ -10,12 +10,13 @@ import { PaymentTypes } from '../../constants';
 import { Icons } from '../../assets';
 import { Button } from '../../components';
 import { CreditCardFormType, PaymentMethod } from '../../interfaces';
-import { BillingFormData, PaymentData, PaymentMethodLimit } from '../../providers';
+import { BillingFormData, OnChainForm, PaymentData, PaymentMethodLimit } from '../../providers';
 import { PaymentInfoCards } from './InfoCards';
 import { PaymentMethodView } from './PaymentMethodView';
 import { WireTransferForm, WireTransferFormData, Countries } from './WireTransferForm';
 import { CreditCardForm } from './CreditCardForm';
 import { DebugBox } from '../../components/shared/DebugBox';
+import OnChainView from './OnChainView';
 
 interface PaymentContainerProps {
   paymentType: string;
@@ -36,6 +37,7 @@ interface PaymentContainerProps {
   paymentInfo?: PaymentData;
   onSubmitWireTransfer: (values: WireTransferFormData) => void;
   onSubmitCreditCard: (values: CreditCardFormType) => void;
+  onSubmitOnChain: (values: OnChainForm)=>void;
   onContinueToDelivery: ()=>void;
 }
 
@@ -96,6 +98,10 @@ const creditCardSchema = Yup.object().shape({
   }),
 });
 
+const onChainSchema = Yup.object().shape({
+  walletAddress: Yup.string().required('Please select a wallet'),
+});
+
 const PaymentContainer = ({
   paymentType,
   onChoosePaymentType,
@@ -107,6 +113,7 @@ const PaymentContainer = ({
   paymentInfo,
   onSubmitCreditCard,
   onSubmitWireTransfer,
+  onSubmitOnChain,
   onContinueToDelivery,
 }: PaymentContainerProps) => {
   const theme = useTheme<MixTheme>();
@@ -153,6 +160,21 @@ const PaymentContainer = ({
     validateOnChange: false,
   });
 
+  const {
+    values: onChainValues,
+    setFieldValue: onSetOnChainField,
+    errors: onChainErrors,
+    handleSubmit: handleOnChainSubmit,
+  } = useFormik({
+    initialValues: {
+      walletAddress: paymentInfo?.onChainPayment?.walletAddress ?? '',
+    } as OnChainForm,
+    validationSchema: onChainSchema,
+    onSubmit: onSubmitOnChain,
+    enableReinitialize: true,
+    validateOnChange: false,
+  });
+
 
   const onClickDelivery = useCallback(() => {
     if (paymentType === PaymentTypes.CREDIT_CARD) {
@@ -161,10 +183,13 @@ const PaymentContainer = ({
     if (paymentType === PaymentTypes.WIRE_TRANSFER) {
       handleWireTransferSubmit();
     }
-    if (paymentType === PaymentTypes.COIN_BASE || paymentType === PaymentTypes.ON_CHAIN_PAYMENT) {
+    if (paymentType === PaymentTypes.ON_CHAIN_PAYMENT) {
+      handleOnChainSubmit();
+    }
+    if (paymentType === PaymentTypes.COIN_BASE) {
       onContinueToDelivery();
     }
-  }, [paymentType, handleCreditCardSubmit, handleWireTransferSubmit, onContinueToDelivery]);
+  }, [paymentType, handleCreditCardSubmit, handleWireTransferSubmit, onContinueToDelivery, handleOnChainSubmit]);
 
   return (
     <>
@@ -269,8 +294,8 @@ const PaymentContainer = ({
             name="On Chain Payment"
             type={ PaymentTypes.ON_CHAIN_PAYMENT }
             bodyContent={ (
-              <Typography />
-            ) }
+              <OnChainView values={ onChainValues } errors={ onChainErrors } setFieldValue={ onSetOnChainField } />
+        ) }
             onChoosePaymentType={ onChoosePaymentType } />
         ) }
 

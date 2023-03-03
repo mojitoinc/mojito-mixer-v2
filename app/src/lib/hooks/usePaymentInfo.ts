@@ -13,6 +13,7 @@ interface PaymentInfo {
   taxablePrice?: number;
   vertexEnabled?: boolean;
   quantity?: number;
+  txHash?: string;
 }
 const getObject = (value:any) => {
   if (value === 'undefined') return undefined;
@@ -37,6 +38,7 @@ const usePaymentInfo = (): PaymentInfo => {
     const price = CookieService.taxablePrice.getValue();
     const vertex = CookieService.vertexEnabled.getValue();
     const totalQuantity = CookieService.quantity.getValue();
+    const hash = CookieService.txHash.getValue();
 
     const billingInfo = getObject(billing) as BillingFormData;
     const paymentInfo = getObject(payment) as PaymentData;
@@ -47,6 +49,7 @@ const usePaymentInfo = (): PaymentInfo => {
     const taxablePrice = Number(getObject(price));
     const vertexEnabled = Boolean(getObject(vertex));
     const quantity = Number(getObject(totalQuantity));
+    const txHash = getObject(hash);
     // CookieService.billing.remove();
     // CookieService.paymentInfo.remove();
     // CookieService.taxes.remove();
@@ -62,6 +65,7 @@ const usePaymentInfo = (): PaymentInfo => {
       taxablePrice,
       vertexEnabled,
       quantity,
+      txHash,
     });
   }, []);
 

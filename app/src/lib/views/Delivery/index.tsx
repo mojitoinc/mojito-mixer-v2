@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 import { DropdownOptions } from '../../components';
 import { meQuery } from '../../queries/me';
@@ -55,9 +55,15 @@ export const Delivery = () => {
     }
   }, [meData]);
 
+  const connectedWalletAddress = useMemo(() => {
+    if (paymentInfo?.paymentType === PaymentTypes.ON_CHAIN_PAYMENT) return paymentInfo.onChainPayment?.walletAddress;
+    if (connect?.connected) return connect?.account;
+    return undefined;
+  }, [connect, paymentInfo]);
+
   const onClickConfirmPurchase = useCallback(async () => {
     try {
-      const deliveryAddress = connect?.connected ? connect?.account : selectedDeliveryAddress === NEW_MULTI_SIG ? '' : selectedDeliveryAddress;
+      const deliveryAddress = connectedWalletAddress ?? (selectedDeliveryAddress === NEW_MULTI_SIG ? '' : selectedDeliveryAddress);
       if (!deliveryAddress && selectedDeliveryAddress !== NEW_MULTI_SIG) {
         setError('Please select a delivery address');
         return;
@@ -104,8 +110,8 @@ export const Delivery = () => {
     orgId,
     selectedDeliveryAddress,
     addressScreening,
-    connect,
     enableSardine,
+    connectedWalletAddress,
   ]);
 
   return (
@@ -118,7 +124,7 @@ export const Delivery = () => {
       billingInfo={ billingInfo }
       paymentInfo={ paymentInfo }
       onClickConnectWallet={ onWalletConnect }
-      connect={ connect }
+      connectedWalletAddress={ connectedWalletAddress }
       onDisconnect={ onDisconnect }
       error={ error }
       isLoading={ isLoading } />

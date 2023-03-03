@@ -18,6 +18,10 @@ import { useCheckout } from './CheckoutProvider';
 import { Assets } from '../assets';
 import { computeValue } from '../utils/ethUtils';
 
+export interface OnChainForm {
+  walletAddress: string;
+}
+
 export interface PaymentData {
   creditCardData?: CreditCardFormType;
   wireData?: {
@@ -31,6 +35,7 @@ export interface PaymentData {
     };
     country: string;
   };
+  onChainPayment?:OnChainForm;
   paymentId?: string;
   paymentType?: string;
   destinationAddress?: string;
@@ -75,7 +80,7 @@ export const PaymentProvider = ({
   );
 
   const saveToCookies = useCallback(
-    (paymentData: PaymentData, reserveLotData: ReserveNow, paymentResult?:CreatePaymentResult) => {
+    (paymentData: PaymentData, reserveLotData: ReserveNow, paymentResult?:CreatePaymentResult, txHash?: string) => {
       CookieService.billing.setValue(JSON.stringify(billingInfo));
       CookieService.paymentInfo.setValue(JSON.stringify(paymentData));
       CookieService.taxes.setValue(JSON.stringify(taxes));
@@ -85,6 +90,7 @@ export const PaymentProvider = ({
       CookieService.taxablePrice.setValue(taxablePrice);
       CookieService.vertexEnabled.setValue(vertexEnabled);
       CookieService.quantity.setValue(quantity);
+      CookieService.txHash.setValue(txHash);
     },
     [billingInfo, collectionData, taxes, quantity, vertexEnabled, taxablePrice],
   );
@@ -226,14 +232,6 @@ export const PaymentProvider = ({
 
       debug.success('paymentData-coinbase', { paymentReceipt });
 
-      saveToCookies(
-        paymentReceipt.paymentData,
-        paymentReceipt.reserveLotData,
-        paymentReceipt.paymentResult,
-      );
-
-      setPaymentInfo(paymentReceipt.paymentData);
-
       const { ethereum } = window;
       const provider = new ethers.providers.Web3Provider(ethereum);
       const signer = provider.getSigner();
@@ -252,8 +250,8 @@ export const PaymentProvider = ({
         paymentReceipt.invoiceDetails?.items[0]?.onChainPaymentInfo?.ownerWalletAddress,
         Number(paymentReceipt.invoiceDetails?.items[0]?.onChainPaymentInfo?.onChainID ?? 1),
         1,
-        deliveryAddress,
         quantity,
+        deliveryAddress,
         ethers.constants.AddressZero,
         value,
       ];
@@ -268,8 +266,19 @@ export const PaymentProvider = ({
           gasLimit: 250000,
         });
         hash = tx.hash;
+
+        saveToCookies(
+          paymentReceipt.paymentData,
+          paymentReceipt.reserveLotData,
+          paymentReceipt.paymentResult,
+          hash,
+        );
+
+        setPaymentInfo(paymentReceipt.paymentData);
         await provider.waitForTransaction(tx.hash, 4);
       } catch (e: any) {
+      console.log('error',e)
+
         const message = e.message ?? '';
         debug.error('confirm', { message });
       } finally {
@@ -278,6 +287,8 @@ export const PaymentProvider = ({
           setPaymentInfo(paymentReceipt.paymentData);
           setContainerState(ContainerTypes.CONFIRMATION);
         } catch (e: any) {
+      console.log('error',e)
+
           const message = e.message ?? '';
           debug.error('confirm', { message });
           setError(message);
@@ -286,6 +297,7 @@ export const PaymentProvider = ({
     } catch (e: any) {
       const message = e.message ?? '';
       debug.error('confirm', { message });
+      console.log('error',e)
       setError(message);
     }
   }, [
