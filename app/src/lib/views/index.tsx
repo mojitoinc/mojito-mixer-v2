@@ -1,5 +1,6 @@
 import { Box, useTheme } from '@mui/material';
 import React, { useEffect } from 'react';
+import { Stack } from '@mui/system';
 import { Header, Stepper } from '../components';
 import { MixTheme } from '../theme';
 import CostBreakDownContainer from './CostBreakDown';
@@ -39,12 +40,11 @@ const MojitoCheckoutLayout = ({
     return <LoadingContainer />;
   }
   return (
-    <Box
+    <Stack
+      direction={{ xs: 'column-reverse', md: 'row' }}
       sx={{
         backgroundColor: theme.global?.background,
         display: 'flex',
-        width: '100%',
-        flexDirection: { sx: 'column-reverse', lg: 'row' },
         justifyContent: { sx: 'center', lg: 'space-between' },
       }}>
       <Box padding="40px" width="100%">
@@ -61,7 +61,7 @@ const MojitoCheckoutLayout = ({
         { containerState === ContainerTypes.DELIVERY && <Delivery /> }
       </Box>
       <CostBreakDownContainer />
-    </Box>
+    </Stack>
   );
 };
 export default MojitoCheckoutLayout;
