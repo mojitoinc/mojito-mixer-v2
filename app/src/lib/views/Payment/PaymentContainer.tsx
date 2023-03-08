@@ -3,8 +3,6 @@ import React, { useCallback } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import moment from 'moment';
-import { mdiEthereum } from '@mdi/js';
-import Icon from '@mdi/react';
 import { MixTheme } from '../../theme';
 import { PaymentTypes } from '../../constants';
 import { Icons } from '../../assets';
@@ -183,7 +181,7 @@ const PaymentContainer = ({
     if (paymentType === PaymentTypes.WIRE_TRANSFER) {
       handleWireTransferSubmit();
     }
-    if (paymentType === PaymentTypes.ON_CHAIN_PAYMENT) {
+    if (paymentType === PaymentTypes.WALLET_CONNECT) {
       handleOnChainSubmit();
     }
     if (paymentType === PaymentTypes.COIN_BASE) {
@@ -235,7 +233,7 @@ const PaymentContainer = ({
             isSelected={ paymentType }
             name="Walletconnect"
             type={ PaymentTypes.WALLET_CONNECT }
-            bodyContent={ <>Test</> }
+            bodyContent={ <OnChainView values={ onChainValues } errors={ onChainErrors } setFieldValue={ onSetOnChainField } /> }
             onChoosePaymentType={ onChoosePaymentType } />
         ) }
         { config?.applepay && (
@@ -274,28 +272,13 @@ const PaymentContainer = ({
         { config?.coinbase && (
 
           <PaymentMethodView
-            logo={ (
-              <Icon path={ mdiEthereum } size="20px" />
-            ) }
+            logo={ Icons.coinbase }
             isSelected={ paymentType }
             name="Coinbase"
             type={ PaymentTypes.COIN_BASE }
             bodyContent={ (
               <Typography />
             ) }
-            onChoosePaymentType={ onChoosePaymentType } />
-        ) }
-        { config?.onChain && (
-          <PaymentMethodView
-            logo={ (
-              <Icon path={ mdiEthereum } size="20px" />
-            ) }
-            isSelected={ paymentType }
-            name="On Chain Payment"
-            type={ PaymentTypes.ON_CHAIN_PAYMENT }
-            bodyContent={ (
-              <OnChainView values={ onChainValues } errors={ onChainErrors } setFieldValue={ onSetOnChainField } />
-        ) }
             onChoosePaymentType={ onChoosePaymentType } />
         ) }
 

@@ -56,7 +56,7 @@ export const Delivery = () => {
   }, [meData]);
 
   const connectedWalletAddress = useMemo(() => {
-    if (paymentInfo?.paymentType === PaymentTypes.ON_CHAIN_PAYMENT) return paymentInfo.onChainPayment?.walletAddress;
+    if (paymentInfo?.paymentType === PaymentTypes.WALLET_CONNECT) return paymentInfo.onChainPayment?.walletAddress;
     if (connect?.connected) return connect?.account;
     return undefined;
   }, [connect, paymentInfo]);
@@ -94,7 +94,7 @@ export const Delivery = () => {
       if (paymentInfo?.paymentType === PaymentTypes.COIN_BASE) {
         onConfirmCoinbasePurchase(deliveryAddress);
       }
-      if (paymentInfo?.paymentType === PaymentTypes.ON_CHAIN_PAYMENT) {
+      if (paymentInfo?.paymentType === PaymentTypes.WALLET_CONNECT) {
         onConfirmOnChainPurchase(deliveryAddress);
       }
     } catch (e) {

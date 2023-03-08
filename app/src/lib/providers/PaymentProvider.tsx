@@ -17,6 +17,7 @@ import { useBilling } from './BillingProvider';
 import { useCheckout } from './CheckoutProvider';
 import { Assets } from '../assets';
 import { computeValue } from '../utils/ethUtils';
+import { useWeb3ModalConnect } from './Web3ModalConnect';
 
 export interface OnChainForm {
   walletAddress: string;
@@ -78,6 +79,10 @@ export const PaymentProvider = ({
     paymentInfo,
     orgId,
   );
+
+  const {
+    connect,
+  } = useWeb3ModalConnect();
 
   const saveToCookies = useCallback(
     (paymentData: PaymentData, reserveLotData: ReserveNow, paymentResult?:CreatePaymentResult, txHash?: string) => {
@@ -232,10 +237,9 @@ export const PaymentProvider = ({
 
       debug.success('paymentData-coinbase', { paymentReceipt });
 
-      const { ethereum } = window;
-      const provider = new ethers.providers.Web3Provider(ethereum);
-      const signer = provider.getSigner();
-      await signer.getAddress();
+      const { provider } = connect;
+      if (!provider) return;
+      const { signer } = connect;
       const onChainPaymentAddress = paymentReceipt.invoiceDetails?.items[0]?.onChainPaymentInfo?.onchainPaymentAddress ?? '';
       const contract = new ethers.Contract(
         onChainPaymentAddress,
@@ -277,7 +281,7 @@ export const PaymentProvider = ({
         setPaymentInfo(paymentReceipt.paymentData);
         await provider.waitForTransaction(tx.hash, 4);
       } catch (e: any) {
-      console.log('error',e)
+        console.log('error', e);
 
         const message = e.message ?? '';
         debug.error('confirm', { message });
@@ -287,7 +291,7 @@ export const PaymentProvider = ({
           setPaymentInfo(paymentReceipt.paymentData);
           setContainerState(ContainerTypes.CONFIRMATION);
         } catch (e: any) {
-      console.log('error',e)
+          console.log('error', e);
 
           const message = e.message ?? '';
           debug.error('confirm', { message });
@@ -297,7 +301,7 @@ export const PaymentProvider = ({
     } catch (e: any) {
       const message = e.message ?? '';
       debug.error('confirm', { message });
-      console.log('error',e)
+      console.log('error', e);
       setError(message);
     }
   }, [
@@ -316,6 +320,7 @@ export const PaymentProvider = ({
     taxablePrice,
     taxes,
     vertexEnabled,
+    connect,
   ]);
 
   const values = useMemo<Payment>(() => {

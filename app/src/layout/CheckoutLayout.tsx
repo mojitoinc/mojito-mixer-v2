@@ -263,6 +263,12 @@ export const CheckoutLayout: React.FC<CheckoutProps> = ({
           }}
           enableSardine={ false }
           uiConfiguration={{
+            delivery: {
+              creditCard: {
+                enableMultiSig: true,
+                enableConnectWallet: true,
+              },
+            },
 
             billing: {
               isEnableExpressCheckout: Boolean(!values.express ?? true),

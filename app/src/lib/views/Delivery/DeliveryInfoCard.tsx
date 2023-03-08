@@ -171,10 +171,10 @@ export const DeliveryInfoCard = ({
               </Typography>
             </Box>
           ) }
-          { paymentInfo?.paymentType === PaymentTypes.ON_CHAIN_PAYMENT && (
+          { paymentInfo?.paymentType === PaymentTypes.WALLET_CONNECT && (
             <Box>
               <Typography variant="body2" sx={{ marginBottom: '4px' }}>
-                On Chain
+                Walletconnect
               </Typography>
             </Box>
           ) }

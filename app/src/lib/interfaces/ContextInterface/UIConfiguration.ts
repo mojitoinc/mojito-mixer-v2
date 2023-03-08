@@ -40,6 +40,5 @@ export interface UIConfiguration {
     wire: DeliveryType;
     creditCard: DeliveryType;
     coinbase: DeliveryType;
-    onChain: DeliveryType;
   }
 }

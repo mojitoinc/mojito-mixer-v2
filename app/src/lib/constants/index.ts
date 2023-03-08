@@ -10,7 +10,6 @@ export enum PaymentTypes {
   GOOGLE_PAY = 'GooglePayCheckout',
   WIRE_TRANSFER = 'Wire',
   COIN_BASE = 'Coinbase',
-  ON_CHAIN_PAYMENT = 'OnchainPayment'
 }
 
 export const BanksList = ['Bank of America', 'Capitol One', 'Chase', 'Citi Bank', 'Wells Fargo', 'US Bank'];

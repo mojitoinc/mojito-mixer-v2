@@ -110,14 +110,14 @@ const MojitoCheckout: React.FC<MojitoCheckoutProps> = ({
                       success={ success }>
                       <ErrorProvider>
                         <BillingProvider>
-                          <PaymentProvider>
-                            <ConnectProvider>
+                          <ConnectProvider>
+                            <PaymentProvider>
                               <GlobalStyles styles={ styles } />
                               <MojitoCheckoutView
                                 enableSardine={ enableSardine }
                                 sardineEnvironment={ sardineEnvironment } />
-                            </ConnectProvider>
-                          </PaymentProvider>
+                            </PaymentProvider>
+                          </ConnectProvider>
                         </BillingProvider>
                       </ErrorProvider>
                     </ContainerStateProvider>
