@@ -57,10 +57,6 @@ export const DefaultUIConfiguration: UIConfiguration = {
       enableMultiSig: true,
       enableConnectWallet: false,
     },
-    onChain: {
-      enableMultiSig: true,
-      enableConnectWallet: false,
-    },
   },
 };
 

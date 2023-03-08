@@ -40,6 +40,5 @@ export interface MojitoUIConfiguration {
     wire?: MojitoDeliveryType;
     creditCard?: MojitoDeliveryType;
     coinbase?: MojitoDeliveryType;
-    onChain?: MojitoDeliveryType;
   };
 }

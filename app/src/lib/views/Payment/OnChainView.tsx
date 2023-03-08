@@ -1,13 +1,11 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { FormikErrors } from 'formik';
 import { Box, FormHelperText, Typography, useTheme } from '@mui/material';
-import Icon from '@mdi/react';
-import { mdiEthereum } from '@mdi/js';
-import { ethers } from 'ethers';
 import { MixTheme } from '../../theme';
 import { Button, CopyButton } from '../../components';
 import { OnChainForm } from '../../providers';
 import { Icons } from '../../assets';
+import { useWeb3ModalConnect } from '../../providers/Web3ModalConnect';
 
 interface OnChainProps {
   values: OnChainForm;
@@ -20,20 +18,31 @@ interface OnChainProps {
 }
 
 const OnChainView = ({ values, setFieldValue, errors }: OnChainProps) => {
+  const {
+    connect,
+    onWalletConnect,
+    onDisconnect,
+  } = useWeb3ModalConnect();
+
+  useEffect(() => {
+    if (connect) {
+      setFieldValue('walletAddress', connect.account);
+    }
+  }, [setFieldValue, connect]);
+
   const onClickMetaMask = useCallback(async () => {
-    const { ethereum } = window;
-    const provider = new ethers.providers.Web3Provider(ethereum);
-    const signer = provider.getSigner();
-    const address = await signer.getAddress();
-    setFieldValue('walletAddress', address);
-  }, [setFieldValue]);
+    await onDisconnect();
+    await onWalletConnect();
+  }, [onDisconnect,onWalletConnect]);
 
 
   const theme = useTheme<MixTheme>();
   return (
     <>
       { !values?.walletAddress ? (
-        <>
+        <Box
+          display="flex"
+          flexDirection="column">
           <Button
             backgroundColor={ theme.global?.black }
             onClick={ onClickMetaMask }
@@ -41,15 +50,23 @@ const OnChainView = ({ values, setFieldValue, errors }: OnChainProps) => {
               width: { xs: '100%', md: '180px' },
               margin: '16px 0px',
               border: `1px solid ${ theme.global?.black }`,
+              alignSelf: 'center',
             }}
-            title="Metamask">
-            <Icon path={ mdiEthereum } size="20px" />
+            title="Walletconnect">
+            <img
+              src={ Icons.walletConnect }
+              alt={"wallet connect"}
+              style={{
+                width: '20px',
+                height: '20px',
+                marginRight: '8px',
+              }} />
           </Button>
           {
             errors?.walletAddress &&
             <FormHelperText error>{ errors?.walletAddress }</FormHelperText>
         }
-        </>
+        </Box>
       ) : (
         <>
           <Box

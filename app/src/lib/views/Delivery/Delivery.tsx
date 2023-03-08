@@ -67,7 +67,6 @@ const Delivery = ({
     if (paymentInfo?.paymentType === PaymentTypes.GOOGLE_PAY) return delivery.gpay.enableMultiSig;
     if (paymentInfo?.paymentType === PaymentTypes.APPLE_PAY) return delivery.applepay.enableMultiSig;
     if (paymentInfo?.paymentType === PaymentTypes.WALLET_CONNECT) return delivery.walletConnect.enableMultiSig;
-    if (paymentInfo?.paymentType === PaymentTypes.ON_CHAIN_PAYMENT) return delivery.onChain.enableMultiSig;
     return true;
   }, [delivery, paymentInfo]);
 
@@ -78,7 +77,6 @@ const Delivery = ({
     if (paymentInfo?.paymentType === PaymentTypes.GOOGLE_PAY) return delivery.gpay.enableConnectWallet;
     if (paymentInfo?.paymentType === PaymentTypes.APPLE_PAY) return delivery.applepay.enableConnectWallet;
     if (paymentInfo?.paymentType === PaymentTypes.WALLET_CONNECT) return delivery.walletConnect.enableConnectWallet;
-    if (paymentInfo?.paymentType === PaymentTypes.ON_CHAIN_PAYMENT) return delivery.onChain.enableConnectWallet;
     return false;
   }, [delivery, paymentInfo]);
 
@@ -172,7 +170,7 @@ const Delivery = ({
                 }} />
             </Box>
             {
-              paymentInfo?.paymentType !== PaymentTypes.ON_CHAIN_PAYMENT && (
+              paymentInfo?.paymentType !== PaymentTypes.WALLET_CONNECT && (
               <Button
                 title="Disconnect"
                 textColor={ theme.global?.highlightedText }

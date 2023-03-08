@@ -157,7 +157,7 @@ const ConfirmationView = ({ paymentStatus }: ConfirmationViewProps) => {
           </RowItem>
         ) }
 
-        { paymentInfo?.paymentType === PaymentTypes.ON_CHAIN_PAYMENT && (
+        { paymentInfo?.paymentType === PaymentTypes.WALLET_CONNECT && (
         <RowItem
           title="Transaction Hash"
           copyValue={ txHash ?? '' }
@@ -167,7 +167,7 @@ const ConfirmationView = ({ paymentStatus }: ConfirmationViewProps) => {
           </Typography>
         </RowItem>
         ) }
-        { paymentInfo?.paymentType === PaymentTypes.ON_CHAIN_PAYMENT && (
+        { paymentInfo?.paymentType === PaymentTypes.WALLET_CONNECT && (
           <RowItem
             title="Payment Method"
             copyValue={ paymentInfo?.paymentId }
