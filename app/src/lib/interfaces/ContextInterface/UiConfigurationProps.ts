@@ -23,7 +23,6 @@ export interface MojitoUIConfiguration {
     wire?: boolean;
     creditCard?: boolean;
     coinbase?: boolean;
-    onChain?: boolean;
   };
   costBreakdown?: {
     showDiscountCode?: boolean;
