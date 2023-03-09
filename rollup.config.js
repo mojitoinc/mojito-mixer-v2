@@ -111,8 +111,8 @@ export default [{
     }),
     copy({
       targets: [
-        // { src: 'src/assets/*.svg', dest: 'dist/cjs/src/assets' },
-        // { src: 'src/assets/*.svg', dest: 'dist/esm/src/assets' },
+        { src: 'src/assets/*.svg', dest: 'dist/cjs/src/assets' },
+        { src: 'src/assets/*.svg', dest: 'dist/esm/src/assets' },
         { src: 'node_modules/country-state-city/lib/assets', dest: 'dist/cjs/node_modules/country-state-city/lib' },
         { src: 'node_modules/country-state-city/lib/assets', dest: 'dist/esm/node_modules/country-state-city/lib' },
       ]
