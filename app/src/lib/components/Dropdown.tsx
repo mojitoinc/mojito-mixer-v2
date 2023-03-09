@@ -25,7 +25,7 @@ interface DropdownProps {
   onChange?: (val: string) => void;
   options?: DropdownOptions[];
   error?: string;
-  sx: SxProps<Theme>;
+  sx?: SxProps<Theme>;
   required?: boolean;
   placeholder?: string;
 }

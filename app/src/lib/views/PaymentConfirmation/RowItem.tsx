@@ -46,8 +46,10 @@ const RowItem = ({
       <Typography fontSize="16px" width="40%" variant="body1">
         { title }
       </Typography>
-      <Typography fontSize="16px" variant="body1">
-        { value || children }
+      <Typography fontSize="16px" variant="body1" textOverflow="ellipsis" overflow="hidden" margin="0px 8px">
+        { value
+          ? <Typography>{ value }</Typography>
+          : children }
       </Typography>
       { showCopy && (
         <FileCopyOutlinedIcon
@@ -56,7 +58,6 @@ const RowItem = ({
           onClick={ onClickCopy }
           sx={{
             color: theme.global?.paymentConfirmation?.copyIconColor,
-            marginLeft: '8px',
             alignSelf: 'flex-end',
             '&:active': {
               transform: 'scale(0.85, 0.85)',

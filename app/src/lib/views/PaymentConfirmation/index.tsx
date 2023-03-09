@@ -1,27 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { useQuery } from '@apollo/client';
-import { paymentMethodsQuery } from '../../queries/billing';
-import { usePayment, useCheckout } from '../../providers';
-import { PaymentMethod } from '../../interfaces';
 import ConfirmationView from './ConfirmationView';
+import { invoiceDetailsQuery } from '../../queries/invoiceDetails';
+import { usePaymentInfo } from '../../hooks';
 
 const PaymentConfirmationContainer = () => {
-  const { orgId } = useCheckout();
-  const { paymentInfo } = usePayment();
+  const { lotData } = usePaymentInfo();
   const [paymentStatus, setPaymentStatus] = useState<string>('');
-  const { data: paymentMethodsData } = useQuery(paymentMethodsQuery, {
+  const { data: invoiceData } = useQuery(invoiceDetailsQuery, {
     variables: {
-      orgID: orgId,
+      invoiceID: lotData?.invoiceID,
     },
-    fetchPolicy: 'no-cache',
-    skip: !orgId,
+    skip: !lotData?.invoiceID,
+    fetchPolicy: 'network-only',
   });
+
+  console.log('invoiceData?.getInvoiceDetails?.status', invoiceData?.getInvoiceDetails.status);
+
   useEffect(() => {
-    if (paymentMethodsData?.getPaymentMethodList) {
-      const filteredData = paymentMethodsData?.getPaymentMethodList.filter((item:PaymentMethod) => item.id === paymentInfo?.paymentId);
-      setPaymentStatus(filteredData[0]?.status);
+    if (invoiceData?.getInvoiceDetails) {
+      setPaymentStatus(invoiceData?.getInvoiceDetails.status);
     }
-  }, [paymentMethodsData, paymentInfo]);
+  }, [invoiceData]);
   return (
     <ConfirmationView paymentStatus={ paymentStatus } />
   );

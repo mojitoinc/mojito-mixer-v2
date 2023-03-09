@@ -17,7 +17,6 @@ import {
 } from '../../components';
 import { BillingFormData, PaymentData, useUIConfiguration } from '../../providers';
 import { PaymentTypes } from '../../constants';
-import { ConnectType } from '../../providers/ConnectContext';
 import { Icons } from '../../assets';
 import { DeliveryInfoCard } from './DeliveryInfoCard';
 import { NEW_MULTI_SIG } from './index';
@@ -32,10 +31,10 @@ interface DeliveryProps {
   billingInfo: BillingFormData | undefined;
   paymentInfo: PaymentData | undefined;
   onClickConnectWallet: () => void;
-  connect: ConnectType;
   onDisconnect: () => void;
   error?: string;
   isLoading: boolean;
+  connectedWalletAddress?:string;
 }
 
 const Delivery = ({
@@ -47,10 +46,10 @@ const Delivery = ({
   billingInfo,
   paymentInfo,
   onClickConnectWallet,
-  connect,
   onDisconnect,
   error,
   isLoading,
+  connectedWalletAddress,
 }: DeliveryProps) => {
   const theme = useTheme<MixTheme>();
   const { delivery } = useUIConfiguration();
@@ -59,6 +58,28 @@ const Delivery = ({
     () => paymentInfo?.paymentType === PaymentTypes.CREDIT_CARD,
     [paymentInfo],
   );
+
+
+  const showMultiSig = useMemo(() => {
+    if (paymentInfo?.paymentType === PaymentTypes.CREDIT_CARD) return delivery.creditCard.enableMultiSig;
+    if (paymentInfo?.paymentType === PaymentTypes.WIRE_TRANSFER) return delivery.wire.enableMultiSig;
+    if (paymentInfo?.paymentType === PaymentTypes.COIN_BASE) return delivery.coinbase.enableMultiSig;
+    if (paymentInfo?.paymentType === PaymentTypes.GOOGLE_PAY) return delivery.gpay.enableMultiSig;
+    if (paymentInfo?.paymentType === PaymentTypes.APPLE_PAY) return delivery.applepay.enableMultiSig;
+    if (paymentInfo?.paymentType === PaymentTypes.WALLET_CONNECT) return delivery.walletConnect.enableMultiSig;
+    return true;
+  }, [delivery, paymentInfo]);
+
+  const showConnectWallet = useMemo(() => {
+    if (paymentInfo?.paymentType === PaymentTypes.CREDIT_CARD) return delivery.creditCard.enableConnectWallet;
+    if (paymentInfo?.paymentType === PaymentTypes.WIRE_TRANSFER) return delivery.wire.enableConnectWallet;
+    if (paymentInfo?.paymentType === PaymentTypes.COIN_BASE) return delivery.coinbase.enableConnectWallet;
+    if (paymentInfo?.paymentType === PaymentTypes.GOOGLE_PAY) return delivery.gpay.enableConnectWallet;
+    if (paymentInfo?.paymentType === PaymentTypes.APPLE_PAY) return delivery.applepay.enableConnectWallet;
+    if (paymentInfo?.paymentType === PaymentTypes.WALLET_CONNECT) return delivery.walletConnect.enableConnectWallet;
+    return false;
+  }, [delivery, paymentInfo]);
+
   return (
     <>
       <DeliveryInfoCard billingInfo={ billingInfo } paymentInfo={ paymentInfo } />
@@ -80,24 +101,30 @@ const Delivery = ({
                   out for 14 days.`
             : `All related NFT purchase and delivery fees will be covered by ${ organizationName }.` }
         </Typography>
-        { !connect?.connected ? (
+        { !connectedWalletAddress ? (
           <>
-            <Dropdown
-              value={ selectedDeliveryAddress }
-              onChange={ onWalletChange }
-              placeholder="Select Wallet Address"
-              sx={{ marginRight: '8px' }}
-              options={ walletOptions } />
-            { selectedDeliveryAddress === NEW_MULTI_SIG && (
+            {
+            showMultiSig && (
+            <>
+              <Dropdown
+                value={ selectedDeliveryAddress }
+                onChange={ onWalletChange }
+                placeholder="Select Wallet Address"
+                sx={{ marginRight: '8px' }}
+                options={ walletOptions } />
+              { selectedDeliveryAddress === NEW_MULTI_SIG && (
               <Typography
                 variant="body2"
                 sx={{ marginTop: '6px', color: theme.global?.cardGrayedText }}>
                 A new multi-sig wallet will be created for you when purchase is
                 complete
               </Typography>
-            ) }
+              ) }
+            </>
+            )
+            }
             {
-              (delivery?.showConnectWallet && !isCreditCard) && (
+              showConnectWallet && (
               <Stack
                 flexDirection="row"
                 alignItems="flex-end"
@@ -111,7 +138,7 @@ const Delivery = ({
                   onClick={ onClickConnectWallet } />
               </Stack>
               )
-}
+            }
           </>
         ) : (
           <Box
@@ -134,23 +161,27 @@ const Delivery = ({
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',
                 }}>
-                { connect?.account }
+                { connectedWalletAddress }
               </Typography>
               <CopyButton
-                copyValue={ connect?.account }
+                copyValue={ connectedWalletAddress }
                 sx={{
                   alignSelf: 'center',
                 }} />
             </Box>
-            <Button
-              title="Disconnect"
-              textColor={ theme.global?.highlightedText }
-              backgroundColor={ theme.global?.white }
-              variant="outlined"
-              sx={{
-                justifySelf: 'flex-end',
-              }}
-              onClick={ onDisconnect } />
+            {
+              paymentInfo?.paymentType !== PaymentTypes.WALLET_CONNECT && (
+              <Button
+                title="Disconnect"
+                textColor={ theme.global?.highlightedText }
+                backgroundColor={ theme.global?.white }
+                variant="outlined"
+                sx={{
+                  justifySelf: 'flex-end',
+                }}
+                onClick={ onDisconnect } />
+              )
+}
           </Box>
         ) }
       </Card>
@@ -160,7 +191,7 @@ const Delivery = ({
           title="Confirm purchase"
           backgroundColor={ theme.global?.checkout?.continueButtonBackground }
           textColor={ theme.global?.checkout?.continueButtonTextColor }
-          disabled={ !(connect?.connected || selectedDeliveryAddress) }
+          disabled={ !(connectedWalletAddress || selectedDeliveryAddress) }
           onClick={ onClickConfirmPurchase }
           sx={{
             '&: hover': {

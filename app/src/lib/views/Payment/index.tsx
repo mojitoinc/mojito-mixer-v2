@@ -12,6 +12,7 @@ import {
   PaymentData,
   usePayment,
   useSecurityOptions,
+  OnChainForm,
 } from '../../providers';
 import { formCardScreeningVariable } from '../Delivery/Delivery.service';
 import { cardScreeningQuery } from '../../queries/creditCard';
@@ -151,6 +152,33 @@ export const PaymentContainer = () => {
     setContainerState,
   ]);
 
+  const onContinueToDelivery = useCallback(() => {
+    setPaymentInfo({
+      ...paymentInfo,
+      paymentType,
+    });
+    setContainerState(ContainerTypes.DELIVERY);
+  }, [
+    setPaymentInfo,
+    paymentType,
+    setContainerState,
+    paymentInfo,
+  ]);
+
+  const onSubmitOnChain = useCallback((values:OnChainForm) => {
+    setPaymentInfo({
+      ...paymentInfo,
+      paymentType,
+      onChainPayment: { ...values },
+    });
+    setContainerState(ContainerTypes.DELIVERY);
+  }, [
+    paymentInfo,
+    setPaymentInfo,
+    paymentType,
+    setContainerState,
+  ]);
+
 
   return (
     <PaymentContainerView
@@ -163,6 +191,8 @@ export const PaymentContainer = () => {
       screeningError={ screeningError }
       paymentInfo={ paymentInfo }
       onSubmitWireTransfer={ onSubmitWireTransfer }
-      onSubmitCreditCard={ onSubmitCreditCard } />
+      onSubmitCreditCard={ onSubmitCreditCard }
+      onSubmitOnChain={ onSubmitOnChain }
+      onContinueToDelivery={ onContinueToDelivery } />
   );
 };

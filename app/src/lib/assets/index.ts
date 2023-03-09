@@ -1,3 +1,5 @@
+import abi from './buy.json';
+
 const BASE_URL = 'https://raw.githubusercontent.com/mojitoinc/mojito-mixer-v2/develop/app/src/lib/assets/';
 
 const logo = `${ BASE_URL }logo.svg`;
@@ -18,9 +20,11 @@ const masterCard = `${ BASE_URL }masterCard.svg`;
 const americanExpress = `${ BASE_URL }americanExpress.svg`;
 const loading = `${ BASE_URL }loading.svg`;
 const walletAddress = `${ BASE_URL }walletAddress.svg`;
+const coinbase = require('./coinbase.svg');
 
 
 export const DEFAULT_ERROR_IMAGE_SRC = 'https://raw.githubusercontent.com/mojitoinc/mojito-mixers/main/app/src/lib/assets/mojito-error-loader.gif';
+const circle = 'https://raw.githubusercontent.com/mojitoinc/mojito-mixers/main/app/src/lib/assets/circle.png';
 
 export const Icons = {
   logo,
@@ -42,4 +46,10 @@ export const Icons = {
   loading,
   ErrorLoader: DEFAULT_ERROR_IMAGE_SRC,
   walletAddress,
+  circle,
+  coinbase,
+};
+
+export const Assets = {
+  abi,
 };

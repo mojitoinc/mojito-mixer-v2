@@ -2,10 +2,10 @@ import { useLazyQuery, useMutation } from '@apollo/client';
 import { formCreatePaymentMethodObject } from '@views/Delivery/Delivery.service';
 import { useMemo, useCallback } from 'react';
 import { useEncryptCardData } from './useEncryptCard';
-import { CreditCardFormType, ReserveNow, CreatePaymentResult } from '../interfaces';
-import { reserveNowBuyLotQuery } from '../queries/invoiceDetails';
-import { createPaymentMethodQuery, createPaymentQuery, getPaymentMethodStatus } from '../queries/Payment';
-import { BillingFormData, useDebug } from '../providers';
+import { CreditCardFormType, ReserveNow, CreatePaymentResult, InvoiceDetails } from '../interfaces';
+import { invoiceDetailsQuery, reserveNowBuyLotQuery } from '../queries/invoiceDetails';
+import { completeOnChainPaymentQuery, createPaymentMethodQuery, createPaymentQuery, getPaymentMethodStatus } from '../queries/Payment';
+import { BillingFormData, useCheckout, useDebug } from '../providers';
 import { useAPIService } from './useAPIService';
 
 
@@ -21,6 +21,9 @@ export interface PaymentData {
       city: string;
     };
     country: string;
+  };
+  onChainPayment?:{
+    walletAddress: string;
   };
   paymentId?: string;
   paymentType?: string;
@@ -46,10 +49,14 @@ export interface PaymentReceiptData {
   reserveLotData: ReserveNow
   notificationData?: any | undefined;
   paymentResult?: CreatePaymentResult;
+  invoiceDetails?: InvoiceDetails;
 }
 export interface UseCreatePaymentData {
   makeCreditCardPurchase:(options: PaymentOptions)=>Promise<PaymentReceiptData>;
   makeWireTransferPurchase:(options: PaymentOptions)=>Promise<PaymentReceiptData>;
+  makeCoinbasePurchase:(options: PaymentOptions)=>Promise<PaymentReceiptData>;
+  makeOnChainPurchase:(options: PaymentOptions)=>Promise<PaymentReceiptData>;
+  completeOnChainPayment:(options:PaymentOptions, receipt:PaymentReceiptData, txHash:string)=>Promise<void>;
 }
 
 export const useCreatePayment = (paymentInfo: PaymentData | undefined, orgId: string | undefined): UseCreatePaymentData => {
@@ -60,6 +67,10 @@ export const useCreatePayment = (paymentInfo: PaymentData | undefined, orgId: st
   const [encryptCardData] = useEncryptCardData({ orgID: orgId ?? '' });
   const [paymentMethodStatus] = useLazyQuery(getPaymentMethodStatus);
   const [reserveNow] = useMutation(reserveNowBuyLotQuery);
+  const { successURL, errorURL } = useCheckout();
+  const [getInvoiceDetails] = useLazyQuery(invoiceDetailsQuery);
+  const [onCompleteChain] = useMutation(completeOnChainPaymentQuery);
+
 
   const getInvoiceData = useCallback(async (invoiceId: string | undefined, lotId: string | undefined, quantity: number) => {
     if (invoiceId) {
@@ -271,12 +282,177 @@ export const useCreatePayment = (paymentInfo: PaymentData | undefined, orgId: st
   ]);
 
 
+  const makeCoinbasePurchase = useCallback(async (options: PaymentOptions):Promise<PaymentReceiptData> => {
+    const inputData: any = {
+      paymentType: 'Crypto',
+    };
+
+    const result = await createPaymentMethod({
+      variables: {
+        orgID: orgId,
+        input: inputData,
+      },
+    });
+    if (result?.data?.createPaymentMethod?.id) {
+      if (result?.data?.createPaymentMethod?.status !== 'complete') {
+        await paymentMethodStatus({
+          variables: {
+            paymentMethodID: result?.data?.createPaymentMethod?.id,
+          },
+        });
+      }
+
+      const reserveLotData = await getInvoiceData(options.invoiceId, options.lotId, options.quantity);
+
+      const paymentResponse = await createPayment({
+        variables: {
+          paymentMethodID: result?.data?.createPaymentMethod?.id,
+          invoiceID: reserveLotData?.invoiceID,
+          metadata: {
+            destinationAddress: options.deliveryAddress,
+            cryptoData: {
+              name: options.billingInfo?.name,
+              description: '',
+              billingDetails: {
+                city: options.billingInfo?.city,
+                country: options.billingInfo?.country,
+                address1: options.billingInfo?.street1,
+                address2: '',
+                district: options.billingInfo?.state,
+                postalCode: options.billingInfo?.postalCode,
+              },
+              redirectURL: successURL,
+              cancelURL: errorURL,
+            },
+          },
+
+        },
+      });
+      const paymentResult : CreatePaymentResult = paymentResponse?.data?.createPayment;
+      const paymentData: PaymentData = {
+        ...paymentInfo,
+        deliveryStatus: paymentResult?.status,
+        paymentId: paymentResult?.id ?? '',
+        destinationAddress: options.deliveryAddress,
+      };
+      return { paymentData, reserveLotData, paymentResult };
+    }
+    throw new Error('unable to create paymentMethod');
+  }, [
+    paymentInfo,
+    orgId,
+    paymentMethodStatus,
+    createPaymentMethod,
+    createPayment,
+    getInvoiceData,
+    successURL,
+    errorURL,
+  ]);
+
+
+  const makeOnChainPurchase = useCallback(async (options: PaymentOptions):Promise<PaymentReceiptData> => {
+    const inputData: any = {
+      paymentType: 'OnchainPayment',
+    };
+
+    const reserveLotData = await getInvoiceData(options.invoiceId, options.lotId, options.quantity);
+
+    const invoiceDetailsResult = await getInvoiceDetails({
+      variables: {
+        invoiceID: reserveLotData.invoiceID,
+      },
+    });
+    const invoiceDetails:InvoiceDetails = invoiceDetailsResult.data?.getInvoiceDetails;
+    if (invoiceDetails.items?.length === 0 || !invoiceDetails.items[0].isOnchainPaymentAvailable) {
+      throw new Error('On Chain payment is not available for this item');
+    }
+
+    const result = await createPaymentMethod({
+      variables: {
+        orgID: orgId,
+        input: inputData,
+      },
+    });
+    if (result?.data?.createPaymentMethod?.id) {
+      if (result?.data?.createPaymentMethod?.status !== 'complete') {
+        await paymentMethodStatus({
+          variables: {
+            paymentMethodID: result?.data?.createPaymentMethod?.id,
+          },
+        });
+      }
+
+      const paymentResponse = await createPayment({
+        variables: {
+          paymentMethodID: result?.data?.createPaymentMethod?.id,
+          invoiceID: reserveLotData?.invoiceID,
+          metadata: {
+            destinationAddress: options.deliveryAddress,
+            onChainPaymentData: {
+              name: options.billingInfo?.name,
+              description: '',
+              billingDetails: {
+                city: options.billingInfo?.city,
+                country: options.billingInfo?.country,
+                address1: options.billingInfo?.street1,
+                address2: '',
+                district: options.billingInfo?.state,
+                postalCode: options.billingInfo?.postalCode,
+              },
+            },
+          },
+
+        },
+      });
+      const paymentResult : CreatePaymentResult = paymentResponse?.data?.createPayment;
+      const paymentData: PaymentData = {
+        ...paymentInfo,
+        deliveryStatus: paymentResult?.status,
+        paymentId: paymentResult?.id ?? '',
+        destinationAddress: options.deliveryAddress,
+      };
+      return { paymentData, reserveLotData, paymentResult, invoiceDetails };
+    }
+    throw new Error('unable to create paymentMethod');
+  }, [
+    paymentInfo,
+    orgId,
+    paymentMethodStatus,
+    createPaymentMethod,
+    createPayment,
+    getInvoiceData,
+    getInvoiceDetails,
+  ]);
+
+  const completeOnChainPayment = useCallback(async (options:PaymentOptions, receipt:PaymentReceiptData, txHash = '') => {
+    await onCompleteChain({
+      variables: {
+        invoiceId: receipt.reserveLotData.invoiceID,
+        networkId: receipt.invoiceDetails?.items[0]?.onChainPaymentInfo?.networkID,
+        txHash,
+        billingDetails: {
+          city: options.billingInfo?.city,
+          country: options.billingInfo?.country,
+          address1: options.billingInfo?.street1,
+          address2: '',
+          district: options.billingInfo?.state,
+          postalCode: options.billingInfo?.postalCode,
+        },
+      },
+    });
+  }, [
+    onCompleteChain,
+  ]);
+
   const values = useMemo<UseCreatePaymentData>(() => {
     return {
       makeCreditCardPurchase,
       makeWireTransferPurchase,
+      makeCoinbasePurchase,
+      makeOnChainPurchase,
+      completeOnChainPayment,
     };
-  }, [makeCreditCardPurchase, makeWireTransferPurchase]);
+  }, [makeCreditCardPurchase, makeWireTransferPurchase, makeCoinbasePurchase, makeOnChainPurchase, completeOnChainPayment]);
 
   return values;
 };

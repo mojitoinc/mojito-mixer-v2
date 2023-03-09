@@ -8,7 +8,8 @@ export enum PaymentTypes {
   WALLET_CONNECT = 'Crypto',
   APPLE_PAY = 'ApplePayCheckout',
   GOOGLE_PAY = 'GooglePayCheckout',
-  WIRE_TRANSFER = 'Wire'
+  WIRE_TRANSFER = 'Wire',
+  COIN_BASE = 'Coinbase',
 }
 
 export const BanksList = ['Bank of America', 'Capitol One', 'Chase', 'Citi Bank', 'Wells Fargo', 'US Bank'];
@@ -16,6 +17,7 @@ export const BanksList = ['Bank of America', 'Capitol One', 'Chase', 'Citi Bank'
 export enum PaymentStatus {
   PENDING = 'pending',
   COMPLETED = 'completed',
+  PAID = 'Paid',
   ACTIVE = 'active'
 }
 
@@ -27,3 +29,4 @@ export function isLocalhost() {
 
   return window.location.hostname === 'localhost';
 }
+export const CIRCLE_URL = 'https://www.circle.com/en/';

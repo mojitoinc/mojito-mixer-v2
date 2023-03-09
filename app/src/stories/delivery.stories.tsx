@@ -1,6 +1,5 @@
 import React from 'react';
 import DeliveryContainer from '@views/Delivery/Delivery';
-import { ConnectType } from '@lib/providers/ConnectContext';
 
 export const BillingViewStories = () => {
   return (
@@ -18,7 +17,6 @@ export const BillingViewStories = () => {
           value: '0xaldjkaslk',
         },
       ] }
-      connect={{} as ConnectType}
       onDisconnect={ () => undefined }
       isLoading={ false } />
   );

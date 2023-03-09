@@ -15,13 +15,13 @@ interface ConfirmationViewProps {
 
 const ConfirmationView = ({ paymentStatus }: ConfirmationViewProps) => {
   const theme = useTheme<MixTheme>();
-  const { paymentInfo, billingInfo } = usePaymentInfo();
+  const { paymentInfo, billingInfo, txHash } = usePaymentInfo();
   const { paymentConfirmation: paymentConfiguration } = useUIConfiguration();
 
   const backgroundColor = useMemo(() => {
     return paymentStatus === PaymentStatus.PENDING
       ? theme.global?.paymentConfirmation?.awaitingPaymentBackground
-      : paymentStatus === PaymentStatus.COMPLETED
+      : (paymentStatus === PaymentStatus.COMPLETED || paymentStatus === PaymentStatus.PAID)
         ? theme.global?.paymentConfirmation?.processedBackground
         : theme.global?.paymentConfirmation?.awaitingPaymentBackground;
   }, [paymentStatus, theme]);
@@ -29,7 +29,7 @@ const ConfirmationView = ({ paymentStatus }: ConfirmationViewProps) => {
   const textColor = useMemo(
     () => (paymentStatus === PaymentStatus.PENDING
       ? theme.global?.paymentConfirmation?.awaitingPaymentTextColor
-      : paymentStatus === PaymentStatus.COMPLETED
+      : (paymentStatus === PaymentStatus.COMPLETED || paymentStatus === PaymentStatus.PAID)
         ? theme.global?.paymentConfirmation?.processedTextColor
         : theme.global?.paymentConfirmation?.awaitingPaymentTextColor),
     [paymentStatus, theme],
@@ -38,7 +38,7 @@ const ConfirmationView = ({ paymentStatus }: ConfirmationViewProps) => {
   const status = useMemo(() => {
     return paymentStatus === PaymentStatus.PENDING
       ? 'Awaiting Payment'
-      : paymentStatus === PaymentStatus.COMPLETED
+      : (paymentStatus === PaymentStatus.COMPLETED || paymentStatus === PaymentStatus.PAID)
         ? 'Processed'
         : 'Inprogress';
   }, [paymentStatus]);
@@ -144,12 +144,28 @@ const ConfirmationView = ({ paymentStatus }: ConfirmationViewProps) => {
             any time.
           </Typography>
         ) }
-        { paymentInfo?.paymentType === PaymentTypes.WALLET_CONNECT && (
+        { paymentInfo?.paymentType === PaymentTypes.COIN_BASE && (
           <RowItem
-            title="Transaction Hash"
-            value="0x09750ad...360fdb7"
-            copyValue="0x09750"
-            showCopy />
+            title="Payment Method"
+            copyValue={ paymentInfo?.paymentId }
+            showCopy>
+            <Typography fontSize="16px">
+              Coinbase
+              <br />
+              { paymentInfo?.paymentId }
+            </Typography>
+          </RowItem>
+        ) }
+
+        { paymentInfo?.paymentType === PaymentTypes.WALLET_CONNECT && (
+        <RowItem
+          title="Transaction Hash"
+          copyValue={ txHash ?? '' }
+          showCopy>
+          <Typography fontSize="16px">
+            { txHash }
+          </Typography>
+        </RowItem>
         ) }
         { paymentInfo?.paymentType === PaymentTypes.WALLET_CONNECT && (
           <RowItem
@@ -157,7 +173,7 @@ const ConfirmationView = ({ paymentStatus }: ConfirmationViewProps) => {
             copyValue={ paymentInfo?.paymentId }
             showCopy>
             <Typography fontSize="16px">
-              Wallet Connect
+              On Chain Payment
               <br />
               { paymentInfo?.paymentId }
             </Typography>

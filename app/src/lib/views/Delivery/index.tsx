@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 import { DropdownOptions } from '../../components';
 import { meQuery } from '../../queries/me';
@@ -19,7 +19,7 @@ export const Delivery = () => {
   const [walletOptions, setWalletOptions] = useState<DropdownOptions[]>([]);
   const { billingInfo } = useBilling();
   const { orgId } = useCheckout();
-  const { paymentInfo, onConfirmCreditCardPurchase, onConfirmWireTransferPurchase } = usePayment();
+  const { paymentInfo, onConfirmCreditCardPurchase, onConfirmWireTransferPurchase, onConfirmCoinbasePurchase, onConfirmOnChainPurchase } = usePayment();
   const { data: meData } = useQuery(meQuery);
   const [addressScreening, { loading: isLoading }] = useMutation(addressScreeningQuery);
   const [error, setError] = useState<string>();
@@ -55,9 +55,15 @@ export const Delivery = () => {
     }
   }, [meData]);
 
+  const connectedWalletAddress = useMemo(() => {
+    if (paymentInfo?.paymentType === PaymentTypes.WALLET_CONNECT) return paymentInfo.onChainPayment?.walletAddress;
+    if (connect?.connected) return connect?.account;
+    return undefined;
+  }, [connect, paymentInfo]);
+
   const onClickConfirmPurchase = useCallback(async () => {
     try {
-      const deliveryAddress = connect?.connected ? connect?.account : selectedDeliveryAddress === NEW_MULTI_SIG ? '' : selectedDeliveryAddress;
+      const deliveryAddress = connectedWalletAddress ?? (selectedDeliveryAddress === NEW_MULTI_SIG ? '' : selectedDeliveryAddress);
       if (!deliveryAddress && selectedDeliveryAddress !== NEW_MULTI_SIG) {
         setError('Please select a delivery address');
         return;
@@ -85,6 +91,12 @@ export const Delivery = () => {
       if (paymentInfo?.paymentType === PaymentTypes.CREDIT_CARD) {
         onConfirmCreditCardPurchase(deliveryAddress);
       }
+      if (paymentInfo?.paymentType === PaymentTypes.COIN_BASE) {
+        onConfirmCoinbasePurchase(deliveryAddress);
+      }
+      if (paymentInfo?.paymentType === PaymentTypes.WALLET_CONNECT) {
+        onConfirmOnChainPurchase(deliveryAddress);
+      }
     } catch (e) {
       debug.error('onConfirm-start', { e });
     }
@@ -92,12 +104,14 @@ export const Delivery = () => {
     debug,
     onConfirmCreditCardPurchase,
     onConfirmWireTransferPurchase,
+    onConfirmCoinbasePurchase,
+    onConfirmOnChainPurchase,
     paymentInfo,
     orgId,
     selectedDeliveryAddress,
     addressScreening,
-    connect,
     enableSardine,
+    connectedWalletAddress,
   ]);
 
   return (
@@ -110,7 +124,7 @@ export const Delivery = () => {
       billingInfo={ billingInfo }
       paymentInfo={ paymentInfo }
       onClickConnectWallet={ onWalletConnect }
-      connect={ connect }
+      connectedWalletAddress={ connectedWalletAddress }
       onDisconnect={ onDisconnect }
       error={ error }
       isLoading={ isLoading } />

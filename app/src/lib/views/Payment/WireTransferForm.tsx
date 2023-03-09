@@ -1,6 +1,8 @@
-import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Typography, useTheme } from '@mui/material';
+import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Typography, useTheme, Box } from '@mui/material';
 import { FormikErrors } from 'formik';
 import React, { useCallback } from 'react';
+import { CIRCLE_URL } from '../../constants';
+import { Icons } from '../../assets';
 import { TextInput, Dropdown } from '../../components';
 import { useCountryOptions } from '../../hooks';
 import { MixTheme } from '../../theme';
@@ -185,6 +187,26 @@ export const WireTransferForm = ({
         complete and your NFT will not be transferred until payment has been
         settled.
       </Typography>
+      <Box
+        display="flex"
+        flexDirection="row"
+        alignItems="center"
+        justifyContent="center"
+        margin="20px 0px">
+        <Typography>
+          Payments powered by
+        </Typography>
+        <a href={ CIRCLE_URL } target="_blank" rel="noreferrer">
+          <img
+            src={ Icons.circle }
+            alt="visa"
+            style={{
+              width: 100,
+              height: 20,
+              marginLeft: '8px',
+            }} />
+        </a>
+      </Box>
     </>
   );
 };

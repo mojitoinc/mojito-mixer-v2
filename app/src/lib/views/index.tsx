@@ -1,4 +1,4 @@
-import { Box, useTheme } from '@mui/material';
+import { Box, Stack, useTheme } from '@mui/material';
 import React, { useEffect } from 'react';
 import { Header, Stepper } from '../components';
 import { MixTheme } from '../theme';
@@ -39,15 +39,14 @@ const MojitoCheckoutLayout = ({
     return <LoadingContainer />;
   }
   return (
-    <Box
+    <Stack
+      direction={{ xs: 'column-reverse', md: 'row' }}
       sx={{
         backgroundColor: theme.global?.background,
         display: 'flex',
-        width: '100%',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: { sx: 'center', lg: 'space-between' },
       }}>
-      <Box padding="40px" width="100%">
+      <Box padding="40px" width={{ lg: '100%' }}>
         <Header
           isPaymentConfirmation={ containerState === ContainerTypes.CONFIRMATION } />
         { containerState !== ContainerTypes.CONFIRMATION && (
@@ -61,7 +60,7 @@ const MojitoCheckoutLayout = ({
         { containerState === ContainerTypes.DELIVERY && <Delivery /> }
       </Box>
       <CostBreakDownContainer />
-    </Box>
+    </Stack>
   );
 };
 export default MojitoCheckoutLayout;
