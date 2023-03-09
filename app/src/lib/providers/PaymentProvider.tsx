@@ -15,7 +15,7 @@ import { ContainerTypes } from '../interfaces/ContextInterface';
 
 import { useBilling } from './BillingProvider';
 import { useCheckout } from './CheckoutProvider';
-import { Assets } from '../assets';
+import { Abi } from '../utils/abi';
 import { computeValue } from '../utils/ethUtils';
 import { useWeb3ModalConnect } from './Web3ModalConnect';
 
@@ -243,7 +243,7 @@ export const PaymentProvider = ({
       const onChainPaymentAddress = paymentReceipt.invoiceDetails?.items[0]?.onChainPaymentInfo?.onchainPaymentAddress ?? '';
       const contract = new ethers.Contract(
         onChainPaymentAddress,
-        Assets.abi.abi,
+        Abi.abi,
         signer,
       );
       const price = vertexEnabled ? (taxes?.taxablePrice ?? 0) : taxablePrice;
