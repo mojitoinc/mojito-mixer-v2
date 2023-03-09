@@ -312,7 +312,6 @@ require('./EventProvider.js');
 require('./SecurityOptionsProvider.js');
 require('./UserInfoProvider.js');
 require('../components/Stepper.js');
-require('../assets/index.js');
 require('@mui/icons-material/ContentCopy');
 var ErrorBoundary = require('../components/shared/ErrorBoundary.js');
 

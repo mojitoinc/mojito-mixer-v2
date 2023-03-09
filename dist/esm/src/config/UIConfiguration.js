@@ -21,7 +21,6 @@ const DefaultUIConfiguration = {
         wire: true,
         creditCard: true,
         coinbase: true,
-        onChain: true,
     },
     costBreakdown: {
         showDiscountCode: true,

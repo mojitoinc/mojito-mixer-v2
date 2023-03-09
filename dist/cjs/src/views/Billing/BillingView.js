@@ -322,7 +322,6 @@ var Button = require('../../components/Button.js');
 require('@mui/icons-material/ArrowBack');
 require('../../components/Stepper.js');
 var TextInput = require('../../components/TextInput.js');
-require('../../assets/index.js');
 require('@mui/icons-material/ContentCopy');
 require('../../components/shared/ErrorBoundary.js');
 var BillingForm = require('./BillingForm.js');

@@ -310,7 +310,6 @@ import '../../providers/SecurityOptionsProvider.js';
 import '../../providers/UserInfoProvider.js';
 import '../../components/Stepper.js';
 import TextInput from '../../components/TextInput.js';
-import '../../assets/index.js';
 import '@mui/icons-material/ContentCopy';
 import '../../components/shared/ErrorBoundary.js';
 import '../../service/CookieService.js';

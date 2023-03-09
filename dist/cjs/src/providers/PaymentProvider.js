@@ -34,7 +34,7 @@ require('uuidv4');
 require('../config/paymentConfiguration.js');
 var useCreatePayment = require('../hooks/useCreatePayment.js');
 var RootContainer = require('../interfaces/ContextInterface/RootContainer.js');
-var index$1 = require('../assets/index.js');
+var abi = require('../utils/abi.js');
 var ethUtils = require('../utils/ethUtils.js');
 var Web3ModalConnect = require('./Web3ModalConnect.js');
 var index = require('../../node_modules/@ethersproject/contracts/lib.esm/index.js');
@@ -187,7 +187,7 @@ const PaymentProvider = ({ children, }) => {
                 return;
             const { signer } = connect;
             const onChainPaymentAddress = (_q = (_p = (_o = (_m = paymentReceipt.invoiceDetails) === null || _m === void 0 ? void 0 : _m.items[0]) === null || _o === void 0 ? void 0 : _o.onChainPaymentInfo) === null || _p === void 0 ? void 0 : _p.onchainPaymentAddress) !== null && _q !== void 0 ? _q : '';
-            const contract = new index.Contract(onChainPaymentAddress, index$1.Assets.abi.abi, signer);
+            const contract = new index.Contract(onChainPaymentAddress, abi.Abi.abi, signer);
             const price = vertexEnabled ? ((_r = taxes === null || taxes === void 0 ? void 0 : taxes.taxablePrice) !== null && _r !== void 0 ? _r : 0) : taxablePrice;
             const value = yield ethUtils.computeValue(price !== null && price !== void 0 ? price : 0);
             const nftDetails = [

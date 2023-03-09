@@ -312,7 +312,6 @@ require('../../providers/EventProvider.js');
 require('../../providers/SecurityOptionsProvider.js');
 require('../../providers/UserInfoProvider.js');
 require('../../components/Stepper.js');
-require('../../assets/index.js');
 require('@mui/icons-material/ContentCopy');
 require('../../components/shared/ErrorBoundary.js');
 var index = require('../../constants/index.js');
