@@ -74,6 +74,7 @@
     "country-codes-list": "^1.6.10",
     "country-region-data": "^2.7.0",
     "country-state-city": "3.1.2",
+    "ethers": "^5.7.2",
     "formik": "^2.2.9",
     "graphql": "^16.6.0",
     "merge-options": "^3.0.4",
