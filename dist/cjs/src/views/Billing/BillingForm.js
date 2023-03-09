@@ -314,7 +314,6 @@ require('../../providers/SecurityOptionsProvider.js');
 require('../../providers/UserInfoProvider.js');
 require('../../components/Stepper.js');
 var TextInput = require('../../components/TextInput.js');
-require('../../assets/index.js');
 require('@mui/icons-material/ContentCopy');
 require('../../components/shared/ErrorBoundary.js');
 require('../../service/CookieService.js');

@@ -308,7 +308,6 @@ import '../../providers/EventProvider.js';
 import '../../providers/SecurityOptionsProvider.js';
 import '../../providers/UserInfoProvider.js';
 import '../../components/Stepper.js';
-import '../../assets/index.js';
 import '@mui/icons-material/ContentCopy';
 import '../../components/shared/ErrorBoundary.js';
 import { PaymentStatus, PaymentTypes } from '../../constants/index.js';

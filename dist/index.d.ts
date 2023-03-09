@@ -263,7 +263,6 @@ interface UIConfiguration {
         wire: boolean;
         creditCard: boolean;
         coinbase: boolean;
-        onChain: boolean;
     };
     costBreakdown: {
         showDiscountCode: boolean;
@@ -311,7 +310,6 @@ interface MojitoUIConfiguration {
         wire?: boolean;
         creditCard?: boolean;
         coinbase?: boolean;
-        onChain?: boolean;
     };
     costBreakdown?: {
         showDiscountCode?: boolean;

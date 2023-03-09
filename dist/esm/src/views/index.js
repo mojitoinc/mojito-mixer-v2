@@ -296,7 +296,6 @@ import '../../node_modules/@mui/material/GlobalStyles/GlobalStyles.js';
 import '../../node_modules/@mui/base/FocusTrap/FocusTrap.js';
 import Header from '../components/Header.js';
 import Stepper from '../components/Stepper.js';
-import '../assets/index.js';
 import '@mui/icons-material/ContentCopy';
 import '../components/shared/ErrorBoundary.js';
 import CostBreakdownContainer from './CostBreakDown/index.js';

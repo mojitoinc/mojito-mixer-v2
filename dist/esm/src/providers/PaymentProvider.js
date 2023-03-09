@@ -30,7 +30,7 @@ import 'uuidv4';
 import '../config/paymentConfiguration.js';
 import { useCreatePayment } from '../hooks/useCreatePayment.js';
 import { ContainerTypes } from '../interfaces/ContextInterface/RootContainer.js';
-import { Assets } from '../assets/index.js';
+import { Abi } from '../utils/abi.js';
 import { computeValue } from '../utils/ethUtils.js';
 import { useWeb3ModalConnect } from './Web3ModalConnect.js';
 import { Contract } from '../../node_modules/@ethersproject/contracts/lib.esm/index.js';
@@ -179,7 +179,7 @@ const PaymentProvider = ({ children, }) => {
                 return;
             const { signer } = connect;
             const onChainPaymentAddress = (_q = (_p = (_o = (_m = paymentReceipt.invoiceDetails) === null || _m === void 0 ? void 0 : _m.items[0]) === null || _o === void 0 ? void 0 : _o.onChainPaymentInfo) === null || _p === void 0 ? void 0 : _p.onchainPaymentAddress) !== null && _q !== void 0 ? _q : '';
-            const contract = new Contract(onChainPaymentAddress, Assets.abi.abi, signer);
+            const contract = new Contract(onChainPaymentAddress, Abi.abi, signer);
             const price = vertexEnabled ? ((_r = taxes === null || taxes === void 0 ? void 0 : taxes.taxablePrice) !== null && _r !== void 0 ? _r : 0) : taxablePrice;
             const value = yield computeValue(price !== null && price !== void 0 ? price : 0);
             const nftDetails = [
