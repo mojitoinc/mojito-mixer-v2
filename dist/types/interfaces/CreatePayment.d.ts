@@ -23,6 +23,7 @@ export interface WireInstructions {
 }
 export interface Details {
     WireInstructions?: WireInstructions;
+    hostedURL?: string;
     __typename: string;
 }
 export interface CreatePaymentResult {

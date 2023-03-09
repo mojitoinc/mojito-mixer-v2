@@ -10,6 +10,7 @@ interface PaymentInfo {
     taxablePrice?: number;
     vertexEnabled?: boolean;
     quantity?: number;
+    txHash?: string;
 }
 declare const usePaymentInfo: () => PaymentInfo;
 export default usePaymentInfo;

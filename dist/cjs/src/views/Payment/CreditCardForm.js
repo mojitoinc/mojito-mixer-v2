@@ -316,6 +316,7 @@ var TextInput = require('../../components/TextInput.js');
 var CreditCardDropdown = require('../../components/shared/CreditCardDropdown.js');
 require('@mui/icons-material/ContentCopy');
 require('../../components/shared/ErrorBoundary.js');
+var index = require('../../assets/index.js');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -401,7 +402,15 @@ const CreditCardForm = ({ creditCardList, values, setFieldValue, errors, screeni
                 marginTop: 2,
                 backgroundColor: (_d = theme.global) === null || _d === void 0 ? void 0 : _d.grayBackground,
                 borderRadius: '4px',
-            } }, "NFTs purchased by credit card can only be transferred to your multi-sig wallet and cannot be transferred out for 14 days.")));
+            } }, "NFTs purchased by credit card can only be transferred to your multi-sig wallet and cannot be transferred out for 14 days."),
+        React__default["default"].createElement(Box["default"], { display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center", margin: "20px 0px" },
+            React__default["default"].createElement(Typography["default"], null, "Payments powered by"),
+            React__default["default"].createElement("a", { href: "https://www.circle.com/en/", target: "_blank", rel: "noreferrer" },
+                React__default["default"].createElement("img", { src: index.Icons.circle, alt: "circle", style: {
+                        width: 100,
+                        height: 20,
+                        marginLeft: '8px',
+                    } })))));
 };
 
 exports.CreditCardForm = CreditCardForm;

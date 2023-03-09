@@ -1,4 +1,4 @@
-import { CreditCardFormType, ReserveNow, CreatePaymentResult } from '../interfaces';
+import { CreditCardFormType, ReserveNow, CreatePaymentResult, InvoiceDetails } from '../interfaces';
 import { BillingFormData } from '../providers';
 export interface PaymentData {
     creditCardData?: CreditCardFormType;
@@ -12,6 +12,9 @@ export interface PaymentData {
             city: string;
         };
         country: string;
+    };
+    onChainPayment?: {
+        walletAddress: string;
     };
     paymentId?: string;
     paymentType?: string;
@@ -35,9 +38,13 @@ export interface PaymentReceiptData {
     reserveLotData: ReserveNow;
     notificationData?: any | undefined;
     paymentResult?: CreatePaymentResult;
+    invoiceDetails?: InvoiceDetails;
 }
 export interface UseCreatePaymentData {
     makeCreditCardPurchase: (options: PaymentOptions) => Promise<PaymentReceiptData>;
     makeWireTransferPurchase: (options: PaymentOptions) => Promise<PaymentReceiptData>;
+    makeCoinbasePurchase: (options: PaymentOptions) => Promise<PaymentReceiptData>;
+    makeOnChainPurchase: (options: PaymentOptions) => Promise<PaymentReceiptData>;
+    completeOnChainPayment: (options: PaymentOptions, receipt: PaymentReceiptData, txHash: string) => Promise<void>;
 }
 export declare const useCreatePayment: (paymentInfo: PaymentData | undefined, orgId: string | undefined) => UseCreatePaymentData;

@@ -312,6 +312,7 @@ require('../../providers/EventProvider.js');
 require('../../providers/SecurityOptionsProvider.js');
 require('../../providers/UserInfoProvider.js');
 require('../../components/Stepper.js');
+require('../../assets/index.js');
 require('@mui/icons-material/ContentCopy');
 require('../../components/shared/ErrorBoundary.js');
 var index = require('../../constants/index.js');
@@ -346,13 +347,13 @@ var InfoIcon__default = /*#__PURE__*/_interopDefaultLegacy(InfoIcon);
 const ConfirmationView = ({ paymentStatus }) => {
     var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s;
     const theme = useTheme["default"]();
-    const { paymentInfo, billingInfo } = usePaymentInfo["default"]();
+    const { paymentInfo, billingInfo, txHash } = usePaymentInfo["default"]();
     const { paymentConfirmation: paymentConfiguration } = UIConfigurationProvider.useUIConfiguration();
     const backgroundColor = React.useMemo(() => {
         var _a, _b, _c, _d, _e, _f;
         return paymentStatus === index.PaymentStatus.PENDING
             ? (_b = (_a = theme.global) === null || _a === void 0 ? void 0 : _a.paymentConfirmation) === null || _b === void 0 ? void 0 : _b.awaitingPaymentBackground
-            : paymentStatus === index.PaymentStatus.COMPLETED
+            : (paymentStatus === index.PaymentStatus.COMPLETED || paymentStatus === index.PaymentStatus.PAID)
                 ? (_d = (_c = theme.global) === null || _c === void 0 ? void 0 : _c.paymentConfirmation) === null || _d === void 0 ? void 0 : _d.processedBackground
                 : (_f = (_e = theme.global) === null || _e === void 0 ? void 0 : _e.paymentConfirmation) === null || _f === void 0 ? void 0 : _f.awaitingPaymentBackground;
     }, [paymentStatus, theme]);
@@ -360,14 +361,14 @@ const ConfirmationView = ({ paymentStatus }) => {
         var _a, _b, _c, _d, _e, _f;
         return (paymentStatus === index.PaymentStatus.PENDING
             ? (_b = (_a = theme.global) === null || _a === void 0 ? void 0 : _a.paymentConfirmation) === null || _b === void 0 ? void 0 : _b.awaitingPaymentTextColor
-            : paymentStatus === index.PaymentStatus.COMPLETED
+            : (paymentStatus === index.PaymentStatus.COMPLETED || paymentStatus === index.PaymentStatus.PAID)
                 ? (_d = (_c = theme.global) === null || _c === void 0 ? void 0 : _c.paymentConfirmation) === null || _d === void 0 ? void 0 : _d.processedTextColor
                 : (_f = (_e = theme.global) === null || _e === void 0 ? void 0 : _e.paymentConfirmation) === null || _f === void 0 ? void 0 : _f.awaitingPaymentTextColor);
     }, [paymentStatus, theme]);
     const status = React.useMemo(() => {
         return paymentStatus === index.PaymentStatus.PENDING
             ? 'Awaiting Payment'
-            : paymentStatus === index.PaymentStatus.COMPLETED
+            : (paymentStatus === index.PaymentStatus.COMPLETED || paymentStatus === index.PaymentStatus.PAID)
                 ? 'Processed'
                 : 'Inprogress';
     }, [paymentStatus]);
@@ -419,10 +420,16 @@ const ConfirmationView = ({ paymentStatus }) => {
                     borderTop: 0,
                     borderRadius: '0 0 4px 4px',
                 } }, "If you selected to have your NFT(s) transferred directly to your non-custodial wallet (such as MetaMask), we will do so as soon as payment confirmation is received; otherwise, your NFT(s) will be transferred to a MultiSig wallet (also known as a custodial wallet) for safekeeping. You can view your NFT(s) on your Account page at any time.")),
-            (paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.paymentType) === index.PaymentTypes.WALLET_CONNECT && (React__default["default"].createElement(RowItem["default"], { title: "Transaction Hash", value: "0x09750ad...360fdb7", copyValue: "0x09750", showCopy: true })),
+            (paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.paymentType) === index.PaymentTypes.COIN_BASE && (React__default["default"].createElement(RowItem["default"], { title: "Payment Method", copyValue: paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.paymentId, showCopy: true },
+                React__default["default"].createElement(Typography["default"], { fontSize: "16px" },
+                    "Coinbase",
+                    React__default["default"].createElement("br", null), paymentInfo === null || paymentInfo === void 0 ? void 0 :
+                    paymentInfo.paymentId))),
+            (paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.paymentType) === index.PaymentTypes.WALLET_CONNECT && (React__default["default"].createElement(RowItem["default"], { title: "Transaction Hash", copyValue: txHash !== null && txHash !== void 0 ? txHash : '', showCopy: true },
+                React__default["default"].createElement(Typography["default"], { fontSize: "16px" }, txHash))),
             (paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.paymentType) === index.PaymentTypes.WALLET_CONNECT && (React__default["default"].createElement(RowItem["default"], { title: "Payment Method", copyValue: paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.paymentId, showCopy: true },
                 React__default["default"].createElement(Typography["default"], { fontSize: "16px" },
-                    "Wallet Connect",
+                    "On Chain Payment",
                     React__default["default"].createElement("br", null), paymentInfo === null || paymentInfo === void 0 ? void 0 :
                     paymentInfo.paymentId))),
             (paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.paymentType) === index.PaymentTypes.WIRE_TRANSFER && (React__default["default"].createElement(RowItem["default"], { title: "Payment Method" },

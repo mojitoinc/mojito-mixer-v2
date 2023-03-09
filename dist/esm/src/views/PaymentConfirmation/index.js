@@ -10,37 +10,43 @@ import '../../../node_modules/@apollo/client/utilities/common/canUse.js';
 import { useQuery } from '../../../node_modules/@apollo/client/react/hooks/useQuery.js';
 import '../../../node_modules/@apollo/client/react/parser/index.js';
 import '../../../node_modules/@apollo/client/errors/index.js';
-import { paymentMethodsQuery } from '../../queries/billing.js';
+import ConfirmationView from './ConfirmationView.js';
+import { invoiceDetailsQuery } from '../../queries/invoiceDetails.js';
+import usePaymentInfo from '../../hooks/usePaymentInfo.js';
 import '../../providers/DebugProvider.js';
 import '../../providers/ErrorProvider.js';
 import '../../providers/BillingProvider.js';
 import '../../providers/ContainerStateProvider.js';
 import '../../providers/UIConfigurationProvider.js';
-import { useCheckout } from '../../providers/CheckoutProvider.js';
-import { usePayment } from '../../providers/PaymentProvider.js';
+import '../../providers/CheckoutProvider.js';
+import '../../providers/PaymentProvider.js';
 import '../../providers/EventProvider.js';
 import '../../providers/SecurityOptionsProvider.js';
 import '../../providers/UserInfoProvider.js';
-import ConfirmationView from './ConfirmationView.js';
+import 'openpgp';
+import 'atob';
+import 'btoa';
+import '../../queries/creditCard.js';
+import 'uuidv4';
+import '../../config/paymentConfiguration.js';
+import '../../queries/Payment.js';
 
 const PaymentConfirmationContainer = () => {
-    const { orgId } = useCheckout();
-    const { paymentInfo } = usePayment();
+    const { lotData } = usePaymentInfo();
     const [paymentStatus, setPaymentStatus] = useState('');
-    const { data: paymentMethodsData } = useQuery(paymentMethodsQuery, {
+    const { data: invoiceData } = useQuery(invoiceDetailsQuery, {
         variables: {
-            orgID: orgId,
+            invoiceID: lotData === null || lotData === void 0 ? void 0 : lotData.invoiceID,
         },
-        fetchPolicy: 'no-cache',
-        skip: !orgId,
+        skip: !(lotData === null || lotData === void 0 ? void 0 : lotData.invoiceID),
+        fetchPolicy: 'network-only',
     });
+    console.log('invoiceData?.getInvoiceDetails?.status', invoiceData === null || invoiceData === void 0 ? void 0 : invoiceData.getInvoiceDetails.status);
     useEffect(() => {
-        var _a;
-        if (paymentMethodsData === null || paymentMethodsData === void 0 ? void 0 : paymentMethodsData.getPaymentMethodList) {
-            const filteredData = paymentMethodsData === null || paymentMethodsData === void 0 ? void 0 : paymentMethodsData.getPaymentMethodList.filter((item) => item.id === (paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.paymentId));
-            setPaymentStatus((_a = filteredData[0]) === null || _a === void 0 ? void 0 : _a.status);
+        if (invoiceData === null || invoiceData === void 0 ? void 0 : invoiceData.getInvoiceDetails) {
+            setPaymentStatus(invoiceData === null || invoiceData === void 0 ? void 0 : invoiceData.getInvoiceDetails.status);
         }
-    }, [paymentMethodsData, paymentInfo]);
+    }, [invoiceData]);
     return (React__default.createElement(ConfirmationView, { paymentStatus: paymentStatus }));
 };
 

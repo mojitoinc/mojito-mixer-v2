@@ -36,17 +36,21 @@ const reserveNowBuyLotQuery = index.gql `
         }
     }
 `;
-index.gql `
+const invoiceDetailsQuery = index.gql `
     query GetInvoiceDetails($invoiceID: UUID1!) {
         getInvoiceDetails(invoiceID: $invoiceID) {
+            status
             items {
-                collectionItemID
-                destinationAddress
-                units
-                unitPrice
-                taxes
-                totalPrice
-                __typename
+                invoiceItemID
+                isOnchainPaymentAvailable
+                onChainPaymentInfo {
+                  networkID
+                  ownerWalletAddress
+                  onchainPaymentAddress
+                  tokenContractAddress
+                  onChainID
+                  tokenType
+                }
             }
         __typename
         }
@@ -72,5 +76,6 @@ const getTaxQuoteQuery = index.gql `
 `;
 
 exports.getTaxQuoteQuery = getTaxQuoteQuery;
+exports.invoiceDetailsQuery = invoiceDetailsQuery;
 exports.reserveNowBuyLotQuery = reserveNowBuyLotQuery;
 //# sourceMappingURL=invoiceDetails.js.map

@@ -24,6 +24,8 @@ const DefaultUIConfiguration = {
         walletConnect: true,
         wire: true,
         creditCard: true,
+        coinbase: true,
+        onChain: true,
     },
     costBreakdown: {
         showDiscountCode: true,
@@ -34,7 +36,30 @@ const DefaultUIConfiguration = {
         onGoTo: () => undefined,
     },
     delivery: {
-        showConnectWallet: true,
+        gpay: {
+            enableMultiSig: true,
+            enableConnectWallet: false,
+        },
+        applepay: {
+            enableMultiSig: true,
+            enableConnectWallet: false,
+        },
+        coinbase: {
+            enableMultiSig: true,
+            enableConnectWallet: false,
+        },
+        creditCard: {
+            enableMultiSig: true,
+            enableConnectWallet: false,
+        },
+        walletConnect: {
+            enableMultiSig: true,
+            enableConnectWallet: false,
+        },
+        wire: {
+            enableMultiSig: true,
+            enableConnectWallet: false,
+        },
     },
 };
 const makeUIConfiguration = (configurations) => {

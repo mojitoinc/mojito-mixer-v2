@@ -305,7 +305,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 
-const PaymentMethodView = ({ isSelected = '', name, logo, bodyContent, onChoosePaymentType, type, }) => {
+const PaymentMethodView = ({ isSelected = '', name, logo, bodyContent, onChoosePaymentType, type, endAdornment, }) => {
     var _a, _b, _c;
     const isCreditCard = React.useMemo(() => type === index.PaymentTypes.CREDIT_CARD, [type]);
     const theme = useTheme["default"]();
@@ -323,9 +323,11 @@ const PaymentMethodView = ({ isSelected = '', name, logo, bodyContent, onChooseP
             React__default["default"].createElement(Box["default"], { display: "flex", alignItems: "center" },
                 React__default["default"].createElement(Radio["default"], { sx: { padding: '0 9px 0 0' }, checked: isSelected === type, onChange: handleChange }),
                 !isCreditCard && (React__default["default"].createElement(Box["default"], { sx: { border: `1px solid ${(_c = theme.global) === null || _c === void 0 ? void 0 : _c.cardBorder}` }, width: "48px", height: "24px", display: "flex", justifyContent: "center" },
-                    React__default["default"].createElement("img", { src: logo !== null && logo !== void 0 ? logo : index$1.Icons.item, width: 32, alt: "logo" }))),
+                    typeof logo === 'string' &&
+                        React__default["default"].createElement("img", { src: logo !== null && logo !== void 0 ? logo : index$1.Icons.item, width: 32, alt: "logo" }),
+                    logo && typeof logo !== 'string' && (React__default["default"].createElement(React__default["default"].Fragment, null, logo)))),
                 React__default["default"].createElement(Typography["default"], { variant: "subtitle1", sx: { marginLeft: isCreditCard ? 0 : 1, fontWeight: 700 } }, name)),
-            Boolean(isCreditCard) && React__default["default"].createElement("img", { src: logo !== null && logo !== void 0 ? logo : index$1.Icons.item, alt: "logo" })),
+            endAdornment),
         isSelected === type && (React__default["default"].createElement(CardContent["default"], { sx: { padding: 0 } }, bodyContent))));
 };
 

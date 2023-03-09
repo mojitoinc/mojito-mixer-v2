@@ -43,7 +43,7 @@ const Delivery = () => {
     const [walletOptions, setWalletOptions] = React.useState([]);
     const { billingInfo } = BillingProvider.useBilling();
     const { orgId } = CheckoutProvider.useCheckout();
-    const { paymentInfo, onConfirmCreditCardPurchase, onConfirmWireTransferPurchase } = PaymentProvider.usePayment();
+    const { paymentInfo, onConfirmCreditCardPurchase, onConfirmWireTransferPurchase, onConfirmCoinbasePurchase, onConfirmOnChainPurchase } = PaymentProvider.usePayment();
     const { data: meData } = useQuery.useQuery(me.meQuery);
     const [addressScreening, { loading: isLoading }] = useMutation.useMutation(Payment.addressScreeningQuery);
     const [error, setError] = React.useState();
@@ -70,10 +70,18 @@ const Delivery = () => {
             setWalletOptions(formattedWallets);
         }
     }, [meData]);
+    const connectedWalletAddress = React.useMemo(() => {
+        var _a;
+        if ((paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.paymentType) === index.PaymentTypes.WALLET_CONNECT)
+            return (_a = paymentInfo.onChainPayment) === null || _a === void 0 ? void 0 : _a.walletAddress;
+        if (connect === null || connect === void 0 ? void 0 : connect.connected)
+            return connect === null || connect === void 0 ? void 0 : connect.account;
+        return undefined;
+    }, [connect, paymentInfo]);
     const onClickConfirmPurchase = React.useCallback(() => tslib_es6.__awaiter(void 0, void 0, void 0, function* () {
         var _d;
         try {
-            const deliveryAddress = (connect === null || connect === void 0 ? void 0 : connect.connected) ? connect === null || connect === void 0 ? void 0 : connect.account : selectedDeliveryAddress === NEW_MULTI_SIG ? '' : selectedDeliveryAddress;
+            const deliveryAddress = connectedWalletAddress !== null && connectedWalletAddress !== void 0 ? connectedWalletAddress : (selectedDeliveryAddress === NEW_MULTI_SIG ? '' : selectedDeliveryAddress);
             if (!deliveryAddress && selectedDeliveryAddress !== NEW_MULTI_SIG) {
                 setError('Please select a delivery address');
                 return;
@@ -101,6 +109,12 @@ const Delivery = () => {
             if ((paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.paymentType) === index.PaymentTypes.CREDIT_CARD) {
                 onConfirmCreditCardPurchase(deliveryAddress);
             }
+            if ((paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.paymentType) === index.PaymentTypes.COIN_BASE) {
+                onConfirmCoinbasePurchase(deliveryAddress);
+            }
+            if ((paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.paymentType) === index.PaymentTypes.WALLET_CONNECT) {
+                onConfirmOnChainPurchase(deliveryAddress);
+            }
         }
         catch (e) {
             debug.error('onConfirm-start', { e });
@@ -109,14 +123,16 @@ const Delivery = () => {
         debug,
         onConfirmCreditCardPurchase,
         onConfirmWireTransferPurchase,
+        onConfirmCoinbasePurchase,
+        onConfirmOnChainPurchase,
         paymentInfo,
         orgId,
         selectedDeliveryAddress,
         addressScreening,
-        connect,
         enableSardine,
+        connectedWalletAddress,
     ]);
-    return (React__default["default"].createElement(Delivery$1["default"], { onWalletChange: handleChange, walletOptions: walletOptions, selectedDeliveryAddress: selectedDeliveryAddress, onClickConfirmPurchase: onClickConfirmPurchase, organizationName: (_c = (_b = (_a = meData === null || meData === void 0 ? void 0 : meData.me) === null || _a === void 0 ? void 0 : _a.userOrgs[0]) === null || _b === void 0 ? void 0 : _b.organization) === null || _c === void 0 ? void 0 : _c.name, billingInfo: billingInfo, paymentInfo: paymentInfo, onClickConnectWallet: onWalletConnect, connect: connect, onDisconnect: onDisconnect, error: error, isLoading: isLoading }));
+    return (React__default["default"].createElement(Delivery$1["default"], { onWalletChange: handleChange, walletOptions: walletOptions, selectedDeliveryAddress: selectedDeliveryAddress, onClickConfirmPurchase: onClickConfirmPurchase, organizationName: (_c = (_b = (_a = meData === null || meData === void 0 ? void 0 : meData.me) === null || _a === void 0 ? void 0 : _a.userOrgs[0]) === null || _b === void 0 ? void 0 : _b.organization) === null || _c === void 0 ? void 0 : _c.name, billingInfo: billingInfo, paymentInfo: paymentInfo, onClickConnectWallet: onWalletConnect, connectedWalletAddress: connectedWalletAddress, onDisconnect: onDisconnect, error: error, isLoading: isLoading }));
 };
 
 exports.Delivery = Delivery;

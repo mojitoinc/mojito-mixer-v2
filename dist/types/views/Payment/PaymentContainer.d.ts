@@ -1,7 +1,7 @@
 /// <reference types="react" />
 import { PaymentTypes } from '../../constants';
 import { CreditCardFormType, PaymentMethod } from '../../interfaces';
-import { BillingFormData, PaymentData, PaymentMethodLimit } from '../../providers';
+import { BillingFormData, OnChainForm, PaymentData, PaymentMethodLimit } from '../../providers';
 import { WireTransferFormData } from './WireTransferForm';
 interface PaymentContainerProps {
     paymentType: string;
@@ -13,6 +13,8 @@ interface PaymentContainerProps {
         walletConnect?: boolean;
         wire?: boolean;
         creditCard?: boolean;
+        coinbase?: boolean;
+        onChain?: boolean;
     };
     billingInfo: BillingFormData | undefined;
     paymentMethodLimit: PaymentMethodLimit | undefined;
@@ -20,6 +22,8 @@ interface PaymentContainerProps {
     paymentInfo?: PaymentData;
     onSubmitWireTransfer: (values: WireTransferFormData) => void;
     onSubmitCreditCard: (values: CreditCardFormType) => void;
+    onSubmitOnChain: (values: OnChainForm) => void;
+    onContinueToDelivery: () => void;
 }
-declare const PaymentContainer: ({ paymentType, onChoosePaymentType, creditCardList, config, billingInfo, paymentMethodLimit, screeningError, paymentInfo, onSubmitCreditCard, onSubmitWireTransfer, }: PaymentContainerProps) => JSX.Element;
+declare const PaymentContainer: ({ paymentType, onChoosePaymentType, creditCardList, config, billingInfo, paymentMethodLimit, screeningError, paymentInfo, onSubmitCreditCard, onSubmitWireTransfer, onSubmitOnChain, onContinueToDelivery, }: PaymentContainerProps) => JSX.Element;
 export default PaymentContainer;

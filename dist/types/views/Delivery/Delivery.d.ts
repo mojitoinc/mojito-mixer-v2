@@ -1,7 +1,6 @@
 /// <reference types="react" />
 import { DropdownOptions } from '../../components';
 import { BillingFormData, PaymentData } from '../../providers';
-import { ConnectType } from '../../providers/ConnectContext';
 interface DeliveryProps {
     onWalletChange: (val: string) => void;
     walletOptions: DropdownOptions[];
@@ -11,10 +10,10 @@ interface DeliveryProps {
     billingInfo: BillingFormData | undefined;
     paymentInfo: PaymentData | undefined;
     onClickConnectWallet: () => void;
-    connect: ConnectType;
     onDisconnect: () => void;
     error?: string;
     isLoading: boolean;
+    connectedWalletAddress?: string;
 }
-declare const Delivery: ({ onWalletChange, walletOptions, selectedDeliveryAddress, onClickConfirmPurchase, organizationName, billingInfo, paymentInfo, onClickConnectWallet, connect, onDisconnect, error, isLoading, }: DeliveryProps) => JSX.Element;
+declare const Delivery: ({ onWalletChange, walletOptions, selectedDeliveryAddress, onClickConfirmPurchase, organizationName, billingInfo, paymentInfo, onClickConnectWallet, onDisconnect, error, isLoading, connectedWalletAddress, }: DeliveryProps) => JSX.Element;
 export default Delivery;

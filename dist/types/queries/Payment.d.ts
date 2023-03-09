@@ -2,3 +2,4 @@ export declare const createPaymentMethodQuery: import("@apollo/client").Document
 export declare const createPaymentQuery: import("@apollo/client").DocumentNode;
 export declare const getPaymentMethodStatus: import("@apollo/client").DocumentNode;
 export declare const addressScreeningQuery: import("@apollo/client").DocumentNode;
+export declare const completeOnChainPaymentQuery: import("@apollo/client").DocumentNode;

@@ -238,7 +238,7 @@ require('../../node_modules/@mui/material/SpeedDialAction/SpeedDialAction.js');
 require('../../node_modules/@mui/material/SpeedDialAction/speedDialActionClasses.js');
 require('../../node_modules/@mui/material/SpeedDialIcon/SpeedDialIcon.js');
 require('../../node_modules/@mui/material/SpeedDialIcon/speedDialIconClasses.js');
-require('../../node_modules/@mui/material/Stack/Stack.js');
+var Stack = require('../../node_modules/@mui/material/Stack/Stack.js');
 require('../../node_modules/@mui/material/Step/Step.js');
 require('../../node_modules/@mui/material/Step/stepClasses.js');
 require('../../node_modules/@mui/material/Step/StepContext.js');
@@ -300,6 +300,7 @@ require('../../node_modules/@mui/material/GlobalStyles/GlobalStyles.js');
 require('../../node_modules/@mui/base/FocusTrap/FocusTrap.js');
 var Header = require('../components/Header.js');
 var Stepper = require('../components/Stepper.js');
+require('../assets/index.js');
 require('@mui/icons-material/ContentCopy');
 require('../components/shared/ErrorBoundary.js');
 var index$6 = require('./CostBreakDown/index.js');
@@ -359,14 +360,12 @@ const MojitoCheckoutLayout = ({ sardineEnvironment, enableSardine, }) => {
     if (containerState === RootContainer.ContainerTypes.LOADING) {
         return React__default["default"].createElement(index$1["default"], null);
     }
-    return (React__default["default"].createElement(Box["default"], { sx: {
+    return (React__default["default"].createElement(Stack["default"], { direction: { xs: 'column-reverse', md: 'row' }, sx: {
             backgroundColor: (_a = theme.global) === null || _a === void 0 ? void 0 : _a.background,
             display: 'flex',
-            width: '100%',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
+            justifyContent: { sx: 'center', lg: 'space-between' },
         } },
-        React__default["default"].createElement(Box["default"], { padding: "40px", width: "100%" },
+        React__default["default"].createElement(Box["default"], { padding: "40px", width: { lg: '100%' } },
             React__default["default"].createElement(Header["default"], { isPaymentConfirmation: containerState === RootContainer.ContainerTypes.CONFIRMATION }),
             containerState !== RootContainer.ContainerTypes.CONFIRMATION && (React__default["default"].createElement(Stepper["default"], { currentState: containerState })),
             containerState === RootContainer.ContainerTypes.CHECKOUT && React__default["default"].createElement(index$2["default"], null),

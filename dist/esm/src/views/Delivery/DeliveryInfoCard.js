@@ -392,7 +392,11 @@ const DeliveryInfoCard = ({ billingInfo, paymentInfo, }) => {
                         React__default.createElement(Typography, { variant: "body2", sx: { margin: '0 8px' } },
                             "****", (_u = (_t = paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.creditCardData) === null || _t === void 0 ? void 0 : _t.cardData) === null || _u === void 0 ? void 0 :
                             _u.last4Digit),
-                        React__default.createElement(Typography, { variant: "body2", sx: { color: (_v = theme.global) === null || _v === void 0 ? void 0 : _v.unHighlightedText } }, (_w = paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.creditCardData) === null || _w === void 0 ? void 0 : _w.expiry))))),
+                        React__default.createElement(Typography, { variant: "body2", sx: { color: (_v = theme.global) === null || _v === void 0 ? void 0 : _v.unHighlightedText } }, (_w = paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.creditCardData) === null || _w === void 0 ? void 0 : _w.expiry)))),
+                (paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.paymentType) === PaymentTypes.COIN_BASE && (React__default.createElement(Box, null,
+                    React__default.createElement(Typography, { variant: "body2", sx: { marginBottom: '4px' } }, "Coinbase"))),
+                (paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.paymentType) === PaymentTypes.WALLET_CONNECT && (React__default.createElement(Box, null,
+                    React__default.createElement(Typography, { variant: "body2", sx: { marginBottom: '4px' } }, "Walletconnect")))),
             React__default.createElement(Box, null,
                 React__default.createElement(Typography, { variant: "button", sx: {
                         color: (_x = theme.global) === null || _x === void 0 ? void 0 : _x.unHighlightedText,

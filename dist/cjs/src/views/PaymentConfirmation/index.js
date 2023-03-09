@@ -14,41 +14,47 @@ require('../../../node_modules/@apollo/client/utilities/common/canUse.js');
 var useQuery = require('../../../node_modules/@apollo/client/react/hooks/useQuery.js');
 require('../../../node_modules/@apollo/client/react/parser/index.js');
 require('../../../node_modules/@apollo/client/errors/index.js');
-var billing = require('../../queries/billing.js');
+var ConfirmationView = require('./ConfirmationView.js');
+var invoiceDetails = require('../../queries/invoiceDetails.js');
+var usePaymentInfo = require('../../hooks/usePaymentInfo.js');
 require('../../providers/DebugProvider.js');
 require('../../providers/ErrorProvider.js');
 require('../../providers/BillingProvider.js');
 require('../../providers/ContainerStateProvider.js');
 require('../../providers/UIConfigurationProvider.js');
-var CheckoutProvider = require('../../providers/CheckoutProvider.js');
-var PaymentProvider = require('../../providers/PaymentProvider.js');
+require('../../providers/CheckoutProvider.js');
+require('../../providers/PaymentProvider.js');
 require('../../providers/EventProvider.js');
 require('../../providers/SecurityOptionsProvider.js');
 require('../../providers/UserInfoProvider.js');
-var ConfirmationView = require('./ConfirmationView.js');
+require('openpgp');
+require('atob');
+require('btoa');
+require('../../queries/creditCard.js');
+require('uuidv4');
+require('../../config/paymentConfiguration.js');
+require('../../queries/Payment.js');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
 var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 
 const PaymentConfirmationContainer = () => {
-    const { orgId } = CheckoutProvider.useCheckout();
-    const { paymentInfo } = PaymentProvider.usePayment();
+    const { lotData } = usePaymentInfo["default"]();
     const [paymentStatus, setPaymentStatus] = React.useState('');
-    const { data: paymentMethodsData } = useQuery.useQuery(billing.paymentMethodsQuery, {
+    const { data: invoiceData } = useQuery.useQuery(invoiceDetails.invoiceDetailsQuery, {
         variables: {
-            orgID: orgId,
+            invoiceID: lotData === null || lotData === void 0 ? void 0 : lotData.invoiceID,
         },
-        fetchPolicy: 'no-cache',
-        skip: !orgId,
+        skip: !(lotData === null || lotData === void 0 ? void 0 : lotData.invoiceID),
+        fetchPolicy: 'network-only',
     });
+    console.log('invoiceData?.getInvoiceDetails?.status', invoiceData === null || invoiceData === void 0 ? void 0 : invoiceData.getInvoiceDetails.status);
     React.useEffect(() => {
-        var _a;
-        if (paymentMethodsData === null || paymentMethodsData === void 0 ? void 0 : paymentMethodsData.getPaymentMethodList) {
-            const filteredData = paymentMethodsData === null || paymentMethodsData === void 0 ? void 0 : paymentMethodsData.getPaymentMethodList.filter((item) => item.id === (paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.paymentId));
-            setPaymentStatus((_a = filteredData[0]) === null || _a === void 0 ? void 0 : _a.status);
+        if (invoiceData === null || invoiceData === void 0 ? void 0 : invoiceData.getInvoiceDetails) {
+            setPaymentStatus(invoiceData === null || invoiceData === void 0 ? void 0 : invoiceData.getInvoiceDetails.status);
         }
-    }, [paymentMethodsData, paymentInfo]);
+    }, [invoiceData]);
     return (React__default["default"].createElement(ConfirmationView["default"], { paymentStatus: paymentStatus }));
 };
 

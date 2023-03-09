@@ -297,7 +297,7 @@ import '../../../node_modules/@mui/base/FocusTrap/FocusTrap.js';
 import { Icons } from '../../assets/index.js';
 import { PaymentTypes } from '../../constants/index.js';
 
-const PaymentMethodView = ({ isSelected = '', name, logo, bodyContent, onChoosePaymentType, type, }) => {
+const PaymentMethodView = ({ isSelected = '', name, logo, bodyContent, onChoosePaymentType, type, endAdornment, }) => {
     var _a, _b, _c;
     const isCreditCard = useMemo(() => type === PaymentTypes.CREDIT_CARD, [type]);
     const theme = useTheme();
@@ -315,9 +315,11 @@ const PaymentMethodView = ({ isSelected = '', name, logo, bodyContent, onChooseP
             React__default.createElement(Box, { display: "flex", alignItems: "center" },
                 React__default.createElement(Radio, { sx: { padding: '0 9px 0 0' }, checked: isSelected === type, onChange: handleChange }),
                 !isCreditCard && (React__default.createElement(Box, { sx: { border: `1px solid ${(_c = theme.global) === null || _c === void 0 ? void 0 : _c.cardBorder}` }, width: "48px", height: "24px", display: "flex", justifyContent: "center" },
-                    React__default.createElement("img", { src: logo !== null && logo !== void 0 ? logo : Icons.item, width: 32, alt: "logo" }))),
+                    typeof logo === 'string' &&
+                        React__default.createElement("img", { src: logo !== null && logo !== void 0 ? logo : Icons.item, width: 32, alt: "logo" }),
+                    logo && typeof logo !== 'string' && (React__default.createElement(React__default.Fragment, null, logo)))),
                 React__default.createElement(Typography, { variant: "subtitle1", sx: { marginLeft: isCreditCard ? 0 : 1, fontWeight: 700 } }, name)),
-            Boolean(isCreditCard) && React__default.createElement("img", { src: logo !== null && logo !== void 0 ? logo : Icons.item, alt: "logo" })),
+            endAdornment),
         isSelected === type && (React__default.createElement(CardContent, { sx: { padding: 0 } }, bodyContent))));
 };
 

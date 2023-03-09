@@ -125,7 +125,25 @@ const PaymentContainer = () => {
         paymentType,
         setContainerState,
     ]);
-    return (React__default.createElement(PaymentContainer$1, { paymentType: paymentType, onChoosePaymentType: onChoosePaymentType, creditCardList: creditCardList, config: uiConfiguration === null || uiConfiguration === void 0 ? void 0 : uiConfiguration.payment, billingInfo: billingInfo, paymentMethodLimit: paymentMethods, screeningError: screeningError, paymentInfo: paymentInfo, onSubmitWireTransfer: onSubmitWireTransfer, onSubmitCreditCard: onSubmitCreditCard }));
+    const onContinueToDelivery = useCallback(() => {
+        setPaymentInfo(Object.assign(Object.assign({}, paymentInfo), { paymentType }));
+        setContainerState(ContainerTypes.DELIVERY);
+    }, [
+        setPaymentInfo,
+        paymentType,
+        setContainerState,
+        paymentInfo,
+    ]);
+    const onSubmitOnChain = useCallback((values) => {
+        setPaymentInfo(Object.assign(Object.assign({}, paymentInfo), { paymentType, onChainPayment: Object.assign({}, values) }));
+        setContainerState(ContainerTypes.DELIVERY);
+    }, [
+        paymentInfo,
+        setPaymentInfo,
+        paymentType,
+        setContainerState,
+    ]);
+    return (React__default.createElement(PaymentContainer$1, { paymentType: paymentType, onChoosePaymentType: onChoosePaymentType, creditCardList: creditCardList, config: uiConfiguration === null || uiConfiguration === void 0 ? void 0 : uiConfiguration.payment, billingInfo: billingInfo, paymentMethodLimit: paymentMethods, screeningError: screeningError, paymentInfo: paymentInfo, onSubmitWireTransfer: onSubmitWireTransfer, onSubmitCreditCard: onSubmitCreditCard, onSubmitOnChain: onSubmitOnChain, onContinueToDelivery: onContinueToDelivery }));
 };
 
 export { PaymentContainer };

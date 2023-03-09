@@ -1,35 +1,7 @@
 /// <reference types="react" />
-export interface MojitoUIConfiguration {
-    global?: {
-        logoSrc?: string;
-        loaderImageSrc?: string;
-        errorImageSrc?: string;
-    };
-    billing?: {
-        isEnableExpressCheckout?: boolean;
-        gpay?: boolean;
-        applepay?: boolean;
-        walletConnect?: boolean;
-        metaMask?: boolean;
-    };
-    payment?: {
-        gpay?: boolean;
-        applepay?: boolean;
-        walletConnect?: boolean;
-        wire?: boolean;
-        creditCard?: boolean;
-    };
-    costBreakdown?: {
-        showDiscountCode?: boolean;
-    };
-    paymentConfirmation?: {
-        wireTransferInstructions?: JSX.Element;
-        creditCardInstructions?: JSX.Element;
-        onGoTo?: () => void;
-    };
-    delivery?: {
-        showConnectWallet?: boolean;
-    };
+export interface DeliveryType {
+    enableConnectWallet: boolean;
+    enableMultiSig: boolean;
 }
 export interface UIConfiguration {
     global: {
@@ -50,6 +22,8 @@ export interface UIConfiguration {
         walletConnect: boolean;
         wire: boolean;
         creditCard: boolean;
+        coinbase: boolean;
+        onChain: boolean;
     };
     costBreakdown: {
         showDiscountCode: boolean;
@@ -60,6 +34,11 @@ export interface UIConfiguration {
         onGoTo: () => void;
     };
     delivery: {
-        showConnectWallet: boolean;
+        gpay: DeliveryType;
+        applepay: DeliveryType;
+        walletConnect: DeliveryType;
+        wire: DeliveryType;
+        creditCard: DeliveryType;
+        coinbase: DeliveryType;
     };
 }

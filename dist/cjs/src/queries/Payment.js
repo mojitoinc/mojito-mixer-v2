@@ -39,6 +39,11 @@ const createPaymentMethodQuery = index.gql `
             status
             __typename
         }
+        ... on OnchainPaymentMethodOutput {
+            id
+            status
+            __typename
+        }
         __typename
         }
     }
@@ -118,15 +123,27 @@ const getPaymentMethodStatus = index.gql `
     }
 `;
 const addressScreeningQuery = index.gql `
-    mutation GetPaymentMethodStatus($input: AddressScreeningInput!,$orgID: UUID1!) {
+    mutation AddressScreening($input: AddressScreeningInput!,$orgID: UUID1!) {
         addressScreening(
             input: $input
             orgID: $orgID
         )
     }
 `;
+const completeOnChainPaymentQuery = index.gql `
+    mutation completeOnchainPayment($invoiceId : UUID1!,$networkId:UUID1!,$txHash:String!,$billingDetails:CryptoBillingDetails!) {
+        completeOnchainPayment(
+            invoiceId:$invoiceId
+            networkId:$networkId
+            txHash:$txHash
+            billingDetails:$billingDetails
+        )
+    }
+
+`;
 
 exports.addressScreeningQuery = addressScreeningQuery;
+exports.completeOnChainPaymentQuery = completeOnChainPaymentQuery;
 exports.createPaymentMethodQuery = createPaymentMethodQuery;
 exports.createPaymentQuery = createPaymentQuery;
 exports.getPaymentMethodStatus = getPaymentMethodStatus;

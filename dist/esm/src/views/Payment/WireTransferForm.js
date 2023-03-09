@@ -78,7 +78,7 @@ import '../../../node_modules/@mui/material/BottomNavigation/BottomNavigation.js
 import '../../../node_modules/@mui/material/BottomNavigation/bottomNavigationClasses.js';
 import '../../../node_modules/@mui/material/BottomNavigationAction/BottomNavigationAction.js';
 import '../../../node_modules/@mui/material/BottomNavigationAction/bottomNavigationActionClasses.js';
-import '../../../node_modules/@mui/material/Box/Box.js';
+import Box from '../../../node_modules/@mui/material/Box/Box.js';
 import '../../../node_modules/@mui/material/Breadcrumbs/Breadcrumbs.js';
 import '../../../node_modules/@mui/material/Breadcrumbs/breadcrumbsClasses.js';
 import '../../../node_modules/@mui/material/Button/Button.js';
@@ -295,6 +295,8 @@ import '../../../node_modules/@mui/material/Typography/typographyClasses.js';
 import '../../../node_modules/@mui/material/Zoom/Zoom.js';
 import '../../../node_modules/@mui/material/GlobalStyles/GlobalStyles.js';
 import '../../../node_modules/@mui/base/FocusTrap/FocusTrap.js';
+import { CIRCLE_URL } from '../../constants/index.js';
+import { Icons } from '../../assets/index.js';
 import Dropdown from '../../components/Dropdown.js';
 import '@mui/icons-material/ArrowBack';
 import '../../providers/DebugProvider.js';
@@ -401,7 +403,15 @@ const WireTransferForm = ({ values, handleChange, setFieldValue, errors, }) => {
                 marginTop: 2,
                 backgroundColor: (_b = theme.global) === null || _b === void 0 ? void 0 : _b.grayBackground,
                 borderRadius: '4px',
-            } }, "Please note that wire transfers usually take 1-3 business days to complete and your NFT will not be transferred until payment has been settled.")));
+            } }, "Please note that wire transfers usually take 1-3 business days to complete and your NFT will not be transferred until payment has been settled."),
+        React__default.createElement(Box, { display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center", margin: "20px 0px" },
+            React__default.createElement(Typography, null, "Payments powered by"),
+            React__default.createElement("a", { href: CIRCLE_URL, target: "_blank", rel: "noreferrer" },
+                React__default.createElement("img", { src: Icons.circle, alt: "visa", style: {
+                        width: 100,
+                        height: 20,
+                        marginLeft: '8px',
+                    } })))));
 };
 
 export { Countries, WireTransferForm };

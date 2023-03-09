@@ -200,6 +200,7 @@ interface WireInstructions {
 }
 interface Details {
     WireInstructions?: WireInstructions;
+    hostedURL?: string;
     __typename: string;
 }
 interface CreatePaymentResult {
@@ -234,39 +235,13 @@ interface CheckoutOptions {
     invoiceId?: string;
     discountCode?: string;
     vertexEnabled?: boolean;
+    successURL?: string;
+    errorURL?: string;
 }
 
-interface MojitoUIConfiguration {
-    global?: {
-        logoSrc?: string;
-        loaderImageSrc?: string;
-        errorImageSrc?: string;
-    };
-    billing?: {
-        isEnableExpressCheckout?: boolean;
-        gpay?: boolean;
-        applepay?: boolean;
-        walletConnect?: boolean;
-        metaMask?: boolean;
-    };
-    payment?: {
-        gpay?: boolean;
-        applepay?: boolean;
-        walletConnect?: boolean;
-        wire?: boolean;
-        creditCard?: boolean;
-    };
-    costBreakdown?: {
-        showDiscountCode?: boolean;
-    };
-    paymentConfirmation?: {
-        wireTransferInstructions?: JSX.Element;
-        creditCardInstructions?: JSX.Element;
-        onGoTo?: () => void;
-    };
-    delivery?: {
-        showConnectWallet?: boolean;
-    };
+interface DeliveryType {
+    enableConnectWallet: boolean;
+    enableMultiSig: boolean;
 }
 interface UIConfiguration {
     global: {
@@ -287,6 +262,8 @@ interface UIConfiguration {
         walletConnect: boolean;
         wire: boolean;
         creditCard: boolean;
+        coinbase: boolean;
+        onChain: boolean;
     };
     costBreakdown: {
         showDiscountCode: boolean;
@@ -297,7 +274,12 @@ interface UIConfiguration {
         onGoTo: () => void;
     };
     delivery: {
-        showConnectWallet: boolean;
+        gpay: DeliveryType;
+        applepay: DeliveryType;
+        walletConnect: DeliveryType;
+        wire: DeliveryType;
+        creditCard: DeliveryType;
+        coinbase: DeliveryType;
     };
 }
 
@@ -305,6 +287,53 @@ interface UserInfo {
     email: string;
 }
 
+interface MojitoDeliveryType {
+    enableConnectWallet?: boolean;
+    enableMultiSig?: boolean;
+}
+interface MojitoUIConfiguration {
+    global?: {
+        logoSrc?: string;
+        loaderImageSrc?: string;
+        errorImageSrc?: string;
+    };
+    billing?: {
+        isEnableExpressCheckout?: boolean;
+        gpay?: boolean;
+        applepay?: boolean;
+        walletConnect?: boolean;
+        metaMask?: boolean;
+    };
+    payment?: {
+        gpay?: boolean;
+        applepay?: boolean;
+        walletConnect?: boolean;
+        wire?: boolean;
+        creditCard?: boolean;
+        coinbase?: boolean;
+        onChain?: boolean;
+    };
+    costBreakdown?: {
+        showDiscountCode?: boolean;
+    };
+    paymentConfirmation?: {
+        wireTransferInstructions?: JSX.Element;
+        creditCardInstructions?: JSX.Element;
+        onGoTo?: () => void;
+    };
+    delivery?: {
+        gpay?: MojitoDeliveryType;
+        applepay?: MojitoDeliveryType;
+        walletConnect?: MojitoDeliveryType;
+        wire?: MojitoDeliveryType;
+        creditCard?: MojitoDeliveryType;
+        coinbase?: MojitoDeliveryType;
+    };
+}
+
+interface OnChainForm {
+    walletAddress: string;
+}
 interface PaymentData {
     creditCardData?: CreditCardFormType;
     wireData?: {
@@ -318,6 +347,7 @@ interface PaymentData {
         };
         country: string;
     };
+    onChainPayment?: OnChainForm;
     paymentId?: string;
     paymentType?: string;
     destinationAddress?: string;
@@ -383,6 +413,7 @@ interface PaymentInfo {
     taxablePrice?: number;
     vertexEnabled?: boolean;
     quantity?: number;
+    txHash?: string;
 }
 declare const usePaymentInfo: () => PaymentInfo;
 

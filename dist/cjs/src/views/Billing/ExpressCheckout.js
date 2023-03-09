@@ -145,7 +145,7 @@ require('../../../node_modules/@mui/material/FormHelperText/FormHelperText.js');
 require('../../../node_modules/@mui/material/FormHelperText/formHelperTextClasses.js');
 require('../../../node_modules/@mui/material/FormLabel/FormLabel.js');
 require('../../../node_modules/@mui/material/FormLabel/formLabelClasses.js');
-require('../../../node_modules/@mui/material/Grid/Grid.js');
+var Grid = require('../../../node_modules/@mui/material/Grid/Grid.js');
 require('../../../node_modules/@mui/material/Grid/gridClasses.js');
 require('../../../node_modules/@mui/material/Unstable_Grid2/Grid2.js');
 require('../../../node_modules/@mui/material/Unstable_Grid2/grid2Classes.js');
@@ -325,36 +325,36 @@ const ExpressCheckoutView = ({ config }) => {
     const theme = useTheme["default"]();
     return (React__default["default"].createElement(Box["default"], { marginBottom: "24px" },
         React__default["default"].createElement(LinedText["default"], { text: "Express Checkout" }),
-        React__default["default"].createElement(Box["default"], { display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center", sx: {
+        React__default["default"].createElement(Grid["default"], { sx: {
                 margin: '24px 0px',
-            } },
-            (config === null || config === void 0 ? void 0 : config.gpay) && (React__default["default"].createElement(Button["default"], { backgroundColor: (_a = theme.global) === null || _a === void 0 ? void 0 : _a.black, sx: {
-                    width: '90px',
-                    margin: '0px 8px',
-                } },
-                React__default["default"].createElement("img", { src: index.Icons.gpay, width: "50px", height: "20px", alt: "Google pay" }))),
-            (config === null || config === void 0 ? void 0 : config.applepay) && (React__default["default"].createElement(Button["default"], { backgroundColor: (_b = theme.global) === null || _b === void 0 ? void 0 : _b.black, sx: {
-                    width: '90px',
-                    margin: '0px 8px',
-                } },
-                React__default["default"].createElement("img", { src: index.Icons.applepay, width: "50px", height: "20px", alt: "Apple pay" }))),
-            (config === null || config === void 0 ? void 0 : config.walletConnect) && (React__default["default"].createElement(Button["default"], { backgroundColor: (_c = theme.global) === null || _c === void 0 ? void 0 : _c.white, textColor: (_d = theme.global) === null || _d === void 0 ? void 0 : _d.black, sx: {
-                    width: '180px',
-                    margin: '0px 8px',
-                    border: `1px solid ${(_e = theme.global) === null || _e === void 0 ? void 0 : _e.black}`,
-                }, title: "Walletconnect" },
-                React__default["default"].createElement("img", { src: index.Icons.walletConnect, width: "16px", height: "16px", style: {
-                        marginRight: '8px',
-                    }, alt: "Walletconnect" }))),
-            (config === null || config === void 0 ? void 0 : config.metaMask) && (React__default["default"].createElement(Button["default"], { backgroundColor: (_f = theme.global) === null || _f === void 0 ? void 0 : _f.white, textColor: (_g = theme.global) === null || _g === void 0 ? void 0 : _g.black, sx: {
-                    width: '180px',
-                    height: '40px',
-                    margin: '0px 8px',
-                    border: `1px solid ${(_h = theme.global) === null || _h === void 0 ? void 0 : _h.black}`,
-                }, title: "Metamask" },
-                React__default["default"].createElement("img", { src: index.Icons.metamask, width: "16px", height: "16px", alt: "Metamask", style: {
-                        marginRight: '8px',
-                    } })))),
+            }, container: true, spacing: 2 },
+            (config === null || config === void 0 ? void 0 : config.gpay) && (React__default["default"].createElement(Grid["default"], { xs: 6, lg: 2, item: true },
+                React__default["default"].createElement(Button["default"], { sx: {
+                        width: { xs: '100%', lg: '90px' },
+                    }, backgroundColor: (_a = theme.global) === null || _a === void 0 ? void 0 : _a.black },
+                    React__default["default"].createElement("img", { src: index.Icons.gpay, width: "50px", height: "20px", alt: "Google pay" })))),
+            (config === null || config === void 0 ? void 0 : config.applepay) && (React__default["default"].createElement(Grid["default"], { xs: 6, lg: 2, item: true },
+                React__default["default"].createElement(Button["default"], { backgroundColor: (_b = theme.global) === null || _b === void 0 ? void 0 : _b.black, sx: {
+                        width: { xs: '100%', lg: '90px' },
+                    } },
+                    React__default["default"].createElement("img", { src: index.Icons.applepay, width: "50px", height: "20px", alt: "Apple pay" })))),
+            (config === null || config === void 0 ? void 0 : config.walletConnect) && (React__default["default"].createElement(Grid["default"], { xs: 12, lg: 3, md: 6, item: true },
+                React__default["default"].createElement(Button["default"], { backgroundColor: (_c = theme.global) === null || _c === void 0 ? void 0 : _c.white, textColor: (_d = theme.global) === null || _d === void 0 ? void 0 : _d.black, sx: {
+                        width: { xs: '100%', lg: '180px' },
+                        border: `1px solid ${(_e = theme.global) === null || _e === void 0 ? void 0 : _e.black}`,
+                    }, title: "Walletconnect" },
+                    React__default["default"].createElement("img", { src: index.Icons.walletConnect, width: "16px", height: "16px", style: {
+                            marginRight: '8px',
+                        }, alt: "Walletconnect" })))),
+            (config === null || config === void 0 ? void 0 : config.metaMask) && (React__default["default"].createElement(Grid["default"], { xs: 12, lg: 3, md: 6, item: true },
+                React__default["default"].createElement(Button["default"], { backgroundColor: (_f = theme.global) === null || _f === void 0 ? void 0 : _f.white, textColor: (_g = theme.global) === null || _g === void 0 ? void 0 : _g.black, sx: {
+                        width: { xs: '100%', lg: '180px' },
+                        height: '40px',
+                        border: `1px solid ${(_h = theme.global) === null || _h === void 0 ? void 0 : _h.black}`,
+                    }, title: "Metamask" },
+                    React__default["default"].createElement("img", { src: index.Icons.metamask, width: "16px", height: "16px", alt: "Metamask", style: {
+                            marginRight: '8px',
+                        } }))))),
         React__default["default"].createElement(LinedText["default"], { text: "OR" })));
 };
 

@@ -14,14 +14,14 @@ import '../../node_modules/@apollo/client/react/hooks/useQuery.js';
 import '../../node_modules/@apollo/client/react/parser/index.js';
 import { formCreatePaymentMethodObject } from '../views/Delivery/Delivery.service.js';
 import { useEncryptCardData } from './useEncryptCard.js';
-import { reserveNowBuyLotQuery } from '../queries/invoiceDetails.js';
-import { createPaymentMethodQuery, createPaymentQuery, getPaymentMethodStatus } from '../queries/Payment.js';
+import { reserveNowBuyLotQuery, invoiceDetailsQuery } from '../queries/invoiceDetails.js';
+import { createPaymentMethodQuery, createPaymentQuery, getPaymentMethodStatus, completeOnChainPaymentQuery } from '../queries/Payment.js';
 import { useDebug } from '../providers/DebugProvider.js';
 import '../providers/ErrorProvider.js';
 import '../providers/BillingProvider.js';
 import '../providers/ContainerStateProvider.js';
 import '../providers/UIConfigurationProvider.js';
-import '../providers/CheckoutProvider.js';
+import { useCheckout } from '../providers/CheckoutProvider.js';
 import '../providers/PaymentProvider.js';
 import '../providers/EventProvider.js';
 import '../providers/SecurityOptionsProvider.js';
@@ -40,6 +40,9 @@ const useCreatePayment = (paymentInfo, orgId) => {
     const [encryptCardData] = useEncryptCardData({ orgID: orgId !== null && orgId !== void 0 ? orgId : '' });
     const [paymentMethodStatus] = useLazyQuery(getPaymentMethodStatus);
     const [reserveNow] = useMutation(reserveNowBuyLotQuery);
+    const { successURL, errorURL } = useCheckout();
+    const [getInvoiceDetails] = useLazyQuery(invoiceDetailsQuery);
+    const [onCompleteChain] = useMutation(completeOnChainPaymentQuery);
     const getInvoiceData = useCallback((invoiceId, lotId, quantity) => __awaiter(void 0, void 0, void 0, function* () {
         var _a, _b;
         if (invoiceId) {
@@ -207,12 +210,157 @@ const useCreatePayment = (paymentInfo, orgId) => {
         createPayment,
         getInvoiceData,
     ]);
+    const makeCoinbasePurchase = useCallback((options) => __awaiter(void 0, void 0, void 0, function* () {
+        var _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31, _32, _33, _34, _35;
+        const inputData = {
+            paymentType: 'Crypto',
+        };
+        const result = yield createPaymentMethod({
+            variables: {
+                orgID: orgId,
+                input: inputData,
+            },
+        });
+        if ((_21 = (_20 = result === null || result === void 0 ? void 0 : result.data) === null || _20 === void 0 ? void 0 : _20.createPaymentMethod) === null || _21 === void 0 ? void 0 : _21.id) {
+            if (((_23 = (_22 = result === null || result === void 0 ? void 0 : result.data) === null || _22 === void 0 ? void 0 : _22.createPaymentMethod) === null || _23 === void 0 ? void 0 : _23.status) !== 'complete') {
+                yield paymentMethodStatus({
+                    variables: {
+                        paymentMethodID: (_25 = (_24 = result === null || result === void 0 ? void 0 : result.data) === null || _24 === void 0 ? void 0 : _24.createPaymentMethod) === null || _25 === void 0 ? void 0 : _25.id,
+                    },
+                });
+            }
+            const reserveLotData = yield getInvoiceData(options.invoiceId, options.lotId, options.quantity);
+            const paymentResponse = yield createPayment({
+                variables: {
+                    paymentMethodID: (_27 = (_26 = result === null || result === void 0 ? void 0 : result.data) === null || _26 === void 0 ? void 0 : _26.createPaymentMethod) === null || _27 === void 0 ? void 0 : _27.id,
+                    invoiceID: reserveLotData === null || reserveLotData === void 0 ? void 0 : reserveLotData.invoiceID,
+                    metadata: {
+                        destinationAddress: options.deliveryAddress,
+                        cryptoData: {
+                            name: (_28 = options.billingInfo) === null || _28 === void 0 ? void 0 : _28.name,
+                            description: '',
+                            billingDetails: {
+                                city: (_29 = options.billingInfo) === null || _29 === void 0 ? void 0 : _29.city,
+                                country: (_30 = options.billingInfo) === null || _30 === void 0 ? void 0 : _30.country,
+                                address1: (_31 = options.billingInfo) === null || _31 === void 0 ? void 0 : _31.street1,
+                                address2: '',
+                                district: (_32 = options.billingInfo) === null || _32 === void 0 ? void 0 : _32.state,
+                                postalCode: (_33 = options.billingInfo) === null || _33 === void 0 ? void 0 : _33.postalCode,
+                            },
+                            redirectURL: successURL,
+                            cancelURL: errorURL,
+                        },
+                    },
+                },
+            });
+            const paymentResult = (_34 = paymentResponse === null || paymentResponse === void 0 ? void 0 : paymentResponse.data) === null || _34 === void 0 ? void 0 : _34.createPayment;
+            const paymentData = Object.assign(Object.assign({}, paymentInfo), { deliveryStatus: paymentResult === null || paymentResult === void 0 ? void 0 : paymentResult.status, paymentId: (_35 = paymentResult === null || paymentResult === void 0 ? void 0 : paymentResult.id) !== null && _35 !== void 0 ? _35 : '', destinationAddress: options.deliveryAddress });
+            return { paymentData, reserveLotData, paymentResult };
+        }
+        throw new Error('unable to create paymentMethod');
+    }), [
+        paymentInfo,
+        orgId,
+        paymentMethodStatus,
+        createPaymentMethod,
+        createPayment,
+        getInvoiceData,
+        successURL,
+        errorURL,
+    ]);
+    const makeOnChainPurchase = useCallback((options) => __awaiter(void 0, void 0, void 0, function* () {
+        var _36, _37, _38, _39, _40, _41, _42, _43, _44, _45, _46, _47, _48, _49, _50, _51, _52, _53;
+        const inputData = {
+            paymentType: 'OnchainPayment',
+        };
+        const reserveLotData = yield getInvoiceData(options.invoiceId, options.lotId, options.quantity);
+        const invoiceDetailsResult = yield getInvoiceDetails({
+            variables: {
+                invoiceID: reserveLotData.invoiceID,
+            },
+        });
+        const invoiceDetails = (_36 = invoiceDetailsResult.data) === null || _36 === void 0 ? void 0 : _36.getInvoiceDetails;
+        if (((_37 = invoiceDetails.items) === null || _37 === void 0 ? void 0 : _37.length) === 0 || !invoiceDetails.items[0].isOnchainPaymentAvailable) {
+            throw new Error('On Chain payment is not available for this item');
+        }
+        const result = yield createPaymentMethod({
+            variables: {
+                orgID: orgId,
+                input: inputData,
+            },
+        });
+        if ((_39 = (_38 = result === null || result === void 0 ? void 0 : result.data) === null || _38 === void 0 ? void 0 : _38.createPaymentMethod) === null || _39 === void 0 ? void 0 : _39.id) {
+            if (((_41 = (_40 = result === null || result === void 0 ? void 0 : result.data) === null || _40 === void 0 ? void 0 : _40.createPaymentMethod) === null || _41 === void 0 ? void 0 : _41.status) !== 'complete') {
+                yield paymentMethodStatus({
+                    variables: {
+                        paymentMethodID: (_43 = (_42 = result === null || result === void 0 ? void 0 : result.data) === null || _42 === void 0 ? void 0 : _42.createPaymentMethod) === null || _43 === void 0 ? void 0 : _43.id,
+                    },
+                });
+            }
+            const paymentResponse = yield createPayment({
+                variables: {
+                    paymentMethodID: (_45 = (_44 = result === null || result === void 0 ? void 0 : result.data) === null || _44 === void 0 ? void 0 : _44.createPaymentMethod) === null || _45 === void 0 ? void 0 : _45.id,
+                    invoiceID: reserveLotData === null || reserveLotData === void 0 ? void 0 : reserveLotData.invoiceID,
+                    metadata: {
+                        destinationAddress: options.deliveryAddress,
+                        onChainPaymentData: {
+                            name: (_46 = options.billingInfo) === null || _46 === void 0 ? void 0 : _46.name,
+                            description: '',
+                            billingDetails: {
+                                city: (_47 = options.billingInfo) === null || _47 === void 0 ? void 0 : _47.city,
+                                country: (_48 = options.billingInfo) === null || _48 === void 0 ? void 0 : _48.country,
+                                address1: (_49 = options.billingInfo) === null || _49 === void 0 ? void 0 : _49.street1,
+                                address2: '',
+                                district: (_50 = options.billingInfo) === null || _50 === void 0 ? void 0 : _50.state,
+                                postalCode: (_51 = options.billingInfo) === null || _51 === void 0 ? void 0 : _51.postalCode,
+                            },
+                        },
+                    },
+                },
+            });
+            const paymentResult = (_52 = paymentResponse === null || paymentResponse === void 0 ? void 0 : paymentResponse.data) === null || _52 === void 0 ? void 0 : _52.createPayment;
+            const paymentData = Object.assign(Object.assign({}, paymentInfo), { deliveryStatus: paymentResult === null || paymentResult === void 0 ? void 0 : paymentResult.status, paymentId: (_53 = paymentResult === null || paymentResult === void 0 ? void 0 : paymentResult.id) !== null && _53 !== void 0 ? _53 : '', destinationAddress: options.deliveryAddress });
+            return { paymentData, reserveLotData, paymentResult, invoiceDetails };
+        }
+        throw new Error('unable to create paymentMethod');
+    }), [
+        paymentInfo,
+        orgId,
+        paymentMethodStatus,
+        createPaymentMethod,
+        createPayment,
+        getInvoiceData,
+        getInvoiceDetails,
+    ]);
+    const completeOnChainPayment = useCallback((options, receipt, txHash = '') => __awaiter(void 0, void 0, void 0, function* () {
+        var _54, _55, _56, _57, _58, _59, _60, _61;
+        yield onCompleteChain({
+            variables: {
+                invoiceId: receipt.reserveLotData.invoiceID,
+                networkId: (_56 = (_55 = (_54 = receipt.invoiceDetails) === null || _54 === void 0 ? void 0 : _54.items[0]) === null || _55 === void 0 ? void 0 : _55.onChainPaymentInfo) === null || _56 === void 0 ? void 0 : _56.networkID,
+                txHash,
+                billingDetails: {
+                    city: (_57 = options.billingInfo) === null || _57 === void 0 ? void 0 : _57.city,
+                    country: (_58 = options.billingInfo) === null || _58 === void 0 ? void 0 : _58.country,
+                    address1: (_59 = options.billingInfo) === null || _59 === void 0 ? void 0 : _59.street1,
+                    address2: '',
+                    district: (_60 = options.billingInfo) === null || _60 === void 0 ? void 0 : _60.state,
+                    postalCode: (_61 = options.billingInfo) === null || _61 === void 0 ? void 0 : _61.postalCode,
+                },
+            },
+        });
+    }), [
+        onCompleteChain,
+    ]);
     const values = useMemo(() => {
         return {
             makeCreditCardPurchase,
             makeWireTransferPurchase,
+            makeCoinbasePurchase,
+            makeOnChainPurchase,
+            completeOnChainPayment,
         };
-    }, [makeCreditCardPurchase, makeWireTransferPurchase]);
+    }, [makeCreditCardPurchase, makeWireTransferPurchase, makeCoinbasePurchase, makeOnChainPurchase, completeOnChainPayment]);
     return values;
 };
 

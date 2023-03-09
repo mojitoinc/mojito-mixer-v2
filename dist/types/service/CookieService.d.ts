@@ -13,6 +13,7 @@ export declare const CookieService: {
     collectionData: CookieStorage;
     paymentResult: CookieStorage;
     quantity: CookieStorage;
+    txHash: CookieStorage;
     vertexEnabled: CookieStorage;
     taxablePrice: CookieStorage;
 };

@@ -34,6 +34,7 @@ const CookieService = {
     collectionData: new CookieStorage('collectionData'),
     paymentResult: new CookieStorage('paymentResult'),
     quantity: new CookieStorage('quantity'),
+    txHash: new CookieStorage('txHash'),
     vertexEnabled: new CookieStorage('vertexEnabled'),
     taxablePrice: new CookieStorage('taxablePrice'),
 };

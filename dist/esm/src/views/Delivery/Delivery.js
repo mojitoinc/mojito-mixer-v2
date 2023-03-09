@@ -317,11 +317,41 @@ import { DeliveryInfoCard } from './DeliveryInfoCard.js';
 import { NEW_MULTI_SIG } from './index.js';
 import LoadingContainer from '../Loading/index.js';
 
-const Delivery = ({ onWalletChange, walletOptions, selectedDeliveryAddress, onClickConfirmPurchase, organizationName, billingInfo, paymentInfo, onClickConnectWallet, connect, onDisconnect, error, isLoading, }) => {
+const Delivery = ({ onWalletChange, walletOptions, selectedDeliveryAddress, onClickConfirmPurchase, organizationName, billingInfo, paymentInfo, onClickConnectWallet, onDisconnect, error, isLoading, connectedWalletAddress, }) => {
     var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p;
     const theme = useTheme();
     const { delivery } = useUIConfiguration();
     const isCreditCard = useMemo(() => (paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.paymentType) === PaymentTypes.CREDIT_CARD, [paymentInfo]);
+    const showMultiSig = useMemo(() => {
+        if ((paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.paymentType) === PaymentTypes.CREDIT_CARD)
+            return delivery.creditCard.enableMultiSig;
+        if ((paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.paymentType) === PaymentTypes.WIRE_TRANSFER)
+            return delivery.wire.enableMultiSig;
+        if ((paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.paymentType) === PaymentTypes.COIN_BASE)
+            return delivery.coinbase.enableMultiSig;
+        if ((paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.paymentType) === PaymentTypes.GOOGLE_PAY)
+            return delivery.gpay.enableMultiSig;
+        if ((paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.paymentType) === PaymentTypes.APPLE_PAY)
+            return delivery.applepay.enableMultiSig;
+        if ((paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.paymentType) === PaymentTypes.WALLET_CONNECT)
+            return delivery.walletConnect.enableMultiSig;
+        return true;
+    }, [delivery, paymentInfo]);
+    const showConnectWallet = useMemo(() => {
+        if ((paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.paymentType) === PaymentTypes.CREDIT_CARD)
+            return delivery.creditCard.enableConnectWallet;
+        if ((paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.paymentType) === PaymentTypes.WIRE_TRANSFER)
+            return delivery.wire.enableConnectWallet;
+        if ((paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.paymentType) === PaymentTypes.COIN_BASE)
+            return delivery.coinbase.enableConnectWallet;
+        if ((paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.paymentType) === PaymentTypes.GOOGLE_PAY)
+            return delivery.gpay.enableConnectWallet;
+        if ((paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.paymentType) === PaymentTypes.APPLE_PAY)
+            return delivery.applepay.enableConnectWallet;
+        if ((paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.paymentType) === PaymentTypes.WALLET_CONNECT)
+            return delivery.walletConnect.enableConnectWallet;
+        return false;
+    }, [delivery, paymentInfo]);
     return (React__default.createElement(React__default.Fragment, null,
         React__default.createElement(DeliveryInfoCard, { billingInfo: billingInfo, paymentInfo: paymentInfo }),
         React__default.createElement(Card, { sx: {
@@ -337,10 +367,11 @@ const Delivery = ({ onWalletChange, walletOptions, selectedDeliveryAddress, onCl
                   NFTs purchased by credit card can only be transferred to your multi-sig wallet and cannot be transferred 
                   out for 14 days.`
                 : `All related NFT purchase and delivery fees will be covered by ${organizationName}.`),
-            !(connect === null || connect === void 0 ? void 0 : connect.connected) ? (React__default.createElement(React__default.Fragment, null,
-                React__default.createElement(Dropdown, { value: selectedDeliveryAddress, onChange: onWalletChange, placeholder: "Select Wallet Address", sx: { marginRight: '8px' }, options: walletOptions }),
-                selectedDeliveryAddress === NEW_MULTI_SIG && (React__default.createElement(Typography, { variant: "body2", sx: { marginTop: '6px', color: (_d = theme.global) === null || _d === void 0 ? void 0 : _d.cardGrayedText } }, "A new multi-sig wallet will be created for you when purchase is complete")),
-                ((delivery === null || delivery === void 0 ? void 0 : delivery.showConnectWallet) && !isCreditCard) && (React__default.createElement(Stack, { flexDirection: "row", alignItems: "flex-end", justifyContent: "flex-end" },
+            !connectedWalletAddress ? (React__default.createElement(React__default.Fragment, null,
+                showMultiSig && (React__default.createElement(React__default.Fragment, null,
+                    React__default.createElement(Dropdown, { value: selectedDeliveryAddress, onChange: onWalletChange, placeholder: "Select Wallet Address", sx: { marginRight: '8px' }, options: walletOptions }),
+                    selectedDeliveryAddress === NEW_MULTI_SIG && (React__default.createElement(Typography, { variant: "body2", sx: { marginTop: '6px', color: (_d = theme.global) === null || _d === void 0 ? void 0 : _d.cardGrayedText } }, "A new multi-sig wallet will be created for you when purchase is complete")))),
+                showConnectWallet && (React__default.createElement(Stack, { flexDirection: "row", alignItems: "flex-end", justifyContent: "flex-end" },
                     React__default.createElement(Button, { title: "Connect Wallet", textColor: (_e = theme.global) === null || _e === void 0 ? void 0 : _e.highlightedText, backgroundColor: (_f = theme.global) === null || _f === void 0 ? void 0 : _f.white, variant: "outlined", sx: { marginTop: 2 }, onClick: onClickConnectWallet }))))) : (React__default.createElement(Box, { display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between", border: `1px solid ${(_g = theme.global) === null || _g === void 0 ? void 0 : _g.cardBorder}`, padding: "16px", sx: {
                     background: (_h = theme.global) === null || _h === void 0 ? void 0 : _h.background,
                 } },
@@ -349,16 +380,16 @@ const Delivery = ({ onWalletChange, walletOptions, selectedDeliveryAddress, onCl
                     React__default.createElement(Typography, { fontSize: "16px", marginLeft: "12px", width: "150px", sx: {
                             overflow: 'hidden',
                             textOverflow: 'ellipsis',
-                        } }, connect === null || connect === void 0 ? void 0 : connect.account),
-                    React__default.createElement(CopyButton, { copyValue: connect === null || connect === void 0 ? void 0 : connect.account, sx: {
+                        } }, connectedWalletAddress),
+                    React__default.createElement(CopyButton, { copyValue: connectedWalletAddress, sx: {
                             alignSelf: 'center',
                         } })),
-                React__default.createElement(Button, { title: "Disconnect", textColor: (_j = theme.global) === null || _j === void 0 ? void 0 : _j.highlightedText, backgroundColor: (_k = theme.global) === null || _k === void 0 ? void 0 : _k.white, variant: "outlined", sx: {
+                (paymentInfo === null || paymentInfo === void 0 ? void 0 : paymentInfo.paymentType) !== PaymentTypes.WALLET_CONNECT && (React__default.createElement(Button, { title: "Disconnect", textColor: (_j = theme.global) === null || _j === void 0 ? void 0 : _j.highlightedText, backgroundColor: (_k = theme.global) === null || _k === void 0 ? void 0 : _k.white, variant: "outlined", sx: {
                         justifySelf: 'flex-end',
-                    }, onClick: onDisconnect })))),
+                    }, onClick: onDisconnect }))))),
         React__default.createElement(Box, { display: "flex", flexDirection: "row", justifyContent: "space-between" },
             React__default.createElement(FormHelperText, { error: true }, error),
-            React__default.createElement(Button, { title: "Confirm purchase", backgroundColor: (_m = (_l = theme.global) === null || _l === void 0 ? void 0 : _l.checkout) === null || _m === void 0 ? void 0 : _m.continueButtonBackground, textColor: (_p = (_o = theme.global) === null || _o === void 0 ? void 0 : _o.checkout) === null || _p === void 0 ? void 0 : _p.continueButtonTextColor, disabled: !((connect === null || connect === void 0 ? void 0 : connect.connected) || selectedDeliveryAddress), onClick: onClickConfirmPurchase, sx: {
+            React__default.createElement(Button, { title: "Confirm purchase", backgroundColor: (_m = (_l = theme.global) === null || _l === void 0 ? void 0 : _l.checkout) === null || _m === void 0 ? void 0 : _m.continueButtonBackground, textColor: (_p = (_o = theme.global) === null || _o === void 0 ? void 0 : _o.checkout) === null || _p === void 0 ? void 0 : _p.continueButtonTextColor, disabled: !(connectedWalletAddress || selectedDeliveryAddress), onClick: onClickConfirmPurchase, sx: {
                     '&: hover': {
                         backgroundColor: 'rgba(102, 99, 253, 0.8)',
                     },

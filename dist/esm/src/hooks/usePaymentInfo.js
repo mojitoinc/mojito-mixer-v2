@@ -25,6 +25,7 @@ const usePaymentInfo = () => {
         const price = CookieService.taxablePrice.getValue();
         const vertex = CookieService.vertexEnabled.getValue();
         const totalQuantity = CookieService.quantity.getValue();
+        const hash = CookieService.txHash.getValue();
         const billingInfo = getObject(billing);
         const paymentInfo = getObject(payment);
         const lotData = getObject(reserveLotData);
@@ -34,6 +35,7 @@ const usePaymentInfo = () => {
         const taxablePrice = Number(getObject(price));
         const vertexEnabled = Boolean(getObject(vertex));
         const quantity = Number(getObject(totalQuantity));
+        const txHash = getObject(hash);
         // CookieService.billing.remove();
         // CookieService.paymentInfo.remove();
         // CookieService.taxes.remove();
@@ -49,6 +51,7 @@ const usePaymentInfo = () => {
             taxablePrice,
             vertexEnabled,
             quantity,
+            txHash,
         });
     }, []);
     return Object.assign({}, paymentData);

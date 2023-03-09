@@ -345,8 +345,8 @@ const MojitoCheckout = ({ uiConfiguration = DefaultUIConfiguration, theme, show,
                                     React__default.createElement(ContainerStateProvider, { paymentId: checkoutOptions === null || checkoutOptions === void 0 ? void 0 : checkoutOptions.paymentId, success: success },
                                         React__default.createElement(ErrorProvider, null,
                                             React__default.createElement(BillingProvider, null,
-                                                React__default.createElement(PaymentProvider, null,
-                                                    React__default.createElement(ConnectProvider, null,
+                                                React__default.createElement(ConnectProvider, null,
+                                                    React__default.createElement(PaymentProvider, null,
                                                         React__default.createElement(GlobalStyles, { styles: styles }),
                                                         React__default.createElement(MojitoCheckoutLayout, { enableSardine: enableSardine, sardineEnvironment: sardineEnvironment })))))))))))))));
 };

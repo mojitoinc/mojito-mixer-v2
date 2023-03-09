@@ -146,7 +146,7 @@ require('../../../node_modules/@mui/material/FormHelperText/FormHelperText.js');
 require('../../../node_modules/@mui/material/FormHelperText/formHelperTextClasses.js');
 require('../../../node_modules/@mui/material/FormLabel/FormLabel.js');
 require('../../../node_modules/@mui/material/FormLabel/formLabelClasses.js');
-require('../../../node_modules/@mui/material/Grid/Grid.js');
+var Grid = require('../../../node_modules/@mui/material/Grid/Grid.js');
 require('../../../node_modules/@mui/material/Grid/gridClasses.js');
 require('../../../node_modules/@mui/material/Unstable_Grid2/Grid2.js');
 require('../../../node_modules/@mui/material/Unstable_Grid2/grid2Classes.js');
@@ -314,6 +314,7 @@ require('../../providers/SecurityOptionsProvider.js');
 require('../../providers/UserInfoProvider.js');
 require('../../components/Stepper.js');
 var TextInput = require('../../components/TextInput.js');
+require('../../assets/index.js');
 require('@mui/icons-material/ContentCopy');
 require('../../components/shared/ErrorBoundary.js');
 require('../../service/CookieService.js');
@@ -381,33 +382,23 @@ const BillingForm = ({ values, errors, onChange, isValid, setFieldValue, }) => {
                         marginRight: '10px',
                     } }),
                 React__default["default"].createElement(Typography["default"], { fontWeight: "400", fontSize: "16px" }, "Complete necessary changes to continue"))),
-            React__default["default"].createElement(Box["default"], { display: "flex", justifyContent: "space-between" },
-                React__default["default"].createElement(TextInput["default"], { value: values === null || values === void 0 ? void 0 : values.firstName, onChange: onChange('firstName'), error: errors === null || errors === void 0 ? void 0 : errors.firstName, title: "First name", sx: {
-                        marginTop: '16px',
-                        width: '48%',
-                    }, required: true, placeholder: "First name", type: "text" }),
-                React__default["default"].createElement(TextInput["default"], { value: values === null || values === void 0 ? void 0 : values.lastName, onChange: onChange('lastName'), error: errors === null || errors === void 0 ? void 0 : errors.lastName, title: "Last name", sx: {
-                        marginTop: '16px',
-                        width: '48%',
-                    }, required: true, placeholder: "Last name", type: "text" })),
-            React__default["default"].createElement(Box["default"], { display: "flex", flexDirection: "row", marginTop: "16px" },
-                React__default["default"].createElement(Dropdown["default"], { value: values === null || values === void 0 ? void 0 : values.country, onChange: onChange('country'), title: "Country/Region", required: true, sx: { marginRight: '8px' }, error: errors === null || errors === void 0 ? void 0 : errors.country, placeholder: "Select one...", options: countries }),
-                React__default["default"].createElement(Dropdown["default"], { value: values === null || values === void 0 ? void 0 : values.state, onChange: onChange('state'), title: "State", sx: {
-                        marginLeft: '8px',
-                    }, placeholder: "Select one...", options: states, error: errors === null || errors === void 0 ? void 0 : errors.state, required: true })),
-            React__default["default"].createElement(Box["default"], { display: "flex", flexDirection: "row", sx: {
-                    marginTop: '16px',
-                } },
-                React__default["default"].createElement(Dropdown["default"], { value: values === null || values === void 0 ? void 0 : values.city, onChange: onChange('city'), title: "City", required: true, placeholder: "Select one...", sx: { marginRight: '8px' }, error: errors === null || errors === void 0 ? void 0 : errors.city, options: cities }),
-                React__default["default"].createElement(TextInput["default"], { value: values === null || values === void 0 ? void 0 : values.postalCode, onChange: onChange('postalCode'), title: "Zip code", sx: {
-                        marginLeft: '8px',
-                    }, required: true, error: errors === null || errors === void 0 ? void 0 : errors.postalCode, placeholder: "e.g. 10005" })),
-            React__default["default"].createElement(TextInput["default"], { value: values === null || values === void 0 ? void 0 : values.street1, onChange: onChange('street1'), title: "Address", sx: {
-                    marginTop: '16px',
-                }, required: true, error: errors === null || errors === void 0 ? void 0 : errors.street1, placeholder: "" }),
-            React__default["default"].createElement(TextInput["default"], { value: values === null || values === void 0 ? void 0 : values.phoneNumber, onChange: onChangePhoneNumber, title: "Phone number", sx: {
-                    marginTop: '16px',
-                }, required: true, error: errors === null || errors === void 0 ? void 0 : errors.phoneNumber, placeholder: "(___) ___-____", type: "tel" }))));
+            React__default["default"].createElement(Grid["default"], { container: true, spacing: 2 },
+                React__default["default"].createElement(Grid["default"], { xs: 12, lg: 6, item: true },
+                    React__default["default"].createElement(TextInput["default"], { value: values === null || values === void 0 ? void 0 : values.firstName, onChange: onChange('firstName'), error: errors === null || errors === void 0 ? void 0 : errors.firstName, title: "First name", required: true, placeholder: "First name", type: "text" })),
+                React__default["default"].createElement(Grid["default"], { xs: 12, lg: 6, item: true },
+                    React__default["default"].createElement(TextInput["default"], { value: values === null || values === void 0 ? void 0 : values.lastName, onChange: onChange('lastName'), error: errors === null || errors === void 0 ? void 0 : errors.lastName, title: "Last name", required: true, placeholder: "Last name", type: "text" })),
+                React__default["default"].createElement(Grid["default"], { xs: 12, lg: 6, item: true },
+                    React__default["default"].createElement(Dropdown["default"], { value: values === null || values === void 0 ? void 0 : values.country, onChange: onChange('country'), title: "Country/Region", required: true, error: errors === null || errors === void 0 ? void 0 : errors.country, placeholder: "Select one...", options: countries })),
+                React__default["default"].createElement(Grid["default"], { xs: 12, lg: 6, item: true },
+                    React__default["default"].createElement(Dropdown["default"], { value: values === null || values === void 0 ? void 0 : values.state, onChange: onChange('state'), title: "State", placeholder: "Select one...", options: states, error: errors === null || errors === void 0 ? void 0 : errors.state, required: true })),
+                React__default["default"].createElement(Grid["default"], { xs: 12, lg: 6, item: true },
+                    React__default["default"].createElement(Dropdown["default"], { value: values === null || values === void 0 ? void 0 : values.city, onChange: onChange('city'), title: "City", required: true, placeholder: "Select one...", sx: { marginRight: '8px' }, error: errors === null || errors === void 0 ? void 0 : errors.city, options: cities })),
+                React__default["default"].createElement(Grid["default"], { xs: 12, lg: 6, item: true },
+                    React__default["default"].createElement(TextInput["default"], { value: values === null || values === void 0 ? void 0 : values.postalCode, onChange: onChange('postalCode'), title: "Zip code", required: true, error: errors === null || errors === void 0 ? void 0 : errors.postalCode, placeholder: "e.g. 10005" })),
+                React__default["default"].createElement(Grid["default"], { xs: 12, item: true },
+                    React__default["default"].createElement(TextInput["default"], { value: values === null || values === void 0 ? void 0 : values.street1, onChange: onChange('street1'), title: "Address", required: true, error: errors === null || errors === void 0 ? void 0 : errors.street1, placeholder: "" })),
+                React__default["default"].createElement(Grid["default"], { xs: 12, item: true },
+                    React__default["default"].createElement(TextInput["default"], { value: values === null || values === void 0 ? void 0 : values.phoneNumber, onChange: onChangePhoneNumber, title: "Phone number", required: true, error: errors === null || errors === void 0 ? void 0 : errors.phoneNumber, placeholder: "(___) ___-____", type: "tel" }))))));
 };
 
 exports["default"] = BillingForm;

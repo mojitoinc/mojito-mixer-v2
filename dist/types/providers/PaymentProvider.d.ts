@@ -1,5 +1,8 @@
 import React from 'react';
 import { CreditCardFormType } from '../interfaces';
+export interface OnChainForm {
+    walletAddress: string;
+}
 export interface PaymentData {
     creditCardData?: CreditCardFormType;
     wireData?: {
@@ -13,6 +16,7 @@ export interface PaymentData {
         };
         country: string;
     };
+    onChainPayment?: OnChainForm;
     paymentId?: string;
     paymentType?: string;
     destinationAddress?: string;
@@ -28,6 +32,8 @@ export interface Payment {
     setPaymentInfo: React.Dispatch<React.SetStateAction<PaymentData | undefined>>;
     onConfirmCreditCardPurchase: (deliveryAddress: string) => void;
     onConfirmWireTransferPurchase: (deliveryAddress: string) => void;
+    onConfirmCoinbasePurchase: (deliveryAddress: string) => void;
+    onConfirmOnChainPurchase: (deliveryAddress: string) => void;
     paymentMethods?: PaymentMethodLimit;
     setPaymentMethods: React.Dispatch<React.SetStateAction<PaymentMethodLimit | undefined>>;
 }

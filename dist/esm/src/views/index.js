@@ -234,7 +234,7 @@ import '../../node_modules/@mui/material/SpeedDialAction/SpeedDialAction.js';
 import '../../node_modules/@mui/material/SpeedDialAction/speedDialActionClasses.js';
 import '../../node_modules/@mui/material/SpeedDialIcon/SpeedDialIcon.js';
 import '../../node_modules/@mui/material/SpeedDialIcon/speedDialIconClasses.js';
-import '../../node_modules/@mui/material/Stack/Stack.js';
+import Stack from '../../node_modules/@mui/material/Stack/Stack.js';
 import '../../node_modules/@mui/material/Step/Step.js';
 import '../../node_modules/@mui/material/Step/stepClasses.js';
 import '../../node_modules/@mui/material/Step/StepContext.js';
@@ -296,6 +296,7 @@ import '../../node_modules/@mui/material/GlobalStyles/GlobalStyles.js';
 import '../../node_modules/@mui/base/FocusTrap/FocusTrap.js';
 import Header from '../components/Header.js';
 import Stepper from '../components/Stepper.js';
+import '../assets/index.js';
 import '@mui/icons-material/ContentCopy';
 import '../components/shared/ErrorBoundary.js';
 import CostBreakdownContainer from './CostBreakDown/index.js';
@@ -351,14 +352,12 @@ const MojitoCheckoutLayout = ({ sardineEnvironment, enableSardine, }) => {
     if (containerState === ContainerTypes.LOADING) {
         return React__default.createElement(LoadingContainer, null);
     }
-    return (React__default.createElement(Box, { sx: {
+    return (React__default.createElement(Stack, { direction: { xs: 'column-reverse', md: 'row' }, sx: {
             backgroundColor: (_a = theme.global) === null || _a === void 0 ? void 0 : _a.background,
             display: 'flex',
-            width: '100%',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
+            justifyContent: { sx: 'center', lg: 'space-between' },
         } },
-        React__default.createElement(Box, { padding: "40px", width: "100%" },
+        React__default.createElement(Box, { padding: "40px", width: { lg: '100%' } },
             React__default.createElement(Header, { isPaymentConfirmation: containerState === ContainerTypes.CONFIRMATION }),
             containerState !== ContainerTypes.CONFIRMATION && (React__default.createElement(Stepper, { currentState: containerState })),
             containerState === ContainerTypes.CHECKOUT && React__default.createElement(BillingContainer, null),

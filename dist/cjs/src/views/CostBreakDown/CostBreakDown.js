@@ -336,8 +336,8 @@ const CostBreakDown = ({ taxes, collectionData, quantity, vertexEnabled, taxable
             alignSelf: 'stretch',
             backgroundSize: '100%',
             padding: '40px',
-            width: '100%',
-            minHeight: '100vh',
+            width: { lg: '100%' },
+            minHeight: { lg: '100vh' },
         } },
         React__default["default"].createElement(Box["default"], { sx: {
                 padding: '24px',

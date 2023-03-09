@@ -318,6 +318,7 @@ import Button from '../../components/Button.js';
 import '@mui/icons-material/ArrowBack';
 import '../../components/Stepper.js';
 import TextInput from '../../components/TextInput.js';
+import '../../assets/index.js';
 import '@mui/icons-material/ContentCopy';
 import '../../components/shared/ErrorBoundary.js';
 import BillingForm from './BillingForm.js';

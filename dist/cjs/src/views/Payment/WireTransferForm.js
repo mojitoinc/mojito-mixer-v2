@@ -82,7 +82,7 @@ require('../../../node_modules/@mui/material/BottomNavigation/BottomNavigation.j
 require('../../../node_modules/@mui/material/BottomNavigation/bottomNavigationClasses.js');
 require('../../../node_modules/@mui/material/BottomNavigationAction/BottomNavigationAction.js');
 require('../../../node_modules/@mui/material/BottomNavigationAction/bottomNavigationActionClasses.js');
-require('../../../node_modules/@mui/material/Box/Box.js');
+var Box = require('../../../node_modules/@mui/material/Box/Box.js');
 require('../../../node_modules/@mui/material/Breadcrumbs/Breadcrumbs.js');
 require('../../../node_modules/@mui/material/Breadcrumbs/breadcrumbsClasses.js');
 require('../../../node_modules/@mui/material/Button/Button.js');
@@ -299,6 +299,8 @@ require('../../../node_modules/@mui/material/Typography/typographyClasses.js');
 require('../../../node_modules/@mui/material/Zoom/Zoom.js');
 require('../../../node_modules/@mui/material/GlobalStyles/GlobalStyles.js');
 require('../../../node_modules/@mui/base/FocusTrap/FocusTrap.js');
+var index = require('../../constants/index.js');
+var index$1 = require('../../assets/index.js');
 var Dropdown = require('../../components/Dropdown.js');
 require('@mui/icons-material/ArrowBack');
 require('../../providers/DebugProvider.js');
@@ -409,7 +411,15 @@ const WireTransferForm = ({ values, handleChange, setFieldValue, errors, }) => {
                 marginTop: 2,
                 backgroundColor: (_b = theme.global) === null || _b === void 0 ? void 0 : _b.grayBackground,
                 borderRadius: '4px',
-            } }, "Please note that wire transfers usually take 1-3 business days to complete and your NFT will not be transferred until payment has been settled.")));
+            } }, "Please note that wire transfers usually take 1-3 business days to complete and your NFT will not be transferred until payment has been settled."),
+        React__default["default"].createElement(Box["default"], { display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center", margin: "20px 0px" },
+            React__default["default"].createElement(Typography["default"], null, "Payments powered by"),
+            React__default["default"].createElement("a", { href: index.CIRCLE_URL, target: "_blank", rel: "noreferrer" },
+                React__default["default"].createElement("img", { src: index$1.Icons.circle, alt: "visa", style: {
+                        width: 100,
+                        height: 20,
+                        marginLeft: '8px',
+                    } })))));
 };
 
 exports.Countries = Countries;
